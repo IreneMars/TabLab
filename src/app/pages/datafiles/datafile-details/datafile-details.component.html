@@ -1,0 +1,115 @@
+<div class="row complete-height">
+    <div class="col-2">
+
+    </div>
+    <div class="col-7">
+        <div class="mt-2" *ngIf="isLoading">
+            <mat-spinner></mat-spinner>
+        </div>
+        <app-datafile-edit *ngIf="edit" [(edit)]="edit" [datafile]="datafile" [datafileId]="datafileId"></app-datafile-edit>
+
+        <div class="container" *ngIf="!isLoading && !edit">
+            <div class="row mt-4">
+
+                <div class="col-10">
+                    <h2>{{ datafile.title }} (from <a routerLink="/workspace/{{workspaceId}}">
+                      {{workspaceId}}
+                    </a>)</h2>
+                </div>
+                <div class="col-2 d-flex justify-content-end">
+                    <div class="me-1">
+                        <button class="btn btn-outline-light btn-sm" type="button" (click)="onEdit()">
+                          <i class="fas fa-pen"></i>
+                        </button>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item danger" (click)="onDelete()">Eliminar Fichero</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col">
+                    <p>{{ datafile.description }}</p>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col-2 pe-0">
+                    <h2 class="mb-0">Contenido</h2>
+                </div>
+                <div class="col-10 ps-0" *ngIf="!content">
+                    <div>
+                        <form [formGroup]="fileForm" (ngSubmit)="onSave()">
+                            <input type="file" (change)="onFilePicked($event)" formControlName="contentPath" class="form-control form-control-sm" name="uploaded_file">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-10 d-flex justify-content-end ps-0" *ngIf="content">
+                    <div class="me-1">
+                        <form [formGroup]="fileForm" (ngSubmit)="onSave()">
+                            <input type="file" (change)="onFilePicked($event)" formControlName="contentPath" class="form-control form-control-sm" name="uploaded_file">
+                        </form>
+                    </div>
+
+                    <div class="me-1">
+                        <button class="btn btn-outline-light btn-sm" type="button" *ngIf="content" (click)="onDownload()">
+                          <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="me-1">
+                        <button class="btn btn-outline-light btn-sm" type="button" (click)="onEditContent()" *ngIf="content">
+                        <i class="fas fa-pen"></i>
+                      </button>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-light btn-sm" type="button" (click)="onDeleteFile()" *ngIf="content">
+                        <i class="fas fa-trash-alt danger"></i>
+                      </button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="form-floating">
+                    <form [formGroup]="fileContentForm">
+                        <textarea formControlName="fileContent" class="form-control mt-2 pt-1" id="floatingTextarea2" style="height: 400px"></textarea>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div *ngIf="fileName">
+                        Nombre del archivo: {{fileName}}
+                    </div>
+                </div>
+                <div class="col-6 mt-2 d-flex justify-content-end">
+                    <div>
+                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content" [disabled]="disabledContent" (click)="onSave()">Guardar cambios</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <mat-error>
+                    <small *ngIf="invalidExtension" class="text-danger">
+                              Ingrese un archivo con el formato adecuado (.json o .yaml).
+                            </small>
+                </mat-error>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="container ps-0">
+            <app-esquema-list [datafileId]="datafileId" [workspaceId]="workspaceId" [esquemas]="esquemas" [infer]="infer"></app-esquema-list>
+        </div>
+        <div class="container ps-0">
+            <app-configuration-list [datafileId]="datafileId" [workspaceId]="workspaceId" [configurations]="configurations"></app-configuration-list>
+        </div>
+        <div class="container ps-0">
+            <app-test-list [datafileId]="datafileId" [workspaceId]="workspaceId" [tests]="tests" [esquemas]="esquemas" [configurations]="formattedConfigs"></app-test-list>
+        </div>
+    </div>
+</div>

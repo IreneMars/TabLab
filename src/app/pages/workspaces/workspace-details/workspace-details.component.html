@@ -1,0 +1,214 @@
+<div class="row ps-2 pe-2 complete-height">
+    <div class="col-2 collections p-0">
+        <div class="container p-0">
+            <div class="row mt-4 ps-4 pe-3">
+                <div class="col-8">
+                    <h2 class="mb-2">Collections</h2>
+                </div>
+            </div>
+            <div class="row mt-0">
+                <div class="accordion accordion-flush pb-5" id="accordionFlushExample">
+                    <div *ngFor="let collection of collections; let i=index;">
+                        <div class="row mt-2 ps-3 pe-2" *ngIf="editMode && collectionIndex===i">
+                            <app-collection-create [(collectionIndex)]="collectionIndex" [(editMode)]="editMode" [editCollection]="collection"></app-collection-create>
+                        </div>
+                        <div class="accordion-item" *ngIf="collectionIndex!==i">
+                            <h4 class="row accordion-header m-0 pt-1 pb-1" id="flush-headingOne">
+                                <div class="col-10 ps-4 pe-2 pt-1 collapsed" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse'+i" aria-expanded="false" [aria-controls]="collection.name">
+                                    {{collection.title}}
+                                </div>
+                                <div class="col-2 d-flex justify-content-end">
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-secondary btn-sm expand-files" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                          <i class="fas fa-ellipsis-h "></i>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><a class="dropdown-item" (click)="onUpdateCollection(i)">Editar</a></li>
+                                            <li><a class="dropdown-item danger" (click)="onDeleteCollection(collection.id)">Eliminar</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </h4>
+                            <div [attr.id]="'collapse'+i" class="accordion-collapse collapse " aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" *ngFor="let datafile of collection.datafiles">
+                                <div class="accordion-body pt-2 pb-2 ps-5 pe-2" routerLink="/workspace/{{workspaceId}}/datafile/{{datafile._id}}">{{datafile.title}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-collapse collapse show linebreak pt-2 mt-2" *ngFor="let datafile of orphanedDatafiles">
+                        <div class="accordion-body pt-2 pb-2 ps-5 pe-2" routerLink="/workspace/{{workspaceId}}/datafile/{{datafile._id}}">{{datafile.title}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2 ps-4 pe-3">
+                <app-collection-create [(close)]="close" *ngIf="!close"></app-collection-create>
+            </div>
+            <div class="row mt-2 ps-4 pe-3">
+                <div class="col">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary btn-sm" type="button" [disabled]="" (click)="onAddCollection()">
+                          <i class="fas fa-plus"></i> Añadir Colección
+                          </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-7">
+        <div class="mt-2" *ngIf="isLoading">
+            <mat-spinner></mat-spinner>
+        </div>
+        <app-workspace-edit *ngIf="edit" [(edit)]="edit" [workspace]="workspace" [workspaceId]="workspaceId"></app-workspace-edit>
+
+        <div class="container" *ngIf="!isLoading && !edit">
+
+            <div class="row mt-4">
+                <div class="col-10">
+                    <h2>{{ workspace.title }}</h2>
+
+                </div>
+                <div class="col-2 d-flex justify-content-end">
+                    <div class="me-1">
+                        <button class="btn btn-outline-light btn-sm" type="button" (click)="onEdit()">
+                          <i class="fas fa-pen"></i>
+                        </button>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" (click)="onLeave()">Abandonar Espacio</a></li>
+                            <li><a class="dropdown-item danger" (click)="onDelete()">Eliminar Espacio</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col">
+                    <p>{{ workspace.description }}</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-2">
+            <div class="col">
+                <h2>Actividad</h2>
+                <div class="my-custom-scrollbar">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small>3 days ago</small>
+                            </div>
+                            <p class="mb-1">Some placeholder content in a paragraph.</p>
+                            <small>And some small print.</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small class="text-muted">3 days ago</small>
+                            </div>
+                            <p class="mb-1">Some placeholder content in a paragraph.</p>
+                            <small class="text-muted">And some muted small print.</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small class="text-muted">3 days ago</small>
+                            </div>
+                            <p class="mb-1">Some placeholder content in a paragraph.</p>
+                            <small class="text-muted">And some muted small print.</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small>3 days ago</small>
+                            </div>
+                            <p class="mb-1">Some placeholder content in a paragraph.</p>
+                            <small>And some small print.</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small class="text-muted">3 days ago</small>
+                            </div>
+                            <p class="mb-1">Some placeholder content in a paragraph.</p>
+                            <small class="text-muted">And some muted small print.</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small class="text-muted">3 days ago</small>
+                            </div>
+                            <p class="mb-1">Some placeholder content in a paragraph.</p>
+                            <small class="text-muted">And some muted small print.</small>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-3 members">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col">
+                    <h2>Empieza!</h2>
+                    <button type="button" class="btn add-file btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="!savefileChange">
+                      Crear fichero de datos
+                    </button>
+                    <button type="button" class="btn add-file btn-sm" disabled *ngIf="savefileChange">
+                      Crear fichero de datos
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    </button>
+                    <app-datafile-create (savefileChange)="setSaveMode($event)" [workspaceId]="workspaceId" [collections]="collections"></app-datafile-create>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <h2>Members</h2>
+
+                    <ul class="list-group">
+                        <div *ngFor="let user of users">
+                            <li class="list-group-item pt-0 pb-0 d-flex justify-content-between align-items-center">
+
+                                <div class="pt-1 pb-1 post-image">
+                                    <img src="{{user.photo}}" class="border rounded-circle me-2" alt=""> {{user.username}}
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Admin
+                                </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><button class="dropdown-item btn-sm" type="button">Admin</button></li>
+                                        <li><button class="dropdown-item btn-sm " type="button">Owner</button></li>
+                                        <li><button class="dropdown-item btn-sm" type="button">Member</button></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </div>
+                    </ul>
+
+                </div>
+            </div>
+
+            <app-invitation-create></app-invitation-create>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+
+<!-- <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
+<!-- </div>
+</div> -->

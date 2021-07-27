@@ -1,0 +1,48 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="row justify-content-sm-center mt-5" *ngIf="!isLoading">
+    <div class="col-sm-auto">
+        <div class="card animate__animated animate__fadeIn animate__faster">
+            <div class="card-body">
+                <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+                    <h2 class="card-title">Registro</h2>
+                    <mat-form-field>
+                        <input matInput type="text" placeholder="Nombre" formControlName="username" [class.is-invalid]="invalidUsername">
+                        <mat-error>
+                            <small *ngIf="invalidUsername" class="text-danger">
+                              Ingrese un nombre de usuario adecuado (mayor de 5 letras).
+                            </small>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input matInput type="email" placeholder="Correo electrónico" formControlName="email" [class.is-invalid]="invalidEmail">
+                        <mat-error>
+                            <small *ngIf="invalidEmail" class="text-danger">
+                              Ingrese un correo adecuado
+                            </small>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input matInput type="password" placeholder="Contraseña" formControlName="password" [class.is-invalid]="invalidPassword">
+                        <mat-error>
+                            <small *ngIf="invalidPassword" class="text-danger">
+                              Ingrese una contraseña adecuada
+                            </small>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="mt-3 btn btn-primary btn-block" *ngIf="!isLoading">Registrar</button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a routerLink="/auth/login">
+                        ¿Ya tienes una cuenta?
+                      </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

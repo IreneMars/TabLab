@@ -1,0 +1,43 @@
+.btn-outline-light {
+    color: rgb(156, 156, 156) !important;
+    border-color: #ced4da;
+}
+
+.btn-outline-light:hover {
+    color: white !important;
+    background-color: #ced4da !important;
+    border-color: #ced4da;
+}
+
+.danger {
+    color: #dc3845;
+}
+
+.my-scrollbar {
+    height: 400px;
+    overflow: auto;
+    border: 1px solid #ced4da;
+    border-radius: 4px 4px 4px 4px;
+    background-color: white;
+}
+
+.my-scrollbar-terminal {
+    height: 200px;
+    overflow: auto;
+    border: 1px solid #ced4da;
+    border-radius: 4px 4px 4px 4px;
+    background-color: white;
+}
+
+.border-header {
+    border-top: 1px solid #ced4da;
+    border-right: 1px solid #ced4da;
+    border-left: 1px solid #ced4da;
+    border-radius: 4px 4px 0 0;
+    background-color: #e9ecef;
+}
+
+.border-content {
+    border-radius: 0 0 4px 4px;
+    border: 1px solid #ced4da;
+}

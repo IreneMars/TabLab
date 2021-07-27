@@ -1,0 +1,48 @@
+<form class="row mt-2" [formGroup]="invitationForm" (ngSubmit)="onInvite()">
+    <div class="row m-0 p-0" *ngIf="!create">
+        <div class="col input-group input-group-sm">
+            <input type="email" class="form-control" placeholder="Introduce un email..." formControlName="email" [class.is-invalid]="invalidEmail">
+        </div>
+    </div>
+    <div class="input-group" *ngIf="create">
+        <input type="email" class="form-control" placeholder="Introduce un email..." formControlName="email" [class.is-invalid]="invalidEmail">
+        <button class="btn btn-outline-secondary btn-sm" type="button" type="submit" id="button-addon2">Añadir</button>
+    </div>
+    <div class="row ms-0 mb-2 p-0">
+        <div class="col d-flex justify-content-start">
+            <mat-error>
+                <small *ngIf="invalidEmail" class="text-danger">
+                  Ingrese un correo adecuado
+                </small>
+            </mat-error>
+        </div>
+    </div>
+    <div class="row ms-0 p-0" *ngIf="create">
+        <div class="col">
+            <ul class="list-group">
+                <div *ngFor="let item of invitations">
+                    <li class="list-group-item container p-1">
+                        <div class="row ps-2 pe-3">
+                            <div class="col-10 mt-1">
+                                {{item}}
+                            </div>
+                            <div class="col-2 m-0 p-0 d-flex justify-content-end">
+                                <div>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                                      <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </div>
+    <div class="row mt-1 m-0 p-0" *ngIf="!create">
+        <div class="col  d-flex justify-content-end">
+            <button type="submit" class="btn btn-sm btn-primary me-1">Invitar</button>
+            <a class="btn btn-sm btn-secondary" (click)="onReset()">Cancelar</a>
+        </div>
+    </div>
+</form>

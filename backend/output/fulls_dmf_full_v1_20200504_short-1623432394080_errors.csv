@@ -1,0 +1,10 @@
+Error Code|Tags|Label|Field Name|Field Position|Row Position|Error Message|Error Cell
+duplicate-row|[#table, #row]||||3|Row at position 3 is duplicated: the same as row at position "2"|
+duplicate-row|[#table, #row]||||791|Row at position 791 is duplicated: the same as row at position "790"|
+duplicate-row|[#table, #row]||||1587|Row at position 1587 is duplicated: the same as row at position "1586"|
+duplicate-row|[#table, #row]||||1798|Row at position 1798 is duplicated: the same as row at position "1797"|
+duplicate-row|[#table, #row]||||2345|Row at position 2345 is duplicated: the same as row at position "2344"|
+duplicate-row|[#table, #row]||||3011|Row at position 3011 is duplicated: the same as row at position "2955"|
+duplicate-row|[#table, #row]||||3237|Row at position 3237 is duplicated: the same as row at position "3236"|
+duplicate-row|[#table, #row]||||3269|Row at position 3269 is duplicated: the same as row at position "3268"|
+duplicate-row|[#table, #row]||||3283|Row at position 3283 is duplicated: the same as row at position "3282"|

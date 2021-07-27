@@ -1,0 +1,125 @@
+mat-form-field,
+textarea {
+    width: 100%;
+}
+
+mat-card {
+    display: block;
+    margin-top: 1rem;
+}
+
+mat-spinner {
+    margin: auto;
+}
+
+input[type="file"] {
+    visibility: hidden;
+}
+
+.add-file {
+    color: grey;
+}
+
+.my-custom-scrollbar {
+    height: 60%;
+    overflow: auto;
+}
+
+.sidenav {
+    background-color: #f2f2f3;
+}
+
+.sidenav h2 {
+    /* padding: 20px 0px 5px 20px;
+    margin: 0px; */
+    color: black;
+}
+
+.sidenav h4 {
+    /* margin: 0px; */
+    color: black;
+}
+
+.accordion-button:not(.collapsed) {
+    color: black !important;
+}
+
+.sidenav div {
+    background-color: #f2f2f3 !important;
+}
+
+.sidenav div:hover {
+    background-color: #e7e7e7 !important;
+}
+
+.accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.post-image img {
+    width: 40px;
+    height: 40px;
+}
+
+.members {
+    background-color: #f2f2f3;
+}
+
+.collections {
+    background-color: #f2f2f3;
+}
+
+.btn-outline-light {
+    color: rgb(156, 156, 156) !important;
+}
+
+.danger {
+    color: #dc3845;
+}
+
+.complete-height {
+    height: 100%;
+}
+
+.accordion-header {
+    background-color: #f2f2f3;
+}
+
+.accordion-header:hover {
+    background-color: #dbdbdb;
+}
+
+.btn-outline-secondary {
+    border: none;
+}
+
+.btn-outline-secondary:hover {
+    color: #6c757d;
+    background-color: #cccccc;
+}
+
+.add-file {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.add-file:hover {
+    color: #6c757d;
+    background-color: #cccccc;
+    border-color: #cccccc;
+}
+
+.linebreak {
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    border-top-color: #6c757d;
+}

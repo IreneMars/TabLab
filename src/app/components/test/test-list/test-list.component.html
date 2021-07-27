@@ -1,0 +1,58 @@
+<div class="row mt-4">
+    <div class="col-5">
+        <h2>Pruebas</h2>
+    </div>
+    <div class="col-7 d-flex justify-content-end">
+        <div>
+            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#testCreateModal" *ngIf="!savefileChange">
+              Añadir prueba
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-sm" disabled *ngIf="savefileChange">
+              Añadir prueba
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+            <!-- [esquemaForm]="esquemaForm" (savefileChange)="setSaveMode($event)" (esquemaChange)="setEsquema($event)"-->
+            <app-test-create [workspaceId]="workspaceId" [datafileId]="datafileId" [test]="test" [esquemas]="esquemas" [configurations]="configurations"></app-test-create>
+        </div>
+    </div>
+</div>
+<div class="row mt-2 mb-4">
+    <div class="col p-0">
+        <div class="container">
+            <div class="row border-header p-2">
+                <div class="col-3 d-flex justify-content-start">
+                    <div>Título</div>
+                </div>
+                <div class="col-6 d-flex justify-content-center">
+                    <div>Última modificación</div>
+                </div>
+                <div class="col-3 d-flex justify-content-end">
+                    <div>Opciones</div>
+                </div>
+            </div>
+            <div class="row mt-0 p-2 border-content">
+                <div class="col">
+                    <div class="row mt-1 mb-1" *ngFor="let test of tests">
+                        <div class="col-3 d-flex justify-content-start pt-2 pe-0">
+                            <div>{{test.title}}</div>
+                        </div>
+                        <div class="col-6 d-flex justify-content-center pt-2">
+                            <div>{{test.updateMoment | date:'EEEE d MMMM y, h:mm:ss'}}</div>
+                        </div>
+                        <div class="col-3 d-flex justify-content-end pe-4">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-light btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                              <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" routerLink="/workspace/{{workspaceId}}/datafile/{{datafileId}}/test/{{test._id}}">Editar Prueba</a></li>
+                                    <li><a class="dropdown-item danger" (click)="onDelete(test._id)">Eliminar Prueba</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

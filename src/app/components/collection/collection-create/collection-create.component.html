@@ -1,0 +1,21 @@
+<form [formGroup]="collectionForm" (ngSubmit)="onSave()" class="col mb-2">
+    <div class="row">
+        <mat-error>
+            <small *ngIf="invalidTitle" class="text-danger">
+              Ingrese un título adecuado
+            </small>
+        </mat-error>
+    </div>
+    <div class="row">
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control" placeholder="Introduce un título..." formControlName="title" [class.is-invalid]="invalidTitle">
+            <a class="btn btn-outline-secondary btn-sm" (click)="onCancel()" *ngIf="!isLoading">
+                <i class="fas fa-times"></i>
+            </a>
+            <button class="btn btn-outline-secondary btn-sm" type="button" disabled *ngIf="isLoading">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+        </div>
+
+    </div>
+</form>

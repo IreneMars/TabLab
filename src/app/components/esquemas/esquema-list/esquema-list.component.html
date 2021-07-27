@@ -1,0 +1,66 @@
+<div class="row mt-4">
+    <div class="col-5">
+        <h2>Esquemas</h2>
+    </div>
+    <div class="col-7 d-flex justify-content-end">
+        <div class="me-1">
+            <button type="button" class="btn btn-outline-primary btn-sm" type="button" *ngIf="!inferring && infer" (click)="onInfer()">
+              Inferir Esquema
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-sm" type="button" disabled *ngIf="inferring">
+              Inferir Esquema
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal2" *ngIf="!savefileChange">
+              Añadir esquema
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-sm" disabled *ngIf="savefileChange">
+              Añadir esquema
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+            <app-esquema-create (savefileChange)="setSaveMode($event)" [datafileId]="datafileId" [workspaceId]="workspaceId" [esquema]="esquema" [esquemaForm]="esquemaForm" (esquemaChange)="setEsquema($event)"></app-esquema-create>
+        </div>
+    </div>
+</div>
+<div class="row mt-2 mb-4">
+    <div class="col p-0">
+        <div class="container">
+            <div class="row border-header p-2">
+                <div class="col-3 d-flex justify-content-start">
+                    <div>Título</div>
+                </div>
+                <div class="col-6 d-flex justify-content-center">
+                    <div>Fecha de Creación</div>
+                </div>
+                <div class="col-3 d-flex justify-content-end">
+                    <div>Opciones</div>
+                </div>
+            </div>
+            <div class="row mt-0 p-2 border-content">
+                <div class="col">
+                    <div class="row mt-1 mb-1" *ngFor="let esquema of esquemas">
+                        <div class="col-3 d-flex justify-content-start pt-2 pe-0">
+                            <div>{{esquema.title}}</div>
+                        </div>
+                        <div class="col-6 d-flex justify-content-center pt-2">
+                            <div>{{esquema.creationMoment | date:'EEEE d MMMM y, h:mm:ss'}}</div>
+                        </div>
+                        <div class="col-3 d-flex justify-content-end pe-4">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-light btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                              <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)=onEdit(esquema._id)>Editar Esquema</a></li>
+                                    <li><a class="dropdown-item danger" (click)=onDelete(esquema._id)>Eliminar Esquema</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
