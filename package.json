@@ -2,8 +2,13 @@
     "name": "mean-course",
     "version": "0.0.0",
     "scripts": {
+        "ng": "ng",
         "start": "nodemon ./backend/app.js",
-
+        "build": "ng build",
+        "test": "ng test",
+        "lint": "ng lint",
+        "e2e": "ng e2e",
+        "start:server": "nodemon ./backend/app.js"
     },
     "private": true,
     "dependencies": {
