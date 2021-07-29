@@ -30,7 +30,7 @@ class Server {
 
         // Lectura y parseo del body
         this.app.use(express.json());
-        this.app.use(express.static(path.join(__dirname, 'dist/mean-course')));
+        this.app.use(express.static('../dist/mean-course'));
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use("/images", express.static(path.join("backend/images")));
         this.app.use("/files", express.static(path.join("backend/files")));
