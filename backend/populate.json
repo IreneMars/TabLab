@@ -1,6 +1,6 @@
 {
     "users": [
-        { "_id": "60ad88d2a74d2e58cc611a3f", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2y$10$HqEc0gqVhVo/teybHyb66.M2SuNjbbSr2qzoJefIkXeSlxSnpDDdi", "name": "irene", "photo": "http://localhost:3000/images/jelly.png", "status": "true", "google": "false" },
+        { "_id": "60ad88d2a74d2e58cc611a3f", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2a$12$e.pe8HdGNvVZdWZVCjhgmOR4qvyef6dRDJMt6TNuHNlwQTy4ozKlq", "name": "irene", "photo": "http://localhost:3000/images/jelly.png", "status": "true", "google": "false" },
         { "_id": "60ae10e9c2d2fe5c48e6eeb5", "username": "daniel", "email": "daniel@gmail.com", "password": "$2y$10$IfcujEFKlz5jS/18OT5bRuVC2vFuO7UNaRvQiF3.zVf04i6vBfG8q", "name": "daniel", "photo": "http://localhost:3000/images/squid.png", "status": "true", "google": "false" },
         { "_id": "60ae10e9c2d2fe5c48e6eeb6", "username": "pedro", "email": "pedro@gmail.com", "password": "$2y$10$eZYlwcXLX5wrcWUXBXxbwu0C2zKthDQfZvlbQ80UF3tbB/D6RO/OC", "name": "pedro", "photo": "http://localhost:3000/images/palm-tree.png", "status": "true", "google": "false" },
         { "_id": "60ae10e9c2d2fe5c48e6eeb7", "username": "sandra", "email": "sandra@gmail.com", "password": "$2y$10$.BkuJC6g1TrW8os.wyFFN.BjIZpgmkYMa9oigdecjU2DenFJUi6.6", "name": "sandra", "photo": "http://localhost:3000/images/beans.png", "status": "true", "google": "false" },

@@ -1410,3 +1410,4 @@
 2021-06-14 14:19:17,196 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
 2021-06-14 14:19:17,196 [MainThread  ] [INFO ]  	   - duplicate-row. Found: 1
 2021-06-14 14:19:17,197 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1623423471171_errors.csv.
+2021-08-20 20:21:18,860 [MainThread  ] [INFO ]  Logs started with level INFO
