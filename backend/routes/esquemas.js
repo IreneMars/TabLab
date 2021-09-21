@@ -2,18 +2,18 @@ const express = require("express");
 
 const EsquemasController = require("../controllers/esquemas");
 
-const checkAuth = require("../middlewares/check-auth");
+const { validateJWT } = require("../middlewares");
 
 const router = express.Router();
 
-router.post("/:datafileId", checkAuth, EsquemasController.createEsquema);
+router.post("/:datafileId", validateJWT, EsquemasController.createEsquema);
 
-router.get("", checkAuth, EsquemasController.getEsquemas);
+router.get("", validateJWT, EsquemasController.getEsquemas);
 
-router.delete("/:id", checkAuth, EsquemasController.deleteEsquema);
+router.delete("/:id", validateJWT, EsquemasController.deleteEsquema);
 
-router.get("/:id", checkAuth, EsquemasController.getEsquema);
+router.get("/:id", validateJWT, EsquemasController.getEsquema);
 
-router.put("/:id", checkAuth, EsquemasController.updateEsquema);
+router.put("/:id", validateJWT, EsquemasController.updateEsquema);
 
 module.exports = router;

@@ -1,9 +1,9 @@
 import { OnDestroy, OnInit } from '@angular/core';
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ReplaySubject, Subscription, Observable } from 'rxjs';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
+import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 export class User {
@@ -20,10 +20,21 @@ export class User {
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   isLoading = false;
+  url: RequestInfo;
   private authStatusSub: Subscription;
+  user: SocialUser;
+  loggedIn: boolean;
 
-  constructor( public authService: AuthService, private formBuilder: FormBuilder, private router: Router ) {
+  private auth2: gapi.auth2.GoogleAuth;
+  private subject = new ReplaySubject<gapi.auth2.GoogleUser>(1);
+
+  constructor( public authService: AuthService, private formBuilder: FormBuilder, private socialAuthService: SocialAuthService ) {
     this.createForm();
+    gapi.load('auth2', () => {
+      gapi.auth2.init({
+        client_id: '303403440470-rllj320ep4gefudqkscfovdm7qug9ebd.apps.googleusercontent.com'
+      });
+    });
   }
 
   createForm() {
@@ -47,6 +58,14 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
 
     }
+    this.url = (window.location.hostname.includes('localhost')) ?
+                            'http://localhost:3000/api/users/google' :
+                            'https://restserver-curso-fher.herokuapp.com/api/auth/google';
+    console.log(this.url);
+    this.socialAuthService.authState.subscribe((user) => {
+      this.user = user;
+      this.loggedIn = (user != null);
+    });
   }
 
   ngOnDestroy(): void {
@@ -65,7 +84,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     return this.loginForm.get('password').invalid;
   }
 
-  onLogin() {
+  onSignIn() {
     if (this.loginForm.invalid){
       return Object.values(this.loginForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
@@ -76,19 +95,42 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       });
     }
-
     this.isLoading = true;
     const values = this.loginForm.getRawValue();
-    this.authService.login(values.username, values.password);
-
+    this.authService.signIn(values.username, values.password);
     if  (values.rememberme) {
       localStorage.setItem('username', values.username);
-      // localStorage.setItem('email', values.email);
     } else {
       localStorage.removeItem('username');
-      // localStorage.removeItem('email');
     }
     this.isLoading = false;
-
   }
+
+  async onGoogleSignIn(){
+    this.auth2 = gapi.auth2.getAuthInstance();
+    this.isLoading = true;
+
+    if (!this.auth2.isSignedIn.get()){
+      await this.auth2.signIn();
+      const id_token = this.auth2.currentUser.get().getAuthResponse().id_token;
+      const data1 = { id_token };
+      this.authService.googleSignIn(id_token);
+
+      // const resp = await fetch( this.url, {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify( data1 )
+      // });
+      // const data2 = await resp.json();
+      // console.log( 'Nuestro server', data2 );
+      this.isLoading = false;
+  } else {
+    console.log('Already signed in!');
+  }
+}
+
+  observable(): Observable<gapi.auth2.GoogleUser>{
+    return this.subject.asObservable();
+  }
+
 }

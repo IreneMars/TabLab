@@ -2,16 +2,16 @@ const express = require("express");
 
 const CollectionsController = require("../controllers/collections");
 
-const checkAuth = require("../middlewares/check-auth");
+const { validateJWT } = require("../middlewares");
 
 const router = express.Router();
 
-router.post("", checkAuth, CollectionsController.createCollection);
+router.post("", validateJWT, CollectionsController.createCollection);
 
-router.put("/:id", checkAuth, CollectionsController.updateCollection);
+router.put("/:id", validateJWT, CollectionsController.updateCollection);
 
-router.get("/:workspaceId", checkAuth, CollectionsController.getCollectionsByWorkspace);
+router.get("/:workspaceId", validateJWT, CollectionsController.getCollectionsByWorkspace);
 
-router.delete("/:id", checkAuth, CollectionsController.deleteCollection);
+router.delete("/:id", validateJWT, CollectionsController.deleteCollection);
 
 module.exports = router;

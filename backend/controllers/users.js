@@ -4,20 +4,32 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const Role = require("../models/role");
 
+const { googleVerify } = require('../helpers/google-verify');
+
+const { generateJWT } = require('../helpers/generate-jwt');
+const user = require("../models/user");
+
 exports.getUsers = async(req = request, res = response) => {
     const { limit = 5, from = 0 } = req.query;
     const query = { status: true };
-    const [total, users] = await Promise.all([
-        User.countDocuments(query),
-        User.find(query)
-        .skip(Number(from))
-        .limit(Number(limit))
-    ]);
-    res.json({
-        total,
-        users
-    });
-}
+    try {
+        const [total, users] = await Promise.all([
+            User.countDocuments(query),
+            User.find(query)
+            .skip(Number(from))
+            .limit(Number(limit))
+        ]);
+        res.status(200).json({
+            message: "Users fetched!",
+            total,
+            users
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: "Fetching users failed!"
+        });
+    }
+};
 
 exports.createUser = async(req, res, next) => {
     try {
@@ -35,44 +47,89 @@ exports.createUser = async(req, res, next) => {
         });
     } catch (err) {
         res.status(500).json({
-            message: "Invalid authentication credentials!"
+            message: "Creation of user failed!"
         });
     }
 };
 
-exports.userLogin = (req, res, next) => {
-    let fetchedUser;
-    User.findOne({ username: req.body.username })
-        .then(user => {
-            if (!user) {
-                return res.status(401).json({
-                    message: "Auth failed"
-                });
-            }
-            fetchedUser = user;
-            return bcrypt.compare(req.body.password, user.password);
-        })
-        .then(result => {
-            if (!result) {
-                return res.status(401).json({
-                    message: "Auth failed"
-                });
-            }
-            const token = jwt.sign({ email: fetchedUser.email, userId: fetchedUser._id },
-                process.env.JWT_KEY, { expiresIn: "3h" }
-            );
-            res.status(200).json({
-                token: token,
-                expiresIn: 3600,
-                userId: fetchedUser._id
+exports.signIn = async(req, res, next) => {
+    try {
+        const fetchedUser = await User.findOne({ username: req.body.username });
+        if (!fetchedUser) { // verify if user exists
+            return res.status(400).json({
+                message: "Username not found."
             });
-        })
-        .catch(err => {
-            return res.status(401).json({
-                message: "Auth failed"
+        }
+
+        if (!fetchedUser.status) { // verify if status is active
+            return res.status(400).json({
+                message: "User status is false (not active)."
             });
+        }
+
+        const validPassword = await bcrypt.compare(req.body.password, fetchedUser.password);
+        if (!validPassword) { // verify password
+            return res.status(400).json({
+                message: "Incorrect password."
+            });
+        }
+
+        // JWT generation
+        const token = await generateJWT(fetchedUser._id);
+        res.status(200).json({
+            token: token,
+            expiresIn: 3600,
+            userId: fetchedUser._id,
+            userEmail: fetchedUser.email
         });
+    } catch (err) {
+        res.status(500).json({
+            message: "Login failed!"
+        });
+    }
 };
+
+exports.googleSignin = async(req, res = response) => {
+    console.log("Google Sign In");
+    const { tokenId } = req.body;
+    try {
+        const { email, name, img } = await googleVerify(tokenId);
+        var fetchedUser = await User.findOne({ email: email });
+        if (!fetchedUser) {
+            // Tengo que crearlo
+            const data = {
+                name,
+                email,
+                password: ':P',
+                img,
+                google: true
+            };
+            fetchedUser = new User(data);
+            await fetchedUser.save();
+        }
+        // Si el usuario en DB
+        if (!fetchedUser.status) {
+            return res.status(401).json({
+                msg: 'Hable con el administrador, usuario bloqueado'
+            });
+        }
+        // JWT generation
+        const token = await generateJWT(fetchedUser._id);
+
+        res.status(200).json({
+            user: fetchedUser,
+            token: token,
+            expiresIn: 3600,
+            userId: fetchedUser._id,
+            userEmail: fetchedUser.email
+        });
+    } catch (error) {
+        res.status(400).json({
+            msg: 'Token de Google no es válido'
+        });
+    }
+};
+
 
 exports.getUsersByWorkspace = async(req, res, next) => {
     try {
@@ -105,17 +162,17 @@ exports.editUser = async(req, res = response) => {
     try {
         const { id } = req.params;
         const { _id, password, google, email, ...rest } = req.body;
-        console.log(rest);
         if (password) {
             const hash = await bcrypt.hash(req.body.password, 10);
             rest.password = hash;
         }
         const user = await User.findByIdAndUpdate(id, rest);
-        console.log(user);
-        res.json(user);
+        res.status(200).json({
+            message: "User modified!",
+            user: user
+        });
     } catch (err) {
-        console.log(err);
-        return res.status(500).json({
+        res.status(500).json({
             message: "Modifying a user failed!"
         });
     }
@@ -126,9 +183,12 @@ exports.deleteUser = async(req, res = response) => {
         const { id } = req.params;
         // We don't delete it physically, but we mark its status as false
         const user = await User.findByIdAndUpdate(id, { status: false });
-        return res.json(user);
+        res.status(200).json({
+            message: "User deleted! (status: false)",
+            user: user
+        });
     } catch (err) {
-        return res.status(500).json({
+        res.status(500).json({
             message: "Deleting a user failed!"
         });
     }

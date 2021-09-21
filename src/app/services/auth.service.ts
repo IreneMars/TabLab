@@ -17,6 +17,7 @@ export class AuthService {
   private userId: string;
   private usersUpdated = new Subject<{users: User[]}>();
   private authStatusListener = new Subject<boolean>();
+  private auth2: gapi.auth2.GoogleAuth;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -35,7 +36,7 @@ export class AuthService {
   }
 
   createUser(username: string, email: string, password: string) {
-    const authData: User = { username: username, email: email, password: password, photo: null };
+    const authData: User = { username, email, password, photo: null };
     return this.http
       .post( BACKEND_URL + '/signup', authData)
       .subscribe(() => {
@@ -46,11 +47,37 @@ export class AuthService {
       });
   }
 
-  login(username: string, password: string) {
-    const authData = { username:username, password: password };
+  signIn(username: string, password: string) {
+    const authData = { username, password };
     this.http
       .post<{ token: string; expiresIn: number, userId: string }>(
-        BACKEND_URL + '/login',
+        BACKEND_URL + '/signin',
+        authData
+      )
+      .subscribe(response => {
+        const token = response.token;
+        this.token = token;
+        if (token) {
+          const expiresInDuration = response.expiresIn;
+          this.setAuthTimer(expiresInDuration);
+          this.isAuthenticated = true;
+          this.userId = response.userId;
+          this.authStatusListener.next(true);
+          const now = new Date();
+          const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+          this.saveAuthData(token, expirationDate, this.userId);
+          this.router.navigate(['/']);
+        }
+      }, error => {
+        this.authStatusListener.next(false);
+      });
+  }
+
+  googleSignIn(tokenId: string) {
+    const authData = { tokenId };
+    this.http
+      .post<{ token: string; expiresIn: number, userId: string }>(
+        BACKEND_URL + 'google',
         authData
       )
       .subscribe(response => {
@@ -96,6 +123,11 @@ export class AuthService {
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.router.navigate(['/']);
+    this.auth2 = gapi.auth2.getAuthInstance();
+    console.log(this.auth2);
+    this.auth2.signOut().then(() => {
+      console.log('Signed out.');
+    });
   }
 
   getUserUpdateListener() {
@@ -147,9 +179,9 @@ export class AuthService {
       return;
     }
     return {
-      token: token,
+      token,
       expirationDate: new Date(expirationDate),
-      userId: userId
+      userId
     };
   }
 }

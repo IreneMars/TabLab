@@ -8,11 +8,11 @@ const dbConnection = async() => {
             useCreateIndex: true,
             useFindAndModify: false
         });
-        console.log('¡Conectado a la base de datos!');
+        console.log('¡Conectado a la base de datos de Mongo!');
 
     } catch (error) {
         console.log(error);
-        throw new Error('Error a la hora de conectarte a la base de datos.');
+        throw new Error('Error a la hora de conectarte a la base de datos de Mongo.');
     }
 };
 

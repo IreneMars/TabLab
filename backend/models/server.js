@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require("path");
+const http = require("http");
 
 const { dbConnection } = require('../database/config');
 
@@ -8,7 +9,7 @@ class Server {
 
     constructor() {
         this.app = express();
-        this.port = process.env.PORT; //|| "3000");
+        this.port = this.normalizePort(process.env.PORT || "3000");
 
         // Conectar a base de datos
         this.conectarDB();
@@ -22,6 +23,27 @@ class Server {
 
     async conectarDB() {
         await dbConnection();
+    }
+
+    getApp() {
+        return this.app;
+    }
+
+    getPort() {
+        return this.port;
+    }
+
+    normalizePort(val) {
+        var port = parseInt(val, 10);
+        if (isNaN(port)) {
+            // named pipe
+            return val;
+        }
+        if (port >= 0) {
+            // port number
+            return port;
+        }
+        return false;
     }
 
     middlewares() {

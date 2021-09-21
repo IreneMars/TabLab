@@ -2,15 +2,16 @@ const express = require("express");
 
 const InvitationsController = require("../controllers/invitations");
 
-const checkAuth = require("../middlewares/check-auth");
+const { validateJWT } = require("../middlewares");
 
 const router = express.Router();
-router.post("", checkAuth, InvitationsController.createInvitation);
 
-router.put("/:id", checkAuth, InvitationsController.updateInvitation);
+router.post("", validateJWT, InvitationsController.createInvitation);
 
-router.get("", checkAuth, InvitationsController.getInvitations);
+router.put("/:id", validateJWT, InvitationsController.updateInvitation);
 
-router.delete("/:id", checkAuth, InvitationsController.deleteInvitation);
+router.get("", validateJWT, InvitationsController.getInvitations);
+
+router.delete("/:id", validateJWT, InvitationsController.deleteInvitation);
 
 module.exports = router;

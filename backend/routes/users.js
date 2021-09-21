@@ -1,19 +1,32 @@
 const express = require("express");
+const { check } = require('express-validator');
 
 const UserController = require("../controllers/users");
 
-const checkAuth = require("../middlewares/check-auth");
+const {
+    validateFields,
+    validateJWT,
+    hasRole
+} = require('../middlewares');
+
+const { emailExists, userExistsById } = require('../helpers/db-validators');
 
 const router = express.Router();
-const { check } = require('express-validator');
-const { validateFields } = require('../middlewares/validate-fields');
-const { emailExists, userExistsById } = require('../helpers/db-validators');
 
 router.get('/', UserController.getUsers);
 
-router.post("/login", UserController.userLogin);
+router.post("/signin", [
+    check('username', 'The username is mandatory').not().isEmpty(),
+    check('password', 'The password is mandatory').not().isEmpty(),
+    validateFields
+], UserController.signIn);
 
-router.get("/:workspaceId", checkAuth, UserController.getUsersByWorkspace);
+router.post('/google', [
+    check('tokenId', 'The tokenId is mandatory').not().isEmpty(),
+    validateFields
+], UserController.googleSignin);
+
+router.get("/:workspaceId", validateJWT, UserController.getUsersByWorkspace);
 
 router.post("/signup", [
     check('username', 'The username is mandatory').not().isEmpty(),
@@ -26,14 +39,16 @@ router.post("/signup", [
 ], UserController.createUser);
 
 router.put('/:id', [
-    check('id', 'No es un ID válido').isMongoId(),
+    check('id', 'The ID is not valid').isMongoId(),
     check('id').custom(userExistsById),
     // check('rol').custom(isValidRole),
     validateFields
 ], UserController.editUser);
 
 router.delete('/:id', [
-    check('id', 'No es un ID válido').isMongoId(),
+    validateJWT,
+    hasRole('ADMIN_ROLE'),
+    check('id', 'The ID is not valid').isMongoId(),
     check('id').custom(userExistsById),
     validateFields
 ], UserController.deleteUser);

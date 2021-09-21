@@ -2,16 +2,16 @@ const express = require("express");
 
 const TestsController = require("../controllers/tests");
 
-const checkAuth = require("../middlewares/check-auth");
+const { validateJWT } = require("../middlewares");
 
 const router = express.Router();
 
-router.post("/:datafileId", checkAuth, TestsController.createTest);
+router.post("/:datafileId", validateJWT, TestsController.createTest);
 
-router.delete("/:id", checkAuth, TestsController.deleteTest);
+router.delete("/:id", validateJWT, TestsController.deleteTest);
 
-router.get("/:id", checkAuth, TestsController.getTest);
+router.get("/:id", validateJWT, TestsController.getTest);
 
-router.put("/:id", checkAuth, TestsController.updateTest);
+router.put("/:id", validateJWT, TestsController.updateTest);
 
 module.exports = router;

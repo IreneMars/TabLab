@@ -2,20 +2,22 @@ const express = require("express");
 
 const PostController = require("../controllers/posts");
 
-const checkAuth = require("../middlewares/check-auth");
+const {
+    validateJWT
+} = require('../middlewares');
 
-const extractImage = require("../middlewares/imagefile");
+const validateImage = require('../middlewares/validate-image');
 
 const router = express.Router();
 
-router.post("", checkAuth, extractImage, PostController.createPost);
+router.post("", validateJWT, validateImage, PostController.createPost);
 
-router.put("/:id", checkAuth, extractImage, PostController.updatePost);
+router.put("/:id", validateJWT, validateImage, PostController.updatePost);
 
 router.get("", PostController.getPosts);
 
 router.get("/:id", PostController.getPost);
 
-router.delete("/:id", checkAuth, PostController.deletePost);
+router.delete("/:id", [validateJWT], PostController.deletePost);
 
 module.exports = router;

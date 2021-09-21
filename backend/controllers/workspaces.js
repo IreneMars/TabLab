@@ -109,7 +109,7 @@ exports.getWorkspaces = async(req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
     const current_user_id = req.userData.userId;
-
+    console.log("Get Workspaces");
     try {
         const roles = await Role.find({ user: current_user_id });
         var workspace_ids = roles.map(function(elem) {

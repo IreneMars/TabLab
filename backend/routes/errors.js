@@ -2,10 +2,10 @@ const express = require("express");
 
 const ErrorsController = require("../controllers/errors");
 
-const checkAuth = require("../middlewares/check-auth");
+const { validateJWT } = require("../middlewares");
 
 const router = express.Router();
 
-router.get("/:workspaceId", checkAuth, ErrorsController.createReport);
+router.get("/:workspaceId", validateJWT, ErrorsController.createReport);
 
 module.exports = router;

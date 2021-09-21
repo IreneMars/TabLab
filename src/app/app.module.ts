@@ -20,6 +20,7 @@ import { ComponentsModule } from './components/components.module';
 
 import { registerLocaleData } from '@angular/common';
 import localEs from '@angular/common/locales/es';
+import { GoogleLoginProvider } from 'angularx-social-login';
 // import { SocketioService } from './services/socketio.service';
 registerLocaleData(localEs);
 
@@ -45,8 +46,10 @@ registerLocaleData(localEs);
       provide: LOCALE_ID,
       useValue: 'es'
     },
+
+    ],
     //SocketioService
-  ],
+
   bootstrap: [AppComponent],
   entryComponents: [ErrorComponent]
 })

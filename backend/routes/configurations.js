@@ -2,18 +2,18 @@ const express = require("express");
 
 const ConfigurationsController = require("../controllers/configurations");
 
-const checkAuth = require("../middlewares/check-auth");
+const { validateJWT } = require("../middlewares");
 
 const router = express.Router();
 
-router.post("/:datafileId", checkAuth, ConfigurationsController.createConfiguration);
+router.post("/:datafileId", validateJWT, ConfigurationsController.createConfiguration);
 
-// router.get("", checkAuth, ConfigurationsController.getConfigurations);
+// router.get("", validateJWT, ConfigurationsController.getConfigurations);
 
-router.delete("/:id", checkAuth, ConfigurationsController.deleteConfiguration);
+router.delete("/:id", validateJWT, ConfigurationsController.deleteConfiguration);
 
-router.get("/:id", checkAuth, ConfigurationsController.getConfiguration);
+router.get("/:id", validateJWT, ConfigurationsController.getConfiguration);
 
-router.put("/:id", checkAuth, ConfigurationsController.updateConfiguration);
+router.put("/:id", validateJWT, ConfigurationsController.updateConfiguration);
 
 module.exports = router;

@@ -2,17 +2,17 @@ const express = require("express");
 
 const WorkspaceController = require("../controllers/workspaces");
 
-const checkAuth = require("../middlewares/check-auth");
+const { validateJWT } = require("../middlewares");
 
 const router = express.Router();
-router.post("", checkAuth, WorkspaceController.createWorkspace);
+router.post("", validateJWT, WorkspaceController.createWorkspace);
 
-router.put("/:id", checkAuth, WorkspaceController.updateWorkspace);
+router.put("/:id", validateJWT, WorkspaceController.updateWorkspace);
 
-router.get("", checkAuth, WorkspaceController.getWorkspaces);
+router.get("", validateJWT, WorkspaceController.getWorkspaces);
 
-router.get("/:id", checkAuth, WorkspaceController.getWorkspace);
+router.get("/:id", validateJWT, WorkspaceController.getWorkspace);
 
-router.delete("/:id", checkAuth, WorkspaceController.deleteWorkspace);
+router.delete("/:id", validateJWT, WorkspaceController.deleteWorkspace);
 
 module.exports = router;

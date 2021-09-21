@@ -2,18 +2,18 @@ const express = require("express");
 
 const DatafilesController = require("../controllers/datafiles");
 
-const checkAuth = require("../middlewares/check-auth");
+const { validateJWT } = require("../middlewares");
 
-const extractFile = require("../middlewares/file");
+const extractFile = require("../middlewares/validate-file");
 
 const router = express.Router();
 
-router.post("", checkAuth, DatafilesController.createDatafile);
+router.post("", validateJWT, DatafilesController.createDatafile);
 
-router.put("/:id", checkAuth, extractFile, DatafilesController.updateDatafile);
+router.put("/:id", validateJWT, extractFile, DatafilesController.updateDatafile);
 
-router.get("/:id", checkAuth, DatafilesController.getDatafile);
+router.get("/:id", validateJWT, DatafilesController.getDatafile);
 
-router.delete("/:id", checkAuth, DatafilesController.deleteDatafile);
+router.delete("/:id", validateJWT, DatafilesController.deleteDatafile);
 
 module.exports = router;
