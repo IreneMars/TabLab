@@ -11,7 +11,7 @@ const BACKEND_URL = environment.apiUrl + '/workspaces/';
 @Injectable({providedIn: 'root'})
 export class WorkspaceService {
   private workspaces: Workspace[] = [];
-  private workspacesUpdated = new Subject<{workspaces: Workspace[], workspaceCount: number}>();
+  private workspacesUpdated = new Subject<{workspaces: Workspace[], workspaceCount: number, totalWorkspaces: number}>();
 
   constructor(private http: HttpClient, private router: Router) {
 
@@ -19,7 +19,7 @@ export class WorkspaceService {
 
   getWorkspaces(workspacesPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${workspacesPerPage}&page=${currentPage}`;
-    this.http.get<{message: string, workspaces: any, maxWorkspaces: number }>(BACKEND_URL + queryParams)
+    this.http.get<{message: string, workspaces: any, maxWorkspaces: number, totalWorkspaces: number }>(BACKEND_URL + queryParams)
       .pipe(map( (workspaceData) => {
         return { workspaces: workspaceData.workspaces.map(workspace => {
           return {
@@ -29,14 +29,16 @@ export class WorkspaceService {
             mandatory: workspace.mandatory,
           };
         }),
-        maxWorkspaces: workspaceData.maxWorkspaces
+        maxWorkspaces: workspaceData.maxWorkspaces,
+        totalWorkspaces: workspaceData.totalWorkspaces
       };
       }))
       .subscribe((transformedWorkspaceData) => {
         this.workspaces = transformedWorkspaceData.workspaces;
         this.workspacesUpdated.next({
           workspaces: [...this.workspaces], // para hacer una verdadera copia y no afectar al original
-          workspaceCount: transformedWorkspaceData.maxWorkspaces});
+          workspaceCount: transformedWorkspaceData.maxWorkspaces,
+          totalWorkspaces: transformedWorkspaceData.totalWorkspaces});
     });
   }
 

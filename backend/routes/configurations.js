@@ -1,19 +1,51 @@
 const express = require("express");
-
-const ConfigurationsController = require("../controllers/configurations");
-
-const { validateJWT } = require("../middlewares");
-
+const { check } = require('express-validator');
 const router = express.Router();
+const { 
+    configurationExistsById, 
+    datafileExistsById 
+} = require('../helpers/db-validators');
+const { 
+    validateJWT, 
+    validateFields,
+} = require("../middlewares");
+const {
+    getConfiguration,
+    createConfiguration,
+    updateConfiguration,
+    deleteConfiguration,
+} = require("../controllers/configurations");
 
-router.post("/:datafileId", validateJWT, ConfigurationsController.createConfiguration);
+router.get("/:id", [
+    validateJWT,
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(configurationExistsById), 
+], getConfiguration);
 
-// router.get("", validateJWT, ConfigurationsController.getConfigurations);
+router.post("/", [
+    validateJWT, 
+    check('title', 'The title is mandatory').not().isEmpty(),
+    check('title', 'The title must have between 1 and 100 characters').isLength({ min: 1, max: 100 }),
+    check('errorCode', 'The error code is mandatory').not().isEmpty(),
+    check('extraParams', 'Extra parameters are mandatory').not().isEmpty(),
+    check('datafile', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('datafile').custom(datafileExistsById),
+    validateFields,
+], createConfiguration);
 
-router.delete("/:id", validateJWT, ConfigurationsController.deleteConfiguration);
-
-router.get("/:id", validateJWT, ConfigurationsController.getConfiguration);
-
-router.put("/:id", validateJWT, ConfigurationsController.updateConfiguration);
+router.put("/:id", [
+    validateJWT, 
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(configurationExistsById),
+    validateFields,
+], updateConfiguration);
+    
+router.delete("/:id", [
+    validateJWT, 
+    //hasRole('ADMIN','USER'),
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(configurationExistsById),
+    validateFields,
+], deleteConfiguration);
 
 module.exports = router;

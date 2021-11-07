@@ -11,15 +11,19 @@ const BACKEND_URL = environment.apiUrl + '/invitations/';
 @Injectable({providedIn: 'root'})
 export class InvitationService {
   private invitations: Invitation[] = [];
-  private invitationsUpdated = new Subject<{invitations: Invitation[], invitationCount: number}>();
-
+  private invitationsUpdated = new Subject<{invitations: Invitation[], invitationCount: number, totalInvitations: number}>();
+  
   constructor(private http: HttpClient, private router: Router) {
-
+    
   }
-
+  
+  getInvitationUpdateListener() {
+    return this.invitationsUpdated.asObservable();
+  }
+  
   getInvitations(invitationsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${invitationsPerPage}&page=${currentPage}`;
-    this.http.get<{message: string, invitations: any, maxInvitations: number }>(BACKEND_URL + queryParams)
+    this.http.get<{message: string, invitations: any, maxInvitations: number, totalInvitations: number }>(BACKEND_URL + queryParams)
       .pipe(map( (invitationData) => {
         return { invitations: invitationData.invitations.map(invitation => {
           return {
@@ -30,23 +34,18 @@ export class InvitationService {
             workspace: invitation.workspace,
           };
         }),
-        maxInvitations: invitationData.maxInvitations
+        maxInvitations: invitationData.maxInvitations,
+        totalInvitations: invitationData.totalInvitations
       };
       }))
       .subscribe((transformedInvitationData) => {
         this.invitations = transformedInvitationData.invitations;
         this.invitationsUpdated.next({
           invitations: [...this.invitations], // para hacer una verdadera copia y no afectar al original
-          invitationCount: transformedInvitationData.maxInvitations});
+          invitationCount: transformedInvitationData.maxInvitations,
+          totalInvitations: transformedInvitationData.totalInvitations});
+
     });
-  }
-
-  getInvitationUpdateListener() {
-    return this.invitationsUpdated.asObservable();
-  }
-
-  getInvitation(id: string) {
-    return this.http.get<{_id: string, sender: string, receiver: string, status: string}>(BACKEND_URL + id);
   }
 
   addInvitation( receiverEmail: string, workspaceId: string) {
@@ -64,7 +63,7 @@ export class InvitationService {
 
   updateInvitation(id: string, status: string){
 
-    const invitationData = { id: id, status: status};
+    const invitationData = { status: status};
 
     this.http
       .put(BACKEND_URL + id, invitationData)

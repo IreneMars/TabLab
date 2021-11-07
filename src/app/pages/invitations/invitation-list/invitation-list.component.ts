@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Invitation } from 'src/app/models/invitation.model';
 import { AuthService } from '../../../services/auth.service';
 import { InvitationService } from '../../../services/invitations.service';
+import { PageEvent } from '@angular/material/paginator';
 
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -51,15 +52,13 @@ export class InvitationListComponent implements OnInit, OnDestroy{
     this.isLoading = true;
     this.invitationsService.getInvitations(this.invitationsPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe( authStatus => {
-      // this.isLoading = false;
-    });
-
+    
     this.invitationsSub = this.invitationsService.getInvitationUpdateListener()
-    .subscribe( (invitationData: {invitations: Invitation[], invitationCount: number}) => {
+    .subscribe( (invitationData: {invitations: Invitation[], invitationCount: number, totalInvitations: number}) => {
       this.isLoading = false;
-      this.totalInvitations = invitationData.invitationCount;
+      this.totalInvitations = invitationData.totalInvitations;
       this.invitations = invitationData.invitations;
+      
       const dataSource = new MatTableDataSource(this.invitations);
       dataSource.sort = this.sort;
 
@@ -75,7 +74,19 @@ export class InvitationListComponent implements OnInit, OnDestroy{
     });
   }
 
+  onChangedPage( pageData: PageEvent ) {
+    this.isLoading = true;
+    this.currentPage = pageData.pageIndex + 1;
+    this.invitationsPerPage = pageData.pageSize;
+    this.invitationsService.getInvitations(this.invitationsPerPage, this.currentPage);
+    // console.log('New call');
+    // console.log('Current page: '+ this.currentPage);
+    // console.log('Workspace per page: '+ this.workspacesPerPage);
+    // console.log('Total workspaces: '+ this.totalWorkspaces);
+  }
+
   ngOnDestroy(): void {
+    this.invitationsSub.unsubscribe();
     this.authStatusSub.unsubscribe();
   }
 

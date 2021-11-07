@@ -1,56 +1,79 @@
 const express = require("express");
 const { check } = require('express-validator');
-
-const UserController = require("../controllers/users");
-
+const { 
+    isValidRole, 
+    emailExists, 
+    userExistsById, 
+    workspaceExistsById 
+} = require('../helpers');
+const router = express.Router();
 const {
     validateFields,
     validateJWT,
     hasRole
 } = require('../middlewares');
 
-const { emailExists, userExistsById } = require('../helpers/db-validators');
+const {
+    getUser,
+    getUsers,
+    login,
+    googleLogin,
+    getUsersByWorkspace,
+    createUser,
+    updateUser,
+    deleteAccount
+} = require('../controllers/users');
 
-const router = express.Router();
+router.get('/', 
+    validateJWT, 
+    getUsers);
 
-router.get('/', UserController.getUsers);
+router.get("/:id", [
+    validateJWT, 
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(userExistsById),
+ ], getUser);
 
-router.post("/signin", [
-    check('username', 'The username is mandatory').not().isEmpty(),
-    check('password', 'The password is mandatory').not().isEmpty(),
-    validateFields
-], UserController.signIn);
-
-router.post('/google', [
-    check('tokenId', 'The tokenId is mandatory').not().isEmpty(),
-    validateFields
-], UserController.googleSignin);
-
-router.get("/:workspaceId", validateJWT, UserController.getUsersByWorkspace);
+router.get("/workspace/:workspaceId", [
+    validateJWT,
+    check('workspaceId', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('workspaceId').custom(workspaceExistsById),
+], getUsersByWorkspace);
 
 router.post("/signup", [
     check('username', 'The username is mandatory').not().isEmpty(),
     check('password', 'The password must have 4 characters or more').isLength({ min: 4 }),
     check('email', 'The email is not valid').isEmail(),
     check('email').custom(emailExists),
-    // check('rol', 'No es un rol válido').isIn(['ADMIN_ROLE','USER_ROLE']),
-    // check('rol').custom(isValidRole),
+    check('role').custom(isValidRole),
     validateFields
-], UserController.createUser);
+], createUser);
+
+router.post("/login", [
+    check('username', 'The username is mandatory').not().isEmpty(),
+    check('password', 'The password is mandatory').not().isEmpty(),
+    validateFields
+], login);
+
+router.post('/google', [
+    check('tokenId', 'The tokenId is mandatory').not().isEmpty(),
+    validateFields
+], googleLogin);
 
 router.put('/:id', [
-    check('id', 'The ID is not valid').isMongoId(),
+    validateJWT,
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
     check('id').custom(userExistsById),
-    // check('rol').custom(isValidRole),
+    check('role').custom(isValidRole),
     validateFields
-], UserController.editUser);
+], updateUser);
 
 router.delete('/:id', [
     validateJWT,
-    hasRole('ADMIN_ROLE'),
-    check('id', 'The ID is not valid').isMongoId(),
+    hasRole('ADMIN','USER'),
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
     check('id').custom(userExistsById),
     validateFields
-], UserController.deleteUser);
-// falta delete y put
+], deleteAccount);
+
 module.exports = router;

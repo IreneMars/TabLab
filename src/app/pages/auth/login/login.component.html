@@ -4,7 +4,7 @@
         <div style="min-width: 30%;">
             <div class="card animate__animated animate__fadeIn animate__faster">
                 <div class="card-body">
-                    <form [formGroup]="loginForm" (ngSubmit)="onSignIn()">
+                    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
                         <h2 class="card-title">Inicio de Sesión</h2>
                         <mat-form-field>
                             <input matInput type="text" placeholder="Nombre" formControlName="username" [class.is-invalid]="invalidUsername">
@@ -37,7 +37,7 @@
                         </div>
                     </form>
                     <div class="d-grid gap-2 mt-1">
-                        <button type="button" (click)="onGoogleSignIn()" class="btn btn-primary">Sign In with Google</button></div>
+                        <button type="button" (click)="onGoogleLogin()" class="btn btn-primary">Sign In with Google</button></div>
                 </div>
             </div>
         </div>

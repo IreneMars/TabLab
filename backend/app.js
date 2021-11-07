@@ -3,7 +3,6 @@
 // const mongoose = require('mongoose');
 // const path = require("path");
 // const cors = require('cors');
-// const postsRoutes = require('./routes/posts');
 // const userRoutes = require('./routes/user');
 // const workspacesRoutes = require('./routes/workspaces');
 // const rolesRoutes = require('./routes/roles');
@@ -12,7 +11,7 @@
 // const datafilesRoutes = require('./routes/datafiles');
 // const esquemasRoutes = require('./routes/esquemas');
 // const configurationsRoutes = require('./routes/configurations');
-// const errorsRoutes = require('./routes/errors');
+// const errorsRoutes = require('./routes/reports');
 // const testsRoutes = require('./routes/tests');
 // const populateRoutes = require('./routes/populate');
 // const app = express();
@@ -39,7 +38,6 @@
 //     next();
 // });
 
-// app.use("/api/posts", postsRoutes);
 // app.use("/api/user", userRoutes);
 // app.use("/api/populate", populateRoutes);
 // app.use("/api/workspaces", workspacesRoutes);
@@ -50,7 +48,7 @@
 // app.use("/api/esquemas", esquemasRoutes);
 // app.use("/api/configurations", configurationsRoutes);
 // app.use("/api/tests", testsRoutes);
-// app.use("/api/errors", errorsRoutes);
+// app.use("/api/reports", reportsRoutes);
 // module.exports = app;
 require('dotenv').config();
 const http = require("http");

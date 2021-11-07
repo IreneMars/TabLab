@@ -17,9 +17,9 @@ export class TestsService {
 
   addTest(title: string, esquema: string, configurations: string[], datafileId: string){
     let res;
-    const testData = {'title': title, 'esquema': esquema, 'configurations': configurations};
+    const testData = {'title': title, 'esquema': esquema, 'configurations': configurations, 'datafile':datafileId};
     this.http.post<{message: string, test: Test}>(
-        BACKEND_URL + datafileId,
+        BACKEND_URL,
         testData
       )
       .subscribe(

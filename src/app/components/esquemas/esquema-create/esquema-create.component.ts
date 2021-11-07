@@ -108,7 +108,7 @@ async onFilePicked(event: Event) {
     this.savefileChange.emit(true);
     const values = this.esquemaForm.getRawValue();
     if (this.esquema) {
-      await this.esquemaService.updateEsquema(this.esquema._id, values.title, this.esquema.contentPath, values.esquemaContent);
+      await this.esquemaService.updateEsquema(this.esquema._id, values.title, this.esquema.contentPath, values.esquemaContent, this.datafileId);
       this.router.navigateByUrl('/', {skipLocationChange: true})
         .then(() => {
           this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);

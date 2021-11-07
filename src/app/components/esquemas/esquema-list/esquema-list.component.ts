@@ -1,13 +1,8 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { Datafile } from '../../../models/datafile';
 import { DatafileService } from '../../../services/datafiles.service';
-import { Papa } from 'ngx-papaparse';
-import * as XLSX from 'xlsx';
-import { Collection } from 'src/app/models/collection';
 import { Esquema } from 'src/app/models/esquema';
 import { EsquemaService } from 'src/app/services/esquemas.service';
 

@@ -74,7 +74,7 @@ export class CollectionCreateComponent implements OnInit, OnDestroy{
     const values = this.collectionForm.getRawValue();
 
     if (this.editMode) {
-      await this.collectionsService.updateCollection(this.editCollection.id, values.title);
+      await this.collectionsService.updateCollection(this.editCollection.id, values.title, this.workspaceId);
     } else {
       await this.collectionsService.createCollection(values.title, this.workspaceId);
     }
@@ -95,7 +95,6 @@ export class CollectionCreateComponent implements OnInit, OnDestroy{
     } else {
         this.closeChange.emit(true);
     }
-
   }
 
 }

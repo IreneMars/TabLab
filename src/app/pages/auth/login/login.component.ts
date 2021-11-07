@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.loginForm = this.formBuilder.group({
-      username       : ['', [Validators.required, Validators.minLength(5)]],
+      username       : ['', [Validators.required, Validators.minLength(4)]],
       // email          : ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9._]+\.[a-z]{2,3}$')]],
       password       : ['', Validators.required],
       rememberme     : [false]
@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     return this.loginForm.get('password').invalid;
   }
 
-  onSignIn() {
+  onLogin() {
     if (this.loginForm.invalid){
       return Object.values(this.loginForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
@@ -97,7 +97,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     const values = this.loginForm.getRawValue();
-    this.authService.signIn(values.username, values.password);
+    console.log(values)
+    this.authService.login(values.username, values.password);
     if  (values.rememberme) {
       localStorage.setItem('username', values.username);
     } else {
@@ -106,7 +107,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
-  async onGoogleSignIn(){
+  async onGoogleLogin(){
     this.auth2 = gapi.auth2.getAuthInstance();
     this.isLoading = true;
 
@@ -114,7 +115,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       await this.auth2.signIn();
       const id_token = this.auth2.currentUser.get().getAuthResponse().id_token;
       const data1 = { id_token };
-      this.authService.googleSignIn(id_token);
+      this.authService.googleLogin(id_token);
 
       // const resp = await fetch( this.url, {
       //     method: 'POST',

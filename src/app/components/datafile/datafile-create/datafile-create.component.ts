@@ -69,6 +69,9 @@ export class DatafileCreateComponent implements OnInit, OnDestroy{
     }
     this.savefileChange.emit(true);
     const values = this.datafileForm.getRawValue();
+    if(values.collection==='Ninguna'){
+      values.collection = null;
+    }
     await this.datafileService.addDatafile(values.title, values.description, values.collection, this.workspaceId);
     this.datafileForm.reset({
       title: '',

@@ -1,22 +1,25 @@
 {
     "users": [
-        { "_id": "60ad88d2a74d2e58cc611a3f", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2a$10$tGr.iPLEhGuL4UXiznQVp.W7syfE8nhdyEHlKkQU3cBtqgIGY0Yd.", "name": "irene", "photo": "http://localhost:3000/images/jelly.png", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb5", "username": "daniel", "email": "daniel@gmail.com", "password": "$2y$10$IfcujEFKlz5jS/18OT5bRuVC2vFuO7UNaRvQiF3.zVf04i6vBfG8q", "name": "daniel", "photo": "http://localhost:3000/images/squid.png", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb6", "username": "pedro", "email": "pedro@gmail.com", "password": "$2y$10$eZYlwcXLX5wrcWUXBXxbwu0C2zKthDQfZvlbQ80UF3tbB/D6RO/OC", "name": "pedro", "photo": "http://localhost:3000/images/palm-tree.png", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb7", "username": "sandra", "email": "sandra@gmail.com", "password": "$2y$10$.BkuJC6g1TrW8os.wyFFN.BjIZpgmkYMa9oigdecjU2DenFJUi6.6", "name": "sandra", "photo": "http://localhost:3000/images/beans.png", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb8", "username": "walo", "email": "walo@gmail.com", "password": "$2y$10$EUkpNODE0JPMPdJIEVyJrejWOrRVRH9usY4pcppOCY9dIWUSf.3IC", "name": "walo", "photo": "http://localhost:3000/images/pizza.png", "status": "true", "google": "false" }
+        { "_id": "60ad88d2a74d2e58cc611a3f", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2a$10$tGr.iPLEhGuL4UXiznQVp.W7syfE8nhdyEHlKkQU3cBtqgIGY0Yd.", "name": "irene", "photo": "http://localhost:3000/users/jelly.png", "role":"ADMIN", "status": "true", "google": "false" },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb5", "username": "daniel", "email": "daniel@gmail.com", "password": "$2y$10$IfcujEFKlz5jS/18OT5bRuVC2vFuO7UNaRvQiF3.zVf04i6vBfG8q", "name": "daniel", "photo": "http://localhost:3000/users/squid.png", "role":"USER", "status": "true", "google": "false" },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb6", "username": "pedro", "email": "pedro@gmail.com", "password": "$2y$10$eZYlwcXLX5wrcWUXBXxbwu0C2zKthDQfZvlbQ80UF3tbB/D6RO/OC", "name": "pedro", "photo": "http://localhost:3000/users/palm-tree.png", "role":"USER", "status": "true", "google": "false" },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb7", "username": "sandra", "email": "sandra@gmail.com", "password": "$2y$10$.BkuJC6g1TrW8os.wyFFN.BjIZpgmkYMa9oigdecjU2DenFJUi6.6", "name": "sandra", "photo": "http://localhost:3000/users/beans.png", "role":"USER", "status": "true", "google": "false" },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb8", "username": "walo", "email": "walo@gmail.com", "password": "$2y$10$EUkpNODE0JPMPdJIEVyJrejWOrRVRH9usY4pcppOCY9dIWUSf.3IC", "name": "walo", "photo": "http://localhost:3000/users/pizza.png", "role":"USER", "status": "true", "google": "false" }
 
     ],
 
     "workspaces": [
         { "_id": "60aeaf40d0e8477348250ac9", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "mandatory": "true" },
         { "_id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal", "description": "Este es un espacio de trabajo normal.", "mandatory": "false" },
+        { "_id": "60aebafbb83c905694cd191d", "title": "Espacio de trabajo normal 2", "description": "Este es un espacio de trabajo normal (2).", "mandatory": "false" },
         { "_id": "60b363c81e7c4e4ff4e724a0", "title": "Espacio de trabajo de user 2", "description": "Este es un espacio de trabajo normal.", "mandatory": "false" }
     ],
 
     "roles": [
         { "_id": "60af80a4149abe5ad034175c", "role": "owner", "workspace": "60aeaf40d0e8477348250ac9", "user": "60ad88d2a74d2e58cc611a3f" },
         { "_id": "60af80a4149abe5ad034175d", "role": "owner", "workspace": "60aebafbb83c905694cd191c", "user": "60ad88d2a74d2e58cc611a3f" },
+        { "_id": "60af80a4149abe5ad034175e", "role": "owner", "workspace": "60aebafbb83c905694cd191d", "user": "60ad88d2a74d2e58cc611a3f" },
+
         { "_id": "60b36426894076503c4de402", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb5" },
         { "_id": "60b36426894076503c4de403", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb6" },
         { "_id": "60b36426894076503c4de404", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb7" },
@@ -40,18 +43,18 @@
     ],
 
     "datafiles": [
-        { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": null, "limitError": null, "delimiter": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": "backend/uploads/datafiles/capital.csv", "limitError": null, "delimiter": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
         { "_id": "60b634e98ab1a18d8850e49f", "title": "Datafile 2", "description": "Este es el datafile 2.", "contentPath": null, "limitError": null, "delimiter": null, "coleccion": null, "workspace": "60aeaf40d0e8477348250ac9" }
     ],
 
     "esquemas": [
-        { "_id": "60c164a855a6814cb879a775", "title": "Esquema Prueba", "contentPath": "backend/esquemas/populate_schema-1622816872776.json", "creationMoment": "1622816872776", "datafile": "60b634e98ab1a18d8850e49e" },
-        { "_id": "60c1669355a6814cb879a77a", "title": "Esquema Prueba 2", "contentPath": "backend/esquemas/populate_schema_2-1623287443765.json", "creationMoment": "1623287443765", "datafile": "60b634e98ab1a18d8850e49e" }
+        { "_id": "60c164a855a6814cb879a775", "title": "Esquema Prueba", "contentPath": "backend/uploads/esquemas/populate_schema-1622816872776.json", "creationMoment": "1622816872776", "datafile": "60b634e98ab1a18d8850e49e" },
+        { "_id": "60c1669355a6814cb879a77a", "title": "Esquema Prueba 2", "contentPath": "backend/uploads/esquemas/populate_schema_2-1623287443765.json", "creationMoment": "1623287443765", "datafile": "60b634e98ab1a18d8850e49e" }
     ],
 
     "configurations": [{
             "_id": "60bf55f7556da65e349c6266",
-            "title": "Config Prueba",
+            "title": "Config Filas Duplicadas",
             "creationMoment": "1622816872776",
             "errorCode": "duplicate-row",
             "extraParams": {},

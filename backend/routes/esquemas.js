@@ -1,19 +1,51 @@
 const express = require("express");
-
-const EsquemasController = require("../controllers/esquemas");
-
-const { validateJWT } = require("../middlewares");
-
+const { check } = require('express-validator');
 const router = express.Router();
+const { 
+    esquemaExistsById,
+    datafileExistsById
+} = require('../helpers/db-validators');
+const { 
+    validateJWT, 
+    validateFields,
+} = require("../middlewares");
+const {
+    getEsquema,
+    createEsquema,
+    updateEsquema,
+    deleteEsquema
+} = require("../controllers/esquemas");
 
-router.post("/:datafileId", validateJWT, EsquemasController.createEsquema);
+router.get("/:id", [
+    validateJWT, 
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(esquemaExistsById), 
+ ], getEsquema);
 
-router.get("", validateJWT, EsquemasController.getEsquemas);
+router.post("/", [
+    validateJWT, 
+    check('title', 'The title is mandatory').not().isEmpty(),
+    check('title', 'The title must have between 1 and 100 characters').isLength({ min: 1, max: 100 }),
+    // // check('contentPath', 'The content path is mandatory').not().isEmpty(),
+    check('datafile', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('datafile').custom(datafileExistsById),
+    validateFields,
+], createEsquema);
 
-router.delete("/:id", validateJWT, EsquemasController.deleteEsquema);
+router.put("/:id", [
+    validateJWT, 
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(esquemaExistsById),
+    check('datafile', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('datafile').custom(datafileExistsById),
+    validateFields,
+], updateEsquema);
 
-router.get("/:id", validateJWT, EsquemasController.getEsquema);
-
-router.put("/:id", validateJWT, EsquemasController.updateEsquema);
+router.delete("/:id", [
+    validateJWT, 
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(esquemaExistsById),
+    validateFields,
+], deleteEsquema);
 
 module.exports = router;

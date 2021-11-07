@@ -7,14 +7,15 @@ import { AngularMaterialModule } from 'src/app/angular-material.module';
 import { ComponentsModule } from '../components/components.module';
 import { HomeComponent } from './home/home.component';
 import { InvitationListComponent } from './invitations/invitation-list/invitation-list.component';
-import { PostCreateComponent } from './posts/post-create/post-create.component';
-import { PostListComponent } from './posts/post-list/post-list.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { WorkspaceCreateComponent } from './workspaces/workspace-create/workspace-create.component';
 import { WorkspaceDetailsComponent } from './workspaces/workspace-details/workspace-details.component';
 import { DatafileDetailsComponent } from './datafiles/datafile-details/datafile-details.component';
 import { TestDetailsComponent } from './tests/test-details/test-details.component';
 import { TestExecuteComponent } from './tests/test-execute/test-execute.component';
+import { ProfileDetailsComponent } from './profile/profile-details/profile-details.component';
+import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { ProfileAccountEditComponent } from './profile/profile-account-edit/profile-account-edit.component';
 
 @NgModule({
   declarations: [
@@ -23,11 +24,12 @@ import { TestExecuteComponent } from './tests/test-execute/test-execute.componen
     WorkspaceListComponent,
     WorkspaceCreateComponent,
     InvitationListComponent,
-    PostCreateComponent,
-    PostListComponent,
     DatafileDetailsComponent,
     TestDetailsComponent,
-    TestExecuteComponent
+    TestExecuteComponent,
+    ProfileDetailsComponent,
+    ProfileEditComponent,
+    ProfileAccountEditComponent
   ],
   imports: [
     CommonModule,

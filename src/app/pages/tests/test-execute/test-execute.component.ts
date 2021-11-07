@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TestsService } from 'src/app/services/tests.service';
 import { Datafile } from 'src/app/models/datafile';
-import { ErrorService } from '../../../services/errors.service';
+import { ReportsService } from '../../../services/reports.service';
 import { CollectionsService } from '../../../services/collections.service';
 import { Observable, Subscription } from 'rxjs';
 import { WorkspaceService } from '../../../services/workspaces.service';
@@ -43,7 +43,7 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
 
   // // tslint:disable-next-line: max-line-length
   constructor(public testsService: TestsService, public collectionsService: CollectionsService, public route: ActivatedRoute,
-              public workspacesService: WorkspaceService, public errorsService: ErrorService,
+              public workspacesService: WorkspaceService, public reportsService: ReportsService,
               //private socketService: SocketioService
               ){
 
@@ -104,7 +104,7 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
     this.inExecution = true;
     this.selectedTests.forEach(async test => {
       console.log(test);
-      this.errorsService.runTest(this.workspaceId, test._id).subscribe( response => {
+      this.reportsService.runTest(this.workspaceId, test._id).subscribe( response => {
         console.log(response);
         const lines = response.buffer.split('\r\n');
         console.log(lines);

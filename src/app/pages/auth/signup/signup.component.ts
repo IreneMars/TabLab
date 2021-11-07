@@ -62,6 +62,6 @@ export class SignupComponent implements OnInit, OnDestroy{
     this.isLoading = true;
     const values = this.signupForm.getRawValue();
     this.authService.createUser(values.username, values.email, values.password);
-    }
   }
+}
 

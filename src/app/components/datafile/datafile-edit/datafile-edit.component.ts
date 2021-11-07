@@ -13,6 +13,7 @@ export class DatafileEditComponent implements OnInit, OnDestroy{
   @Input() edit;
   @Input() datafile;
   @Input() datafileId;
+  @Input() workspaceId;
   @Output() editChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   datafileEditForm: FormGroup;
@@ -72,12 +73,13 @@ export class DatafileEditComponent implements OnInit, OnDestroy{
     this.loading = true;
     const values = this.datafileEditForm.getRawValue();
 
-    await this.datafileService.updateDatafile(this.datafileId, values.title, values.description, null, '');
+    await this.datafileService.updateDatafile(this.datafileId, values.title, values.description);
     this.datafileEditForm.reset();
     this.editChange.emit(false);
     this.router.navigateByUrl('/', {skipLocationChange: true})
     .then(() => {
-      this.router.navigate([`/datafile/${this.datafileId}`]);
+      console.log("Hello")
+      this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
     }).catch( err => {});
     this.loading = false;
   }

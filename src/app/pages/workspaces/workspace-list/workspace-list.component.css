@@ -15,12 +15,12 @@ mat-paginator {
     margin-top: 1rem;
 }
 
-.post-image {
+.user-photo {
     width: 100%;
     margin-bottom: 1rem;
 }
 
-.post-image img {
+.user-photo img {
     width: 50%;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }

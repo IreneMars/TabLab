@@ -9,6 +9,8 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { map } from 'rxjs/operators';
 import { Esquema } from 'src/app/models/esquema';
+import { UploadsService } from 'src/app/services/uploads.service';
+import { WorkspaceService } from 'src/app/services/workspaces.service';
 
 
 @Component({
@@ -38,85 +40,97 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
   file: any = null;
   fileName: string = '';
   invalidExtension = false;
-  extension;
-  workspaceId;
-
-  constructor(public datafilesService: DatafileService, public route: ActivatedRoute, public usersService: AuthService,
-              private router: Router){
-                this.fileForm = new FormGroup({
-                  'contentPath': new FormControl(null, {validators: [Validators.required]})
-                });
-                this.fileContentForm = new FormGroup({
-                  'fileContent': new FormControl({value: '', disabled: true}),
-                });
-  }
-
-  ngOnInit(){
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      const datafileId = paramMap.get('datafileId');
-      this.workspaceId = paramMap.get('workspaceId');
-      this.datafileId = datafileId;
-      this.isLoading = true;
-      this.datafilesService.getDatafile(datafileId).subscribe(datafileData => {
-        this.isLoading = false;
-        this.datafile = {
-          title: datafileData.datafile.title,
-          description: datafileData.datafile.description,
-          contentPath: datafileData.datafile.contentPath,
-          errorLimit: datafileData.datafile.errorLimit,
-          delimiter: datafileData.datafile.delimiter,
-          coleccion: datafileData.datafile.coleccion,
-          workspace: datafileData.datafile.workspace,
-        };
-        this.content = datafileData.content;
-        this.esquemas = datafileData.esquemas;
-        this.configurations = datafileData.configurations;
-        this.tests = datafileData.tests;
-
-        this.formattedConfigs = [];
-        this.configurations.forEach(config => {
-          const extraParamsJSON = JSON.stringify(config.extraParams).toString();
-          const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
-          const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
-          const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');
-          console.log(extraParamsStr);
-          this.formattedConfigs.push({...config, extraParamsStr});
-        });
-
-        if (this.content !== null) {
-          this.infer = true;
-        }
-        this.fileForm = new FormGroup({
-          'contentPath': new FormControl(null, {validators: [Validators.required]})
-        });
-        if (this.datafile.contentPath) {
-          // contentPath: {backend/files/fulls_dmf_full_v1_20200504_short_10-1622910312416.csv",
-          const nameWExtension = this.datafile.contentPath.split('/');
-          const splitNameWExtension = nameWExtension[2].split('.');
-          this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
-          const extension = '.' + splitNameWExtension[1];
-          const nameWDate = nameWExtension[2].split('-');
-          const name = nameWDate[0];
-          this.fileName = name + extension;
-        }
-        if (this.extension === 'xlsx') {
-          let res = this.content[0].join(',')+ '\n';
-          for (let arr of this.content) {
-            res = res + arr.join(',') + '\n';
-          }
-          this.fileContentForm.patchValue({fileContent: res});
-        } else if (this.extension === 'csv') {
-          this.fileContentForm.patchValue({fileContent: datafileData.content });
-
-        }
-
+  extension: string;
+  workspaceId: string;
+  workspace: any;
+  
+  constructor(public datafilesService: DatafileService, public uploadsService: UploadsService, public route: ActivatedRoute, public usersService: AuthService,
+    private router: Router, public workspacesService: WorkspaceService){
+      this.fileForm = new FormGroup({
+        'contentPath': new FormControl(null, {validators: [Validators.required]})
       });
-    });
-
+      this.fileContentForm = new FormGroup({
+        'fileContent': new FormControl({value: '', disabled: true}),
+      });
+    }
+    
+  ngOnInit(){
     this.userIsAuthenticated = this.usersService.getIsAuth();
     this.authStatusSub = this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.usersService.getUserId();
+    });
+    
+    this.userId = this.usersService.getUserId();
+
+    this.isLoading = true;
+    
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      this.datafileId = paramMap.get('datafileId');
+      this.workspaceId = paramMap.get('workspaceId');
+      console.log(this.datafileId);
+      console.log(this.workspaceId)
+      this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData => {
+        this.workspace = {
+          title: workspaceData.workspace.title,
+          description: workspaceData.workspace.description,
+          mandatory: workspaceData.workspace.mandatory
+        };
+        this.isLoading = false;
+      });
+    });
+    
+    
+    this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
+      this.datafile = {
+        title: datafileData.datafile.title,
+        description: datafileData.datafile.description,
+        contentPath: datafileData.datafile.contentPath,
+        errorLimit: datafileData.datafile.errorLimit,
+        delimiter: datafileData.datafile.delimiter,
+        coleccion: datafileData.datafile.coleccion,
+        workspace: datafileData.datafile.workspace,
+      };
+
+      this.content = datafileData.content;
+      this.esquemas = datafileData.esquemas;
+      this.configurations = datafileData.configurations;
+      this.tests = datafileData.tests;
+
+      this.formattedConfigs = [];
+      this.configurations.forEach(config => {
+        const extraParamsJSON = JSON.stringify(config.extraParams).toString();
+        const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
+        const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
+        const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');
+        this.formattedConfigs.push({...config, extraParamsStr});
+      });
+
+      if (this.content !== null) {
+        this.infer = true;
+      }
+      this.fileForm = new FormGroup({
+        'contentPath': new FormControl(null, {validators: [Validators.required]})
+      });
+      if (this.datafile.contentPath) {
+        // contentPath: {backend/files/capital-1234.csv",
+        // contentPath: {backend/uploads/datafiles/capital-1234.csv",
+
+        const nameWExtension = this.datafile.contentPath.split('/');
+        const splitNameWExtension = nameWExtension[3].split('.');
+        this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
+        const nameWDate = nameWExtension[3].split('-');
+        const name = nameWDate[0];
+        this.fileName = name + '.' + this.extension;
+      }
+      if (this.extension === 'xlsx') {
+        let res = this.content[0].join(',')+ '\n';
+        for (let arr of this.content) {
+          res = res + arr.join(',') + '\n';
+        }
+        this.fileContentForm.patchValue({fileContent: res});
+      } else if (this.extension === 'csv') {
+        this.fileContentForm.patchValue({fileContent: datafileData.content });
+      }
     });
   }
 
@@ -151,7 +165,9 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
       this.file = uploadedFile;
       this.isUploading = true;
       // tslint:disable-next-line: max-line-length
-      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, this.file, 'updateFile');
+      console.log(this.userId)
+      await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateFile', this.file);
+      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description);
 
       this.router.navigateByUrl('/', {skipLocationChange: true})
       .then(() => {
@@ -189,17 +205,18 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
         return;
       }
       this.isLoading = true;
-      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, file, 'updateContent');
+      await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateContent', file);
+      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description);
       this.fileContentForm.get('fileContent').disable();
       this.isLoading = false;
     }
 
     async onDeleteFile() {
       this.isUploading = true;
-      await this.datafilesService.updateDatafile(this.datafileId, this.datafile.title, this.datafile.description, null, 'deleteFile');
+      await this.uploadsService.updateFile(this.userId, this.datafileId,'deleteFile', null);
       this.router.navigateByUrl('/', {skipLocationChange: true})
         .then(() => {
-          this.router.navigate([`/workspace/${this.datafileId}/datafile/${this.datafileId}`]);
+          this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
         }).catch( err => {
           console.log(err);
         });

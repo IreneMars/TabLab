@@ -1,77 +1,6 @@
-const Role = require("../models/role");
-const Workspace = require("../models/workspace");
-const Collection = require("../models/collection");
-const Datafile = require("../models/datafile");
+const {Role, Collection, Datafile} = require("../models");
 
-exports.createCollection = async(req, res, next) => {
-    // const current_user_id = req.userData.userId;
-    try {
-        const workspaces = await Workspace.find({ "_id": req.body.workspace }).exec();
-        if (workspaces.length > 1) {
-            res.status(500).json({
-                message: "There are several workspaces with that id!"
-            });
-        } else if (workspaces.length === 0) {
-            res.status(500).json({
-                message: "There is no workspace with that id."
-            });
-        } else if (workspaces.length === 1) {
-            const collection = new Collection({
-                title: req.body.title,
-                workspace: req.body.workspace
-            });
-            await collection.save(function(err, createdCollection) {
-                res.status(201).json({
-                    message: "Collection added successfully!",
-                    invitation: {
-                        ...createdCollection,
-                        id: createdCollection._id
-                    }
-                });
-
-            });
-        }
-
-    } catch (err) {
-        res.status(500).json({
-            message: "Creating a collection failed!"
-        });
-    }
-};
-
-exports.updateCollection = async(req, res, next) => {
-    current_user_id = req.userData.userId;
-    try {
-        const collections = await Collection.find({ _id: req.params.id }).exec();
-        if (collections.length === 0 || collections.length > 1) {
-            res.status(401).json({ message: "There is no unique collection with that id!" });
-        } else if (collections.length === 1) {
-            const roles = await Role.find({ workspace: collections[0].workspace, user: current_user_id }).exec();
-            if (roles.length === 0 || roles.length > 1) {
-                res.status(401).json({ message: "You are not authorized!" });
-            } else if (roles.length === 1) {
-                const collection = new Collection({
-                    _id: req.params.id,
-                    title: req.body.title,
-                    workspace: collections[0].workspace
-                });
-                Collection.updateOne({ _id: req.params.id }, collection).then(result => {
-                    if (result.n > 0) {
-                        res.status(200).json({ message: "Update successful!" });
-                    } else {
-                        res.status(401).json({ message: "Not authorized!" });
-                    }
-                });
-            }
-        }
-    } catch (err) {
-        res.status(500).json({
-            message: "Updating a collection failed!"
-        });
-    }
-};
-
-exports.getCollectionsByWorkspace = async(req, res, next) => {
+exports.getCollectionsByWorkspace = async(req, res) => {
     try {
         collections = await Collection.find({ 'workspace': req.params.workspaceId });
         orphanedDatafiles = await Datafile.find({ 'workspace': req.params.workspaceId, 'collection': null });
@@ -86,7 +15,6 @@ exports.getCollectionsByWorkspace = async(req, res, next) => {
                 updatedCollections.push(updatedCollection);
             }
         }
-
         return res.status(200).json({
             message: "Collections fetched successfully!",
             collections: updatedCollections,
@@ -99,17 +27,74 @@ exports.getCollectionsByWorkspace = async(req, res, next) => {
     }
 };
 
-exports.deleteCollection = async(req, res, next) => {
+exports.createCollection = async(req, res) => {
+    const current_user_id = req.userData.userId;    
     try {
-        const collection = Collection.findOne({ _id: req.params.id }).exec();
-        if (!collection) {
-            return res.status(401).json({ message: "Not authorized!" });
-        } else {
-            await Collection.deleteOne({ _id: req.params.id });
-            return res.status(200).json({ message: "Collection deletion successful!" });
+        const roles = await Role.find({ workspace: req.body.workspace, user: current_user_id });// test if the current user is inside the workspace
+        if(roles.length !== 1) {
+            return res.status(403).json({
+                message: "You are not authorized to create a collection inside this workspace."
+            });
         }
+        const collection = new Collection({
+            title: req.body.title,
+            workspace: req.body.workspace
+        });
+        const createdCollection = await collection.save();
+        
+        return res.status(201).json({
+            message: "Collection created successfully!",
+            collection: createdCollection
+        });        
+        
     } catch (err) {
-        res.status(500).json({
+        return res.status(500).json({
+            message: "Creating a collection failed!"
+        });
+    }
+};
+
+exports.updateCollection = async(req, res) => {
+    current_user_id = req.userData.userId;
+    try {
+        const roles = await Role.find({ workspace: req.body.workspace, user: current_user_id });
+        if(roles.length !== 1) {
+            return res.status(403).json({
+                message: "You are not authorized to update a collection from this workspace."
+            });
+        } else {
+            await Collection.findByIdAndUpdate(req.params.id,{title: req.body.title});
+            const updatedCollection = await Collection.findById(req.params.id);
+            return res.status(200).json({ 
+                message: "Update successful!",
+                collection: updatedCollection
+            });                                      
+        }    
+    } catch (err) {
+        return res.status(500).json({
+            message: "Updating a collection failed!"
+        });
+    }
+};
+
+
+exports.deleteCollection = async(req, res) => {
+    const current_user_id = req.userData.userId;
+    try {
+        const collection = await Collection.findById(req.params.id);
+        const roles = await Role.find({ workspace: collection.workspace, user: current_user_id });
+        if(roles.length !== 1) {
+            return res.status(403).json({
+                message: "You are not authorized to delete a collection from this workspace."
+            });
+        } 
+        await Collection.deleteOne({ _id: req.params.id });
+        return res.status(200).json({ 
+            message: "Collection deleted successfully!" 
+        });
+        
+    } catch (err) {
+        return res.status(500).json({
             message: "Deleting a collection failed!"
         });
     }

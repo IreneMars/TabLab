@@ -12,62 +12,54 @@ const BACKEND_URL = environment.apiUrl + '/esquemas/';
 export class EsquemaService {
   private esquemas: Esquema[] = [];
   private esquemasUpdated = new Subject<{esquemas: Esquema[]}>();
-
+  
   constructor(private http: HttpClient, private router: Router) {}
-
+  
   getEsquemaUpdateListener() {
     return this.esquemasUpdated.asObservable();
   }
-
-  getEsquemas(datafileId: string) {
-    console.log(datafileId);
-    const datafileParams = new HttpParams().set('datafileId', datafileId);
-
-    this.http.get<{message: string, esquemas: any}>(BACKEND_URL, { params: datafileParams })
-      .pipe(map( (esquemaData) => {
-        return { esquemas: esquemaData.esquemas.map(esquema => {
-          return {
-            id: esquema._id,
-            title: esquema.title,
-            contentPath: esquema.contentPath,
-            creationMoment: esquema.creationMoment,
-            datafile: esquema.datafile,
-          };
-        }),
-      };
-      }))
-      .subscribe((transformedEsquemaData) => {
-        this.esquemas = transformedEsquemaData.esquemas;
-        this.esquemasUpdated.next({
-          esquemas: [...this.esquemas], // para hacer una verdadera copia y no afectar al original
-      });
-    });
+  
+  getEsquema(esquemaId: string) {
+    // tslint:disable-next-line: max-line-length
+    console.log(esquemaId);
+    return this.http.get<{esquema: any, content: any}>(BACKEND_URL + esquemaId);
   }
 
-  addEsquema(title: string, esquemaContent: string, fileName: string, datafileId: string, workspaceId:string){
-    let res;
-    const esquemaData = {'title': title, 'esquemaContent': esquemaContent, 'fileName': fileName};
-    this.http.post<{message: string, esquema: Esquema}>(
-        BACKEND_URL + datafileId,
-        esquemaData
-      )
-      .subscribe(
-        responseData => {
-          // Handle result
-          console.log(responseData);
-          res = responseData;
-          this.router.navigateByUrl('/', {skipLocationChange: true})
-            .then(() => {
-              this.router.navigate([`/workspace/${workspaceId}/datafile/${datafileId}`]);
-            }).catch( err => {});
-        },
-        error => {
-          console.log(error);
-        }
-    );
+addEsquema(title: string, esquemaContent: string, fileName: string, datafileId: string, workspaceId:string){
+  let res;
+  let localPath: string = "";
+  let esquemaData: any;
+  const pathAux: string = fileName;
+  
+  if (fileName){
+    const split = pathAux.split('.');
+    const extension = '.' + split[1].toLowerCase();
+    const fileName = split[0].toLowerCase().split(' ').join('_') + "-" + Date.now() + extension;
+    localPath = "backend/uploads/esquemas/" + fileName;
+    esquemaData = {'title': title, 'esquemaContent': esquemaContent, 'contentPath': fileName, 'datafile':datafileId};
+  } else {
+    esquemaData = {'title': title, 'esquemaContent': esquemaContent, 'contentPath': null, 'datafile':datafileId};
+  }
+  console.log(esquemaData)
+  this.http.post<{message: string, esquema: Esquema}>(
+      BACKEND_URL,
+      esquemaData
+    )
+    .subscribe( responseData => {
+        console.log(responseData);
+        res = responseData;
+        this.router.navigateByUrl('/', {skipLocationChange: true})
+        .then(() => {
+          this.router.navigate([`/workspace/${workspaceId}/datafile/${datafileId}`]);
+        }).catch( err => {});
+      },
+      error => {
+        console.log(error);
+      }
+      );
     // return new Promise((resolve, reject) => {
     //       setTimeout(() => {
-    //         if (res === undefined) {
+      //         if (res === undefined) {
     //           reject('Creating a esquema failed!');
     //         } else {
     //           resolve('Esquema added successfully!');
@@ -76,11 +68,12 @@ export class EsquemaService {
     //     });
   }
 
-  deleteEsquema(id: string){
+  updateEsquema(esquemaId: string, title: string, contentPath: string, esquemaContent: string, datafileId: string) {
     let res;
-    this.http.delete(BACKEND_URL +  id).subscribe( responseData => {
-      console.log(responseData);
-      res = responseData;
+    const esquemaData = {'title': title, 'contentPath': contentPath, 'esquemaContent': esquemaContent, 'datafile': datafileId};
+    console.log(esquemaContent);
+    this.http.put(BACKEND_URL + esquemaId, esquemaData).subscribe( response => {
+      res = response;
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -93,18 +86,11 @@ export class EsquemaService {
     });
   }
 
-  getEsquema(esquemaId: string) {
-    // tslint:disable-next-line: max-line-length
-    console.log(esquemaId);
-    return this.http.get<{esquema: any, content: any}>(BACKEND_URL + esquemaId);
-  }
-
-  updateEsquema(esquemaId: string, title: string, contentPath: string, esquemaContent: string) {
+  deleteEsquema(id: string){
     let res;
-    const esquemaData = {'title': title, 'contentPath': contentPath, 'esquemaContent': esquemaContent};
-    console.log(esquemaContent);
-    this.http.put(BACKEND_URL + esquemaId, esquemaData).subscribe( response => {
-      res = response;
+    this.http.delete(BACKEND_URL +  id).subscribe( responseData => {
+      console.log(responseData);
+      res = responseData;
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {

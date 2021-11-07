@@ -45,22 +45,16 @@ export class WorkspaceListComponent implements OnInit, OnDestroy{
     this.isLoading = true;
     this.workspacesService.getWorkspaces(this.workspacesPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
-    // this.workspaces = this.postsService.getPosts();
     // tslint:disable-next-line: deprecation
     this.workspacesSub = this.workspacesService.getWorkspaceUpdateListener()
-    .subscribe( (workspaceData: {workspaces: Workspace[], workspaceCount: number}) => {
+    .subscribe( (workspaceData: {workspaces: Workspace[], workspaceCount: number, totalWorkspaces:number}) => {
       this.isLoading = false;
-      this.totalWorkspaces = workspaceData.workspaceCount;
+      this.totalWorkspaces = workspaceData.totalWorkspaces;
       this.workspaces = workspaceData.workspaces;
 
-      // console.log('On Init');
-      // console.log(this.totalWorkspaces);
-      // console.log(this.workspaces);
+      //console.log(this.totalWorkspaces);
       const dataSource = new MatTableDataSource(this.workspaces);
       dataSource.sort = this.sort;
-      // console.log('Ng After Init');
-      // console.log(dataSource.data);
-      // console.log(dataSource.sort);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
@@ -74,11 +68,10 @@ export class WorkspaceListComponent implements OnInit, OnDestroy{
     this.currentPage = pageData.pageIndex + 1;
     this.workspacesPerPage = pageData.pageSize;
     this.workspacesService.getWorkspaces(this.workspacesPerPage, this.currentPage);
-    console.log('New call');
-    console.log(pageData);
-    console.log('Current page: '+ this.currentPage);
-    console.log('Workspace per page: '+ this.workspacesPerPage);
-
+    // console.log('New call');
+    // console.log('Current page: '+ this.currentPage);
+    // console.log('Workspace per page: '+ this.workspacesPerPage);
+    // console.log('Total workspaces: '+ this.totalWorkspaces);
   }
 
   ngOnDestroy() {

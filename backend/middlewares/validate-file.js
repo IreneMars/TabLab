@@ -5,14 +5,21 @@ const { v4: uuidv4 } = require('uuid');
 const MIME_TYPE_MAP = {
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
     "text/csv": "csv",
+    //PICS MYME TYPES
+    "image/png": "png",
+    "image/jpeg": "jpg",
+    "image/jpg": "jpg"
+};
+
+const MIME_TYPE_MAP_PICS = {
+    "image/png": "png",
+    "image/jpeg": "jpg",
+    "image/jpg": "jpg"
 };
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         if (file) {
-            console.log("====================MIMETYPE BEFORE=========================");
-            console.log(file.mimetype);
-
             var extension = file.originalname.split('.').pop().toLowerCase();
             const validExtension = Object.values(MIME_TYPE_MAP).includes(extension);
 
@@ -23,9 +30,14 @@ const storage = multer.diskStorage({
                 file.mimetype = Object.keys(MIME_TYPE_MAP).find(key => MIME_TYPE_MAP[key] === extension);
                 error = null;
             }
-            console.log("====================MIMETYPE AFTER=========================");
-            console.log(file.mimetype);
-            cb(error, "backend/files");
+            
+            let path = "";
+            if (extension === MIME_TYPE_MAP_PICS[file.mimetype] || Object.values(MIME_TYPE_MAP_PICS).includes(extension)){
+                path = "backend/uploads/users"
+            }else{
+                path = "backend/uploads/datafiles"
+            }
+            cb(error, path);
         }
     },
     filename: (req, file, cb) => {

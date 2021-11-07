@@ -1,45 +1,67 @@
-const Role = require("../models/role");
-const Test = require("../models/test");
-const Datafile = require("../models/datafile");
-const Esquema = require("../models/esquema");
-const Configuration = require("../models/configuration");
+const { Role, Test, Datafile, Esquema, Configuration } = require("../models");
 const fs = require('fs');
 
-exports.createTest = async(req, res, next) => {
-
+exports.getTest = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {
-        const datafiles = await Datafile.find({ '_id': req.params.datafileId });
-        if (datafiles.length === 1) {
-            const roles = await Role.find({ 'workspace': datafiles[0].workspace, 'user': current_user_id });
-            if (roles.length === 1) {
-
-                const test = new Test({
-                    title: req.body.title,
-                    reportPath: null,
-                    status: 'pending',
-                    esquema: req.body.esquema,
-                    configurations: req.body.configurations,
-                    creationMoment: null,
-                    updateMoment: null,
-                    executionMoment: null,
-                    totalErrors: null,
-                    executable: true,
-                    datafile: req.params.datafileId
-                });
-                console.log(test);
-                await test.save(function(err, createdTest) {
-                    console.log(err);
-                    return res.status(201).json({
-                        message: "Test added successfully!",
-                        test: {
-                            ...createdTest,
-                            id: createdTest._id
-                        }
-                    });
-                });
-            }
+        const test = await Test.findById(req.params.id);
+        const datafile = await Datafile.findById(test.datafile);
+        if (!datafile) {
+            return res.status(500).json({
+                message: "Fetching a test failed! (datafile not found)"
+            });
         }
+        const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
+        if (roles.length !== 1) {
+            return res.status(403).json({ 
+                message: "Not authorized to fetch this test!" 
+            });
+        }
+        var esquema = await Esquema.findById(test.esquema);
+        if (!esquema) {
+            esquema = null;
+        }
+        return res.status(200).json({
+            message: "Sucessful fetch!",
+            test: test,
+            esquema: esquema,
+            configurations: test.configurations
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: "Fetching a test failed!"
+        });
+    }
+};
+
+exports.createTest = async(req, res, next) => {
+    const current_user_id = req.userData.userId;
+    try {
+        const datafile = await Datafile.findById(req.body.datafile);
+        const roles = await Role.find({ 'workspace': datafile.workspace, 'user': current_user_id });
+        if (roles.length !== 1) {
+            return res.status(403).json({ 
+                message: "Not authorized to create a test of this datafile!" 
+            });
+        }
+        const test = new Test({
+            title: req.body.title,
+            reportPath: null,
+            status: 'pending',
+            esquema: req.body.esquema,
+            configurations: req.body.configurations,
+            creationMoment: null,
+            updateMoment: null,
+            executionMoment: null,
+            totalErrors: null,
+            executable: true,
+            datafile: req.body.datafile
+        });
+        await test.save(); 
+        return res.status(201).json({
+            message: "Test created successfully!",
+            test: test
+        });        
     } catch (err) {
         return res.status(500).json({
             message: "Creating a test failed!"
@@ -47,97 +69,19 @@ exports.createTest = async(req, res, next) => {
     }
 };
 
-exports.deleteTest = async(req, res, next) => {
-    const current_user_id = req.userData.userId;
-    try {
-        const tests = await Test.find({ _id: req.params.id }).exec();
-        if (tests.length === 1) {
-            const datafiles = await Datafile.find({ '_id': tests[0].datafile });
-            if (datafiles.length === 1) {
-                const roles = await Role.find({ 'workspace': datafiles[0].workspace, 'user': current_user_id });
-                if (roles.length === 1) {
-                    await Test.deleteOne({ _id: req.params.id });
-                    return res.status(200).json({ message: "Test deletion successful!" });
-                } else {
-                    return res.status(401).json({ message: "Not authorized!" });
-                }
-            } else {
-                return res.status(401).json({
-                    message: "Deleting a test failed!"
-                });
-            }
-        } else {
-            return res.status(500).json({
-                message: "Deleting an esquema failed!"
-            });
-        }
-
-    } catch (err) {
-        return res.status(500).json({
-            message: "Deleting an esquema failed!"
-        });
-    }
-
-};
-
-exports.getTest = async(req, res, next) => {
-    const current_user_id = req.userData.userId;
-    try {
-        const tests = await Test.find({ _id: req.params.id }).exec();
-        if (tests.length === 1) {
-            const datafiles = await Datafile.find({ _id: tests[0].datafile }).exec();
-            if (datafiles.length === 1) {
-                const roles = await Role.find({ workspace: datafiles[0].workspace, user: current_user_id }).exec();
-                if (roles.length === 1) {
-                    var esquema = null;
-                    const esquemas = await Esquema.find({ '_id': tests[0].esquema });
-                    if (esquemas.length === 1) {
-                        esquema = esquemas[0];
-                    }
-                    return res.status(200).json({
-                        test: tests[0],
-                        esquema: esquema,
-                        configurations: tests[0].configurations
-                    });
-                } else {
-                    return res.status(401).json({ message: "Not authorized!" });
-                }
-            } else {
-                return res.status(500).json({
-                    message: "Fetching a test failed!"
-                });
-            }
-        } else {
-            return res.status(500).json({
-                message: "Fetching a test failed!"
-            });
-        }
-    } catch (err) {
-        return res.status(500).json({
-            message: "Fetching a test failed!"
-        });
-    }
-};
-
 exports.updateTest = async(req, res, next) => {
-    console.log(req.body);
     current_user_id = req.userData.userId;
     try {
-        const tests = await Test.find({ _id: req.params.id }).exec();
-        if (tests.length !== 1) {
+        const test = await Test.findById(req.params.id);
+        const datafile = await Datafile.findById(test.datafile);
+        if (!datafile) {
             return res.status(500).json({
-                message: "Updating a test failed!"
+                message: "Updating a test failed! (datafile not found)"
             });
         }
-        const datafiles = await Datafile.find({ _id: tests[0].datafile }).exec();
-        if (datafiles.length !== 1) {
-            return res.status(500).json({
-                message: "Updating a test failed!"
-            });
-        }
-        const roles = await Role.find({ workspace: datafiles[0].workspace, user: current_user_id }).exec();
+        const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         if (roles.length !== 1) {
-            return res.status(401).json({ message: "Not authorized!" });
+            return res.status(401).json({ message: "Not authorized to update this test!" });
         }
         var executionMoment = null;
         var errors = 0;
@@ -145,72 +89,81 @@ exports.updateTest = async(req, res, next) => {
             console.log("===========================");
             console.log("UPDATING TEST");
             executionMoment = Date.now();
-            split1 = datafiles[0].contentPath.split('.');
+            split1 = datafile.contentPath.split('.');
             split2 = split1[0].split('/');
             const errorReportPath = 'backend/output/' + split2[2] + '_errors.csv';
-            fs.readFile(errorReportPath, 'utf8', (err, data) => {
+            fs.readFile(errorReportPath, 'utf8', async(err, data) => {
                 if (err) {
                     console.log(err);
                 } else {
                     lines = data.split("\n");
-                    console.log(lines.length - 1);
                     errors = lines.length - 1;
                     const test = new Test({
                         _id: req.params.id,
                         title: req.body.title,
                         status: req.body.status,
-                        reportPath: tests[0].reportPath,
+                        reportPath: test.reportPath,
                         esquema: req.body.esquema,
                         configurations: req.body.configurations,
-                        creationMoment: tests[0].creationMoment,
+                        creationMoment: test.creationMoment,
                         updateMoment: Date.now(),
                         executionMoment: executionMoment, // se verifica
                         totalErrors: errors,
                         executable: true, // Aún por verificar
-                        datafile: tests[0].datafile
+                        datafile: test.datafile
                     });
                     console.log(test);
-                    Test.updateOne({ _id: req.params.id }, test).then(result => {
-                        if (result.n > 0) {
-                            res.status(200).json({ message: "Update successful!" });
-                        } else {
-                            res.status(401).json({ message: "Not authorized!" });
-                        }
-                    }).catch(err => {
-                        console.log(err);
+                    await Test.findByIdAndUpdate(req.params.id, test);
+                    const updatedTest = await Test.findById(req.params.id);
+                    return res.status(200).json({ 
+                        message: "Update successful!",
+                        test: updatedTest
                     });
                 }
             })
         } else {
-            const test = new Test({
-                _id: req.params.id,
-                title: req.body.title,
-                status: tests[0].status,
-                reportPath: tests[0].reportPath,
-                esquema: req.body.esquema,
-                configurations: req.body.configurations,
-                creationMoment: tests[0].creationMoment,
-                updateMoment: Date.now(),
-                executionMoment: executionMoment, // se verifica
-                totalErrors: tests[0].totalErrors,
-                executable: true, // Aún por verificar
-                datafile: tests[0].datafile
+            test.title = req.body.title;
+            test.esquema = req.body.esquema;
+            test.configurations = req.body.configurations;
+            test.updateMoment = Date.now();
+            test.executable = true;
+        
+            Test.findByIdAndUpdate(req.params.id, test);
+            const updatedTest = await Test.findById(req.params.id);
+            return res.status(200).json({ 
+                message: "Test update successful!",
+                test: updatedTest
             });
-            console.log(test);
-            Test.updateOne({ _id: req.params.id }, test).then(result => {
-                if (result.n > 0) {
-                    return res.status(200).json({ message: "Update successful!" });
-                } else {
-                    return res.status(401).json({ message: "Not authorized!" });
-                }
-            }).catch(err => {
-                console.log(err);
-            });
-
         }
     } catch (err) {
         return res.status(500).json({
-            message: "Fetching a test failed!"
+            message: "Updating a test failed!"
         });
     }
+};
+
+exports.deleteTest = async(req, res, next) => {
+    const current_user_id = req.userData.userId;
+    try {
+        const test = await Test.findById(req.params.id);
+        const datafile = await Datafile.findById(test.datafile);
+        if (!datafile) {
+            return res.status(401).json({
+                message: "Deleting a test failed!"
+            });
+        }
+        const roles = await Role.find({ 'workspace': datafile.workspace, 'user': current_user_id });
+        if (roles.length !== 1) {
+            return res.status(401).json({ message: "You are not authorized to delete a test from this datafile!" });
+        }
+        await Test.deleteOne({ _id: req.params.id });
+        return res.status(200).json({ 
+            message: "Test deleted successfully!" 
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: "Deleting an esquema failed!"
+        });
+    }
+
 };

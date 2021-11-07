@@ -102,7 +102,7 @@ export class WorkspaceDetailsComponent implements OnInit, OnDestroy{
     this.rolesService.deleteRole(this.workspaceId).subscribe(response => {
       this.router.navigate(['/workspaces']);
     }, error => {
-
+      console.log(error);
     });
   }
 

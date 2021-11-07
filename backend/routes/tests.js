@@ -1,17 +1,47 @@
 const express = require("express");
-
-const TestsController = require("../controllers/tests");
-
-const { validateJWT } = require("../middlewares");
-
+const { check } = require('express-validator');
 const router = express.Router();
+const { 
+    testExistsById,
+    datafileExistsById
+} = require('../helpers/db-validators');
+const { 
+    validateJWT, 
+    validateFields,
+} = require("../middlewares");
+const {
+    getTest,
+    createTest,
+    updateTest,
+    deleteTest } = require("../controllers/tests");
 
-router.post("/:datafileId", validateJWT, TestsController.createTest);
+router.get("/:id", [
+    validateJWT,
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(testExistsById), 
+], getTest);
 
-router.delete("/:id", validateJWT, TestsController.deleteTest);
+router.post("/", [
+    validateJWT, 
+    check('title', 'The title is mandatory').not().isEmpty(),
+    check('title', 'The title must have between 1 and 100 characters').isLength({ min: 1, max: 100 }),
+    check('datafile', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('datafile').custom(datafileExistsById),
+    validateFields,
+], createTest);
 
-router.get("/:id", validateJWT, TestsController.getTest);
+router.put("/:id", [
+    validateJWT,
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(testExistsById),
+    validateFields, 
+], updateTest);
 
-router.put("/:id", validateJWT, TestsController.updateTest);
+router.delete("/:id", [
+    validateJWT,
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(testExistsById),
+    validateFields, 
+], deleteTest);
 
 module.exports = router;

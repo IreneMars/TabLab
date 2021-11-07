@@ -23,6 +23,12 @@ const userSchema = Schema({
         type: String,
         default: this.username
     },
+    role: {
+        type: String,
+        required: true,
+        default: 'USER',
+        enum: ['ADMIN','USER']
+    },
     status: {
         type: Boolean,
         default: true
@@ -31,12 +37,11 @@ const userSchema = Schema({
         type: Boolean,
         default: false
     },
-
 });
 
 userSchema.pre('save', function(next) {
     this.name = this.username; // considering _id is input by client
-    this.photo = null;
+    this.photo = "http://localhost:3000/assets/default-user-little.png";
     next();
 });
 

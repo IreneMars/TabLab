@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require("path");
 const http = require("http");
-
 const { dbConnection } = require('../database/config');
 
 class Server {
@@ -54,7 +53,10 @@ class Server {
         this.app.use(express.json());
         this.app.use(express.static('../dist/mean-course'));
         this.app.use(express.urlencoded({ extended: false }));
-        this.app.use("/images", express.static(path.join("backend/images")));
+        this.app.use("/users", express.static(path.join("backend/uploads/users")));
+        this.app.use("/datafiles", express.static(path.join("backend/uploads/datafiles")));
+
+        this.app.use("/assets", express.static(path.join("backend/assets")));
         this.app.use("/files", express.static(path.join("backend/files")));
 
         this.app.use((req, res, next) => {
@@ -74,10 +76,7 @@ class Server {
     }
 
     routes() {
-        // this.authPath = '/api/auth';
         this.app.use("/api/users", require('../routes/users'));
-        this.app.use("/api/users", require('../routes/users'));
-        this.app.use("/api/posts", require('../routes/posts'));
         this.app.use("/api/populate", require('../routes/populate'));
         this.app.use("/api/workspaces", require('../routes/workspaces'));
         this.app.use("/api/roles", require('../routes/roles'));
@@ -87,7 +86,8 @@ class Server {
         this.app.use("/api/esquemas", require('../routes/esquemas'));
         this.app.use("/api/configurations", require('../routes/configurations'));
         this.app.use("/api/tests", require('../routes/tests'));
-        this.app.use("/api/errors", require('../routes/errors'));
+        this.app.use("/api/reports", require('../routes/reports'));
+        this.app.use("/api/uploads", require('../routes/uploads'));
     }
 
     listen() {

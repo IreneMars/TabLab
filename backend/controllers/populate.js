@@ -1,20 +1,12 @@
-const User = require("../models/user");
-const Workspace = require("../models/workspace");
-const Role = require("../models/role");
-const Invitation = require("../models/invitation");
-const Collection = require("../models/collection");
-const Datafile = require("../models/datafile");
-const Test = require("../models/test");
-const FricError = require("../models/fricError");
+const { User, Workspace, Role, Invitation, Collection, Datafile, Test, Esquema, Configuration } = require("../models");
 
 const path = require("path");
 const fullPath = path.resolve("backend/populate.json");
 const fs = require('fs');
-const Esquema = require("../models/esquema");
-const Configuration = require("../models/configuration");
 
 const rawdata = fs.readFileSync(fullPath);
 const populate_json_data = JSON.parse(rawdata);
+
 var create_report = (model_name, result, data) => {
     message = "";
     report = { 'model': model_name, 'insertionCount': '', 'insertions': [], errors: [] };
@@ -38,7 +30,6 @@ var create_report = (model_name, result, data) => {
 };
 
 exports.populate = async(req, res, next) => {
-    console.log("populate");
     reports = { "errored_models": [], "reports": [] };
     //users
     try {

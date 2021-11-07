@@ -42,8 +42,8 @@ export class CollectionsService {
 
   createCollection(title: string, workspaceId: string) {
     var res;
-    const collectionData: Collection = { title: title, workspace: workspaceId };
-    this.http.post<{collection: Collection}>(BACKEND_URL, collectionData).subscribe( responseData => {
+    const collection: Collection = { title: title, workspace: workspaceId };
+    this.http.post<{collection: Collection}>(BACKEND_URL, collection).subscribe( responseData => {
       res = responseData;
     });
 
@@ -58,6 +58,23 @@ export class CollectionsService {
     });
   }
 
+  updateCollection(collectionId: string, title: string, workspaceId: string){
+    var res;
+    const collection: Collection = { title: title, workspace: workspaceId };
+    this.http.put(BACKEND_URL + collectionId, collection).subscribe( response => {
+      res = response;
+    });
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (res === undefined) {
+          reject();
+        } else {
+          resolve(true);
+        }
+      }, 1000);
+    });
+  }
+  
   deleteCollection(collectionId: string) {
     let res;
     this.http.delete(BACKEND_URL +  collectionId).subscribe( responseData => {
@@ -73,22 +90,4 @@ export class CollectionsService {
       }, 1000);
     });
   }
-
-  updateCollection(collectionId: string, title: string){
-    var res;
-    const collection: Collection = {'title': title, 'workspace': null };
-    this.http.put(BACKEND_URL + collectionId, collection).subscribe( response => {
-      res = response;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject();
-        } else {
-          resolve(true);
-        }
-      }, 1000);
-    });
-  }
-
 }

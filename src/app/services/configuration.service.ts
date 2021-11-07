@@ -14,25 +14,26 @@ export interface ConfigForm {
 }
 @Injectable({providedIn: 'root'})
 export class ConfigurationService {
-
+  
   constructor(private http: HttpClient, private router: Router) {}
-
+  
+  getConfiguration(configurationId: string) {
+    // tslint:disable-next-line: max-line-length
+    return this.http.get<{configuration: any}>(BACKEND_URL + configurationId);
+  }
+  
   addConfiguration(values: any, datafileId: string){
     let res;
-    console.log(values);
     const configuration = {...values};
     const {title, errorCode, ...extraParams} = configuration;
-    const configurationData = {'title': title, 'errorCode': errorCode, 'extraParams': extraParams};
-    console.log(configurationData);
+    const configurationData = {'title': title, 'errorCode': errorCode, 'extraParams': extraParams, 'datafile': datafileId};
 
     this.http.post<{message: string, configuration: any}>(
-        BACKEND_URL + datafileId,
+        BACKEND_URL,
         configurationData
       )
       .subscribe(
         responseData => {
-          // Handle result
-          console.log(responseData);
           res = responseData;
         },
         error => {
@@ -49,37 +50,13 @@ export class ConfigurationService {
           }, 1000);
         });
   }
-
-  deleteConfiguration(id: string){
-    let res;
-    this.http.delete(BACKEND_URL +  id).subscribe( responseData => {
-      console.log(responseData);
-      res = responseData;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject();
-        } else {
-          resolve(true);
-        }
-      }, 1000);
-    });
-  }
-
-  getConfiguration(configurationId: string) {
-    // tslint:disable-next-line: max-line-length
-    return this.http.get<{configuration: any}>(BACKEND_URL + configurationId);
-  }
-
+ 
   updateConfiguration(configurationId: string, values: any) {
     let res;
-    console.log(values);
     const configuration = {...values};
     const {title, errorCode, ...extraParams} = configuration;
     const configurationData = {'title': title, 'errorCode': errorCode, 'extraParams': extraParams};
-    console.log(configurationData);
-
+    
     this.http.put(BACKEND_URL + configurationId, configurationData).subscribe( response => {
       res = response;
     });
@@ -93,5 +70,20 @@ export class ConfigurationService {
       }, 1000);
     });
   }
-
+  
+  deleteConfiguration(id: string){
+    let res;
+    this.http.delete(BACKEND_URL +  id).subscribe( responseData => {
+      res = responseData;
+    });
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (res === undefined) {
+          reject();
+        } else {
+          resolve(true);
+        }
+      }, 1000);
+    });
+  }
 }

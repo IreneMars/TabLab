@@ -1,17 +1,48 @@
 const express = require("express");
-
-const InvitationsController = require("../controllers/invitations");
-
-const { validateJWT } = require("../middlewares");
-
+const { check } = require('express-validator');
 const router = express.Router();
+const {
+    getInvitations,
+    createInvitation,
+    updateInvitation,
+    deleteInvitation 
+} = require("../controllers/invitations");
 
-router.post("", validateJWT, InvitationsController.createInvitation);
+const { 
+    invitationExistsById,
+    workspaceExistsById,
+    emailExists
+} = require("../helpers");
 
-router.put("/:id", validateJWT, InvitationsController.updateInvitation);
+const { 
+    validateJWT, 
+    validateFields,
+} = require("../middlewares");
 
-router.get("", validateJWT, InvitationsController.getInvitations);
+router.get("/", 
+    validateJWT, 
+    getInvitations);
 
-router.delete("/:id", validateJWT, InvitationsController.deleteInvitation);
+router.post("/", [
+    validateJWT, 
+    check('receiver', 'The receiver email is not valid').isEmail(),
+    check('workspace', 'The ID is not a valid Mongo ID').isMongoId(), 
+    check('workspace').custom(workspaceExistsById),
+    validateFields
+  ], createInvitation);
+
+router.put("/:id", [ 
+    validateJWT, 
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(), 
+    check('id').custom(invitationExistsById), 
+    validateFields,
+], updateInvitation);
+
+router.delete("/:id", [
+    validateJWT, 
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(), 
+    check('id').custom(invitationExistsById),
+    validateFields,
+], deleteInvitation);
 
 module.exports = router;

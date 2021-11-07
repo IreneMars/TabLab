@@ -5,11 +5,11 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DatafileService } from '../../../services/datafiles.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { Esquema } from 'src/app/models/esquema';
 import { Test } from '../../../models/test.model';
 import { Configuration } from 'src/app/models/configuration';
 import { TestsService } from 'src/app/services/tests.service';
 import { Datafile } from 'src/app/models/datafile';
+import { UploadsService } from 'src/app/services/uploads.service';
 
 
 @Component({
@@ -39,7 +39,7 @@ export class TestDetailsComponent implements OnInit {
   edit: boolean;
 
   // tslint:disable-next-line: max-line-length
-  constructor(public testsService: TestsService, public datafilesService: DatafileService, public route: ActivatedRoute,
+  constructor(public testsService: TestsService, public datafilesService: DatafileService, public uploadsService: UploadsService, public route: ActivatedRoute,
               public usersService: AuthService, private router: Router){
                 this.testForm = new FormGroup({
                   'title': new FormControl(null, {validators: [Validators.required]})
@@ -163,7 +163,8 @@ export class TestDetailsComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, file, 'updateContent');
+    //await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateContent', file);
+    await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description);
     this.fileContentForm.get('fileContent').disable();
     this.isLoading = false;
   }
