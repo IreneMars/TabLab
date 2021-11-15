@@ -18,9 +18,7 @@ class Server {
 
         // Rutas de mi aplicación
         this.routes();
-        this.app.get('*', function(req, res) {
-            res.sendFile(path.join(__dirname + '/dist/index.html'));
-        });
+
     }
 
     async conectarDB() {
