@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const path = require("path");
-const http = require("http");
 const { dbConnection } = require('../database/config');
+require('dotenv').config();
 
 class Server {
 
