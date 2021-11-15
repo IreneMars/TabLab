@@ -32,6 +32,12 @@ class Server {
         return this.port;
     }
 
+    getInit() {
+        this.app.get('*', function(req, res) {
+            res.sendFile(path.join(__dirname + '/dist/index.html'));
+        });
+    }
+
     // normalizePort(val) {
     //     var port = parseInt(val, 10);
     //     if (isNaN(port)) {
