@@ -90,8 +90,8 @@ class Server {
     }
 
     listen() {
-        this.app.listen(3000, () => {
-            console.log('Servidor (API Node) corriendo en puerto', 3000);
+        this.app.listen(process.env.PORT, () => {
+            console.log('Servidor (API Node) corriendo en puerto', process.env.PORT);
         });
     }
 
