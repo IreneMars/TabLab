@@ -1,13 +1,13 @@
-const isAdminRole = ( req, res, next ) => {
-    if ( !req.user ) {
+const isAdminRole = (req, res, next) => {
+    if (!req.user) {
         return res.status(500).json({
             msg: 'The app wants to verify the role without validating the token first'
         });
     }
 
     const { role, name } = req.user;
-    
-    if ( role !== 'ADMIN' ) {
+
+    if (role !== 'ADMIN') {
         return res.status(401).json({
             msg: `${ name } is not admin - He/She can not do that.`
         });
@@ -16,8 +16,9 @@ const isAdminRole = ( req, res, next ) => {
 }
 
 const hasRole = (...roles) => {
+
     return (req, res, next) => {
-        if ( !req.user ) {
+        if (!req.user) {
             return res.status(500).json({
                 msg: 'The app wants to verify the role without validating the token first'
             });
@@ -28,6 +29,7 @@ const hasRole = (...roles) => {
                 msg: `The service requires one of these roles: ${ roles }`
             });
         }
+
         next();
     };
 };

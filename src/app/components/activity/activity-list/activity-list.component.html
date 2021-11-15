@@ -1,0 +1,17 @@
+<div class="row mt-2">
+    <div class="col">
+        <h2>Actividad</h2>
+        <div class="my-custom-scrollbar">
+            <div class="list-group" *ngFor="let activity of activities">
+                <div class="list-group-item" aria-current="true">
+                    <div class="d-flex w-100 justify-content-end">
+                        <small>{{activity.creationMoment | date }}</small>
+                    </div>
+                    <p class="mb-1" [innerHTML]="activity.message"></p>
+                    <small>{{activity.creationMoment | date:'mediumTime'}}</small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

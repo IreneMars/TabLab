@@ -1,6 +1,8 @@
-<div class="row complete-height">
-    <div class="col-2">
-
+<div class="row ps-2 pe-2 complete-height">
+    <div class="col-2 collections p-0">
+        <div class="container p-0">
+            <app-collection-list [workspaceId]="workspaceId"></app-collection-list>
+        </div>
     </div>
     <div class="col-7">
         <div class="mt-2" *ngIf="isLoading">

@@ -1,3 +1,4 @@
+const Activity = require('./activity');
 const Collection = require('./collection');
 const Configuration = require('./configuration');
 const Datafile = require('./datafile');
@@ -21,6 +22,6 @@ module.exports = {
     Server,
     Test,
     User,
-    Workspace
+    Workspace,
+    Activity
 }
-

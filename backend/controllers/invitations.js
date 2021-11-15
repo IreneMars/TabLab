@@ -4,12 +4,11 @@ exports.getInvitations = async(req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
     const current_user_id = req.userData.userId;
-
     try {
         const invitationQuery = Invitation.find({ receiver: current_user_id });
         const allInvitations = await invitationQuery.exec();
 
-        if (pageSize && currentPage) {
+        if (pageSize && currentPage && pageSize > 0 && currentPage > 0) {
             invitationQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
         }
         var documents = await invitationQuery.exec();
@@ -46,18 +45,18 @@ exports.createInvitation = async(req, res, next) => {
     const current_user_id = req.userData.userId;
 
     try {
-        const receivers = await User.find({ "email": req.body.receiver });
-        if (receivers.length !== 1) {
+        const receiver = await User.findOne({ "email": req.body.receiver });
+        if (receiver) {
             return res.status(500).json({
                 message: "Creating an invitation failed!"
             });
         }
-        if (receivers[0]._id == current_user_id) {
+        if (receiver._id == current_user_id) {
             return res.status(500).json({
                 message: "You cannot send an invitation to yourself!"
             });
         }
-        const invitations = await Invitation.find({ "receiver": receivers[0]._id, "sender": current_user_id });
+        const invitations = await Invitation.find({ "receiver": receiver._id, "sender": current_user_id });
         if (invitations.length > 0) {
             return res.status(500).json({
                 message: "That user has already received an invitation!"
@@ -65,8 +64,8 @@ exports.createInvitation = async(req, res, next) => {
         } else {
             const invitation = new Invitation({
                 sender: current_user_id,
-                receiver: receivers[0]._id,
-                status: 'pending',
+                receiver: receiver._id,
+                status: req.body.status,
                 workspace: req.body.workspace
             });
             const createdInvitation = await invitation.save();
@@ -92,9 +91,9 @@ exports.updateInvitation = async(req, res, next) => {
                 message: "You are not the receiver of this invitation!"
             });
         }
-        await Invitation.findByIdAndUpdate(req.params.id, {status:req.body.status});
+        await Invitation.findByIdAndUpdate(req.params.id, { status: req.body.status });
         const updatedInvitation = await Invitation.findById(req.params.id);
-        return res.status(200).json({ 
+        return res.status(200).json({
             message: "Update successful!",
             invitation: updatedInvitation
         });
@@ -114,8 +113,8 @@ exports.deleteInvitation = async(req, res, next) => {
             return res.status(403).json({ message: "You are not authorized to delete this invitation!" });
         } else {
             await Invitation.deleteOne({ _id: req.params.id });
-            return res.status(200).json({ 
-                message: "Invitation deletion successful!" 
+            return res.status(200).json({
+                message: "Invitation deletion successful!"
             });
         }
     } catch (err) {

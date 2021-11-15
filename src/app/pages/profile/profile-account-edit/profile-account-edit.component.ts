@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { User } from "src/app/models/user.model";
 import { AuthService } from "src/app/services/auth.service";
-import { WorkspaceService } from "src/app/services/workspaces.service";
+import { WorkspacesService } from "src/app/services/workspaces.service";
+import { UsersService } from '../../../services/users.service';
 
 @Component({
     selector: 'app-profile-account--edit',
@@ -11,33 +12,40 @@ import { WorkspaceService } from "src/app/services/workspaces.service";
     styleUrls: ['./profile-account-edit.component.css']
   })
   export class ProfileAccountEditComponent implements OnInit{
-    user: any;
-    isLoading: boolean = false;
-    emailForm: FormGroup;
-    passForm: FormGroup;
+    isLoading : boolean = false;
+    user      : User;
+    emailForm : FormGroup;
+    passForm  : FormGroup;
 
-    constructor(public usersService: AuthService, public route: ActivatedRoute, public workspacesService: WorkspaceService, 
-                private router: Router, private formBuilder: FormBuilder) {
+    constructor(public authService: AuthService, public usersService: UsersService, public route: ActivatedRoute, 
+                public workspacesService: WorkspacesService, private router: Router, private formBuilder: FormBuilder) {
                   this.createEmailForm();
                   this.createPassForm();
     }
 
     ngOnInit() {
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      this.isLoading = true;
+      this.route.paramMap.subscribe((paramMap: ParamMap) => {
         const userId = paramMap.get('userId');
+        this.isLoading = true;
         this.usersService.getUser(userId).subscribe(userData => {
-        this.user = {
-            userId: userData.user._id,
+          this.user = {
+            id: userData.user._id,
             username: userData.user.username,
-            name: userData.user.name,
             email: userData.user.email,
+            password: userData.user.password,
             photo: userData.user.photo,
-            password: userData.user.password
-        };
-        this.emailForm.reset({
-          email: this.user.email
+            name: userData.user.name,
+            role: userData.user.role,
+            status: userData.user.status,
+            google: userData.user.google
+          };
+          this.emailForm.reset({
+            email: this.user.email
+          });
+          this.isLoading = false;
         });
-        });
+
     });    
   }
 
@@ -101,17 +109,17 @@ import { WorkspaceService } from "src/app/services/workspaces.service";
     }
     this.isLoading = true;
     const values = this.emailForm.getRawValue();
-    this.usersService.updateUser(this.user.userId, null, null,  values.email, this.user.role, null, null, null);
+    this.usersService.updateUser(this.user.id, null, null,  values.email, this.user.role, null, null, null);
     this.router.navigateByUrl('/', {skipLocationChange: true})
     .then(() => {
-      this.router.navigate([`/account/${this.user.userId}/edit`]);
+      this.router.navigate([`/account/${this.user.id}/edit`]);
     }).catch( err => {
-      console.log(err);
+      console.log("Error on onSaveEmail method: "+err);
     });
     this.isLoading = false;
   }
 
-  onSavePass() {
+  async onSavePass() {
     if (this.passForm.invalid){
       return Object.values(this.passForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
@@ -123,22 +131,24 @@ import { WorkspaceService } from "src/app/services/workspaces.service";
     }
     this.isLoading = true;
     const values = this.passForm.getRawValue();
-    this.usersService.updateUser(this.user.userId, null, null, null, this.user.role, values.actualPass, values.newPass, values.repeatPass);
+    await this.usersService.updateUser(this.user.id, null, null, null, this.user.role, values.actualPass, values.newPass, values.repeatPass);
     this.router.navigateByUrl('/', {skipLocationChange: true})
     .then(() => {
-      this.router.navigate([`/account/${this.user.userId}/edit`]);
+      this.router.navigate([`/account/${this.user.id}/edit`]);
     }).catch( err => {
-      console.log(err);
+      console.log("Error on onSavePass method: "+err);
     });
     this.isLoading = false;
   }
 
-  onDeleteAccount() {
-    this.usersService.deleteAccount(this.user.userId)
-    .then(() => {
-      this.usersService.logout();
+  onDeleteAccount(userId: string) {
+    this.usersService.deleteAccount(userId)
+    .then(res => {
+      this.authService.logout();
+      window.location.reload();
+
     }).catch( err => {
-      console.log(err);
+      console.log("Error on onDeleteAccount method: "+err);
     });
     
   }

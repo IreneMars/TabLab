@@ -5,6 +5,7 @@ import { Papa } from 'ngx-papaparse';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { EsquemaService } from 'src/app/services/esquemas.service';
+import { Esquema } from '../../../models/esquema.model';
 
 @Component({
   selector: 'app-esquema-create',
@@ -12,20 +13,21 @@ import { EsquemaService } from 'src/app/services/esquemas.service';
   styleUrls: ['./esquema-create.component.css']
 })
 export class EsquemaCreateComponent implements OnInit, OnDestroy{
-  @Input() esquemaForm: FormGroup;
-  private authStatusSub: Subscription;
-  userIsAuthenticated = false;
-  userId: string;
-  @Input() workspaceId;
-  @Input() datafileId;
-  @Input() savefile;
-  @Output() savefileChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  invalidFile = false;
-  invalidExtension = false;
-  @Output() esquemaChange: EventEmitter<any> = new EventEmitter<any>();
-  @Input() esquema;
-  file = null;
-  chain = '';
+  userId                   : string;
+  userIsAuthenticated      : boolean = false;
+  invalidFile              : boolean = false;
+  invalidExtension         : boolean = false;
+  file                     : any = null;
+  chain                    : string = '';
+  @Input() esquemaForm     : FormGroup;
+  @Input() workspaceId     : string;
+  @Input() datafileId      : string;
+  @Input() savefile        : any;
+  @Input() esquema         : Esquema;
+  @Output() savefileChange : EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() esquemaChange  : EventEmitter<any> = new EventEmitter<any>();
+  
+  private authStatusSub    : Subscription;
 
   constructor(public esquemaService: EsquemaService, public route: ActivatedRoute, private papa: Papa,
               private usersService: AuthService, private router: Router) {
@@ -48,7 +50,6 @@ export class EsquemaCreateComponent implements OnInit, OnDestroy{
   }
 
   get invalidEsquemaPath() {
-    // tslint:disable-next-line: max-line-length
     return this.esquemaForm.get('esquemaPath').invalid && this.esquemaForm.get('esquemaPath').dirty;
   }
 
@@ -97,7 +98,7 @@ async onFilePicked(event: Event) {
         }
         return Object.values(this.esquemaForm.controls).forEach(control => {
           if (control instanceof FormGroup) {
-            // tslint:disable-next-line: no-shadowed-variable
+            
             Object.values(control.controls).forEach( control => control.markAsTouched());
           } else {
             control.markAsTouched();
@@ -108,13 +109,25 @@ async onFilePicked(event: Event) {
     this.savefileChange.emit(true);
     const values = this.esquemaForm.getRawValue();
     if (this.esquema) {
-      await this.esquemaService.updateEsquema(this.esquema._id, values.title, this.esquema.contentPath, values.esquemaContent, this.datafileId);
+      await this.esquemaService.updateEsquema(this.esquema.id, values.title, this.esquema.contentPath, values.esquemaContent, this.datafileId);
       this.router.navigateByUrl('/', {skipLocationChange: true})
         .then(() => {
           this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
         }).catch( err => {});
     } else {
-      this.esquemaService.addEsquema(values.title, values.esquemaContent, this.file.name, this.datafileId, this.workspaceId);
+      this.esquemaService.addEsquema(values.title, values.esquemaContent, this.file.name, this.datafileId, this.workspaceId)
+      .then(response => {
+        this.router.navigateByUrl('/', {skipLocationChange: true})
+        .then(() => {
+          this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
+        })
+        .catch( err => {
+         console.log("Error on onSave method: "+ err);
+        });
+      })
+      .catch(error => {
+         console.log("Error on onSave method: "+error);
+      });
     }
     (document.getElementById('esquemaContent') as HTMLInputElement).value = '';
     this.esquemaForm.reset();

@@ -78,7 +78,6 @@ export class DatafileEditComponent implements OnInit, OnDestroy{
     this.editChange.emit(false);
     this.router.navigateByUrl('/', {skipLocationChange: true})
     .then(() => {
-      console.log("Hello")
       this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
     }).catch( err => {});
     this.loading = false;

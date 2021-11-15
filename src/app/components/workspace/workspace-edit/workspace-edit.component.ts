@@ -1,28 +1,29 @@
 import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { WorkspaceService } from 'src/app/services/workspaces.service';
+import { WorkspacesService } from 'src/app/services/workspaces.service';
+import { Workspace } from '../../../models/workspace.model';
 
 @Component({
   selector: 'app-workspace-edit',
   templateUrl: './workspace-edit.component.html',
 })
 export class WorkspaceEditComponent implements OnInit, OnDestroy{
-  @Input() edit;
-  @Input() workspace;
-  @Input() workspaceId;
-  @Output() editChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  userId               : string;
+  userIsAuthenticated  : boolean = false;
+  loading              : boolean = false;
+  workspaceEditForm    : FormGroup;
+  
+  @Input() edit        : boolean;
+  @Input() workspace   : Workspace;
+  @Input() workspaceId : string;
+  @Output() editChange : EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  workspaceEditForm: FormGroup;
-  loading = false;
-
-  userIsAuthenticated = false;
-  userId: string;
   private authStatusSub: Subscription;
 
-  constructor(public workspaceService: WorkspaceService, public authService: AuthService,  private router: Router,
+  constructor(public workspaceService: WorkspacesService, public authService: AuthService,  private router: Router,
               private formBuilder: FormBuilder) {
     this.createForm();
   }

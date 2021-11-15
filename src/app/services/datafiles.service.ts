@@ -1,60 +1,75 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Datafile } from '../models/datafile';
+import { Datafile } from '../models/datafile.model';
 
 const BACKEND_URL = environment.apiUrl + '/datafiles/';
 
 @Injectable({providedIn: 'root'})
 export class DatafileService {
-  
-  private datafiles: Datafile[] = [];
-  private datafilesUpdated = new Subject<{datafiles: Datafile[]}>();
-  
-  constructor(private http: HttpClient, private router: Router) {
-    
-  }
-  
-  getDatafileUpdateListener() {
-    return this.datafilesUpdated.asObservable();
-  }
+
+  constructor(private http: HttpClient) {}
   
   getDatafile(datafileId: string) {
-    // tslint:disable-next-line: max-line-length
-    return this.http.get<{datafile: any, content: any, esquemas: any, configurations: any, tests: any}>(BACKEND_URL + datafileId);
+    // 
+    return this.http.get<{message: string, datafile: any, content: string, esquemas: any[], configurations: any[], tests: any[]}>(BACKEND_URL + datafileId)
+    .pipe(map( (datafileData) => {
+      return { 
+        datafile: datafileData.datafile,         
+        content: datafileData.content,
+        esquemas: datafileData.esquemas.map( esquema => {
+          return {
+            id: esquema._id,
+            title: esquema.title,
+            contentPath: esquema.contentPath,
+            creationMoment: esquema.creationMoment,
+            datafile: esquema.datafile,
+          };
+        }),
+        configurations: datafileData.configurations.map( configuration => {
+          return {
+            id: configuration._id,
+            title: configuration.title,
+            creationMoment: configuration.creationMoment,
+            errorCode: configuration.errorCode,
+            extraParams: configuration.extraParams,
+            datafile: configuration.datafile,
+          };
+        }),
+        tests: datafileData.tests.map( test => {
+          return {
+            id: test._id,
+            title: test.title,
+            reportPath: test.reportPath,
+            status: test.status,
+            esquema: test.esquema,
+            configurations: test.configurations,
+            creationMoment: test.creationMoment,
+            updateMoment: test.updateMoment,
+            executionMoment: test.executionMoment,
+            totalErrors: test.totalErrors,
+            executable: test.executable,
+            datafile: test.datafile
+          };
+        })
+      };
+    }));
   }
 
-  getOrphanedDatafiles(workspaceId: string) {
-    this.http.get<{message: string, datafiles: any}>(BACKEND_URL)
-      .pipe(map( (datafileData) => {
-        return { datafiles: datafileData.datafiles.map(datafile => {
-          return {
-            id: datafile._id,
-            title: datafile.title,
-            description: datafile.description,
-            content: datafile.content,
-            errorLimit: datafile.errorLimit,
-            delimiter: datafile.delimiter,
-            collection: datafile.collection,
-            workspace: datafile.workspace,
-          };
-        })};
-      }))
-      .subscribe((transformedDatafileData) => {
-        this.datafiles = transformedDatafileData.datafiles;
-        this.datafilesUpdated.next({
-          datafiles: [...this.datafiles], // para hacer una verdadera copia y no afectar al original
-      });
-    });
-  }
-  
   addDatafile( title: string, description: string, collectionId: string, workspaceId: string) {
     let res;
-    const datafileData = {title: title, description: description, collection: collectionId, workspace: workspaceId};
-    this.http.post<{message: string, datafile: Datafile}>(
+    const datafileData: Datafile = {
+      'id': null,
+      'title': title, 
+      'description': description, 
+      'contentPath': null, 
+      'errLimit': null,
+      'delimiter': null,
+      'coleccion': collectionId, 
+      'workspace': workspaceId
+    };
+    this.http.post<{message: string, datafile: any}>(
         BACKEND_URL,
         datafileData
       )
@@ -64,9 +79,9 @@ export class DatafileService {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject();
+          reject('Creating a datafile failed!');
         } else {
-          resolve(true);
+          resolve('Datafile added successfully!');
         }
       }, 1000);
     });
@@ -74,17 +89,26 @@ export class DatafileService {
       
   updateDatafile(datafileId: string, title: string, description: string) {
     let res;
-    const datafileData = {'title': title,'description': description};
+    const datafileData: Datafile = {
+      'id':datafileId,
+      'title': title, 
+      'description': description, 
+      'contentPath': null, 
+      'errLimit': null,
+      'delimiter': null,
+      'coleccion': null, 
+      'workspace': null
+    };
 
-    this.http.put(BACKEND_URL + datafileId, datafileData).subscribe( response => {
+    this.http.put<{message: string, datafile: any}>(BACKEND_URL + datafileId, datafileData).subscribe( response => {
       res = response;
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject();
+          reject('Updating a datafile failed!');
         } else {
-          resolve(true);
+          resolve('Datafile updated successfully!');
         }
       }, 1000);
     });
@@ -92,15 +116,15 @@ export class DatafileService {
   
   deleteDatafile(datafileId: string) {
     let res;
-    this.http.delete(BACKEND_URL +  datafileId).subscribe( responseData => {
+    this.http.delete<{message: string}>(BACKEND_URL +  datafileId).subscribe( responseData => {
         res = responseData;
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject();
+          reject('Deleting a datafile failed!');
         } else {
-          resolve(true);
+          resolve('Datafile deleted successfully!');
         }
       }, 1000);
     });

@@ -17,7 +17,8 @@ const userSchema = Schema({
         required: [true, 'The password is mandatory'],
     },
     photo: {
-        type: String
+        type: String,
+        required: [false],
     },
     name: {
         type: String,
@@ -27,7 +28,7 @@ const userSchema = Schema({
         type: String,
         required: true,
         default: 'USER',
-        enum: ['ADMIN','USER']
+        enum: ['ADMIN', 'USER']
     },
     status: {
         type: Boolean,

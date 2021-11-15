@@ -21,7 +21,7 @@ export class DatafileCreateComponent implements OnInit, OnDestroy{
   @Input() collections;
 
   constructor(public datafileService: DatafileService, public route: ActivatedRoute,
-              private formBuilder: FormBuilder, private usersService: AuthService) {
+              private formBuilder: FormBuilder, private authService: AuthService) {
                 this.createForm();
                 this.datafileForm.reset({
                   title: '',
@@ -31,10 +31,10 @@ export class DatafileCreateComponent implements OnInit, OnDestroy{
               }
 
   ngOnInit(){
-    this.userIsAuthenticated = this.usersService.getIsAuth();
-    this.authStatusSub = this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.usersService.getUserId();
+      this.userId = this.authService.getUserId();
     });
   }
 

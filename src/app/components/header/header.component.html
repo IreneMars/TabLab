@@ -6,34 +6,41 @@
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                     
             <li *ngIf="userIsAuthenticated" class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['workspaces']">Espacios de Trabajo</a>
             </li>
             <li *ngIf="userIsAuthenticated" class="nav-item" routerLinkActive="active">
-                <a class="nav-link" [routerLink]="['invitations']">Invitaciones</a>
+                <a class="nav-link" [routerLink]="['invitations']">
+                    Invitaciones
+                    <i *ngIf="userIsAuthenticated && pendingInvitation" class="ms-1 fas fa-envelope" style="width: 40px; color: rgb(169, 85, 248);"></i>
+                </a>
             </li>
-
+            <li *ngIf="userIsAuthenticated && user.role==='ADMIN'" class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['configuration']">
+                    Configuración Global
+                </a>
+            </li>
         </ul>
+        User is authenticated: {{userIsAuthenticated}}
         <form class="form-inline" *ngIf="!userIsAuthenticated">
             <a class="btn btn-outline-primary me-2" routerLinkActive="active" [routerLink]="['auth/login']">Iniciar Sesión</a>
             <a class="btn btn-outline-primary" routerLinkActive="active" [routerLink]="['auth/signup']">Registro</a>
         </form>
         <form *ngIf="userIsAuthenticated">
             <!-- <a class="btn btn-outline-danger me-2" routerLinkActive="active" (click)="onLogout()">Cerrar Sesión</a> -->
-                <div class="dropdown">
-                    <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="mt-2" *ngIf="isLoading">
                             <img *ngIf="!isLoading" src="/backend/assets/default-user-little.png" class="border rounded-circle" style="width: 40px;" alt="">
                         </div>
                         <img *ngIf="!isLoading" src="{{user.photo}}" class="border rounded-circle" style="width: 40px;" alt="">
                     </button>
-                    <ul *ngIf="!isLoading" class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" routerLink="/profile/{{userId}}">Logueado/a como {{user.username}}</a></li>
-                        <li><a class="dropdown-item" routerLink="/account/{{userId}}/edit">Configuración de la cuenta</a></li>
-                        <li><a class="dropdown-item" routerLinkActive="active" (click)="onLogout()">Cerrar Sesión</a></li>
-                    </ul>
-                  </div>
+                <ul *ngIf="!isLoading" class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" routerLink="/profile/{{userId}}">Logueado/a como {{user.username}}</a></li>
+                    <li><a class="dropdown-item" routerLink="/account/{{userId}}/edit">Configuración de la cuenta</a></li>
+                    <li><a class="dropdown-item" routerLinkActive="active" (click)="onLogout()">Cerrar Sesión</a></li>
+                </ul>
+            </div>
         </form>
     </div>
 </nav>

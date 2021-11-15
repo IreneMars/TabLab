@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { User } from "src/app/models/user.model";
 import { AuthService } from "src/app/services/auth.service";
-import { WorkspaceService } from "src/app/services/workspaces.service";
+import { UsersService } from "src/app/services/users.service";
+import { WorkspacesService } from "src/app/services/workspaces.service";
 
 @Component({
     selector: 'app-profile-details',
@@ -10,27 +11,30 @@ import { WorkspaceService } from "src/app/services/workspaces.service";
     styleUrls: ['./profile-details.component.css']
   })
   export class ProfileDetailsComponent implements OnInit{
-    user: any;
+    user: User;
     userId: string;
     isLoading: boolean = false;
-    constructor(public usersService: AuthService, public route: ActivatedRoute, public workspacesService: WorkspaceService, 
-                private router: Router) {}
+    constructor(public authService: AuthService, public usersService: UsersService,
+                public route: ActivatedRoute, public workspacesService: WorkspacesService) {}
 
     ngOnInit() {
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-        this.userId = paramMap.get('userId');
-        this.isLoading = true;
-        this.usersService.getUser(this.userId).subscribe(userData => {
-        this.user = {
-            username: userData.user.username,
-            name: userData.user.name,
-            email: userData.user.email,
-            photo: userData.user.photo,
-            password: userData.user.password
-        };
-        console.log(this.user)
-        this.isLoading = false;
-        });
+        this.route.paramMap.subscribe((paramMap: ParamMap) => {
+            this.userId = paramMap.get('userId');
+            this.isLoading = true;
+            this.usersService.getUser(this.userId).subscribe(userData => {
+                this.user = {
+                    id: userData.user.id,
+                    username: userData.user.username,
+                    email: userData.user.email,
+                    password: userData.user.password,
+                    photo: userData.user.photo,
+                    name: userData.user.name,
+                    role: userData.user.role,
+                    status: userData.user.status,
+                    google: userData.user.google
+                };
+                this.isLoading = false;
+            });
         });    
     }
 }

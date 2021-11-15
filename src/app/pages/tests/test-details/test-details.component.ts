@@ -5,12 +5,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DatafileService } from '../../../services/datafiles.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { Test } from '../../../models/test.model';
-import { Configuration } from 'src/app/models/configuration';
 import { TestsService } from 'src/app/services/tests.service';
-import { Datafile } from 'src/app/models/datafile';
+import { Datafile } from 'src/app/models/datafile.model';
 import { UploadsService } from 'src/app/services/uploads.service';
-
+import { Configuration } from 'src/app/models/configuration.model';
+import { Test } from 'src/app/models/test.model';
+import { Esquema } from '../../../models/esquema.model';
 
 @Component({
   selector: 'app-test-details',
@@ -18,27 +18,28 @@ import { UploadsService } from 'src/app/services/uploads.service';
   styleUrls: ['./test-details.component.css']
 })
 export class TestDetailsComponent implements OnInit {
-  test: Test;
-  datafile: Datafile;
-  datafileId: string;
+  isLoading                : boolean = false;
+  
+  testId                   : string;
+  test                     : Test;
+  selectedEsquema          : Esquema;
+  selectedConfigurationIDs : string[] = [];
+  
+  workspaceId              : string;
+  datafileId               : string;
+  datafile                 : Datafile;
+  esquemas                 : Esquema[];
+  configurations           : Configuration[];
+  formattedConfigs         : any[] = [];
+  
+  extension                : string = null;
+  fileName                 : string = null;
+  isSavingTest             : boolean = false;
+  edit                     : boolean;
+  
+  fileContentForm          : FormGroup;
+  testForm                 : FormGroup;
 
-  extension: string = null;
-  fileName: string = null;
-
-  workspaceId: string;
-  testId: string;
-  isLoading = false;
-  isSavingTest = false;
-  esquemas: any[];
-  selectedEsquema: any;
-  configurations: Configuration[] = [];
-  selectedConfigurations: string[] = [];
-
-  fileContentForm: FormGroup;
-  testForm: FormGroup;
-  edit: boolean;
-
-  // tslint:disable-next-line: max-line-length
   constructor(public testsService: TestsService, public datafilesService: DatafileService, public uploadsService: UploadsService, public route: ActivatedRoute,
               public usersService: AuthService, private router: Router){
                 this.testForm = new FormGroup({
@@ -47,54 +48,77 @@ export class TestDetailsComponent implements OnInit {
                 this.fileContentForm = new FormGroup({
                   'fileContent': new FormControl({value: '', disabled: true}),
                 });
-
   }
+  
   get invalidTitle() {
     return this.testForm.get('title').invalid && this.testForm.get('title').touched;
   }
+  
   ngOnInit(){
     this.isLoading = true;
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.datafileId = paramMap.get('datafileId');
       this.workspaceId = paramMap.get('workspaceId');
       this.testId = paramMap.get('testId');
+      console.log(this.testId)
       this.testsService.getTest(this.testId).subscribe( testData => {
-        this.test = testData.test;
-        console.log(this.test);
+        this.test = {
+          id: testData.test._id,
+          title: testData.test.title,
+          reportPath: testData.test.reportPath,
+          status: testData.test.status,
+          esquema: testData.test.esquema,
+          configurations: testData.test.configurations,
+          creationMoment: testData.test.creationMoment,
+          updateMoment: testData.test.updateMoment,
+          executionMoment: testData.test.executionMoment,
+          totalErrors: testData.test.totalErrors,
+          executable: testData.test.executable,
+          datafile: testData.test.datafile,
+        };
         this.testForm.reset({title: this.test.title});
-        this.selectedEsquema = testData.esquema;
-        this.selectedConfigurations = testData.configurations;
-        console.log(this.selectedEsquema);
-        console.log(this.selectedConfigurations);
+        this.selectedEsquema = {
+          id: testData.esquema._id,
+          title: testData.esquema.title,
+          contentPath: testData.esquema.contentPath,
+          creationMoment: testData.esquema.creationMoment,
+          datafile: testData.esquema.datafile,
+        }
+        this.selectedConfigurationIDs = testData.configurationIDs;
       });
       this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
         this.fileContentForm.patchValue({fileContent: datafileData.content});
 
-        this.datafile = datafileData.datafile;
-        console.log(this.datafile);
+        this.datafile = {
+          id: datafileData.datafile.id,
+          title: datafileData.datafile.title,
+          description: datafileData.datafile.description,
+          contentPath: datafileData.datafile.contentPath,
+          errLimit: datafileData.datafile.errLimit,
+          delimiter: datafileData.datafile.delimiter,
+          coleccion: datafileData.datafile.coleccion,
+          workspace: datafileData.datafile.workspace,
+        };
         this.esquemas = datafileData.esquemas;
-        console.log(this.esquemas);
-        const configsAux = datafileData.configurations;
-        console.log(datafileData.configurations);
+        this.configurations = datafileData.configurations;
 
         if (this.datafile.contentPath) {
           const nameWExtension = datafileData.datafile.contentPath.split('/');
-          const splitNameWExtension = nameWExtension[2].split('.');
+          const splitNameWExtension = nameWExtension[3].split('.');
           this.extension = splitNameWExtension[1];
 
-          const extension = '.' + splitNameWExtension[1];
-          const nameWDate = nameWExtension[2].split('-');
+          const nameWDate = splitNameWExtension[0].split('-');
           const name = nameWDate[0];
-          this.fileName = name + extension;
+          this.fileName = name + '.' + this.extension;
         }
-
-        configsAux.forEach(config => {
+        this.configurations.forEach(config => {
           const extraParamsJSON = JSON.stringify(config.extraParams).toString();
           const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
           const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
-          const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');
-          this.configurations.push({...config, extraParamsStr});
+          const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');      
+          this.formattedConfigs.push({...config, extraParamsStr});
         });
+
         this.isLoading = false;
         this.edit = false;
       });
@@ -106,7 +130,6 @@ export class TestDetailsComponent implements OnInit {
   async onDelete(){
     this.isLoading = true;
     await this.testsService.deleteTest(this.testId);
-    // /workspace/{{workspaceId}}/datafile/{{datafileId}}/test/{{test._id}}
     this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
   }
 
@@ -126,16 +149,18 @@ export class TestDetailsComponent implements OnInit {
     }
     this.isSavingTest = true;
     const values = this.testForm.getRawValue();
-    // tslint:disable-next-line: max-line-length
-    await this.testsService.updateTest(this.testId, values.title, this.test.esquema, this.selectedConfigurations, '');
-    this.testForm.reset({});
-    this.router.navigateByUrl('/', {skipLocationChange: true})
-    .then(() => {
-      this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}/test/${this.testId}`]);
-    }).catch( err => {
-      console.log(err);
-    });
-    this.isSavingTest = false;
+    this.test.title =  values.title;
+    this.test.executable = true;
+    // this.testsService.updateTest(this.test).subscribe( responseData => {
+    //   this.testForm.reset({});
+    //   this.router.navigateByUrl('/', {skipLocationChange: true})
+    //   .then(() => {
+    //     this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}/test/${this.testId}`]);
+    //   }).catch( err => {
+    //     console.log("Error on onSave method: "+err);
+    //   });
+    //   this.isSavingTest = false;
+    // });
   }
 
   async onSaveContent() {
@@ -153,12 +178,10 @@ export class TestDetailsComponent implements OnInit {
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, wsorksheetContent, worksheetName);
       const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array'});
-      // tslint:disable-next-line: max-line-length
+      // 
       const data: Blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-      console.log(data);
-      // tslint:disable-next-line: max-line-length
+      // 
       file = new File([data], this.fileName, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'});
-      console.log(file);
     } else {
       return;
     }
@@ -172,51 +195,43 @@ export class TestDetailsComponent implements OnInit {
   async onEsquemaPicked(event: Event) {
     const esquemaId = (event.target as HTMLInputElement).value;
     if (esquemaId){
-      // tslint:disable-next-line: max-line-length
-      await this.testsService.updateTest(this.testId, this.test.title, esquemaId, this.selectedConfigurations, '');
-      this.router.navigateByUrl('/', {skipLocationChange: true})
-      .then(() => {
-        this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}/test/${this.testId}`]);
-      }).catch( err => {
-        console.log(err);
-      });
+      this.test.esquema =  esquemaId;
+      this.test.executable = true;
+      // this.testsService.updateTest(this.test).subscribe( responseData => {
+      //   this.router.navigateByUrl('/', {skipLocationChange: true})
+      //   .then(() => {
+      //     this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}/test/${this.testId}`]);
+      //   }).catch( err => {
+      //     console.log("Error on onEsquemaPicked method: "+err);
+      //   });
+      // });
     }
   }
 
   checkConfig(configId: string){
-    return this.selectedConfigurations.includes(configId);
+    return this.selectedConfigurationIDs.includes(configId);
   }
 
   async onConfigurationPicked(event: Event) {
-    const configurationId = (event.target as HTMLInputElement).value;
+    const configurationId: string = (event.target as HTMLInputElement).value;
     const checked: boolean = (event.target as HTMLInputElement).checked;
-    const index: number = this.selectedConfigurations.indexOf(configurationId);
+    const index: number = this.selectedConfigurationIDs.indexOf(configurationId);
     if (checked && index < 0) {
-      console.log(configurationId);
-      this.selectedConfigurations.push(configurationId);
-      // tslint:disable-next-line: max-line-length
-      await this.testsService.updateTest(this.testId, this.test.title, this.test.esquema, this.selectedConfigurations, '');
-      this.router.navigateByUrl('/', {skipLocationChange: true})
-      .then(() => {
-        this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}/test/${this.testId}`]);
-      }).catch( err => {
-        console.log(err);
-      });
+      this.selectedConfigurationIDs.push(configurationId);
+      this.test.configurations = this.selectedConfigurationIDs;
+      this.test.executable = true;
+      // this.testsService.updateTest(this.test).subscribe( responseData => {
+      //   console.log("Added!")
+      // });
     } else if (!checked && index >= 0) {
-      console.log(configurationId);
-      this.selectedConfigurations.splice(index, 1);
-      // tslint:disable-next-line: max-line-length
-      await this.testsService.updateTest(this.testId, this.test.title, this.test.esquema, this.selectedConfigurations, '');
-      this.router.navigateByUrl('/', {skipLocationChange: true})
-      .then(() => {
-        this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}/test/${this.testId}`]);
-      }).catch( err => {
-        console.log(err);
-      });
+      this.selectedConfigurationIDs.splice(index, 1);
+      this.test.configurations = this.selectedConfigurationIDs;
+      this.test.executable = true;
+      // this.testsService.updateTest(this.test).subscribe( responseData => {
+      //   console.log("Added!")
+      // });
     }
-
   }
-
 
   onEditContent() {
     if (this.fileContentForm.get('fileContent').disabled) {
@@ -234,11 +249,9 @@ export class TestDetailsComponent implements OnInit {
       XLSX.utils.book_append_sheet(workbook, wsorksheetContent, worksheetName);
       XLSX.writeFile(workbook, this.fileName); // downloads it
       const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array'});
-      // tslint:disable-next-line: max-line-length
+      // 
       const data: Blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-      console.log(data);
       const file: File = new File([data], 'out.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'});
-      console.log(file);
     } else if (this.extension === 'csv') {
       const blob = new Blob([this.fileContentForm.value.fileContent], {type: 'text/csv' })
       saveAs(blob, this.fileName);

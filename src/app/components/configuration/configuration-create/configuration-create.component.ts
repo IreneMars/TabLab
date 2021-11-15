@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FricError } from 'src/app/models/fricErrors';
+import { Configuration } from 'src/app/models/configuration.model';
+import { FricError } from 'src/app/models/fricError.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { environment } from 'src/environments/environment';
@@ -12,19 +13,20 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./configuration-create.component.css']
 })
 export class ConfigurationCreateComponent implements OnInit, OnDestroy{
-  @Input() configurationForm: FormGroup;
-  private authStatusSub: Subscription;
-  // private fricErrorsSub: Subscription;
-  userIsAuthenticated = false;
-  userId: string;
-  @Input() datafileId;
-  @Input() workspaceId;
-  @Input() savefile;
-  @Input() extraControls: object[] = [];
-  @Output() configurationChange: EventEmitter<any> = new EventEmitter<any>();
-  @Input() configuration;
-  pickedError: any;
-  fricErrors: any;
+  userId                        : string;
+  userIsAuthenticated           : boolean = false;
+  @Input() configurationForm    : FormGroup;
+  @Input() datafileId           : string;
+  @Input() workspaceId          : string;
+  @Input() configurationId        : string;
+  @Input() savefile             : string;
+  @Input() extraControls        : object[] = [];
+  @Output() configurationChange : EventEmitter<any> = new EventEmitter<any>();
+  @Input() configuration        : Configuration;
+  pickedError                   : any;
+  fricErrors                    : any;
+  private authStatusSub         : Subscription;
+  // private fricErrorsSub         : Subscription;
 
   constructor(public configurationService: ConfigurationService, public route: ActivatedRoute,
               private usersService: AuthService, private router: Router) {
@@ -33,14 +35,10 @@ export class ConfigurationCreateComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.fricErrors = environment.errors;
     this.userIsAuthenticated = this.usersService.getIsAuth();
-    this.authStatusSub = this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.usersService.getUserId();
-    });
   }
 
   ngOnDestroy() {
-    this.authStatusSub.unsubscribe();
+    //this.authStatusSub.unsubscribe();
   }
 
   get invalidTitle() {
@@ -65,7 +63,6 @@ export class ConfigurationCreateComponent implements OnInit, OnDestroy{
     const errorCode = (event.target as HTMLInputElement).value;
     const fricError: any = this.fricErrors.find(element => element.errorCode === errorCode);
     this.pickedError = fricError;
-    console.log(this.pickedError);
     if (fricError.extraParams) {
       Object.keys(fricError.extraParams).forEach(extraParam => {
         let tipo = '';
@@ -102,7 +99,6 @@ export class ConfigurationCreateComponent implements OnInit, OnDestroy{
   }
 
   async onSave() {
-    console.log(this.configurationForm.value);
     // if (this.configuration) { // Modo edición
     //   if (this.configurationForm.get('title').invalid) {
     //     this.configurationForm.get('title').markAsTouched();
@@ -112,7 +108,7 @@ export class ConfigurationCreateComponent implements OnInit, OnDestroy{
     if (this.configurationForm.invalid){
       return Object.values(this.configurationForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
-          // tslint:disable-next-line: no-shadowed-variable
+          
           Object.values(control.controls).forEach( control => control.markAsTouched());
         } else {
           control.markAsTouched();
@@ -122,8 +118,7 @@ export class ConfigurationCreateComponent implements OnInit, OnDestroy{
     // }
     const values = this.configurationForm.getRawValue();
     if (this.configuration) {
-    // tslint:disable-next-line: max-line-length
-      await this.configurationService.updateConfiguration(this.configuration._id, values);
+      await this.configurationService.updateConfiguration(this.configurationId, values, this.datafileId);
     } else {
       await this.configurationService.addConfiguration(values, this.datafileId);
       // (document.getElementById('esquemaContent') as HTMLInputElement).value = '';
@@ -132,7 +127,7 @@ export class ConfigurationCreateComponent implements OnInit, OnDestroy{
     .then(() => {
       this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
     }).catch( err => {
-      console.log(err);
+      console.log("Error on onSave method: "+err);
     });
 
     // Resets

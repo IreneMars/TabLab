@@ -1,12 +1,12 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
-import { ActivatedRoute, ParamMap, Router } from "@angular/router";
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from "src/app/models/user.model";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute, ParamMap } from "@angular/router";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from "src/app/services/auth.service";
-import { WorkspaceService } from "src/app/services/workspaces.service";
+import { WorkspacesService } from "src/app/services/workspaces.service";
 import { mimeType } from "./mime-type.validator";
 import { UploadsService } from "src/app/services/uploads.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
+import { UsersService } from "src/app/services/users.service";
 
 @Component({
     selector: 'app-profile-edit',
@@ -21,8 +21,8 @@ export class ProfileEditComponent implements OnInit{
   @ViewChild(HeaderComponent) headerComponent: HeaderComponent;
 
 
-  constructor(public usersService: AuthService, public route: ActivatedRoute, public workspacesService: WorkspaceService, 
-    private router: Router, private uploadsService: UploadsService) {
+  constructor(public authService: AuthService, public usersService: UsersService, public route: ActivatedRoute, 
+              public workspacesService: WorkspacesService, private uploadsService: UploadsService) {
   }
     
   // createUserForm() {
@@ -44,13 +44,15 @@ export class ProfileEditComponent implements OnInit{
       this.isLoading = true;
       this.usersService.getUser(userId).subscribe(userData => {
       this.user = {
-          userId: userData.user._id,
-          username: userData.user.username,
-          name: userData.user.name,
-          email: userData.user.email,
-          photo: userData.user.photo,
-          role: userData.user.role,
-          password: userData.user.password
+        id: userData.user.id,
+        username: userData.user.username,
+        email: userData.user.email,
+        password: userData.user.password,
+        photo: userData.user.photo,
+        name: userData.user.name,
+        role: userData.user.role,
+        status: userData.user.status,
+        google: userData.user.google
       };
       this.userForm.reset({
         name: this.user.name,

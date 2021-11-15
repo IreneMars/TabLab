@@ -1,4 +1,4 @@
-const { User, Workspace, Role, Invitation, Collection, Datafile, Test, Esquema, Configuration } = require("../models");
+const { User, Workspace, Role, Invitation, Collection, Datafile, Test, Esquema, Configuration, Activity } = require("../models");
 
 const path = require("path");
 const fullPath = path.resolve("backend/populate.json");
@@ -116,6 +116,16 @@ exports.populate = async(req, res, next) => {
         reports.reports.push({ "message": message, "report": rep });
     } catch (err) {
         reports.errored_models.push({ "Test": err });
+    }
+
+    // Activities
+    try {
+        Activity.collection.drop();
+        var activitiesResult = await Activity.insertMany(populate_json_data.activities, { ordered: false, rawResult: true });
+        [message, rep] = create_report('activity', activitiesResult, populate_json_data.activities);
+        reports.reports.push({ "message": message, "report": rep });
+    } catch (err) {
+        reports.errored_models.push({ "Activity": err });
     }
 
     return res.status(200).json({

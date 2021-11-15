@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { WorkspaceService } from 'src/app/services/workspaces.service';
+import { WorkspacesService } from 'src/app/services/workspaces.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,15 +11,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./workspace-create.component.css']
 })
 export class WorkspaceCreateComponent implements OnInit, OnDestroy{
-  workspaceForm: FormGroup;
-  isLoading = false;
-  userIsAuthenticated = false;
-  userId: string;
-  create = true;
-  invitations: string[] = [];
-  private authStatusSub: Subscription;
+  isLoading             : boolean = false;
+  userId                : string;
+  userIsAuthenticated   : boolean = false;
+  create                : boolean = true;
+  invitations           : string[] = [];
+  workspaceForm         : FormGroup;
+  private authStatusSub : Subscription;
 
-  constructor( public workspacesService: WorkspaceService, private formBuilder: FormBuilder, private authService: AuthService,
+  constructor( public workspacesService: WorkspacesService, private formBuilder: FormBuilder, private authService: AuthService,
                private router: Router ) {
     this.createForm();
   }
@@ -65,7 +65,13 @@ export class WorkspaceCreateComponent implements OnInit, OnDestroy{
     }
     this.isLoading = true;
     const values = this.workspaceForm.getRawValue();
-    this.workspacesService.addWorkspace(values.title, values.description, this.invitations);
+    this.workspacesService.addWorkspace(values.title, values.description, false, this.invitations)
+    .then(()=>{
+      this.router.navigate(['/workspaces']);
+    })
+    .catch(err=>{
+      console.log("Error on onSave() method: "+err)
+    });
     this.isLoading = false;
   }
 

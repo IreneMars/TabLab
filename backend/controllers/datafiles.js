@@ -1,4 +1,4 @@
-const { Role, Collection, Workspace, Datafile, Configuration, Esquema, Test} = require("../models");
+const { Role, Collection, Workspace, Datafile, Configuration, Esquema, Test } = require("../models");
 var fs = require('file-system');
 const xlsxFile = require('read-excel-file/node');
 
@@ -8,7 +8,7 @@ exports.getDatafile = async(req, res, next) => {
         const datafile = await Datafile.findById(req.params.id);
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         if (roles.length !== 1) {
-            return res.status(403).json({ 
+            return res.status(403).json({
                 message: "You are not authorized to fetch this datafile."
             });
         }
@@ -20,7 +20,6 @@ exports.getDatafile = async(req, res, next) => {
             if (extension === 'csv') {
                 fs.readFile(datafile.contentPath, 'utf8', (err, data) => {
                     if (err) {
-                        console.log(err)
                         return res.status(500).json({
                             message: "Fetching the content of the csv file of this datafile failed!"
                         });
@@ -38,6 +37,7 @@ exports.getDatafile = async(req, res, next) => {
             } else if (extension === 'xlsx') {
                 xlsxFile(datafile.contentPath).then((rows) => {
                     return res.status(200).json({
+                        message: "Sucessful fetch!",
                         datafile: datafile,
                         content: rows,
                         esquemas: esquemas,
@@ -52,13 +52,14 @@ exports.getDatafile = async(req, res, next) => {
             }
         } else {
             return res.status(200).json({
+                message: "Sucessful fetch!",
                 datafile: datafile,
                 content: null,
                 esquemas: esquemas,
                 configurations: configurations,
                 tests: tests
             });
-        }     
+        }
     } catch (err) {
         return res.status(500).json({
             message: "Fetching a datafile failed!"
@@ -80,21 +81,41 @@ exports.createDatafile = async(req, res, next) => {
             return res.status(500).json({
                 message: "There is no collection with that id and the current workspace."
             });
-        } 
+        }
         const datafile = new Datafile({
             title: req.body.title,
             description: req.body.description,
             contentPath: null,
-            limitErrors: null,
+            errLimit: null,
             delimiter: null,
             coleccion: req.body.coleccion,
             workspace: req.body.workspace
         });
         const createdDatafile = await datafile.save();
+
+        const workspace = await Workspace.findById(createdDatafile.workspace);
+        const user = await User.findById(current_user_id);
+        var messageAux = "{{author}} añadió el fichero al espacio de trabajo {{workspace}}";
+        var coleccionAux = null;
+        if (createdDatafile.collection) {
+            messageAux = "{{author}} añadió el fichero al espacio de trabajo {{workspace}} (en la colección {{coleccion}})";
+            const coleccion = await Collection.findById(createdDatafile.collection);
+            coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
+        }
+        const activity = new Activity({
+            message: messageAux,
+            workspace: { 'id': workspace._id, 'title': workspace.title },
+            author: { 'id': current_user_id, 'name': user.name },
+            coleccion: coleccionAux,
+            datafile: { 'id': datafile._id, 'title': datafile.title },
+            creationMoment: null
+        });
+        await activity.save();
+
         return res.status(201).json({
             message: "Datafile added successfully!",
             datafile: createdDatafile
-        });    
+        });
     } catch (err) {
         return res.status(500).json({
             message: "Creating a datafile failed!"
@@ -102,7 +123,7 @@ exports.createDatafile = async(req, res, next) => {
     }
 };
 
-exports.updateDatafile = async(req, res) => { 
+exports.updateDatafile = async(req, res) => {
     current_user_id = req.userData.userId;
     try {
         const datafile = await Datafile.findById(req.params.id);
@@ -112,13 +133,33 @@ exports.updateDatafile = async(req, res) => {
                 message: "You are not authorized to update a datafile from this workspace."
             });
         }
-        await Datafile.findByIdAndUpdate(req.params.id,{title: req.body.title, description: req.body.description});
+        await Datafile.findByIdAndUpdate(req.params.id, { title: req.body.title, description: req.body.description });
         const updatedDatafile = await Datafile.findById(req.params.id);
-        return res.status(200).json({ 
+
+        const workspace = await Workspace.findById(updatedDatafile.workspace);
+        const user = await User.findById(current_user_id);
+        var messageAux = "{{author}} modificó el fichero del espacio de trabajo {{workspace}}";
+        var coleccionAux = null;
+        if (updatedDatafile.collection) {
+            messageAux = "{{author}} modificó el fichero del espacio de trabajo {{workspace}} (de la colección {{coleccion}})";
+            const coleccion = await Collection.findById(updatedDatafile.collection);
+            coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
+        }
+        const activity = new Activity({
+            message: messageAux,
+            workspace: { 'id': workspace._id, 'title': workspace.title },
+            author: { 'id': current_user_id, 'name': user.name },
+            coleccion: coleccionAux,
+            datafile: { 'id': datafile._id, 'title': datafile.title },
+            creationMoment: null
+        });
+        await activity.save();
+
+        return res.status(200).json({
             message: "Update successful!",
             datafile: updatedDatafile
         });
-        
+
     } catch (err) {
         return res.status(500).json({
             message: "Updating a datafile failed!"
@@ -129,18 +170,38 @@ exports.updateDatafile = async(req, res) => {
 exports.deleteDatafile = async(req, res) => {
     const current_user_id = req.userData.userId;
     try {
-        const datafile = await Datafile.findById(req.params.id); 
+        const datafile = await Datafile.findById(req.params.id);
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         if (roles.length !== 1) {
-            return res.status(403).json({ 
+            return res.status(403).json({
                 message: "You are not authorized to delete a datafile from this workspace."
             })
         }
         await Datafile.deleteOne({ _id: req.params.id });
-        return res.status(200).json({ 
-            message: "Datafile deletion successful!" 
+
+        const workspace = await Workspace.findById(datafile.workspace);
+        const user = await User.findById(current_user_id);
+        var messageAux = "{{author}} eliminó el fichero del espacio de trabajo {{workspace}}";
+        var coleccionAux = null;
+        if (datafile.collection) {
+            messageAux = "{{author}} eliminó el fichero del espacio de trabajo {{workspace}} (de la colección {{coleccion}})";
+            const coleccion = await Collection.findById(datafile.collection);
+            coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
+        }
+        const activity = new Activity({
+            message: messageAux,
+            workspace: { 'id': workspace._id, 'title': workspace.title },
+            author: { 'id': current_user_id, 'name': user.name },
+            coleccion: coleccionAux,
+            datafile: { 'id': datafile._id, 'title': datafile.title },
+            creationMoment: null
         });
-        
+        await activity.save();
+
+        return res.status(200).json({
+            message: "Datafile deletion successful!"
+        });
+
     } catch (err) {
         return res.status(500).json({
             message: "Deleting a datafile failed!"

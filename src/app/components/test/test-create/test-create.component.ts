@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Papa } from 'ngx-papaparse';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { TestsService } from 'src/app/services/tests.service';
-import { EsquemaService } from '../../../services/esquemas.service';
 
 @Component({
   selector: 'app-test-create',
@@ -13,22 +11,21 @@ import { EsquemaService } from '../../../services/esquemas.service';
   styleUrls: ['./test-create.component.css']
 })
 export class TestCreateComponent implements OnInit, OnDestroy{
-  @Input() testForm: FormGroup;
-  private authStatusSub: Subscription;
-  userIsAuthenticated = false;
-  userId: string;
-  @Input() workspaceId;
-  @Input() datafileId;
+  userId                   : string;
+  userIsAuthenticated      : boolean = false;
+  selectedConfigurations   : string[];
+  @Input() testForm        : FormGroup;
+  @Input() workspaceId     : string;
+  @Input() datafileId      : string;
+  //@Input() testSave        : boolean;
+  @Output() testSaveChange : EventEmitter<any> = new EventEmitter<any>();
+  @Input() esquemas        : any[];
+  @Input() configurations  : any[];
+  //@Input() test            : any;
+  private authStatusSub    : Subscription;
 
-  @Input() testSave;
-  @Output() testSaveChange: EventEmitter<any> = new EventEmitter<any>();
-  @Input() esquemas;
-  @Input() configurations;
-  @Input() test;
-  selectedConfigurations: string[];
-
-  constructor(public testService: TestsService, public route: ActivatedRoute, private papa: Papa,
-              private formBuilder: FormBuilder, private router: Router) {
+  constructor(public testService: TestsService, public route: ActivatedRoute,
+              private formBuilder: FormBuilder, private router: Router, private usersService: AuthService) {
                 this.createForm();
                 this.testForm.reset({
                   title: '',
@@ -47,15 +44,15 @@ export class TestCreateComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
-    // this.userIsAuthenticated = this.usersService.getIsAuth();
-    // this.authStatusSub = this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
-    //   this.userIsAuthenticated = isAuthenticated;
-    //   this.userId = this.usersService.getUserId();
-    // });
+    this.userIsAuthenticated = this.usersService.getIsAuth();
+    this.authStatusSub = this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
+      this.userIsAuthenticated = isAuthenticated;
+      this.userId = this.usersService.getUserId();
+    });
   }
 
   ngOnDestroy() {
-    // this.authStatusSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 
   get invalidTitle() {
@@ -66,7 +63,7 @@ export class TestCreateComponent implements OnInit, OnDestroy{
     if (this.testForm.invalid){
       return Object.values(this.testForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
-          // tslint:disable-next-line: no-shadowed-variable
+          
           Object.values(control.controls).forEach( control => control.markAsTouched());
         } else {
           control.markAsTouched();
@@ -79,7 +76,7 @@ export class TestCreateComponent implements OnInit, OnDestroy{
       .then(() => {
         this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
       }).catch( err => {
-        console.log(err);
+        console.log("Error on onSave method: "+err);
       });
     this.testForm.reset({});
     this.selectedConfigurations = [];
@@ -87,7 +84,6 @@ export class TestCreateComponent implements OnInit, OnDestroy{
 
   onConfigurationPicked(event: Event) {
     const configurationId = (event.target as HTMLInputElement).value;
-    console.log(configurationId);
     const checked: boolean = (event.target as HTMLInputElement).checked;
     const index: number = this.selectedConfigurations.indexOf(configurationId);
     if (checked && index < 0) {
@@ -101,14 +97,12 @@ export class TestCreateComponent implements OnInit, OnDestroy{
   onEsquemaPicked(event: Event) {
     const esquemaId = (event.target as HTMLInputElement).value;
     if (esquemaId){
-      console.log(esquemaId);
       this.testForm.patchValue({esquema: esquemaId});
     }
   }
 
   onCancel() {
     this.testForm.reset({});
-    console.log(this.testForm);
     this.selectedConfigurations = [];
   }
 }

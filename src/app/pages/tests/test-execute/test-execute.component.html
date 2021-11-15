@@ -1,7 +1,7 @@
 <div class="row complete-height">
-    <div class="col-2">
+    <div class="col-3">
     </div>
-    <div class="col-6">
+    <div class="col-5">
         <div class="mt-2" *ngIf="isLoading">
             <mat-spinner></mat-spinner>
         </div>
@@ -9,13 +9,12 @@
         <div class="container mt-4">
             <div class="row mt-4" *ngIf="!isLoading">
                 <div class="col-6">
-                    <h2>Runner</h2>
+                    <h2>Runner</h2>{{selectedTestIDs}}
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                    <div>
+                    <div *ngIf="selectedTestIDs.size>0">
                         <button class="btn btn-outline-light btn-sm" type="button" *ngIf="!inExecution" (click)="onExecute()">
-                          <i class="fas fa-play"></i>
-                        Ejecutar
+                          <i class="fas fa-play"></i> Ejecutar
                         </button>
                         <button class="btn btn-outline-light btn-sm" type="button" *ngIf="inExecution">
                           <!-- <i class="fas fa-play"></i> -->
@@ -30,35 +29,26 @@
                     <h2 class="mb-0">Orden de Ejecución</h2>
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                    <div>
-                        <a>Deseleccionar todos</a>
-                    </div>
-                    <div class="ms-1">
-                        <a>Seleccionar todos</a>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="selectAllTests" (change)="onSelectAll($event)" [checked]="selectedTestIDs.size === tests.length">
+                        <label class="form-check-label" for="selectAllTests">
+                                Seleccionar Todos
+                            </label>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <div class="container overflow-auto my-scrollbar">
-                        <div class="row pt-2" *ngFor="let datafile of datafilesWTests">
+                        <div class="row pt-2" *ngFor="let test of tests">
                             <div class="col-8 pt-2 pb-1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="datafileCheck" value="{{datafile.datafile._id}}" [checked]="checkDatafile(datafile.datafile._id)">
+                                    <input class="form-check-input" type="checkbox" id="datafileCheck" value="{{test.id}}" (change)="onTestPicked($event)" [checked]="checkTest(test.id)">
                                     <label class="form-check-label" for="datafileCheck">
-                                      {{datafile.datafile.title}}
+                                        {{test.title}} ({{test.datafileTitle}})
                                     </label>
                                 </div>
 
-                            </div>
-                            <div class="col-4 pt-1 pb-1 justify-content-end">
-                                <div>
-                                    <select class="form-select form-select-sm" (change)="onTestPicked($event)">
-                                      <!-- <option value="{{selectedTest._id}}" selected *ngIf="selectedTest in datafile.tests"> {{selectedTest.title}} </option> --> -->
-                                      <option *ngFor="let test of datafile.tests" ng-selected="{{selectedTest == test}}" value="{{test._id}}">{{test.title}}</option>
-
-                                    </select>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -121,7 +111,7 @@
                             <div class="col">
                                 <div class="row mt-1 mb-1" *ngFor="let test of tests">
                                     <div class="col-3 d-flex justify-content-start">
-                                        <div>{{test.title}}</div>
+                                        <p>{{test.title}}</p>
                                     </div>
                                     <div class="col-2 d-flex justify-content-center">
                                         <div>{{test.status}}</div>
@@ -134,9 +124,9 @@
                                         <div>{{test.executionMoment | date:'EEEE d MMMM y, h:mm:ss'}}</div>
                                     </div>
                                     <div class="col-2 d-flex justify-content-center">
-                                        <div>
+                                        <div *ngIf="test.totalErrors && test.totalErrors>0">
                                             <button class="btn btn-outline-light btn-sm" type="button">
-                                              <i class="fas fa-download"></i>
+                                              <i class="fas fa-download" (click)="onDownload(test.id)"></i>
                                             </button>
                                         </div>
                                     </div>

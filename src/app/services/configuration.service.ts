@@ -1,45 +1,38 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Esquema } from '../models/esquema';
+import { Configuration } from '../models/configuration.model';
 
 const BACKEND_URL = environment.apiUrl + '/configurations/';
-export interface ConfigForm {
-  title: string;
-  errorCode: string;
-  extraParams: object;
-}
+
 @Injectable({providedIn: 'root'})
 export class ConfigurationService {
   
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
   
   getConfiguration(configurationId: string) {
-    // tslint:disable-next-line: max-line-length
-    return this.http.get<{configuration: any}>(BACKEND_URL + configurationId);
+    // 
+    return this.http.get<{message:string, configuration: any}>(BACKEND_URL + configurationId);
   }
   
   addConfiguration(values: any, datafileId: string){
-    let res;
-    const configuration = {...values};
-    const {title, errorCode, ...extraParams} = configuration;
-    const configurationData = {'title': title, 'errorCode': errorCode, 'extraParams': extraParams, 'datafile': datafileId};
+    let res: any;
+    //const configuration = {...values};
+    const {title, errorCode, ...extraParams} = values;
+    const configuration: Configuration = {
+      'id':null,
+      'title': title, 
+      'creationMoment': null, 
+      'errorCode': errorCode, 
+      'extraParams': extraParams, 
+      'datafile': datafileId
+    };
 
-    this.http.post<{message: string, configuration: any}>(
-        BACKEND_URL,
-        configurationData
-      )
-      .subscribe(
-        responseData => {
-          res = responseData;
-        },
-        error => {
-          console.log(error);
-        }
-    );
+    this.http.post<{message: string, configuration: any}>(BACKEND_URL, configuration).subscribe( responseData => {
+      res = responseData;
+    });
+    
     return new Promise((resolve, reject) => {
           setTimeout(() => {
             if (res === undefined) {
@@ -51,37 +44,47 @@ export class ConfigurationService {
         });
   }
  
-  updateConfiguration(configurationId: string, values: any) {
-    let res;
-    const configuration = {...values};
-    const {title, errorCode, ...extraParams} = configuration;
-    const configurationData = {'title': title, 'errorCode': errorCode, 'extraParams': extraParams};
+  updateConfiguration(configurationId: string, values: any, datafileId: string) {
+    let res: any;
+    //const configuration = {...values};
+    const {title, errorCode, ...extraParams} = values;
+    const configuration: Configuration = {
+      'id': configurationId,
+      'title': title, 
+      'creationMoment': null, 
+      'errorCode': errorCode, 
+      'extraParams': extraParams, 
+      'datafile': datafileId
+    };
     
-    this.http.put(BACKEND_URL + configurationId, configurationData).subscribe( response => {
+    this.http.put<{message: string, configuration: any}>(
+      BACKEND_URL + configurationId,
+      configuration
+    ).subscribe( response => {
       res = response;
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject();
+          reject('Updating a configuration failed!');
         } else {
-          resolve(true);
+          resolve('Configuration updated successfully!');
         }
       }, 1000);
     });
   }
   
-  deleteConfiguration(id: string){
-    let res;
-    this.http.delete(BACKEND_URL +  id).subscribe( responseData => {
+  deleteConfiguration(configurationId: string){
+    let res: any;
+    this.http.delete<{message: string}>(BACKEND_URL + configurationId).subscribe( responseData => {
       res = responseData;
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject();
+          reject('Deleting a configuration failed!');
         } else {
-          resolve(true);
+          resolve('Configuration deleted successfully!');
         }
       }, 1000);
     });

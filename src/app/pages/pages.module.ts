@@ -16,6 +16,7 @@ import { TestExecuteComponent } from './tests/test-execute/test-execute.componen
 import { ProfileDetailsComponent } from './profile/profile-details/profile-details.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
 import { ProfileAccountEditComponent } from './profile/profile-account-edit/profile-account-edit.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ProfileAccountEditComponent } from './profile/profile-account-edit/prof
     TestExecuteComponent,
     ProfileDetailsComponent,
     ProfileEditComponent,
-    ProfileAccountEditComponent
+    ProfileAccountEditComponent,
+    ConfigurationComponent
   ],
   imports: [
     CommonModule,

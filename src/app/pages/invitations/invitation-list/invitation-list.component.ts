@@ -16,28 +16,28 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./invitation-list.component.css']
 })
 export class InvitationListComponent implements OnInit, OnDestroy{
-  invitationForm: FormGroup;
-  isLoading = false;
-  invalidEmail = false;
-  workspaceId;
+  userId                   : string;
+  userIsAuthenticated      : boolean = false;
+  isLoading                : boolean = false;
+  workspaceId              : string;
+  invalidEmail             : boolean = false;
+  
+  displayedColumns         : string[] = ['sender', 'workspace', 'status'];
+ 
+  invitations              : Invitation[] = [];
+  totalInvitations         : number = 0;
+  invitationsPerPage       : number = 2;
+  currentPage              : number = 1;
+  dataSource               : any = null;
+  pageSizeOptions          : number[] = [1, 2, 5, 10];
+  private invitationsSub   : Subscription;
+  private authStatusSub    : Subscription;
+  invitationForm           : FormGroup;
 
-  displayedColumns: string[] = ['title', 'description', 'creationMoment', 'users'];
-  clickedRows = new Set<Invitation>();
-  // dataSource = [];
-  invitations: Invitation[] = [];
-  totalInvitations = 0;
-  invitationsPerPage = 2;
-  currentPage = 1;
-  dataSource = null;
-  pageSizeOptions = [1, 2, 5, 10];
-  userIsAuthenticated = false;
-  userId: string;
-  private invitationsSub: Subscription;
-  private authStatusSub: Subscription;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort : MatSort;
 
   constructor(public invitationsService: InvitationService, public authService: AuthService, private formBuilder: FormBuilder,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute, private router: Router) {
     this.createForm();
   }
 
@@ -46,7 +46,6 @@ export class InvitationListComponent implements OnInit, OnDestroy{
       email : ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9._]+\.[a-z]{2,3}$')]],
     });
   }
-
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -58,11 +57,9 @@ export class InvitationListComponent implements OnInit, OnDestroy{
       this.isLoading = false;
       this.totalInvitations = invitationData.totalInvitations;
       this.invitations = invitationData.invitations;
-      
-      const dataSource = new MatTableDataSource(this.invitations);
-      dataSource.sort = this.sort;
-
-      });
+      this.dataSource = new MatTableDataSource(this.invitations);
+      this.dataSource.sort = this.sort;
+    });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
@@ -75,14 +72,9 @@ export class InvitationListComponent implements OnInit, OnDestroy{
   }
 
   onChangedPage( pageData: PageEvent ) {
-    this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.invitationsPerPage = pageData.pageSize;
     this.invitationsService.getInvitations(this.invitationsPerPage, this.currentPage);
-    // console.log('New call');
-    // console.log('Current page: '+ this.currentPage);
-    // console.log('Workspace per page: '+ this.workspacesPerPage);
-    // console.log('Total workspaces: '+ this.totalWorkspaces);
   }
 
   ngOnDestroy(): void {
@@ -95,7 +87,7 @@ export class InvitationListComponent implements OnInit, OnDestroy{
       this.invalidEmail = true;
       return Object.values(this.invitationForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
-          // tslint:disable-next-line: no-shadowed-variable
+          
           Object.values(control.controls).forEach( control => control.markAsTouched());
         } else {
           control.markAsTouched();
@@ -105,13 +97,27 @@ export class InvitationListComponent implements OnInit, OnDestroy{
 
     // this.isLoading = true;
     const values = this.invitationForm.getRawValue();
-    this.invitationsService.addInvitation(values.email, this.workspaceId);
+    this.invitationsService.addInvitation(values.email, this.workspaceId)
+    .then(response=>{
+      this.router.navigate(['/']);
+    })
+    .catch(err=>{
+      console.log("Error on onInvite method: "+err);
+    });
     this.invitationForm.reset();
     // this.isLoading = false;
   }
 
   onEditStatus(object, newStatus) {
-    this.invitationsService.updateInvitation(object.id, newStatus);
+    this.invitationsService.updateInvitation(object.id, newStatus)
+      .then(response=>{
+        // this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+        // this.router.navigate(['/invitations']));
+        window.location.reload();
 
+      })
+      .catch(err=>{
+        console.log("Error on onInvite method: "+err);
+      });
   }
 }

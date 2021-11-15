@@ -1,7 +1,7 @@
 export interface Invitation {
-  // id: string;
-  // sender: string;
+  id: string;
+  sender: string;
   receiver: string;
+  status: string;
   workspace: string;
-  // status: string;
 }

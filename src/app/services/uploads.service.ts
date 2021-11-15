@@ -7,6 +7,7 @@ const BACKEND_URL = environment.apiUrl + '/uploads/';
 
 @Injectable({ providedIn: 'root' })
 export class UploadsService {
+  
   constructor(private http: HttpClient, private router: Router) {}
 
   updatePhoto(userId: string, photo: string | File){
@@ -20,7 +21,6 @@ export class UploadsService {
     } else { 
         userData = {'userId':userId,'entity':'users','filePath': photo}; 
     } 
-    console.log(userData)
     this.http
       .put(BACKEND_URL + userId, userData)
       .subscribe( response => {

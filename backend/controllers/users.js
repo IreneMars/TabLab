@@ -1,122 +1,5 @@
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-
-const {User, Role} = require("../models");
-
-const { googleVerify, generateJWT } = require('../helpers');
-
-exports.login = async(req, res) => {
-    try {
-        const fetchedUser = await User.findOne({ username: req.body.username });
-        if (!fetchedUser) { // verify if user exists
-            return res.status(400).json({
-                message: "Username not found."
-            });
-        }
-        if (!fetchedUser.status) { // verify if status is active
-            return res.status(400).json({
-                message: "User status is false (not active)."
-            });
-        }
-
-        const validPassword = await bcrypt.compare(req.body.password, fetchedUser.password);
-        if (!validPassword) { // verify password
-            return res.status(400).json({
-                message: "Incorrect password."
-            });
-        }
-
-        // JWT generation
-        const token = await generateJWT(fetchedUser._id);
-        return res.status(200).json({
-            token: token,
-            expiresIn: 3600,
-            user: fetchedUser,
-        });
-    } catch (err) {
-        return res.status(500).json({
-            message: "Login failed!"
-        });
-    }
-};
-
-exports.googleLogin = async(req, res) => {
-    const { tokenId } = req.body;
-    try {
-        const { email, name, img } = await googleVerify(tokenId);
-        var fetchedUser = await User.findOne({ email: email });
-        if (!fetchedUser) {
-            // Tengo que crearlo
-            const data = {
-                name,
-                email,
-                password: ':P',
-                img,
-                google: true
-            };
-            fetchedUser = new User(data);
-            await fetchedUser.save();
-        }
-        // Si el usuario en DB
-        if (!fetchedUser.status) {
-            return res.status(401).json({
-                msg: 'Talk to the admin, user blocked.'
-            });
-        }
-        // JWT generation
-        const token = await generateJWT(fetchedUser._id);
-
-        return res.status(200).json({
-            token: token,
-            expiresIn: 3600,
-            user: fetchedUser
-        });
-    } catch (error) {
-        return res.status(400).json({
-            msg: 'Invalid Google token.'
-        });
-    }
-};
-
-exports.getUser = async(req, res) => {
-    const current_user_id = req.userData.userId;
-    try {
-        //Error if the user is fetching the data of another user
-        if (current_user_id !== req.params.id) {            
-            return res.status(403).json({ message: "You are not authorized to fetch this user!" });
-        }        
-        const user = await User.findById(req.params.id);
-        return res.status(200).json({
-            user: user,
-        });
-    } catch (err) {
-        return res.status(500).json({
-            message: "Fetching a user failed!"
-        });
-    }
-};
-
-exports.getUsers = async(req, res) => {
-    const { limit = 5, from = 0 } = req.query;
-    const query = { status: true };
-    try {
-        const [total, users] = await Promise.all([
-            User.countDocuments(query),
-            User.find(query)
-            .skip(Number(from))
-            .limit(Number(limit))
-        ]);
-        return res.status(200).json({
-            message: "Users fetched!",
-            total,
-            users
-        });
-    } catch (err) {
-        return res.status(500).json({
-            message: "Fetching users failed!"
-        });
-    }
-};
+const { User, Role, Workspace } = require("../models");
 
 exports.getUsersByWorkspace = async(req, res) => {
     try {
@@ -125,22 +8,33 @@ exports.getUsersByWorkspace = async(req, res) => {
             return elem.user.toString();
         });
         user_ids = [...new Set(user_ids)];
-        User.find({ '_id': { $in: user_ids } })
-            .then(documents => {
-                return res.status(200).json({
-                    message: "Users fetched successfully!",
-                    users: documents,
-                });
-            })
-            .catch(error => {
-                return res.status(500).json({
-                    message: "Fetching users failed!"
-                });
-            });
-
+        const users = await User.find({ '_id': { $in: user_ids } })
+        return res.status(200).json({
+            message: "Users fetched successfully!",
+            users: users,
+        });
     } catch (err) {
         return res.status(500).json({
             message: "Fetching users failed!"
+        });
+    }
+};
+
+exports.getUser = async(req, res) => {
+    const current_user_id = req.userData.userId;
+    try {
+        //Error if the user is fetching the data of another user
+        if (current_user_id !== req.params.id) {
+            return res.status(403).json({ message: "You are not authorized to fetch this user!" });
+        }
+        const user = await User.findById(req.params.id);
+        return res.status(200).json({
+            message: "Successful fetching!",
+            user: user,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: "Fetching a user failed!"
         });
     }
 };
@@ -155,10 +49,26 @@ exports.createUser = async(req, res) => {
             password: hash,
             role: "USER",
         });
-        await user.save();
+        const savedUser = await user.save();
+        const workspace = new Workspace({
+            title: 'Espacio de Trabajo Personal',
+            description: '',
+            creationMoment: null,
+            mandatory: false,
+        });
+        const savedWorkspace = await workspace.save();
+        const role = new Role({
+            role: 'owner',
+            workspace: savedWorkspace._id,
+            user: savedUser._id,
+        });
+        const savedRole = await role.save();
+
         return res.status(201).json({
             message: "User created!",
-            user: user
+            user: savedUser,
+            workspace: savedWorkspace,
+            role: savedRole,
         });
     } catch (err) {
         return res.status(500).json({
@@ -171,36 +81,36 @@ exports.createUser = async(req, res) => {
 exports.updateUser = async(req, res) => {
     current_user_id = req.userData.userId;
     try {
-        const user = await User.findById(req.params.id);          
+        const user = await User.findById(req.params.id);
         if (req.body.email !== null) {
             user.email = req.body.email;
         } else if (req.body.newPass === null) {
-            user.name = req.body.name; 
-            user.username = req.body.username; 
+            user.name = req.body.name;
+            user.username = req.body.username;
         } else if (req.body.newPass !== null) {
             const validCurrentPassword = await bcrypt.compare(req.body.actualPass, user.password);
             const validNewPassword = (req.body.newPass === req.body.repeatPass);
-            if (!validCurrentPassword ) { // verify password
+            if (!validCurrentPassword) { // verify password
                 return res.status(400).json({
                     message: "Incorrect current password."
                 });
-            } else if(!validNewPassword) {
+            } else if (!validNewPassword) {
                 return res.status(400).json({
                     message: "The new and the repeated password are not identical."
                 });
             } else {
                 const hash = await bcrypt.hash(req.body.newPass, 10);
                 user.password = hash;
-            }                  
+            }
         }
-        
-        await User.findByIdAndUpdate(req.params.id,user);          
+
+        await User.findByIdAndUpdate(req.params.id, user);
         const updatedUser = await User.findById(req.params.id);
         return res.status(200).json({
             message: "User updated successfully!",
             user: updatedUser
         });
-        
+
     } catch (err) {
         return res.status(500).json({
             message: "Updating an user failed!"
@@ -209,14 +119,21 @@ exports.updateUser = async(req, res) => {
 };
 
 exports.deleteAccount = async(req, res) => {
+    current_user_id = req.userData.userId;
     try {
         const { id } = req.params;
         // We don't delete it physically, but we mark its status as false
-        const user = await User.findByIdAndUpdate(id, { status: false });
-
+        const user = await User.findById(id);
+        if (id !== current_user_id || user.role !== 'ADMIN') {
+            return res.status(403).json({
+                message: "You are not authorized to delete this user!"
+            });
+        }
+        await User.findByIdAndUpdate(id, { status: false });
+        const updatedUser = await User.findById(id);
         return res.status(200).json({
             message: "User deleted! (status: false)",
-            user: user
+            user: updatedUser
         });
     } catch (err) {
         return res.status(500).json({

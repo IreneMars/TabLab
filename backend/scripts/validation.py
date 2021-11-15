@@ -255,6 +255,9 @@ def validate_file(file_path, schema_file=None,  errors_file_name=None, delimiter
     dialect = {
             "delimiter": "|"
         }
+    if schema_file=="":
+        schema_file = None
+
     resource = Resource(path=file_path,schema=schema_file,dialect=dialect)
     resource.infer(stats=True)
     total_poss_errors = resource['stats']['fields']*resource['stats']['rows']
@@ -315,11 +318,14 @@ out_path = sys.argv[1]
 esquema_path = sys.argv[2];
 file_path = sys.argv[3];
 configurations = [{'code':sys.argv[4]}]
-print('Out Path: '+out_path);
-print('Esquema: '+esquema_path);
-print('File: '+file_path);
-print("Configurations:");
-print(configurations);
+
+logger.info('Out Path: '+out_path);
+logger.info('Esquema: '+esquema_path);
+logger.info('File: '+file_path);
+logger.info('Out Path: '+out_path);
+logger.info("Configurations:");
+logger.info(configurations);
+
 # outlets_schema_file = 'schema/geomarketing/outlets_schema_2.yaml'
 # outlets_source_file = "data/corporate/POI_POI_2019_H2_GMK_V1212_short.xlsx"
 # configurations = [{'code':'type-error'}]
@@ -329,10 +335,10 @@ validate_file(file_path, schema_file=esquema_path, configurations=configurations
 #                 {"code":"row-constraint", "formula": "-180.0 <= LONGITUDE <= 180.0", "fieldName": "LONGITUDE"}]
 # # validate_file(outlets_source_file, schema_file=outlets_schema_file, configurations=configurations)
 
-# dmf_schema_file = 'schema/dmf/dmf_schema.yaml'
-# dmf_source_file = "data/france/dmf/fulls_DMF_FULL_V1_20200504_short.csv"
-# configurations = [{'code':'task-error'}]
-# delimiter="|"
-# #validate_file(dmf_source_file, schema_file=dmf_schema_file, delimiter=None, configurations=configurations)
+# dmf_schema_file = None
+# dmf_source_file = r'backend\uploads\datafiles\capital.csv'
+# configurations = []
+# delimiter=","
+# validate_file(dmf_source_file, schema_file=dmf_schema_file, delimiter=None, configurations=configurations)
 
 # infer_schema("../data/short.xlsx")

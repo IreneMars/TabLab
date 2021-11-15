@@ -12,7 +12,8 @@
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </button>
             <!-- [esquemaForm]="esquemaForm" (savefileChange)="setSaveMode($event)" (esquemaChange)="setEsquema($event)"-->
-            <app-test-create [workspaceId]="workspaceId" [datafileId]="datafileId" [test]="test" [esquemas]="esquemas" [configurations]="configurations"></app-test-create>
+            <app-test-create [workspaceId]="workspaceId" [datafileId]="datafileId" [esquemas]="esquemas" [configurations]="configurations"></app-test-create>
+            <!-- [test]="test" -->
         </div>
     </div>
 </div>
@@ -45,8 +46,8 @@
                                               <i class="fas fa-ellipsis-h"></i>
                                             </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" data-bs-toggle="modal" routerLink="/workspace/{{workspaceId}}/datafile/{{datafileId}}/test/{{test._id}}">Editar Prueba</a></li>
-                                    <li><a class="dropdown-item danger" (click)="onDelete(test._id)">Eliminar Prueba</a></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" routerLink="/workspace/{{workspaceId}}/datafile/{{datafileId}}/test/{{test.id}}">Editar Prueba</a></li>
+                                    <li><a class="dropdown-item danger" (click)="onDelete(test.id)">Eliminar Prueba</a></li>
                                 </ul>
                             </div>
                         </div>

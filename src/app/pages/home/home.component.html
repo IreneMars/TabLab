@@ -2,9 +2,17 @@
     <div *ngIf="!userIsAuthenticated">
         <div class="m-3">
             <h1>Prueba tus tablas!</h1>
-
             <p class="text-align-left">Ahorra tiempo validando tus tablas de forma rápida y sencilla mediante el uso de TabLab.</p>
         </div>
+    </div>
+    <div *ngIf="userIsAuthenticated" class="row ps-2 pe-2 complete-height">
+        <div class="col-3 p-0"></div>
+        <div class="col-6">
+            <h1>Prueba tus tablas!</h1>
+            <p class="text-align-left">Ahorra tiempo validando tus tablas de forma rápida y sencilla mediante el uso de TabLab.</p>
+            <app-activity-list></app-activity-list>
+        </div>
+        <div class="col-3"></div>
     </div>
 
 </div>

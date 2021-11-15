@@ -1,0 +1,12 @@
+.btn-outline-light {
+    color: rgb(156, 156, 156) !important;
+}
+
+.danger {
+    color: #dc3845;
+}
+
+.my-custom-scrollbar {
+    height: 80%;
+    overflow: auto;
+}

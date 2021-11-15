@@ -3,14 +3,16 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { Datafile } from '../../../models/datafile';
+import { Datafile } from '../../../models/datafile.model';
 import { DatafileService } from '../../../services/datafiles.service';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { map } from 'rxjs/operators';
-import { Esquema } from 'src/app/models/esquema';
 import { UploadsService } from 'src/app/services/uploads.service';
-import { WorkspaceService } from 'src/app/services/workspaces.service';
+import { WorkspacesService } from 'src/app/services/workspaces.service';
+import { Workspace } from '../../../models/workspace.model';
+import { Configuration } from '../../../models/configuration.model';
+import { Esquema } from '../../../models/esquema.model';
+import { Test } from '../../../models/test.model';
 
 
 @Component({
@@ -19,33 +21,36 @@ import { WorkspaceService } from 'src/app/services/workspaces.service';
   styleUrls: ['./datafile-details.component.css']
 })
 export class DatafileDetailsComponent implements OnInit, OnDestroy{
-  datafile: Datafile;
-  datafileId: string;
-  isLoading = false;
-  isUploading = false;
-  userIsAuthenticated = false;
-  userId: string;
-  esquemas: Esquema[];
-  configurations: any[];
-  formattedConfigs: any[];
-  tests: any[];
-  private authStatusSub: Subscription;
-  infer = false;
-  edit = false;
-  fileForm: FormGroup;
-  fileContentForm: FormGroup;
-  filePreview: string;
-  content: any = null;
-  arrayBuffer: any;
-  file: any = null;
-  fileName: string = '';
-  invalidExtension = false;
-  extension: string;
-  workspaceId: string;
-  workspace: any;
+  userId                : string;
+  userIsAuthenticated   : boolean = false;
+  isLoading             : boolean = false;
+  isUploading           : boolean = false;
+  infer                 : boolean = false;
+  edit                  : boolean = false;
+  invalidExtension      : boolean = false;
   
-  constructor(public datafilesService: DatafileService, public uploadsService: UploadsService, public route: ActivatedRoute, public usersService: AuthService,
-    private router: Router, public workspacesService: WorkspaceService){
+  datafileId            : string;
+  datafile              : Datafile;
+  workspaceId           : string;
+  workspace             : Workspace;
+  esquemas              : Esquema[];
+  configurations        : Configuration[];
+  formattedConfigs      : any[] = [];
+  tests                 : Test[];
+  
+  fileForm              : FormGroup;
+  fileContentForm       : FormGroup;
+  filePreview           : string;
+  content               : any = null;
+  arrayBuffer           : any;
+  file                  : any = null;
+  fileName              : string = '';
+  extension             : string;
+  
+  private authStatusSub : Subscription;
+
+  constructor(public datafilesService: DatafileService, public workspacesService: WorkspacesService, public uploadsService: UploadsService, public route: ActivatedRoute, public usersService: AuthService,
+    private router: Router){
       this.fileForm = new FormGroup({
         'contentPath': new FormControl(null, {validators: [Validators.required]})
       });
@@ -67,12 +72,13 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.datafileId = paramMap.get('datafileId');
       this.workspaceId = paramMap.get('workspaceId');
-      console.log(this.datafileId);
-      console.log(this.workspaceId)
+
       this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData => {
         this.workspace = {
+          id: workspaceData.workspace.id,
           title: workspaceData.workspace.title,
           description: workspaceData.workspace.description,
+          creationMoment: workspaceData.workspace.creationMoment,
           mandatory: workspaceData.workspace.mandatory
         };
         this.isLoading = false;
@@ -82,10 +88,11 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
     
     this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
       this.datafile = {
+        id: datafileData.datafile.id,
         title: datafileData.datafile.title,
         description: datafileData.datafile.description,
         contentPath: datafileData.datafile.contentPath,
-        errorLimit: datafileData.datafile.errorLimit,
+        errLimit: datafileData.datafile.errLimit,
         delimiter: datafileData.datafile.delimiter,
         coleccion: datafileData.datafile.coleccion,
         workspace: datafileData.datafile.workspace,
@@ -96,7 +103,6 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
       this.configurations = datafileData.configurations;
       this.tests = datafileData.tests;
 
-      this.formattedConfigs = [];
       this.configurations.forEach(config => {
         const extraParamsJSON = JSON.stringify(config.extraParams).toString();
         const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
@@ -104,7 +110,6 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
         const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');
         this.formattedConfigs.push({...config, extraParamsStr});
       });
-
       if (this.content !== null) {
         this.infer = true;
       }
@@ -164,43 +169,36 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
 
       this.file = uploadedFile;
       this.isUploading = true;
-      // tslint:disable-next-line: max-line-length
-      console.log(this.userId)
       await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateFile', this.file);
       await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description);
 
       this.router.navigateByUrl('/', {skipLocationChange: true})
       .then(() => {
         this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-      }).catch( err => {console.log(err);});
+      }).catch( err => {
+        console.log("Error on onFilePicked method: "+err);
+      });
       this.isUploading = false;
     }}
 
     async onSave() {
       let file: any;
       let content = this.fileContentForm.value.fileContent;
-      console.log(content);
       if (this.extension === 'csv') {
         const blob = new Blob([content], {type: 'text/csv' });
         file = new File([blob], this.fileName, {type: 'text/csv'});
       } else if (this.extension === 'xlsx') {
-        console.log(typeof content);
         let rows = content.split('\n').map(row => {
           return row.split(',');
         });
-        console.log(rows);
         const worksheetName = this.fileName;
 
         const wsorksheetContent = XLSX.utils.aoa_to_sheet(rows);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, wsorksheetContent, worksheetName);
         const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array'});
-        // tslint:disable-next-line: max-line-length
         const data: Blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-        console.log(data);
-        // tslint:disable-next-line: max-line-length
         file = new File([data], this.fileName, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'});
-        console.log(file);
       } else {
         return;
       }
@@ -218,7 +216,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
         .then(() => {
           this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
         }).catch( err => {
-          console.log(err);
+          console.log("Error on onDeleteFile method: "+err);
         });
 
       this.isUploading = false;
@@ -226,25 +224,20 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
 
     onDownload() {
       if (this.extension === 'xlsx') {
-        console.log(this.content);
         const worksheetName = this.fileName;
         const wsorksheetContent = XLSX.utils.aoa_to_sheet(this.content);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, wsorksheetContent, worksheetName);
         XLSX.writeFile(workbook, this.fileName); // downloads it
         const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array'});
-        // tslint:disable-next-line: max-line-length
         const data: Blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-        console.log(data);
         const file: File = new File([data], 'out.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'});
-        console.log(file);
       } else if (this.extension === 'csv') {
         const blob = new Blob([this.content], {type: 'text/csv' })
         saveAs(blob, this.fileName);
       } else {
         return;
       }
-
     }
 
     onEditContent() {

@@ -11,7 +11,6 @@ const dbConnection = async() => {
         console.log('¡Conectado a la base de datos de Mongo!');
 
     } catch (error) {
-        console.log(error);
         throw new Error('Error a la hora de conectarte a la base de datos de Mongo.');
     }
 };

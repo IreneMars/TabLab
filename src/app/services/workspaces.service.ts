@@ -2,31 +2,34 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Workspace } from 'src/app/models/workspace.model';
 
 const BACKEND_URL = environment.apiUrl + '/workspaces/';
 
 @Injectable({providedIn: 'root'})
-export class WorkspaceService {
+export class WorkspacesService {
   private workspaces: Workspace[] = [];
   private workspacesUpdated = new Subject<{workspaces: Workspace[], workspaceCount: number, totalWorkspaces: number}>();
-
-  constructor(private http: HttpClient, private router: Router) {
-
+  
+  constructor(private http: HttpClient) {}
+  
+  getWorkspaceUpdateListener() {
+    return this.workspacesUpdated.asObservable();
   }
-
+  
   getWorkspaces(workspacesPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${workspacesPerPage}&page=${currentPage}`;
     this.http.get<{message: string, workspaces: any, maxWorkspaces: number, totalWorkspaces: number }>(BACKEND_URL + queryParams)
       .pipe(map( (workspaceData) => {
         return { workspaces: workspaceData.workspaces.map(workspace => {
           return {
+            id: workspace._id,
             title: workspace.title,
             description: workspace.description,
-            id: workspace._id,
+            creationMoment: workspace.creationMoment,
             mandatory: workspace.mandatory,
+            users: workspace.users
           };
         }),
         maxWorkspaces: workspaceData.maxWorkspaces,
@@ -41,47 +44,91 @@ export class WorkspaceService {
           totalWorkspaces: transformedWorkspaceData.totalWorkspaces});
     });
   }
-
-  getWorkspaceUpdateListener() {
-    return this.workspacesUpdated.asObservable();
+  
+  getWorkspace(workspaceId: string) {
+    return this.http.get<{message: string, workspace: any, orphanedDatafiles: any[], datafilesWTests: any[], tests: any[]}>(BACKEND_URL + workspaceId)
+    .pipe(map( (workspaceData) => {
+      return { 
+        workspace: workspaceData.workspace,
+        orphanedDatafiles: workspaceData.orphanedDatafiles
+          .map(datafile => {
+            return {
+              id: datafile._id,
+              title: datafile.title,
+              description: datafile.description,
+              contentPath: datafile.contentPath,
+              errLimit: datafile.errLimit,
+              delimiter: datafile.delimiter,
+              coleccion: datafile.coleccion,
+              workspace: datafile.workspace
+            };
+          })  
+      };
+    }));
   }
 
-  getWorkspace(id: string) {
-    return this.http.get<{workspace: any, orphanedDatafiles: any[], datafiles: any[], tests: any[]}>(BACKEND_URL + id);
-  }
+  addWorkspace(title: string, description: string, mandatory: boolean, invitations: string[]) {
+    let res: any;
+    const workspaceData = {
+      'title': title, 
+      'description': description, 
+      'creationMoment': null,
+      'mandatory': mandatory,
+      'invitations': invitations
+    };
+    this.http.post<{message: string, workspace: any}>(BACKEND_URL, workspaceData).subscribe( responseData => {
+      res = responseData;  
+    });
 
-  addWorkspace( title: string, description: string, invitations: string[]) {
-    const workspaceData = {'title': title, 'description': description, 'mandatory': false, 'invitations': invitations};
-    console.log(workspaceData);
-    this.http.post<{message: string, workspace: Workspace}>(
-        BACKEND_URL,
-        workspaceData
-      )
-      .subscribe( responseData => {
-        this.router.navigate(['/workspaces']);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (res === undefined) {
+          reject('Creating a workspace failed!');
+        } else {
+          resolve('Workspace added successfully!');
+        }
+      }, 1000);
     });
 
   }
 
-  updateWorkspace(id: string, title: string, description: string){
-    var res;
-    const workspace: Workspace = {'title': title, 'description': description, 'mandatory': null};
-    this.http.put(BACKEND_URL + id, workspace).subscribe( response => {
+  updateWorkspace(workspaceId: string, title: string, description: string){
+    let res: any;
+    const workspace: Workspace = {
+      'id': workspaceId,
+      'title': title, 
+      'description': description, 
+      'creationMoment': null,
+      'mandatory': null
+    };
+    this.http.put<{message: string, workspace: any}>(BACKEND_URL + workspaceId, workspace).subscribe( response => {
       res = response;
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject();
+          reject('Updating a workspace failed!');
         } else {
-          resolve(true);
+          resolve('Workspace updated successfully!');
         }
       }, 1000);
     });
   }
 
-  deleteWorkspace(id: string) {
-    return this.http.delete(BACKEND_URL +  id);
+  deleteWorkspace(workspaceId: string) {
+    let res: any;
+    this.http.delete<{message: string}>(BACKEND_URL +  workspaceId).subscribe( responseData => {
+      res = responseData;
+    });
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (res === undefined) {
+          reject('Deleting a workspace failed!');
+        } else {
+          resolve('Workspace deleted successfully!');
+        }
+      }, 1000);
+    });
   }
 
 }

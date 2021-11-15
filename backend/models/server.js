@@ -51,7 +51,7 @@ class Server {
 
         // Lectura y parseo del body
         this.app.use(express.json());
-        this.app.use(express.static('../dist/mean-course'));
+        this.app.use(express.static('../dist/tablab'));
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use("/users", express.static(path.join("backend/uploads/users")));
         this.app.use("/datafiles", express.static(path.join("backend/uploads/datafiles")));
@@ -76,6 +76,7 @@ class Server {
     }
 
     routes() {
+        this.app.use("/api/auth", require('../routes/auth'));
         this.app.use("/api/users", require('../routes/users'));
         this.app.use("/api/populate", require('../routes/populate'));
         this.app.use("/api/workspaces", require('../routes/workspaces'));
@@ -88,6 +89,7 @@ class Server {
         this.app.use("/api/tests", require('../routes/tests'));
         this.app.use("/api/reports", require('../routes/reports'));
         this.app.use("/api/uploads", require('../routes/uploads'));
+        this.app.use("/api/activities", require('../routes/activities'));
     }
 
     listen() {

@@ -1,34 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Collection } from '../models/collection';
+import { Collection } from '../models/collection.model';
 
 const BACKEND_URL = environment.apiUrl + '/collections/';
 
 @Injectable({providedIn: 'root'})
 export class CollectionsService {
-  private collections: Collection[] = [];
-  private collectionsUpdated = new Subject<{collections: Collection[]}>();
+  private collections: any[] = [];
+  private collectionsUpdated = new Subject<{collections: any[]}>();
 
-  constructor(private http: HttpClient, private router: Router) {
-  }
+  constructor(private http: HttpClient) {}
 
   getCollectionUpdateListener() {
     return this.collectionsUpdated.asObservable();
   }
 
   getCollectionsByWorkspace(workspaceId: string) {
-    return this.http.get<{message: string, collections: any}>(BACKEND_URL + workspaceId)
+    return this.http.get<{message: string, collections: any[], orphanedDatafiles: any[]}>(BACKEND_URL + workspaceId)
     .pipe(map( (collectionData) => {
-      return { collections: collectionData.collections.map(collection => {
-        return {
-          title: collection.title,
-          id: collection._id,
-          datafiles: collection.datafiles
-        };
+      return { 
+        collections: collectionData.collections
+        .map(collection => {
+          return {
+            id: collection._id,
+            title: collection.title,
+            datafiles: collection.datafiles
+          };
       }),
     };
     }))
@@ -37,55 +37,63 @@ export class CollectionsService {
       this.collectionsUpdated.next({
         collections: [...this.collections]
       });
-  });
+    });
   }
 
-  createCollection(title: string, workspaceId: string) {
-    var res;
-    const collection: Collection = { title: title, workspace: workspaceId };
-    this.http.post<{collection: Collection}>(BACKEND_URL, collection).subscribe( responseData => {
+  addCollection(title: string, workspaceId: string) {
+    let res: any;
+    const collection: Collection = { 
+      'id': null,
+      'title': title, 
+      'workspace': workspaceId 
+    };
+    this.http.post<{message: string, collection: any}>(BACKEND_URL, collection).subscribe( responseData => {
       res = responseData;
     });
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject();
+          reject('Creating a collection failed!');
         } else {
-          resolve(true);
+          resolve('Collection added successfully!');
         }
       }, 1000);
     });
   }
 
   updateCollection(collectionId: string, title: string, workspaceId: string){
-    var res;
-    const collection: Collection = { title: title, workspace: workspaceId };
-    this.http.put(BACKEND_URL + collectionId, collection).subscribe( response => {
+    let res: any;
+    const collection: Collection = { 
+      'id': collectionId,
+      'title': title, 
+      'workspace': workspaceId 
+    };
+    this.http.put<{message: string, collection: any}>(BACKEND_URL + collectionId, collection).subscribe( response => {
       res = response;
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject();
+          reject('Updating a collection failed!');
         } else {
-          resolve(true);
+          resolve('Collection updated successfully!');
         }
       }, 1000);
     });
   }
   
   deleteCollection(collectionId: string) {
-    let res;
-    this.http.delete(BACKEND_URL +  collectionId).subscribe( responseData => {
+    let res: any;
+    this.http.delete<{message: string}>(BACKEND_URL + collectionId).subscribe( responseData => {
         res = responseData;
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject();
+          reject('Deleting a collection failed!');
         } else {
-          resolve(true);
+          resolve('Collection deleted successfully!');
         }
       }, 1000);
     });

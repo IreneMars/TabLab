@@ -52,7 +52,7 @@
                           <i class="fas fa-ellipsis-h"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" routerLink="/workspace/{{workspaceId}}/runner/{{test._id}}">Ejecutar Prueba</a></li>
+                            <li><a class="dropdown-item" routerLink="/workspace/{{workspaceId}}/runner/{{test.id}}">Ejecutar Prueba</a></li>
                             <li><a class="dropdown-item danger" (click)="onDelete()">Eliminar Prueba</a></li>
                         </ul>
 
@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-6 mt-2 d-flex justify-content-end">
                     <div *ngIf="datafile.contentPath">
-                        <button class="btn btn-outline-primary btn-sm me-1" routerLink="/workspace/{{workspaceId}}/runner/{{test._id}}">Ejecutar Prueba</button>
+                        <button class="btn btn-outline-primary btn-sm me-1" routerLink="/workspace/{{workspaceId}}/runner/{{test.id}}">Ejecutar Prueba</button>
                         <button class="btn btn-outline-primary btn-sm" type="submit" (click)="onSaveContent()">Guardar cambios</button>
                     </div>
                 </div>
@@ -118,8 +118,8 @@
                 </div>
                 <div class="col-8">
                     <select class="form-select form-select-sm" (change)="onEsquemaPicked($event)">
-                      <option value="None" selected *ngIf="!selectedEsquema"> ----- </option> -->
-                      <option *ngFor="let esquema of esquemas" [selected]="selectedEsquema && esquema._id == selectedEsquema._id" value="{{esquema._id}}">{{esquema.title}}</option>
+                      <option value="None" selected *ngIf="!selectedEsquema"> ----- </option>
+                      <option *ngFor="let esquema of esquemas" [selected]="selectedEsquema && esquema.id == selectedEsquema.id" value="{{esquema.id}}">{{esquema.title}}</option>
                     </select>
                 </div>
             </div>
@@ -147,7 +147,7 @@
                         </div>
                         <div class="row mt-0 p-2 border-content">
                             <div class="col">
-                                <div class="row mt-1 mb-1" *ngFor="let configuration of configurations">
+                                <div class="row mt-1 mb-1" *ngFor="let configuration of formattedConfigs">
                                     <div class="col-3 d-flex justify-content-start">
                                         <div>{{configuration.title}}</div>
                                     </div>
@@ -157,12 +157,13 @@
                                     <div class="col-4 d-flex justify-content-center">
                                         <div>
                                             <button class="btn btn-outline-light btn-sm" type="button" matTooltip="{{configuration.extraParamsStr || '-'}}">
-                                          <i class="far fa-eye"></i>
-                                        </button></div>
+                                                <i class="far fa-eye"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     <div class="col-1 d-flex justify-content-center">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="{{configuration._id}}" id="flexCheckDefault" (change)="onConfigurationPicked($event)" [checked]="checkConfig(configuration._id)">
+                                            <input class="form-check-input" type="checkbox" value="{{configuration.id}}" id="flexCheckDefault" (change)="onConfigurationPicked($event)" [checked]="checkConfig(configuration.id)">
                                         </div>
                                     </div>
                                 </div>

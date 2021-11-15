@@ -45,7 +45,6 @@ export class CollectionCreateComponent implements OnInit, OnDestroy{
     this.workspaceId = params.get('workspaceId');
 
     });
-    console.log(this.editCollection);
     if (this.editCollection) {
       this.editMode = true;
       this.collectionForm.reset({
@@ -63,7 +62,6 @@ export class CollectionCreateComponent implements OnInit, OnDestroy{
       this.invalidTitle = true;
       return Object.values(this.collectionForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
-          // tslint:disable-next-line: no-shadowed-variable
           Object.values(control.controls).forEach( control => control.markAsTouched());
         } else {
           control.markAsTouched();
@@ -76,7 +74,7 @@ export class CollectionCreateComponent implements OnInit, OnDestroy{
     if (this.editMode) {
       await this.collectionsService.updateCollection(this.editCollection.id, values.title, this.workspaceId);
     } else {
-      await this.collectionsService.createCollection(values.title, this.workspaceId);
+      await this.collectionsService.addCollection(values.title, this.workspaceId);
     }
     this.collectionForm.reset();
     this.router.navigateByUrl('/', {skipLocationChange: true})
@@ -87,7 +85,6 @@ export class CollectionCreateComponent implements OnInit, OnDestroy{
   }
 
   onCancel() {
-    console.log(this.editMode);
     this.collectionForm.reset();
     if (this.editMode) {
       this.editModeChange.emit(false);

@@ -12,17 +12,17 @@ exports.getConfiguration = async(req, res, next) => {
         }
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         if (roles.length !== 1) {
-            return res.status(403).json({ 
-                message: "Not authorized to fetch this configuration!" 
+            return res.status(403).json({
+                message: "Not authorized to fetch this configuration!"
             });
         }
         return res.status(200).json({
             message: "Sucessful fetch!",
             configuration: configuration
-        });    
+        });
     } catch (err) {
         return res.status(500).json({
-            message: "Fetching a configuration failed!"
+            message: "Fetching a configuration failed!",
         });
     }
 };
@@ -38,10 +38,10 @@ exports.createConfiguration = async(req, res, next) => {
         }
         const roles = await Role.find({ 'workspace': datafile.workspace, 'user': current_user_id });
         if (roles.length !== 1) {
-            return res.status(403).json({ 
-                message: "Not authorized to create a configuration inside this workspace!" 
+            return res.status(403).json({
+                message: "Not authorized to create a configuration inside this workspace!"
             });
-        }    
+        }
         const configuration = new Configuration({
             title: req.body.title,
             creationMoment: null,
@@ -53,7 +53,7 @@ exports.createConfiguration = async(req, res, next) => {
         return res.status(201).json({
             message: "Configuration created!",
             configuration: configuration
-        });               
+        });
     } catch (err) {
         return res.status(500).json({
             message: "Creating a configuration failed!"
@@ -73,19 +73,19 @@ exports.updateConfiguration = async(req, res, next) => {
         }
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         if (roles.length !== 1) {
-            return res.status(403).json({ 
+            return res.status(403).json({
                 message: "You are not authorized to update a configuration from this workspace."
             });
-        }    
+        }
         configuration.title = req.body.title;
-        configuration.errorCode = req.body.errorCode,
-        configuration.extraParams = req.body.extraParams,
-        await Configuration.findByIdAndUpdate(req.params.id,configuration);          
+        configuration.errorCode = req.body.errorCode;
+        configuration.extraParams = req.body.extraParams;
+        await Configuration.findByIdAndUpdate(req.params.id, configuration);
         const updatedConfiguration = await Configuration.findById(req.params.id);
         return res.status(200).json({
             message: "Configuration updated successfully!",
-            user: updatedConfiguration
-        });       
+            configuration: updatedConfiguration
+        });
     } catch (err) {
         return res.status(500).json({
             message: "Updating a configuration failed!"
@@ -104,14 +104,14 @@ exports.deleteConfiguration = async(req, res, next) => {
             });
         }
         const roles = await Role.find({ 'workspace': datafile.workspace, 'user': current_user_id });
-        if(roles.length !== 1) {
+        if (roles.length !== 1) {
             return res.status(403).json({
                 message: "You are not authorized to delete a configuration from this workspace."
             });
         } else {
             await Configuration.deleteOne({ _id: req.params.id });
-            return res.status(200).json({ 
-                message: "Configuration deleted successfully!" 
+            return res.status(200).json({
+                message: "Configuration deleted successfully!"
             });
         }
     } catch (err) {

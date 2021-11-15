@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { WorkspacesService } from '../../../services/workspaces.service';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +16,8 @@ export class SignupComponent implements OnInit, OnDestroy{
   signupForm: FormGroup;
   private authStatusSub: Subscription;
 
-  constructor( public authService: AuthService, private formBuilder: FormBuilder, private router: Router ) {
+  constructor( public authService: AuthService, public usersService: UsersService, private formBuilder: FormBuilder, 
+               private router: Router, public workspacesService: WorkspacesService ) {
     this.createForm();
   }
 
@@ -49,7 +52,7 @@ export class SignupComponent implements OnInit, OnDestroy{
     return this.signupForm.get('password').invalid;
   }
 
-  onSignup() {
+  async onSignup() {
     if (this.signupForm.invalid){
       return Object.values(this.signupForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
@@ -61,7 +64,13 @@ export class SignupComponent implements OnInit, OnDestroy{
     }
     this.isLoading = true;
     const values = this.signupForm.getRawValue();
-    this.authService.createUser(values.username, values.email, values.password);
+    this.usersService.addUser(values.username, values.email, values.password)
+    .then(()=>{
+      this.router.navigate(['/']);
+    })
+    .catch(err=>{
+      console.log("Error on onSignUp() method: "+err)
+    });
   }
 }
 

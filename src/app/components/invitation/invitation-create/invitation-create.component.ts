@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angul
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Invitation } from 'src/app/models/invitation.model';
 import { AuthService } from '../../../services/auth.service';
 import { InvitationService } from '../../../services/invitations.service';
 
@@ -10,18 +11,18 @@ import { InvitationService } from '../../../services/invitations.service';
   templateUrl: './invitation-create.component.html',
 })
 export class InvitationCreateComponent implements OnInit, OnDestroy{
-  invitationForm: FormGroup;
-  isLoading = false;
-  invalidEmail = false;
-  workspaceId;
-  @Input() create;
-  @Input()  invitations;
-  @Output() invitationsChange = new EventEmitter();
-  private authStatusSub: Subscription;
+  isLoading                   : boolean = false;
+  workspaceId                 : string;
+  invalidEmail                : boolean = false;
+  @Input() create             : any;
+  @Input()  invitations       : Invitation[];
+  @Output() invitationsChange : any = new EventEmitter();
+  invitationForm              : FormGroup;
+  private authStatusSub       : Subscription;
 
 
   constructor(public invitationsService: InvitationService, public authService: AuthService, private formBuilder: FormBuilder,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,  private router: Router) {
     this.createForm();
   }
 
@@ -49,7 +50,7 @@ export class InvitationCreateComponent implements OnInit, OnDestroy{
     this.invalidEmail = true;
     return Object.values(this.invitationForm.controls).forEach(control => {
       if (control instanceof FormGroup) {
-        // tslint:disable-next-line: no-shadowed-variable
+        
         Object.values(control.controls).forEach( control => control.markAsTouched());
       } else {
         control.markAsTouched();
@@ -63,7 +64,13 @@ export class InvitationCreateComponent implements OnInit, OnDestroy{
       this.invitations.push(values.email);
       this.invitationsChange.emit(this.invitations);
     }  else {
-      this.invitationsService.addInvitation(values.email, this.workspaceId);
+      this.invitationsService.addInvitation(values.email, this.workspaceId)
+        .then(response=>{
+          this.router.navigate(['/']);
+        })
+        .catch(err=>{
+          console.log("Error on onInvite method: "+err);
+        });
     }
     this.invitationForm.reset();
     // this.isLoading = false;

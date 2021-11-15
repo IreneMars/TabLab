@@ -18,4 +18,9 @@ const roleSchema = Schema({
     }
 });
 
+roleSchema.pre('save', function(next) {
+    this.role = 'member';
+    next();
+});
+
 module.exports = model('Role', roleSchema);

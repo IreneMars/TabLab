@@ -19,7 +19,7 @@
                         <label class="col-form-label">Esquema:</label>
                         <select class="form-select form-select-sm" (change)="onEsquemaPicked($event)">
                               <option selected >Ninguna</option>
-                              <option *ngFor="let esquema of esquemas" value="{{esquema._id}}">{{esquema.title}}</option>
+                              <option *ngFor="let esquema of esquemas" value="{{esquema.id}}">{{esquema.title}}</option>
                         </select>
                     </div>
                     <div class="mb-3 " style="display: inline-block ">
@@ -52,7 +52,7 @@
                                         </td>
                                         <td class="col-1 d-flex justify-content-center">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="{{configuration._id}}" id="flexCheckDefault" (change)="onConfigurationPicked($event)">
+                                                <input class="form-check-input" type="checkbox" value="{{configuration.id}}" id="flexCheckDefault" (change)="onConfigurationPicked($event)">
                                             </div>
                                         </td>
                                     </div>

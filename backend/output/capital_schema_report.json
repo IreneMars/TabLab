@@ -1,0 +1,67 @@
+{
+  "version": "4.20.2",
+  "time": 0.006,
+  "errors": [],
+  "tasks": [
+    {
+      "resource": {
+        "path": "backend\\uploads\\datafiles\\capital.csv",
+        "dialect": {
+          "delimiter": "|"
+        },
+        "name": "capital",
+        "profile": "tabular-data-resource",
+        "scheme": "file",
+        "format": "csv",
+        "hashing": "md5",
+        "encoding": "utf-8",
+        "schema": {
+          "fields": [
+            {
+              "type": "string",
+              "name": "id,name,name"
+            }
+          ]
+        },
+        "stats": {
+          "hash": "5b3a8b8c3803e5ad88f0e9321ee79c97",
+          "bytes": 165,
+          "fields": 1,
+          "rows": 9
+        }
+      },
+      "time": 0.006,
+      "scope": [
+        "hash-count-error",
+        "byte-count-error",
+        "field-count-error",
+        "row-count-error",
+        "blank-header",
+        "extra-label",
+        "missing-label",
+        "blank-label",
+        "duplicate-label",
+        "incorrect-label",
+        "blank-row",
+        "primary-key-error",
+        "foreign-key-error",
+        "extra-cell",
+        "missing-cell",
+        "type-error",
+        "constraint-error",
+        "unique-error"
+      ],
+      "partial": false,
+      "errors": [],
+      "stats": {
+        "errors": 0
+      },
+      "valid": true
+    }
+  ],
+  "stats": {
+    "errors": 0,
+    "tasks": 1
+  },
+  "valid": true
+}

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Invitation } from 'src/app/models/invitation.model';
 
@@ -13,9 +12,7 @@ export class InvitationService {
   private invitations: Invitation[] = [];
   private invitationsUpdated = new Subject<{invitations: Invitation[], invitationCount: number, totalInvitations: number}>();
   
-  constructor(private http: HttpClient, private router: Router) {
-    
-  }
+  constructor(private http: HttpClient) {}
   
   getInvitationUpdateListener() {
     return this.invitationsUpdated.asObservable();
@@ -25,55 +22,109 @@ export class InvitationService {
     const queryParams = `?pagesize=${invitationsPerPage}&page=${currentPage}`;
     this.http.get<{message: string, invitations: any, maxInvitations: number, totalInvitations: number }>(BACKEND_URL + queryParams)
       .pipe(map( (invitationData) => {
-        return { invitations: invitationData.invitations.map(invitation => {
-          return {
-            id: invitation._id,
-            sender: invitation.sender,
-            receiver: invitation.receiver,
-            status: invitation.status,
-            workspace: invitation.workspace,
-          };
-        }),
-        maxInvitations: invitationData.maxInvitations,
-        totalInvitations: invitationData.totalInvitations
-      };
+        return { 
+          invitations: invitationData.invitations
+          .map( invitation => {
+            return {
+              id: invitation._id,
+              sender: invitation.sender,
+              receiver: invitation.receiver,
+              status: invitation.status,
+              workspace: invitation.workspace,
+            };
+          }),
+          maxInvitations: invitationData.maxInvitations,
+          totalInvitations: invitationData.totalInvitations
+        };
       }))
       .subscribe((transformedInvitationData) => {
         this.invitations = transformedInvitationData.invitations;
         this.invitationsUpdated.next({
-          invitations: [...this.invitations], // para hacer una verdadera copia y no afectar al original
+          invitations: [...this.invitations],
           invitationCount: transformedInvitationData.maxInvitations,
           totalInvitations: transformedInvitationData.totalInvitations});
-
     });
+  }
+
+  getInvitationsHeader() {
+    return this.http.get<{message: string, invitations: any}>(BACKEND_URL)
+      .pipe(map( (invitationData) => {
+        return { 
+          invitations: invitationData.invitations
+          .map( invitation => {
+            return {
+              id: invitation._id,
+              sender: invitation.sender,
+              receiver: invitation.receiver,
+              status: invitation.status,
+              workspace: invitation.workspace,
+            };
+          }),
+        };
+      }))
   }
 
   addInvitation( receiverEmail: string, workspaceId: string) {
-    const invitationData: Invitation = { receiver: receiverEmail, workspace: workspaceId };
+    let res: any;
+    const invitation: Invitation = { 
+      'id':null, 
+      'sender':null, 
+      'receiver': receiverEmail, 
+      'status':'pending', 
+      'workspace': workspaceId 
+    };
 
-    this.http.post<{invitation: Invitation}>(
-        BACKEND_URL,
-        invitationData
-      )
+    this.http.post<{message: string, invitation: any}>(BACKEND_URL, invitation).subscribe( responseData => {
+      res = responseData;
+    });
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (res === undefined) {
+          reject('Creating an invitation failed!');
+        } else {
+          resolve('Invitation added successfully!');
+        }
+      }, 1000);
+    });
+  }
+
+  updateInvitation(invitationId: string, status: string){
+    let res: any;
+    const invitationData: Invitation = { 
+      'id':invitationId, 
+      'sender':null, 
+      'receiver': null, 
+      'status':status, 
+      'workspace': null 
+    };
+    this.http.put<{message: string, invitation: any}>(BACKEND_URL + invitationId, invitationData)
       .subscribe( responseData => {
-        this.router.navigate(['/']);
+        res = responseData
     });
-
-  }
-
-  updateInvitation(id: string, status: string){
-
-    const invitationData = { status: status};
-
-    this.http
-      .put(BACKEND_URL + id, invitationData)
-      .subscribe( response => {
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-        this.router.navigate(['/invitations']));
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (res === undefined) {
+          reject('Updating an invitation failed!');
+        } else {
+          resolve('Invitation updated successfully!');
+        }
+      }, 1000);
     });
   }
 
-  deleteInvitation(id: string){
-    return this.http.delete(BACKEND_URL +  id);
+  deleteInvitation(invitationId: string){
+    let res: any;
+    this.http.delete<{message: string}>(BACKEND_URL +  invitationId).subscribe( responseData => {
+      res = responseData;
+    });
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (res === undefined) {
+          reject('Deleting an invitation failed!');
+        } else {
+          resolve('Invitation deleted successfully!');
+        }
+      }, 1000);
+    });
   }
 }

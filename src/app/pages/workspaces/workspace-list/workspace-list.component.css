@@ -40,5 +40,5 @@ th.mat-sort-header-sorted {
 }
 
 .mat-row:hover .mat-cell {
-    border-color: currentColor;
+    background: whitesmoke;
 }

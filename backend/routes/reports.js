@@ -1,13 +1,20 @@
 const express = require("express");
+const { check } = require('express-validator');
+const router = express.Router();
 
 const { createReport } = require("../controllers/reports");
 
-const { validateJWT } = require("../middlewares");
+const { validateJWT, validateFields } = require("../middlewares");
 
-const router = express.Router();
+const {
+    testExistsById,
+} = require("../helpers");
 
-router.get("/:workspaceId", 
-    validateJWT, 
-    createReport);
+router.put("/", [
+    validateJWT,
+    // check('testId', 'The ID is not a valid Mongo ID').isMongoId(),
+    // check('testId').custom(testExistsById),
+    // validateFields,
+], createReport);
 
 module.exports = router;

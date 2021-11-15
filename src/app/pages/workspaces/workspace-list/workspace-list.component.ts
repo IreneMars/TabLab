@@ -3,7 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { Workspace } from 'src/app/models/workspace.model';
-import { WorkspaceService } from '../../../services/workspaces.service';
+import { WorkspacesService } from '../../../services/workspaces.service';
 
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -21,41 +21,43 @@ export interface PeriodicElement {
   styleUrls: ['./workspace-list.component.css']
 })
 export class WorkspaceListComponent implements OnInit, OnDestroy{
-  displayedColumns: string[] = ['title', 'description', 'creationMoment', 'users'];
-  clickedRows = new Set<Workspace>();
-  // dataSource = [];
-  isLoading = false;
-  workspaces: Workspace[] = [];
-  totalWorkspaces = 0;
-  workspacesPerPage = 2;
-  currentPage = 1;
-  dataSource = null;
-  pageSizeOptions = [1, 2, 5, 10];
-  userIsAuthenticated = false;
-  userId: string;
-  private workspacesSub: Subscription;
-  private authStatusSub: Subscription;
+  userId                   : string;
+  userIsAuthenticated      : boolean = false;
+  isLoading                : boolean = false;
+  displayedColumns         : string[] = ['title', 'description', 'creationMoment', 'users'];
+  //clickedRows              : Set<Workspace> = new Set<Workspace>();
+  workspaces               : Workspace[] = [];
+  totalWorkspaces          : number = 0;
+  workspacesPerPage        : number = 2;
+  currentPage              : number = 1;
+  dataSource               : any = null;
+  pageSizeOptions          : number[] = [1, 2, 5, 10];
+  private workspacesSub    : Subscription;
+  private authStatusSub    : Subscription;
 
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort : MatSort;
 
-  constructor( public workspacesService: WorkspaceService, private authService: AuthService) { }
+  constructor( public workspacesService: WorkspacesService, private authService: AuthService) { }
 
 
   ngOnInit() {
     this.isLoading = true;
     this.workspacesService.getWorkspaces(this.workspacesPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
-    // tslint:disable-next-line: deprecation
     this.workspacesSub = this.workspacesService.getWorkspaceUpdateListener()
     .subscribe( (workspaceData: {workspaces: Workspace[], workspaceCount: number, totalWorkspaces:number}) => {
       this.isLoading = false;
       this.totalWorkspaces = workspaceData.totalWorkspaces;
       this.workspaces = workspaceData.workspaces;
-
-      //console.log(this.totalWorkspaces);
-      const dataSource = new MatTableDataSource(this.workspaces);
-      dataSource.sort = this.sort;
+      this.dataSource = new MatTableDataSource(this.workspaces);
+      this.dataSource.sort = this.sort;
+    });
+    this.workspaces.map(function(workspace) {
+      this.authService.getUsersById(workspace.id).subscribe((usersData: {users: any[]}) => {
+        this.isLoading = false;
+        workspace['users'] = usersData.users;
       });
+    });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
@@ -64,14 +66,9 @@ export class WorkspaceListComponent implements OnInit, OnDestroy{
   }
 
   onChangedPage( pageData: PageEvent ) {
-    this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.workspacesPerPage = pageData.pageSize;
     this.workspacesService.getWorkspaces(this.workspacesPerPage, this.currentPage);
-    // console.log('New call');
-    // console.log('Current page: '+ this.currentPage);
-    // console.log('Workspace per page: '+ this.workspacesPerPage);
-    // console.log('Total workspaces: '+ this.totalWorkspaces);
   }
 
   ngOnDestroy() {

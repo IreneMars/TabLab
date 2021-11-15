@@ -5,42 +5,41 @@ const {
     getInvitations,
     createInvitation,
     updateInvitation,
-    deleteInvitation 
+    deleteInvitation
 } = require("../controllers/invitations");
 
-const { 
+const {
     invitationExistsById,
     workspaceExistsById,
-    emailExists
 } = require("../helpers");
 
-const { 
-    validateJWT, 
+const {
+    validateJWT,
     validateFields,
 } = require("../middlewares");
 
-router.get("/", 
-    validateJWT, 
+router.get("/",
+    validateJWT,
     getInvitations);
 
 router.post("/", [
-    validateJWT, 
+    validateJWT,
     check('receiver', 'The receiver email is not valid').isEmail(),
-    check('workspace', 'The ID is not a valid Mongo ID').isMongoId(), 
+    check('workspace', 'The ID is not a valid Mongo ID').isMongoId(),
     check('workspace').custom(workspaceExistsById),
     validateFields
-  ], createInvitation);
+], createInvitation);
 
-router.put("/:id", [ 
-    validateJWT, 
-    check('id', 'The ID is not a valid Mongo ID').isMongoId(), 
-    check('id').custom(invitationExistsById), 
+router.put("/:id", [
+    validateJWT,
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(invitationExistsById),
     validateFields,
 ], updateInvitation);
 
 router.delete("/:id", [
-    validateJWT, 
-    check('id', 'The ID is not a valid Mongo ID').isMongoId(), 
+    validateJWT,
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
     check('id').custom(invitationExistsById),
     validateFields,
 ], deleteInvitation);

@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.url = (window.location.hostname.includes('localhost')) ?
                             'http://localhost:3000/api/users/google' :
                             'https://restserver-curso-fher.herokuapp.com/api/auth/google';
-    console.log(this.url);
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
@@ -88,7 +87,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.loginForm.invalid){
       return Object.values(this.loginForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
-          // tslint:disable-next-line: no-shadowed-variable
+          
           Object.values(control.controls).forEach( control => control.markAsTouched());
         } else {
           control.markAsTouched();
@@ -97,7 +96,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     const values = this.loginForm.getRawValue();
-    console.log(values)
     this.authService.login(values.username, values.password);
     if  (values.rememberme) {
       localStorage.setItem('username', values.username);
@@ -123,7 +121,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       //     body: JSON.stringify( data1 )
       // });
       // const data2 = await resp.json();
-      // console.log( 'Nuestro server', data2 );
       this.isLoading = false;
   } else {
     console.log('Already signed in!');

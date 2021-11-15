@@ -15,7 +15,7 @@ exports.getEsquema = async(req, res, next) => {
         }
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
 
-        if(roles.length !== 1) {
+        if (roles.length !== 1) {
             return res.status(403).json({
                 message: "You are not authorized to fetch this esquema."
             });
@@ -43,17 +43,15 @@ exports.getEsquema = async(req, res, next) => {
 
 exports.createEsquema = async(req, res, next) => {
     const current_user_id = req.userData.userId;
-    console.log("Create Esquema")
 
     try {
         const datafile = await Datafile.findById(req.body.datafile);
         const roles = await Role.find({ 'workspace': datafile.workspace, 'user': current_user_id });
         if (roles.length !== 1) {
-            return res.status(403).json({ 
+            return res.status(403).json({
                 message: "You are not authorized to create an esquema from this workspace."
             })
         }
-        console.log(datafile)
         if (req.body.contentPath) { // Manual creation
             fs.writeFile(req.body.contentPath, req.body.esquemaContent, err => {
                 if (err) {
@@ -69,24 +67,19 @@ exports.createEsquema = async(req, res, next) => {
                 creationMoment: null,
                 datafile: req.body.datafile
             });
-            console.log(esquema)
             const createdEsquema = await esquema.save();
             return res.status(201).json({
                 message: "Esquema added successfully!",
                 esquema: createdEsquema
             });
         } else if (!req.body.contentPath && datafile.contentPath) { // Infer creation
-            console.log("Inferring");
-            const title = "Inferred esquema - " + datafile.title;
             const fileName = 'inferred_schema' + "-" + Date.now() + '.yaml';
             const localPath = 'backend/uploads/esquemas/' + fileName;
-            console.log("hello")
             bufferedSpawn('python', ["backend/scripts/infer_esquema.py", datafile.contentPath, fileName])
                 .then((output) => {
-                    console.log('Pipe data from python script ...');
                     // send data to browser
                     const esquema = new Esquema({
-                        title: title,
+                        title: req.body.title,
                         contentPath: localPath,
                         creationMoment: null,
                         datafile: req.body.datafile
@@ -95,12 +88,10 @@ exports.createEsquema = async(req, res, next) => {
                     return res.status(201).json({
                         message: "Esquema inferred successfully",
                         esquema: createdEsquema
-                    });                    
+                    });
                 }, (err) => {
-                    console.log(err)
                     return res.status(500).json({
                         message: "Inferring an esquema failed!",
-                        error: err
                     });
                 });
         } else if (!req.body.contentPath && !datafile.contentPath) {
@@ -122,14 +113,13 @@ exports.updateEsquema = async(req, res, next) => {
         const esquema = await Esquema.findById(req.params.id);
         const datafile = await Datafile.findById(esquema.datafile);
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
-        if(roles.length !== 1) {
+        if (roles.length !== 1) {
             return res.status(403).json({
                 message: "You are not authorized to update an esquema from this workspace."
             });
-        } 
-        console.log(req.body.contentPath)
+        }
         fs.unlink(req.body.contentPath, (err) => {
-            if(err){
+            if (err) {
                 return res.status(500).json({
                     message: "Updating (deleting old one) an esquema failed!",
                     error: err
@@ -137,7 +127,7 @@ exports.updateEsquema = async(req, res, next) => {
             }
         });
         fs.writeFile(req.body.contentPath, req.body.esquemaContent, err => {
-            if(err){
+            if (err) {
                 return res.status(500).json({
                     message: "Updating (writing new one) an esquema failed!",
                     error: err
@@ -148,7 +138,7 @@ exports.updateEsquema = async(req, res, next) => {
         esquema.contentPath = req.body.contentPath;
         Esquema.findByIdAndUpdate(req.params.id, esquema);
         const updatedEsquema = await Esquema.findById(req.params.id);
-        return res.status(200).json({ 
+        return res.status(200).json({
             message: "Update successful!",
             esquema: updatedEsquema
         });
@@ -173,17 +163,18 @@ exports.deleteEsquema = async(req, res, next) => {
         const roles = await Role.find({ 'workspace': datafile.workspace, 'user': current_user_id });
 
         if (roles.length !== 1) {
-            return res.status(403).json({ 
+            return res.status(403).json({
                 message: "You are not authorized to delete an esquema from this workspace."
-            })        }
+            })
+        }
         fs.unlink(esquema.contentPath, (err) => {
             if (err) {
                 console.error(err);
             }
         });
         await Esquema.deleteOne({ _id: req.params.id });
-        return res.status(200).json({ 
-            message: "Esquema deletion successful!" 
+        return res.status(200).json({
+            message: "Esquema deletion successful!"
         });
 
     } catch (err) {

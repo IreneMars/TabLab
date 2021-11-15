@@ -3,19 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { map } from 'rxjs/operators';
-import { User } from '../models/user.model';
 
-const BACKEND_URL = environment.apiUrl + '/users/';
+const BACKEND_URL = environment.apiUrl + '/auth/';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private users: User[] = [];
   private isAuthenticated = false;
   private token: string;
   private tokenTimer: any;
   private userId: string;
-  private usersUpdated = new Subject<{users: User[]}>();
   private authStatusListener = new Subject<boolean>();
   private auth2: gapi.auth2.GoogleAuth;
   private username: string = "";
@@ -32,6 +28,7 @@ export class AuthService {
   getUserId() {
     return this.userId;
   }
+  
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
@@ -49,12 +46,7 @@ export class AuthService {
 
   login(username: string, password: string) {
     const authData = { username, password };
-    console.log(authData)
-    this.http
-    .post<{ token: string; expiresIn: number, user: any}>(
-      BACKEND_URL + '/login',
-      authData
-      )
+    this.http.post<{ token: string; expiresIn: number, user: any}>(BACKEND_URL + '/login', authData)
       .subscribe(response => {
         const token = response.token;
         this.token = token;
@@ -126,16 +118,13 @@ export class AuthService {
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.router.navigate(['/']);
-    this.auth2 = gapi.auth2.getAuthInstance();
-    this.auth2.signOut().then(() => {
-      console.log('Signed out.');
-    });
+    if (gapi.auth2){
+      this.auth2 = gapi.auth2.getAuthInstance();
+      this.auth2.signOut().then(() => {
+      });
+    }
   }
-    
-  getUserUpdateListener() {
-    return this.usersUpdated.asObservable();
-  }
-    
+      
   private setAuthTimer(duration: number) {
     this.tokenTimer = setTimeout(() => {
       this.logout();
@@ -172,87 +161,5 @@ export class AuthService {
       username
     };
   }
-
-  getUser(userId: string) {
-    // tslint:disable-next-line: max-line-length
-    return this.http.get<{user: any}>(BACKEND_URL + userId);
-  }
-
-  createUser(username: string, email: string, password: string) {
-    const authData: User = { username, email, password, photo: null };
-    return this.http
-      .post( BACKEND_URL + '/signup', authData)
-      .subscribe(() => {
-        // tslint:disable-next-line: no-unused-expression
-        this.router.navigate(['/']);
-      }, error => {
-        this.authStatusListener.next(false);
-      });
-  }
-
-  getUsersByWorkspace(workspaceId: string) {
-    return this.http.get<{message: string, users: any}>(BACKEND_URL + 'workspace/'+workspaceId)
-    .pipe(map( (userData) => {
-      return { users: userData.users.map(user => {
-        return {
-          username: user.username,
-          photo: user.photo,
-        };
-      }),
-    };
-    }))
-    .subscribe((transformedUserData) => {
-      this.users = transformedUserData.users;
-      this.usersUpdated.next({
-        users: [...this.users]
-      });
-    });
-  }
-
-  updateUser(id: string, name: string, username: string, email: string, role: string, actualPass: string, newPass: string, repeatPass: string){
-    let res;
-    console.log("role");
-
-    console.log(role);
-    const userData = {'id': id, 'name': name, 'username': username, 'email': email, 'role': role, 'actualPass': actualPass, 
-                  'newPass': newPass, 'repeatPass': repeatPass};
-    this.http
-      .put(BACKEND_URL + id, userData)
-      .subscribe( response => {
-        res = response;
-    });
-    
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject();
-        } else {
-          resolve(res);
-        }
-      }, 1000);
-    });
-  }
-
-  deleteAccount(id: string) {
-    let res;
-
-    this.http
-      .delete(BACKEND_URL + id)
-      .subscribe( response => {
-        res = response;
-    });
-    
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject();
-        } else {
-          resolve(true);
-        }
-      }, 1000);
-    });
-  }
-
-
-
+  
 }

@@ -1,86 +1,81 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Esquema } from '../models/esquema';
+import { EsquemaForm } from '../models/esquemaForm.model';
 
 const BACKEND_URL = environment.apiUrl + '/esquemas/';
 
 @Injectable({providedIn: 'root'})
 export class EsquemaService {
-  private esquemas: Esquema[] = [];
-  private esquemasUpdated = new Subject<{esquemas: Esquema[]}>();
-  
-  constructor(private http: HttpClient, private router: Router) {}
-  
-  getEsquemaUpdateListener() {
-    return this.esquemasUpdated.asObservable();
-  }
+
+  constructor(private http: HttpClient) {}
   
   getEsquema(esquemaId: string) {
-    // tslint:disable-next-line: max-line-length
-    console.log(esquemaId);
-    return this.http.get<{esquema: any, content: any}>(BACKEND_URL + esquemaId);
+    // 
+    return this.http.get<{message:string, esquema: any, content: any}>(BACKEND_URL + esquemaId);
   }
 
-addEsquema(title: string, esquemaContent: string, fileName: string, datafileId: string, workspaceId:string){
-  let res;
-  let localPath: string = "";
-  let esquemaData: any;
-  const pathAux: string = fileName;
-  
-  if (fileName){
-    const split = pathAux.split('.');
-    const extension = '.' + split[1].toLowerCase();
-    const fileName = split[0].toLowerCase().split(' ').join('_') + "-" + Date.now() + extension;
-    localPath = "backend/uploads/esquemas/" + fileName;
-    esquemaData = {'title': title, 'esquemaContent': esquemaContent, 'contentPath': fileName, 'datafile':datafileId};
-  } else {
-    esquemaData = {'title': title, 'esquemaContent': esquemaContent, 'contentPath': null, 'datafile':datafileId};
-  }
-  console.log(esquemaData)
-  this.http.post<{message: string, esquema: Esquema}>(
-      BACKEND_URL,
-      esquemaData
-    )
-    .subscribe( responseData => {
-        console.log(responseData);
-        res = responseData;
-        this.router.navigateByUrl('/', {skipLocationChange: true})
-        .then(() => {
-          this.router.navigate([`/workspace/${workspaceId}/datafile/${datafileId}`]);
-        }).catch( err => {});
-      },
-      error => {
-        console.log(error);
-      }
-      );
-    // return new Promise((resolve, reject) => {
-    //       setTimeout(() => {
-      //         if (res === undefined) {
-    //           reject('Creating a esquema failed!');
-    //         } else {
-    //           resolve('Esquema added successfully!');
-    //         }
-    //       }, 2000);
-    //     });
-  }
+  addEsquema(title: string, esquemaContent: string, fileName: string, datafileId: string, workspaceId:string){
+    let res: any;
+    let newFileName: string;
+    let esquemaData: EsquemaForm = {
+      'id': null,
+      'title': title, 
+      'contentPath': null, 
+      'creationMoment':null,
+      'datafile':datafileId,
+      'esquemaContent': esquemaContent
+    };
+    
+    if (fileName){//Manual creation
+      const split = fileName.split('.');
+      const extension = '.' + split[1].toLowerCase();
+      newFileName = split[0].toLowerCase().split(' ').join('_') + "-" + Date.now() + extension;
+      const localPath = 'backend/uploads/esquemas/' + newFileName;            
+      esquemaData.contentPath = localPath;
+    } else {//Inferring
+      esquemaData.title = "Inferred esquema - " + title;
+    }
+
+    this.http.post<{message: string, esquema: any}>(
+        BACKEND_URL,
+        esquemaData
+      )
+      .subscribe( responseData => {
+          res = responseData;
+      });
+
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (res === undefined) {
+            reject('Creating an esquema failed!');
+          } else {
+            resolve('Esquema added successfully!');
+          }
+        }, 2000);
+      });
+    }
 
   updateEsquema(esquemaId: string, title: string, contentPath: string, esquemaContent: string, datafileId: string) {
     let res;
-    const esquemaData = {'title': title, 'contentPath': contentPath, 'esquemaContent': esquemaContent, 'datafile': datafileId};
-    console.log(esquemaContent);
-    this.http.put(BACKEND_URL + esquemaId, esquemaData).subscribe( response => {
+    const esquemaData: EsquemaForm = {
+      'id': esquemaId,
+      'title': title, 
+      'contentPath': contentPath, 
+      'creationMoment': null,
+      'datafile': datafileId,
+      'esquemaContent': esquemaContent
+    };
+    
+    this.http.put<{message: string, esquema: any}>(BACKEND_URL + esquemaId, esquemaData).subscribe( response => {
       res = response;
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject();
+          reject('Updating an esquema failed!');
         } else {
-          resolve(true);
+          resolve('Esquema updated successfully!');
         }
       }, 1000);
     });
@@ -88,16 +83,15 @@ addEsquema(title: string, esquemaContent: string, fileName: string, datafileId: 
 
   deleteEsquema(id: string){
     let res;
-    this.http.delete(BACKEND_URL +  id).subscribe( responseData => {
-      console.log(responseData);
+    this.http.delete<{message: string}>(BACKEND_URL +  id).subscribe( responseData => {
       res = responseData;
     });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject();
+          reject('Deleting an esquema failed!');
         } else {
-          resolve(true);
+          resolve('Esquema deleted successfully!');
         }
       }, 1000);
     });

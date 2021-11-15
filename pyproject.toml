@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "tablab"
+version = "0.1.0"
+description = ""
+authors = ["IreneMars <irenecharm97@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+frictionless = "^4.20.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

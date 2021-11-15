@@ -1,19 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { TestsService } from 'src/app/services/tests.service';
-import { Datafile } from 'src/app/models/datafile';
 import { ReportsService } from '../../../services/reports.service';
 import { CollectionsService } from '../../../services/collections.service';
-import { Observable, Subscription } from 'rxjs';
-import { WorkspaceService } from '../../../services/workspaces.service';
+import { WorkspacesService } from '../../../services/workspaces.service';
 import { Workspace } from 'src/app/models/workspace.model';
-import { Collection } from 'src/app/models/collection';
 import { Test } from 'src/app/models/test.model';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
-import { map } from 'rxjs/operators';
-//import { SocketioService } from 'src/app/services/socketio.service';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-test-execute',
@@ -21,104 +15,137 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./test-execute.component.css']
 })
 export class TestExecuteComponent implements OnInit, OnDestroy {
+  userIsAuthenticated    : boolean = false;
+  userId                 : string;
+  isLoading              : boolean = false;
+  workspaceId            : string;
+  workspace              : Workspace;
+  testId                 : string;
+  selectedTest           : Test;
+  selectedTestIDs        : Set<string> = new Set();
+  tests                  : any[];
+  inExecution            : boolean = false;
+  terminal               : any[] = [];
+  private authStatusSub  : Subscription;
+  private testsSub       : Subscription;
 
-  // test: Test;
-  // datafile: Datafile;
-  // datafileId: string;
-  workspace: Workspace;
-  selectedTest: Test;
-  workspaceId: string;
-  testId: string;
-  isLoading = false;
-  collections: any[];
-  private collectionsSub: Subscription;
-  orphanedDatafiles: Datafile[];
-  datafilesWTests: any[];
-  tests: any[];
-  selectedTests: any[] = [];
-  selectedDatafile;
-  inExecution = false;
-  terminal: any[] = [];
-
-
-  // // tslint:disable-next-line: max-line-length
-  constructor(public testsService: TestsService, public collectionsService: CollectionsService, public route: ActivatedRoute,
-              public workspacesService: WorkspaceService, public reportsService: ReportsService,
-              //private socketService: SocketioService
-              ){
-
-  }
-
-  ngOnDestroy(): void {
-    this.collectionsSub.unsubscribe();
+  constructor(private authService: AuthService, public testsService: TestsService, public collectionsService: CollectionsService, 
+              public route: ActivatedRoute, public workspacesService: WorkspacesService, public reportsService: ReportsService){
   }
 
   ngOnInit(){
-    //this.socketService.emitMessage();
-
     this.isLoading = true;
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.workspaceId = paramMap.get('workspaceId');
       if (paramMap.get('testId')) {
         this.testId = paramMap.get('testId');
-        this.testsService.getTest(this.testId).subscribe( testData => {
-          this.selectedTest = testData.test;
-          this.selectedDatafile = testData.test.datafile;
-          this.selectedTests.push(this.selectedTest);
-        });
+        this.selectedTestIDs.add(this.testId);     
       }
-      // Workspace and orphaned datafiles
-      this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData => {
-        this.isLoading = false;
-        this.workspace = {
-          title: workspaceData.workspace.title,
-          description: workspaceData.workspace.description,
-          mandatory: workspaceData.workspace.mandatory
-        };
-        this.orphanedDatafiles = workspaceData.orphanedDatafiles;
-        this.datafilesWTests = workspaceData.datafiles;
-        this.tests = workspaceData.tests;
-        console.log(this.tests);
-      });
-      this.isLoading = false;
+      // Tests
+      this.testsService.getTests(this.workspaceId);
+      this.testsSub = this.testsService.getTestUpdateListener()
+        .subscribe( (testData: {tests: any[]}) => {
+          this.isLoading = false;
+          this.tests = testData.tests;
+        });
     });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
+      });
+  }
+  
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
+    this.testsSub.unsubscribe();
   }
 
   onTestPicked(event: Event) {
+    const testId: string = (event.target as HTMLInputElement).value;
+    const checked: boolean = (event.target as HTMLInputElement).checked;
+    // const index: number = this.selectedTestIDs.indexOf(testId);
+    if (checked) {
+    // if (checked && index < 0) {
+      this.selectedTestIDs.add(testId);
+    } else if (!checked) {
+    //} else if (!checked && index >= 0) {
+      this.selectedTestIDs.delete(testId);
+    }
+    console.log(this.selectedTestIDs)
+  }
+
+  onSelectAll(event: Event) {
+    const checked: boolean = (event.target as HTMLInputElement).checked;
+    if (checked) {
+      console.log("Select All")
+      for (var test of this.tests){
+        this.selectedTestIDs.add(test.id);
+      }
+      console.log(this.selectedTestIDs)
+    }
+    if (!checked) {
+      console.log("Deselect All")
+      this.selectedTestIDs = new Set();
+      console.log(this.selectedTestIDs)
+    }
+    console.log(this.selectedTestIDs)
 
   }
 
-  onDatafilePicked(event: Event) {
-
+  checkTest(testId: string){
+    return this.selectedTestIDs.has(testId);
   }
+  
+  onDownload(testId: string) {
+    this.testsService.getTest(testId).subscribe( testData => {
+      
+      var reportPath: string = testData.test.reportPath;
+      var fileNameSplits = reportPath.split("/");
+      var fileName = fileNameSplits[2].split(".");
+      const blob = new Blob([testData.reportContent], {type: 'text/csv' })
+      saveAs(blob, fileName[0]);
 
-  checkDatafile(datafileId: string){
-    return this.selectedDatafile === datafileId;
-  }
-
-  checkTest(datafileId: string){
-    return this.selectedDatafile === datafileId;
+    })
   }
 
   onExecute(){
-    this.inExecution = true;
-    this.selectedTests.forEach(async test => {
-      console.log(test);
-      this.reportsService.runTest(this.workspaceId, test._id).subscribe( response => {
-        console.log(response);
-        const lines = response.buffer.split('\r\n');
-        console.log(lines);
-        for (const line of lines) {
-          this.terminal.push(line);
-        }
-        console.log(this.terminal);
-        // this.terminal = response.buffer;
-        this.testsService.updateTest(test._id, test.title, test.esquema, test.configurations, 'execute');
-
-        this.inExecution = false;
-      });
-
-    });
+    if(this.selectedTestIDs.size===0){
+      return;
+    }
+      this.inExecution = true;
+      for (var selectedTestId of this.selectedTestIDs){
+        console.log(selectedTestId)
+        this.reportsService.addReport(selectedTestId).subscribe(async responseData => {
+          console.log(responseData)
+          const testUpdate: Test = {
+            id: responseData.testUpdates._id,
+            title: responseData.testUpdates.title,
+            reportPath: responseData.testUpdates.reportPath,
+            status: responseData.testUpdates.status,
+            esquema: responseData.testUpdates.esquema,
+            configurations: responseData.testUpdates.configurations,
+            creationMoment: responseData.testUpdates.creationMoment,
+            updateMoment: responseData.testUpdates.updateMoment,
+            executionMoment: responseData.testUpdates.executionMoment,
+            totalErrors: responseData.testUpdates.totalErrors,
+            executable: responseData.testUpdates.executable,
+            datafile: responseData.testUpdates.datafile,
+          };
+          this.testsService.updateTest(testUpdate).then(data=>{
+            console.log(data);
+            this.inExecution = false;
+          })
+          .catch(err=>{
+            console.log(err)
+            this.inExecution = false;
+          });
+     
+        });
+      }
+    
   }
 
 }

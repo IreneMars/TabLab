@@ -42,7 +42,6 @@ const validateJWT = async(req, res, next) => {
         next();
 
     } catch (err) {
-        console.log(err);
         res.status(401).json({
             message: 'Invalid token. You are not authenticated!'
         });
