@@ -31,7 +31,7 @@ export class ConfigurationCreateComponent implements OnInit, OnDestroy{
   constructor(public configurationService: ConfigurationService, public route: ActivatedRoute,
               private usersService: AuthService, private router: Router) {
   }
-
+//
   ngOnInit() {
     this.fricErrors = environment.errors;
     this.userIsAuthenticated = this.usersService.getIsAuth();
