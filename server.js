@@ -1,8 +1,7 @@
 const http = require("http");
 const Server = require('./backend/models/server.model');
 const serverConfig = new Server();
-const port = serverConfig.getPort();
-
+serverConfig.listen();
 // const onError = error => {
 //     if (error.syscall !== "listen") {
 //         throw error;
@@ -21,10 +20,6 @@ const port = serverConfig.getPort();
 //             throw error;
 //     }
 // };
-
 // const server = http.createServer(serverConfig.getApp());
 // module.exports = server;
-
 // server.on("error", onError);
-serverConfig.listen(port);
-console.log("Escuchando en el puerto " + port + "...");

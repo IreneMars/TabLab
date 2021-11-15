@@ -8,6 +8,7 @@ class Server {
 
     constructor() {
         this.app = express();
+        console.log(process.env.PORT);
         this.port = process.env.PORT;
 
         // Conectar a base de datos
@@ -50,7 +51,9 @@ class Server {
         this.app.use(cors());
 
         this.app.use(express.json());
-        this.app.use(express.static('../dist/tablab'));
+        this.app.use(express.static(path.join(__dirname, 'dist/tablab')));
+        console.log(path.join(__dirname, 'dist/tablab'));
+        //this.app.use(express.static('../dist/tablab'));
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use("/users", express.static(path.join("backend/uploads/users")));
         this.app.use("/datafiles", express.static(path.join("backend/uploads/datafiles")));
