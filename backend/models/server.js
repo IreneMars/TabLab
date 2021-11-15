@@ -44,7 +44,7 @@ class Server {
     //     }
     //     return false;
     // }
-
+    //
     middlewares() {
         // CORS: para evitar errores del tipo crossed domain access
         this.app.use(cors());
