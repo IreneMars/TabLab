@@ -1,6 +1,4 @@
 const multer = require("multer");
-const path = require('path');
-const { v4: uuidv4 } = require('uuid');
 
 const MIME_TYPE_MAP = {
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
@@ -30,11 +28,11 @@ const storage = multer.diskStorage({
                 file.mimetype = Object.keys(MIME_TYPE_MAP).find(key => MIME_TYPE_MAP[key] === extension);
                 error = null;
             }
-            
+
             let path = "";
-            if (extension === MIME_TYPE_MAP_PICS[file.mimetype] || Object.values(MIME_TYPE_MAP_PICS).includes(extension)){
+            if (extension === MIME_TYPE_MAP_PICS[file.mimetype] || Object.values(MIME_TYPE_MAP_PICS).includes(extension)) {
                 path = "backend/uploads/users"
-            }else{
+            } else {
                 path = "backend/uploads/datafiles"
             }
             cb(error, path);
