@@ -8,8 +8,8 @@ const average = [
 
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:3000/api',
-  SOCKET_ENDPOINT: 'http://localhost:3000',
+  apiUrl: 'https://tablab-app.herokuapp.com/api',
+  SOCKET_ENDPOINT: 'https://tablab-app.herokuapp.com',
   errors: [
     new FricError('duplicate-row', null),
     new FricError('deviated-value', new DeviatedValueParams('', average, 0))
