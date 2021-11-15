@@ -8,8 +8,8 @@ class Server {
 
     constructor() {
         this.app = express();
-        console.log(process.env.PORT);
-        this.port = process.env.PORT;
+        //console.log(process.env.PORT);
+        this.port = 3000;
 
         // Conectar a base de datos
         this.conectarDB();
@@ -51,8 +51,7 @@ class Server {
         this.app.use(cors());
 
         this.app.use(express.json());
-        this.app.use(express.static(path.join(__dirname, 'dist/tablab')));
-        console.log(path.join(__dirname, 'dist/tablab'));
+        this.app.use(express.static('/app/dist/tablab'));
         //this.app.use(express.static('../dist/tablab'));
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use("/users", express.static(path.join("backend/uploads/users")));
@@ -91,8 +90,8 @@ class Server {
     }
 
     listen() {
-        this.app.listen(this.port, () => {
-            console.log('Servidor (API Node) corriendo en puerto', this.port);
+        this.app.listen(3000, () => {
+            console.log('Servidor (API Node) corriendo en puerto', 3000);
         });
     }
 

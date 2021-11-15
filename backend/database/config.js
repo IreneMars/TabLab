@@ -8,6 +8,7 @@ const dbConnection = async() => {
             useCreateIndex: true,
             useFindAndModify: false
         });
+        console.log(process.env.MONGODB_CNN)
         console.log('¡Conectado a la base de datos de Mongo!');
 
     } catch (error) {

@@ -1,7 +1,6 @@
-const http = require("http");
 const Server = require('./backend/models/server.model');
-const serverConfig = new Server();
-serverConfig.listen();
+const server = new Server();
+server.listen();
 // const onError = error => {
 //     if (error.syscall !== "listen") {
 //         throw error;
