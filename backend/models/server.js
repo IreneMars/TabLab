@@ -8,7 +8,8 @@ class Server {
 
     constructor() {
         this.app = express();
-        this.port = this.normalizePort(process.env.PORT || "3000");
+        this.port = process.env.PORT;
+        //this.port = this.normalizePort(process.env.PORT || "3000");
 
         // Conectar a base de datos
         this.conectarDB();
@@ -32,18 +33,18 @@ class Server {
         return this.port;
     }
 
-    normalizePort(val) {
-        var port = parseInt(val, 10);
-        if (isNaN(port)) {
-            // named pipe
-            return val;
-        }
-        if (port >= 0) {
-            // port number
-            return port;
-        }
-        return false;
-    }
+    // normalizePort(val) {
+    //     var port = parseInt(val, 10);
+    //     if (isNaN(port)) {
+    //         // named pipe
+    //         return val;
+    //     }
+    //     if (port >= 0) {
+    //         // port number
+    //         return port;
+    //     }
+    //     return false;
+    // }
 
     middlewares() {
         // CORS: para evitar errores del tipo crossed domain access
