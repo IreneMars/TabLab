@@ -8,8 +8,8 @@ class Server {
 
     constructor() {
         this.app = express();
-        //console.log(process.env.PORT);
-        this.port = 3000;
+
+        this.port = process.env.PORT;
 
         // Conectar a base de datos
         this.conectarDB();
@@ -90,8 +90,8 @@ class Server {
     }
 
     listen() {
-        this.app.listen(process.env.PORT, () => {
-            console.log('Servidor (API Node) corriendo en puerto', process.env.PORT);
+        this.app.listen(this.port, () => {
+            console.log('Servidor (API Node) corriendo en puerto', this.port);
         });
     }
 
