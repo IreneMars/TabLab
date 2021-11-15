@@ -92,4 +92,3 @@ server.on("error", onError);
 server.on("listening", onListening);
 server.listen(port);
 console.log("Escuchando en el puerto " + port + "...");
-server.getInit();

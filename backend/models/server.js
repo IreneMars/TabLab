@@ -18,6 +18,9 @@ class Server {
 
         // Rutas de mi aplicación
         this.routes();
+        this.app.get('*', function(req, res) {
+            res.sendFile(path.join(__dirname + '/dist/index.html'));
+        });
     }
 
     async conectarDB() {
@@ -29,28 +32,21 @@ class Server {
     }
 
     getPort() {
-        return this.port;
-    }
-
-    getInit() {
-        this.app.get('*', function(req, res) {
-            res.sendFile(path.join(__dirname + '/dist/index.html'));
-        });
-    }
-
-    // normalizePort(val) {
-    //     var port = parseInt(val, 10);
-    //     if (isNaN(port)) {
-    //         // named pipe
-    //         return val;
-    //     }
-    //     if (port >= 0) {
-    //         // port number
-    //         return port;
-    //     }
-    //     return false;
-    // }
-    //
+            return this.port;
+        }
+        // normalizePort(val) {
+        //     var port = parseInt(val, 10);
+        //     if (isNaN(port)) {
+        //         // named pipe
+        //         return val;
+        //     }
+        //     if (port >= 0) {
+        //         // port number
+        //         return port;
+        //     }
+        //     return false;
+        // }
+        //
     middlewares() {
         // CORS: para evitar errores del tipo crossed domain access
         this.app.use(cors());
