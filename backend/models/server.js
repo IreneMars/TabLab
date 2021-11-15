@@ -49,7 +49,6 @@ class Server {
         // CORS: para evitar errores del tipo crossed domain access
         this.app.use(cors());
 
-        // Lectura y parseo del body
         this.app.use(express.json());
         this.app.use(express.static('../dist/tablab'));
         this.app.use(express.urlencoded({ extended: false }));
@@ -60,16 +59,12 @@ class Server {
         this.app.use("/files", express.static(path.join("backend/files")));
 
         this.app.use((req, res, next) => {
-            // Permitimos solo a nuestra aplicacion de angular hacer llamadas a nuestra api
             res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
 
-            // Cabeceras que enviamos en cada respuesta
             res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
-            // Métodos REST que vamos a permitir
             res.setHeader('Access-Control-Allow-Methods', "GET, POST, PATCH, PUT, DELETE, OPTIONS");
 
-            // Pasar al siguiente middleware
             next();
         });
 
