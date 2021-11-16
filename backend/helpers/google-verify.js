@@ -8,6 +8,8 @@ const googleVerify = async(idToken = '') => {
         // Or, if multiple clients access the backend:
         //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
     });
+    console.log("Google Verify")
+    console.log(process.env.GOOGLE_CLIENT_ID)
 
     const {
         name: name,

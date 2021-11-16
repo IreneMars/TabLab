@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.createForm();
     gapi.load('auth2', () => {
       gapi.auth2.init({
-        client_id: '303403440470-rllj320ep4gefudqkscfovdm7qug9ebd.apps.googleusercontent.com'
+        client_id: '303403440470-ov4hqkp88j4uflfclvd5pltnklc3uejk.apps.googleusercontent.com'
       });
     });
   }

@@ -42,6 +42,8 @@ exports.login = async(req, res) => {
 exports.googleLogin = async(req, res) => {
     const { tokenId } = req.body;
     try {
+        console.log("Google Verify")
+        console.log(process.env.GOOGLE_CLIENT_ID)
         const { email, name, img } = await googleVerify(tokenId);
         var fetchedUser = await User.findOne({ email: email });
         if (!fetchedUser) {
