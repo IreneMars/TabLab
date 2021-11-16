@@ -355,7 +355,7 @@ class LoginComponent {
         this.createForm();
         gapi.load('auth2', () => {
             gapi.auth2.init({
-                client_id: '303403440470-rllj320ep4gefudqkscfovdm7qug9ebd.apps.googleusercontent.com'
+                client_id: '303403440470-ov4hqkp88j4uflfclvd5pltnklc3uejk.apps.googleusercontent.com'
             });
         });
     }
@@ -1406,7 +1406,7 @@ AuthModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineInjecto
                 providers: [
                     {
                         id: angularx_social_login__WEBPACK_IMPORTED_MODULE_8__["GoogleLoginProvider"].PROVIDER_ID,
-                        provider: new angularx_social_login__WEBPACK_IMPORTED_MODULE_8__["GoogleLoginProvider"]('303403440470-rllj320ep4gefudqkscfovdm7qug9ebd.apps.googleusercontent.com')
+                        provider: new angularx_social_login__WEBPACK_IMPORTED_MODULE_8__["GoogleLoginProvider"]('303403440470-ov4hqkp88j4uflfclvd5pltnklc3uejk.apps.googleusercontent.com')
                     }
                 ]
             },
