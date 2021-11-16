@@ -21,6 +21,7 @@ import { ComponentsModule } from './components/components.module';
 import { registerLocaleData } from '@angular/common';
 import localEs from '@angular/common/locales/es';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { RouterModule } from '@angular/router';
 // import { SocketioService } from './services/socketio.service';
 registerLocaleData(localEs);
 
@@ -38,6 +39,7 @@ registerLocaleData(localEs);
     PagesModule,
     ComponentsModule,
     ReactiveFormsModule,
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
