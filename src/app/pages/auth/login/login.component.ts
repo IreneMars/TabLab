@@ -94,6 +94,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       });
     }
+    //
     this.isLoading = true;
     const values = this.loginForm.getRawValue();
     this.authService.login(values.username, values.password);
