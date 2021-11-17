@@ -50,7 +50,7 @@ class Server {
         // CORS: para evitar errores del tipo crossed domain access
         this.app.use(cors());
 
-        // Lectura y parseo del body
+        // Lectura y parseo del body 
         this.app.use(express.json());
         this.app.use(express.static('/app/dist/tablab'));
         this.app.use(express.urlencoded({ extended: false }));
