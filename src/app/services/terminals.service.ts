@@ -21,7 +21,6 @@ export class TerminalsService {
       'content': content,
       'user': userId
     };
-    return this.http.put<{message: string, role: any}>(BACKEND_URL + terminalId, terminal);
-    
-  }
+    return this.http.put<{message: string, role: any}>(BACKEND_URL + terminalId, terminal)
+  }  
 }

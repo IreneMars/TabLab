@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from './models/user.model';
 
 import { AuthService } from './services/auth.service';
-// import { SocketioService } from './services/socketio.service';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +9,11 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  user: any;
+  userId              : string;
+  
   constructor(private authService: AuthService) {}
-    //private socketService: SocketioService) {}
 
   ngOnInit() {
     this.authService.autoAuthUser();
-    //this.socketService.setupSocketConnection();
   }
-
 }

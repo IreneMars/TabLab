@@ -104,7 +104,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       localStorage.removeItem('username');
     }
     this.isLoading = false;
-    this.router.navigateByUrl('/');
   }
 
   async onGoogleLogin(){

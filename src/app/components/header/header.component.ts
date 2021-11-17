@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/user.model';
 import { InvitationService } from '../../services/invitations.service';
 import { Invitation } from 'src/app/models/invitation.model';
+import { AuthStatusService } from 'src/app/services/authStatus.service';
 
 @Component({
   selector: 'app-header',
@@ -15,14 +16,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
   pendingInvitation   : boolean = false;
   userId              : string;
   userIsAuthenticated : boolean = false;
-  user                : User;
+  user                : User = null;
   invitationsSub      : Subscription;
   invitations         : Invitation[] = [];
   private authListenerSubs : Subscription;
+  subscription: Subscription;
 
-  constructor( private authService: AuthService, public usersService: UsersService, public invitationsService: InvitationService ) {
+  constructor( private authService: AuthService, private authStatusService: AuthStatusService,
+               public usersService: UsersService, public invitationsService: InvitationService ) {
+  }
+  
+  checkUser(){
+    this.subscription = this.authStatusService.currentAuthStatus.subscribe((authStatus:any) => {
+      if (!this.user) {
+        if(authStatus.user){
+          this.user = authStatus.user;
+          this.userIsAuthenticated = true;
+        }
+      }
+    })
   }
 
+  isAdmin(){
+    var res = false;
+    if (this.user && this.user.role=="admin") {
+      res = true;     
+    }
+    return res;
+  }
+  
   ngOnInit(): void {
     this.isLoading = true;
     this.userIsAuthenticated = this.authService.getIsAuth();

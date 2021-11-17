@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 // import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { ErrorInterceptor } from './error-interceptor';
@@ -17,7 +16,6 @@ import { PagesModule } from './pages/pages.module';
 import { ComponentsModule } from './components/components.module';
 import { registerLocaleData } from '@angular/common';
 import localEs from '@angular/common/locales/es';
-import { TranslatePipe } from './pipes/translate.pipe';
 
 registerLocaleData(localEs);
 

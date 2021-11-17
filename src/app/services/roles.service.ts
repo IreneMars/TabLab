@@ -45,13 +45,13 @@ export class RolesService {
       res = response;
     });
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Updating a role failed!');
-        } else {
-          resolve('Role updated successfully!');
-        }
-      });
+      
+      if (res === undefined) {
+        reject('Updating a role failed!');
+      } else {
+        resolve('Role updated successfully!');
+      }
+      
     });
   }
 

@@ -25,7 +25,7 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
   testId                 : string;
   selectedTest           : Test;
   selectedTestIDs        : Set<string> = new Set();
-  tests                  : any[];
+  tests                  : Test[];
   inExecution            : boolean = false;
   terminal               : Terminal;
   private authStatusSub  : Subscription;
@@ -35,7 +35,7 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
               public route: ActivatedRoute, public workspacesService: WorkspacesService, public reportsService: ReportsService,
               public terminalsService: TerminalsService, private router: Router){
   }
-//
+
   ngOnInit(){
     this.isLoading = true;
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -61,6 +61,7 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
           content:response.terminal.content,
           user:response.terminal.user,
         };
+        console.log(this.terminal.content)
       });
     }
     this.authStatusSub = this.authService
@@ -86,24 +87,18 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
     //} else if (!checked && index >= 0) {
       this.selectedTestIDs.delete(testId);
     }
-    console.log(this.selectedTestIDs)
   }
 
   onSelectAll(event: Event) {
     const checked: boolean = (event.target as HTMLInputElement).checked;
     if (checked) {
-      console.log("Select All")
       for (var test of this.tests){
         this.selectedTestIDs.add(test.id);
       }
-      console.log(this.selectedTestIDs)
     }
     if (!checked) {
-      console.log("Deselect All")
       this.selectedTestIDs = new Set();
-      console.log(this.selectedTestIDs)
     }
-    console.log(this.selectedTestIDs)
 
   }
 
@@ -123,10 +118,9 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
     })
   }
   async onClean(){
-    this.terminalsService.updateTerminal(this.terminal.id,this.userId,[]).subscribe( response => {
+    this.terminalsService.updateTerminal(this.terminal.id,this.userId,[]).subscribe(()=>{
       this.terminal.content = [];
-    });
-
+    })
   }
   onExecute(){
     if(this.selectedTestIDs.size===0){
@@ -158,18 +152,31 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
               executable: responseData.testUpdates.executable,
               datafile: responseData.testUpdates.datafile,
             };
-            this.testsService.updateTest(testUpdate).then((data:any)=>{
-              this.terminal.content.push(data.message);
-              this.inExecution = false;
+            this.testsService.updateTest(testUpdate).then(async (data:any)=>{
+              if (data !==  undefined){
+                this.terminal.content.push(data);
+              }
+              console.log(this.terminal.content)
+              this.terminalsService.updateTerminal(this.terminal.id,this.userId,this.terminal.content).subscribe(terminalData =>{
+                console.log(terminalData)
+                this.inExecution = false;
+              })
             })
             .catch(err=>{
               this.terminal.content.push(err);
               this.inExecution = false;
             });
+            for (var test of this.tests){
+              if(this.selectedTestIDs.has(test.id) && test.id===selectedTestId){
+                const index = this.tests.indexOf(test);
+                this.tests.splice(index,1,testUpdate);
+              }
+            }        
           });
+          
+    
         });
       }
-    
   }
 
 }
