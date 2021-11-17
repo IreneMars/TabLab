@@ -9,7 +9,7 @@ import { Test } from 'src/app/models/test.model';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { TerminalsService } from '../../../services/terminals.service';
-import { Terminal } from '../../../models/terminal.model';
+import { Terminal } from 'src/app/models/terminal.model';
 
 @Component({
   selector: 'app-test-execute',
