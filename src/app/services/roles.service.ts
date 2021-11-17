@@ -33,13 +33,13 @@ export class RolesService {
     });
   }
   
-  updateRole(roleId: string, roleName: string){
+  updateRole(roleId: string, roleName: string, workspaceId: string){
     let res: any;
     const role: Role = {
       'id': roleId,
       'role': roleName, 
-      'workspace': null, 
-      'user': null
+      'user': null,
+      'workspace': workspaceId
     };
     this.http.put<{message: string, role: any}>(BACKEND_URL + roleId, role).subscribe( response => {
       res = response;
@@ -51,7 +51,7 @@ export class RolesService {
         } else {
           resolve('Role updated successfully!');
         }
-      }, 1000);
+      });
     });
   }
 

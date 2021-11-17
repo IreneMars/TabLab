@@ -1,11 +1,18 @@
 {
     "users": [
-        { "_id": "60ad88d2a74d2e58cc611a31", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2a$10$tGr.iPLEhGuL4UXiznQVp.W7syfE8nhdyEHlKkQU3cBtqgIGY0Yd.", "name": "irene", "photo": "http://localhost:3000/users/jelly.png", "role": "ADMIN", "status": "true", "google": "false" },
+        { "_id": "60ad88d2a74d2e58cc611a31", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2a$10$M4/WzOyXzntqUDAm8NDd4OEQ1NrrtrIzOMWzHWBM2X6wf/AgXaCy6", "name": "irene", "photo": "http://localhost:3000/users/jelly.png", "role": "ADMIN", "status": "true", "google": "false" },
         { "_id": "60ae10e9c2d2fe5c48e6eeb2", "username": "daniel", "email": "daniel@gmail.com", "password": "$2y$10$IfcujEFKlz5jS/18OT5bRuVC2vFuO7UNaRvQiF3.zVf04i6vBfG8q", "name": "daniel", "photo": "http://localhost:3000/users/squid.png", "role": "USER", "status": "true", "google": "false" },
         { "_id": "60ae10e9c2d2fe5c48e6eeb3", "username": "pedro", "email": "pedro@gmail.com", "password": "$2y$10$eZYlwcXLX5wrcWUXBXxbwu0C2zKthDQfZvlbQ80UF3tbB/D6RO/OC", "name": "pedro", "photo": "http://localhost:3000/users/palm-tree.png", "role": "USER", "status": "true", "google": "false" },
         { "_id": "60ae10e9c2d2fe5c48e6eeb4", "username": "sandra", "email": "sandra@gmail.com", "password": "$2y$10$.BkuJC6g1TrW8os.wyFFN.BjIZpgmkYMa9oigdecjU2DenFJUi6.6", "name": "sandra", "photo": "http://localhost:3000/users/beans.png", "role": "USER", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb5", "username": "walo", "email": "walo@gmail.com", "password": "$2y$10$EUkpNODE0JPMPdJIEVyJrejWOrRVRH9usY4pcppOCY9dIWUSf.3IC", "name": "walo", "photo": "http://localhost:3000/users/pizza.png", "role": "USER", "status": "true", "google": "false" }
+        { "_id": "60ae10e9c2d2fe5c48e6eeb5", "username": "walo", "email": "walo@gmail.com", "password": "$2y$10$EUkpNODE0JPMPdJIEVyJrejWOrRVRH9usY4pcppOCY9dIWUSf.3IC", "name": "walo", "photo": "http://localhost:3000/users/duck.png", "role": "USER", "status": "true", "google": "false" }
+    ],
 
+    "terminals": [
+        { "_id": "61952bed9136713cda9b4f6b", "content": [], "user": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "61952bf3cac9dbc32b02a461", "content": [], "user": "60ae10e9c2d2fe5c48e6eeb2" },
+        { "_id": "61952bf82583551e0191769f", "content": [], "user": "60ae10e9c2d2fe5c48e6eeb3" },
+        { "_id": "61952bfd60fc4ca867e71290", "content": [], "user": "60ae10e9c2d2fe5c48e6eeb4" },
+        { "_id": "61952c02332786d4906aa972", "content": [], "user": "60ae10e9c2d2fe5c48e6eeb5" }
     ],
 
     "workspaces": [
@@ -27,7 +34,6 @@
 
         { "_id": "60b36426894076503c4de406", "role": "owner", "workspace": "60b363c81e7c4e4ff4e724a0", "user": "60ae10e9c2d2fe5c48e6eeb3" },
         { "_id": "60b36426894076503c4de407", "role": "admin", "workspace": "60b363c81e7c4e4ff4e724a0", "user": "60ae10e9c2d2fe5c48e6eeb4" }
-
     ],
 
     "invitations": [
@@ -44,7 +50,10 @@
 
     "datafiles": [
         { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": "backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv", "errLimit": null, "delimiter": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
-        { "_id": "60b634e98ab1a18d8850e49f", "title": "Datafile 2", "description": "Este es el datafile 2.", "contentPath": null, "errLimit": null, "delimiter": null, "coleccion": null, "workspace": "60aeaf40d0e8477348250ac9" }
+        { "_id": "60b634e98ab1a18d8850e49f", "title": "Datafile 2", "description": "Este es el datafile 2.", "contentPath": null, "errLimit": null, "delimiter": null, "coleccion": null, "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "619389a81a2dffb23b953917", "title": "Datafile 3", "description": "Este es el datafile 3.", "contentPath": null, "errLimit": null, "delimiter": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "6193a80edcc6d2ea6bd3e1b8", "title": "Datafile 4", "description": "Este es el datafile 4.", "contentPath": null, "errLimit": null, "delimiter": null, "coleccion": "60b436d8a0646673b02cb8c3", "workspace": "60aeaf40d0e8477348250ac9" }
+
     ],
 
     "esquemas": [
@@ -77,6 +86,7 @@
     "tests": [{
             "_id": "60c36c9ee5d8ef42848fe2f5",
             "title": "PRUEBA DMF",
+            "delimiter": "|",
             "reportPath": null,
             "status": "passed",
             "esquema": "60c164a855a6814cb879a775",
@@ -91,6 +101,7 @@
         {
             "_id": "60c36c9ee5d8ef42848fe2f6",
             "title": "PRUEBA DMF 2",
+            "delimiter": "|",
             "reportPath": null,
             "status": "pending",
             "esquema": "60c1669355a6814cb879a77a",

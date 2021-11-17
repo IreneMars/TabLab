@@ -32,6 +32,7 @@ export class DatafileService {
             id: configuration._id,
             title: configuration.title,
             creationMoment: configuration.creationMoment,
+            delimiter: configuration.delimiter,
             errorCode: configuration.errorCode,
             extraParams: configuration.extraParams,
             datafile: configuration.datafile,
@@ -41,6 +42,7 @@ export class DatafileService {
           return {
             id: test._id,
             title: test.title,
+            delimiter: test.delimiter,
             reportPath: test.reportPath,
             status: test.status,
             esquema: test.esquema,
@@ -66,7 +68,7 @@ export class DatafileService {
       'contentPath': null, 
       'errLimit': null,
       'delimiter': null,
-      'coleccion': collectionId, 
+      'collection': collectionId, 
       'workspace': workspaceId
     };
     this.http.post<{message: string, datafile: any}>(
@@ -87,7 +89,7 @@ export class DatafileService {
     });
   }
       
-  updateDatafile(datafileId: string, title: string, description: string) {
+  updateDatafile(datafileId: string, title: string, description: string, collection:string) {
     let res;
     const datafileData: Datafile = {
       'id':datafileId,
@@ -96,7 +98,7 @@ export class DatafileService {
       'contentPath': null, 
       'errLimit': null,
       'delimiter': null,
-      'coleccion': null, 
+      'collection': collection, 
       'workspace': null
     };
 
@@ -106,11 +108,11 @@ export class DatafileService {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (res === undefined) {
-          reject('Updating a datafile failed!');
+          resolve('Updating a datafile failed!');
         } else {
           resolve('Datafile updated successfully!');
         }
-      }, 1000);
+      }, 3000);
     });
   }
   

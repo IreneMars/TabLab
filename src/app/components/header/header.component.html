@@ -4,7 +4,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02" *ngIf="!isLoading">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li *ngIf="userIsAuthenticated" class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['workspaces']">Espacios de Trabajo</a>
@@ -21,7 +21,7 @@
                 </a>
             </li>
         </ul>
-        User is authenticated: {{userIsAuthenticated}}
+
         <form class="form-inline" *ngIf="!userIsAuthenticated">
             <a class="btn btn-outline-primary me-2" routerLinkActive="active" [routerLink]="['auth/login']">Iniciar Sesión</a>
             <a class="btn btn-outline-primary" routerLinkActive="active" [routerLink]="['auth/signup']">Registro</a>

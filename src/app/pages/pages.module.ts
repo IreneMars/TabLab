@@ -17,6 +17,7 @@ import { ProfileDetailsComponent } from './profile/profile-details/profile-detai
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
 import { ProfileAccountEditComponent } from './profile/profile-account-edit/profile-account-edit.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
+import { TranslatePipe } from '../pipes/translate.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ConfigurationComponent } from './configuration/configuration.component'
     ProfileDetailsComponent,
     ProfileEditComponent,
     ProfileAccountEditComponent,
-    ConfigurationComponent
+    ConfigurationComponent,
+    TranslatePipe
   ],
   imports: [
     CommonModule,
@@ -41,6 +43,6 @@ import { ConfigurationComponent } from './configuration/configuration.component'
     ComponentsModule,
     FormsModule,
     AppRoutingModule,
-  ]
+  ],
 })
 export class PagesModule { }

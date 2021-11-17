@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TestsService } from 'src/app/services/tests.service';
 import { ReportsService } from '../../../services/reports.service';
 import { CollectionsService } from '../../../services/collections.service';
@@ -8,6 +8,8 @@ import { Workspace } from 'src/app/models/workspace.model';
 import { Test } from 'src/app/models/test.model';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { TerminalsService } from '../../../services/terminals.service';
+import { Terminal } from '../../../models/terminal.model';
 
 @Component({
   selector: 'app-test-execute',
@@ -25,12 +27,13 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
   selectedTestIDs        : Set<string> = new Set();
   tests                  : any[];
   inExecution            : boolean = false;
-  terminal               : any[] = [];
+  terminal               : Terminal;
   private authStatusSub  : Subscription;
   private testsSub       : Subscription;
-
+  
   constructor(private authService: AuthService, public testsService: TestsService, public collectionsService: CollectionsService, 
-              public route: ActivatedRoute, public workspacesService: WorkspacesService, public reportsService: ReportsService){
+              public route: ActivatedRoute, public workspacesService: WorkspacesService, public reportsService: ReportsService,
+              public terminalsService: TerminalsService, private router: Router){
   }
 
   ngOnInit(){
@@ -50,11 +53,20 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
         });
     });
     this.userIsAuthenticated = this.authService.getIsAuth();
+    if(this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+      this.terminalsService.getTerminal(this.userId).subscribe((response)=>{
+        this.terminal = {
+          id:response.terminal._id,
+          content:response.terminal.content,
+          user:response.terminal.user,
+        };
+      });
+    }
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
-        this.userId = this.authService.getUserId();
       });
   }
   
@@ -110,39 +122,51 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
 
     })
   }
+  async onClean(){
+    this.terminalsService.updateTerminal(this.terminal.id,this.userId,[]).subscribe( response => {
+      this.terminal.content = [];
+    });
 
+  }
   onExecute(){
     if(this.selectedTestIDs.size===0){
       return;
     }
       this.inExecution = true;
       for (var selectedTestId of this.selectedTestIDs){
-        console.log(selectedTestId)
-        this.reportsService.addReport(selectedTestId).subscribe(async responseData => {
-          console.log(responseData)
-          const testUpdate: Test = {
-            id: responseData.testUpdates._id,
-            title: responseData.testUpdates.title,
-            reportPath: responseData.testUpdates.reportPath,
-            status: responseData.testUpdates.status,
-            esquema: responseData.testUpdates.esquema,
-            configurations: responseData.testUpdates.configurations,
-            creationMoment: responseData.testUpdates.creationMoment,
-            updateMoment: responseData.testUpdates.updateMoment,
-            executionMoment: responseData.testUpdates.executionMoment,
-            totalErrors: responseData.testUpdates.totalErrors,
-            executable: responseData.testUpdates.executable,
-            datafile: responseData.testUpdates.datafile,
-          };
-          this.testsService.updateTest(testUpdate).then(data=>{
-            console.log(data);
-            this.inExecution = false;
-          })
-          .catch(err=>{
-            console.log(err)
-            this.inExecution = false;
+        this.testsService.getTest(selectedTestId).subscribe((testResponse)=>{
+          this.terminal.content.push("Test "+testResponse.test.title+" is being executed.");
+          this.reportsService.addReport(selectedTestId).subscribe(async responseData => {
+            var buffer = responseData.execBuffer.split("\n");
+            for (var line of buffer){
+              this.terminal.content.push(line)
+            }
+            this.terminal.content.push(responseData.execBuffer);
+            this.terminal.content.push(responseData.message);
+            const testUpdate: Test = {
+              id: responseData.testUpdates._id,
+              title: responseData.testUpdates.title,
+              delimiter: responseData.testUpdates.delimiter,
+              reportPath: responseData.testUpdates.reportPath,
+              status: responseData.testUpdates.status,
+              esquema: responseData.testUpdates.esquema,
+              configurations: responseData.testUpdates.configurations,
+              creationMoment: responseData.testUpdates.creationMoment,
+              updateMoment: responseData.testUpdates.updateMoment,
+              executionMoment: responseData.testUpdates.executionMoment,
+              totalErrors: responseData.testUpdates.totalErrors,
+              executable: responseData.testUpdates.executable,
+              datafile: responseData.testUpdates.datafile,
+            };
+            this.testsService.updateTest(testUpdate).then((data:any)=>{
+              this.terminal.content.push(data.message);
+              this.inExecution = false;
+            })
+            .catch(err=>{
+              this.terminal.content.push(err);
+              this.inExecution = false;
+            });
           });
-     
         });
       }
     

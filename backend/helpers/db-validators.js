@@ -1,17 +1,18 @@
-const { 
-    Collection, 
+const {
+    Collection,
     Configuration,
-    Datafile, 
+    Datafile,
     Esquema,
     Invitation,
     Role,
     Test,
-    User, 
-    Workspace
+    User,
+    Workspace,
+    Terminal
 } = require('../models');
 
 const isValidRole = async(role = '') => {
-    const roleExists = ["USER","ADMIN"].includes(role);
+    const roleExists = ["USER", "ADMIN"].includes(role);
     //const roleExists = await Role.findOne({ role });
     if (!roleExists) {
         throw new Error(`The role: ${ role } is not contemplated in the BD.`);
@@ -25,10 +26,10 @@ const emailExists = async(email = '') => {
     }
 };
 
-const allowedEntities = ( entity = '', entities = []) => {
+const allowedEntities = (entity = '', entities = []) => {
 
-    const included = entities.includes( entity );
-    if ( !included ) {
+    const included = entities.includes(entity);
+    if (!included) {
         throw new Error(`The entity ${ entity } is not allowed (allowed entities:${ entities })`);
     }
     return true;
@@ -37,9 +38,9 @@ const allowedEntities = ( entity = '', entities = []) => {
 /**
  * Collection
  */
-const collectionExistsById = async( id ) => {
+const collectionExistsById = async(id) => {
     const collectionExists = await Collection.findById(id);
-    if ( !collectionExists ) {
+    if (!collectionExists) {
         throw new Error(`The collection with id: ${ id } does not exist.`);
     }
 }
@@ -47,9 +48,9 @@ const collectionExistsById = async( id ) => {
 /**
  * Configuration
  */
-const configurationExistsById = async( id ) => {
+const configurationExistsById = async(id) => {
     const configurationExists = await Configuration.findById(id);
-    if ( !configurationExists ) {
+    if (!configurationExists) {
         throw new Error(`The configuration with id: ${ id } does not exist.`);
     }
 }
@@ -57,9 +58,9 @@ const configurationExistsById = async( id ) => {
 /**
  * Datafile
  */
-const datafileExistsById = async( id ) => {
+const datafileExistsById = async(id) => {
     const datafileExists = await Datafile.findById(id);
-    if ( !datafileExists ) {
+    if (!datafileExists) {
         throw new Error(`The datafile with id: ${ id } does not exist.`);
     }
 }
@@ -67,9 +68,9 @@ const datafileExistsById = async( id ) => {
 /**
  * Esquema
  */
-const esquemaExistsById = async( id ) => {
+const esquemaExistsById = async(id) => {
     const esquemaExists = await Esquema.findById(id);
-    if ( !esquemaExists ) {
+    if (!esquemaExists) {
         throw new Error(`The esquema with id: ${ id } does not exist.`);
     }
 }
@@ -77,9 +78,9 @@ const esquemaExistsById = async( id ) => {
 /**
  * Invitation
  */
-const invitationExistsById = async( id ) => {
+const invitationExistsById = async(id) => {
     const invitationExists = await Invitation.findById(id);
-    if ( !invitationExists ) {
+    if (!invitationExists) {
         throw new Error(`The invitation with id: ${ id } does not exist.`);
     }
 }
@@ -87,9 +88,9 @@ const invitationExistsById = async( id ) => {
 /**
  * Role
  */
-const roleExistsById = async( id ) => {
+const roleExistsById = async(id) => {
     const roleExists = await Role.findById(id);
-    if ( !roleExists ) {
+    if (!roleExists) {
         throw new Error(`The role with id: ${ id } does not exist.`);
     }
 }
@@ -97,9 +98,9 @@ const roleExistsById = async( id ) => {
 /**
  * Test
  */
-const testExistsById = async( id ) => {
+const testExistsById = async(id) => {
     const testExists = await Test.findById(id);
-    if ( !testExists ) {
+    if (!testExists) {
         throw new Error(`The test with id: ${ id } does not exist.`);
     }
 }
@@ -108,7 +109,7 @@ const testExistsById = async( id ) => {
  * User
  */
 const userExistsById = async(id) => {
-    
+
     const userExists = await User.findById(id);
     if (!userExists) {
         throw new Error(`The user with id: ${ id } does not exist.`);
@@ -118,10 +119,20 @@ const userExistsById = async(id) => {
 /**
  * Workspace
  */
-const workspaceExistsById = async( id ) => {
+const workspaceExistsById = async(id) => {
     const workspaceExists = await Workspace.findById(id);
-    if ( !workspaceExists ) {
+    if (!workspaceExists) {
         throw new Error(`The workspace with id: ${ id } does not exist.`);
+    }
+}
+
+/**
+ * Terminal
+ */
+const terminalExistsById = async(id) => {
+    const terminalExists = await Terminal.findById(id);
+    if (!terminalExists) {
+        throw new Error(`The terminal with id: ${ id } does not exist.`);
     }
 }
 
@@ -129,12 +140,12 @@ const workspaceExistsById = async( id ) => {
  * Entity
  */
 //  const entityExistsById = async( id ) => {
-    //     const entityExists = await Entity.findById(id);
-    //     if ( !entityExists ) {
-        //         throw new Error(`The id: ${ id } does not exist.`);
-        //     }
-        // }
-        
+//     const entityExists = await Entity.findById(id);
+//     if ( !entityExists ) {
+//         throw new Error(`The id: ${ id } does not exist.`);
+//     }
+// }
+
 module.exports = {
     isValidRole,
     emailExists,
@@ -148,4 +159,5 @@ module.exports = {
     testExistsById,
     userExistsById,
     workspaceExistsById,
+    terminalExistsById
 };

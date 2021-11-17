@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor( private authService: AuthService, public activitiesService: ActivitiesService) {
   }
 
-
   ngOnInit(): void {
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
@@ -31,7 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authStatusSub.unsubscribe();
+    //this.authStatusSub.unsubscribe();
   }
 
 

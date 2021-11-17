@@ -7,8 +7,13 @@ exports.getUsersByWorkspace = async(req, res) => {
         var user_ids = roles.map(function(elem) {
             return elem.user.toString();
         });
-        user_ids = [...new Set(user_ids)];
-        const users = await User.find({ '_id': { $in: user_ids } })
+        var users = [];
+        for (var role of roles) {
+            const user = await User.findById(role.user);
+            user._doc['roleId'] = role._id;
+            user._doc['roleName'] = role.role;
+            users.push(user);
+        }
         return res.status(200).json({
             message: "Users fetched successfully!",
             users: users,

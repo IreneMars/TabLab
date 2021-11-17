@@ -1,58 +1,57 @@
-<mat-spinner *ngIf="isLoading"></mat-spinner>
 <div class="container mt-5" *ngIf="!isLoading">
     <div class="row justify-content-center">
         <div class="col-9 col-auto ">
             <div class="row">
                 <div class="col-4">
-                  <div class="row d-grid gap-2">
-                    <a type="button" class="btn btn-outline-secondary active" routerLink="/profile/{{user.userId}}/edit">Editar Perfil</a>
-                    <a type="button" class="btn btn-outline-secondary" routerLink="/account/{{user.userId}}/edit">Configuración de la cuenta</a>
-                  </div>
+                    <div class="row d-grid gap-2">
+                        <a type="button" class="btn btn-outline-secondary active" routerLink="/profile/{{user.userId}}/edit">Editar Perfil</a>
+                        <a type="button" class="btn btn-outline-secondary" routerLink="/account/{{user.userId}}/edit">Configuración de la cuenta</a>
+                    </div>
                 </div>
                 <div class="col-8 ps-4">
-                  <h1>Editar Perfil</h1>
-                  
-                  <form [formGroup]="userForm" (ngSubmit)="onSaveUser()">
-                    
-                    <div  *ngIf="photoPreview && photoPreview !== '' && userForm.get('photo').valid">                         
-                      <img [src]="photoPreview" class="border rounded-circle me-2" style="width: 80px;"> 
-                    </div> 
-                    <div  *ngIf="!photoPreview">                         
-                      <img src="{{user.photo}}" class="border rounded-circle me-2" style="width: 80px;" alt="">
-                    </div>                     
-                    <div class="mt-2 mb-4">
-                      <button type="button" class="btn btn-primary btn-sm" (click)="filePicker.click()">
+                    <h1>Editar Perfil</h1>
+
+                    <form [formGroup]="userForm" (ngSubmit)="onSaveUser()">
+
+                        <div *ngIf="photoPreview && photoPreview !== '' && userForm.get('photo').valid">
+                            <img [src]="photoPreview" class="border rounded-circle me-2" style="width: 80px;">
+                        </div>
+                        <div *ngIf="!photoPreview">
+                            <img src="{{user.photo}}" class="border rounded-circle me-2" style="width: 80px;" alt="">
+                        </div>
+                        <div class="mt-2 mb-4">
+                            <button type="button" class="btn btn-primary btn-sm" (click)="filePicker.click()">
                         Cambiar Foto
                         <span style="color: white;">
                           <i class="fas fa-camera fa-lg ms-1"></i>	
                         </span>
                       </button>
-                      <input type="file" #filePicker (change)="onImagePicked($event)" visbility="hidden"> 
-                    </div>
-                     
-                  
-                    <div class="mb-3">
-                      <label for="FormName" class="form-label">Nombre</label>
-                      <input type="text" class="form-control" id="FormName" formControlName="name" [class.is-invalid]="invalidName" placeholder="Name" value="{{user.name}}">
-                      <mat-error>
-                        <small *ngIf="invalidName" class="text-danger">
+                            <input type="file" #filePicker (change)="onImagePicked($event)" visbility="hidden">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="FormName" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="FormName" formControlName="name" [class.is-invalid]="invalidName" placeholder="Name" value="{{user.name}}">
+                            <mat-error>
+                                <small *ngIf="invalidName" class="text-danger">
                           Ingrese un nombre válido.
                         </small>
-                      </mat-error>
-                    </div>
-                    <div class="mb-3">
-                      <label for="FormUsername" class="form-label">Nombre de Usuario</label>
-                      <input type="text" class="form-control" id="FormUsername" formControlName="username" [class.is-invalid]="invalidUsername"placeholder="Username" value="{{user.username}}">
-                      <mat-error>
-                        <small *ngIf="invalidUsername" class="text-danger">
+                            </mat-error>
+                        </div>
+                        <div class="mb-3">
+                            <label for="FormUsername" class="form-label">Nombre de Usuario</label>
+                            <input type="text" class="form-control" id="FormUsername" formControlName="username" [class.is-invalid]="invalidUsername" placeholder="Username" value="{{user.username}}">
+                            <mat-error>
+                                <small *ngIf="invalidUsername" class="text-danger">
                           Ingrese un nombre de usuario válido.
                         </small>
-                      </mat-error>
-                    </div>
-                    
-                    <button class="btn btn-primary me-1 mt-2" type="submit">Guardar Cambios</button>
-                    <button class="btn btn-secondary mt-2" (click)="onCancelUserForm()" [disabled]="pristineUser">Cancelar</button>
-                  </form>
+                            </mat-error>
+                        </div>
+
+                        <button class="btn btn-primary me-1 mt-2" type="submit">Guardar Cambios</button>
+                        <button class="btn btn-secondary mt-2" (click)="onCancelUserForm()" [disabled]="pristineUser">Cancelar</button>
+                    </form>
                 </div>
 
             </div>

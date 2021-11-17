@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { UsersService } from '../../services/users.service';
@@ -20,20 +20,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   invitations         : Invitation[] = [];
   private authListenerSubs : Subscription;
 
-
-  constructor( public authService: AuthService, public usersService: UsersService, public invitationsService: InvitationService ) {
+  constructor( private authService: AuthService, public usersService: UsersService, public invitationsService: InvitationService ) {
   }
 
   ngOnInit(): void {
     this.isLoading = true;
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-        this.userIsAuthenticated = isAuthenticated;
-        console.log(this.userIsAuthenticated);
-    });
-    
-    const data = this.authService.getUserData();
-    if (data) {
+    console.log("User is authenticated: "+this.authService.getIsAuth())
+    if(this.userIsAuthenticated){
+      const data = this.authService.getUserData();
       this.userId = data.userId;
       this.usersService.getUser(this.userId).subscribe(userData => {
         this.user = {
@@ -46,25 +41,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
           role: userData.user.role,
           status: userData.user.status,
           google: userData.user.google
-        };
-        this.isLoading = false;
-
-      });
-    }
-    this.isLoading = true;
-    this.userId = this.authService.getUserId();
-    if(this.userId){
-      this.invitationsService.getInvitationsHeader().subscribe( (invitationData: {invitations: Invitation[]}) => {
-        this.isLoading = false;
-        this.invitations = invitationData.invitations;
-        for (var invitation of this.invitations) {
+        }
+        this.invitationsService.getInvitationsHeader().subscribe( (invitationData: {invitations: Invitation[]}) => {
+          this.invitations = invitationData.invitations;
+          for (var invitation of this.invitations) {
             if(invitation.status==='pending'){
               this.pendingInvitation = true;
               break;
             }
-        }
+          }
+          this.isLoading = false;
+        });
       });
+    }else{
+      this.isLoading = false;
     }
+    this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+      this.userIsAuthenticated = isAuthenticated;
+    });
 
   }
 

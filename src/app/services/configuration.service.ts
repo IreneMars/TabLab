@@ -19,7 +19,7 @@ export class ConfigurationService {
   addConfiguration(values: any, datafileId: string){
     let res: any;
     //const configuration = {...values};
-    const {title, errorCode, ...extraParams} = values;
+    const {title, errorCode, delimiter, ...extraParams} = values;
     const configuration: Configuration = {
       'id':null,
       'title': title, 
@@ -47,7 +47,7 @@ export class ConfigurationService {
   updateConfiguration(configurationId: string, values: any, datafileId: string) {
     let res: any;
     //const configuration = {...values};
-    const {title, errorCode, ...extraParams} = values;
+    const {title, errorCode, delimiter, ...extraParams} = values;
     const configuration: Configuration = {
       'id': configurationId,
       'title': title, 

@@ -43,8 +43,10 @@ export class TestDetailsComponent implements OnInit {
   constructor(public testsService: TestsService, public datafilesService: DatafileService, public uploadsService: UploadsService, public route: ActivatedRoute,
               public usersService: AuthService, private router: Router){
                 this.testForm = new FormGroup({
-                  'title': new FormControl(null, {validators: [Validators.required]})
+                  'title': new FormControl(null, {validators: [Validators.required]}),
+                  'delimiter': new FormControl(null)
                 });
+                
                 this.fileContentForm = new FormGroup({
                   'fileContent': new FormControl({value: '', disabled: true}),
                 });
@@ -60,11 +62,11 @@ export class TestDetailsComponent implements OnInit {
       this.datafileId = paramMap.get('datafileId');
       this.workspaceId = paramMap.get('workspaceId');
       this.testId = paramMap.get('testId');
-      console.log(this.testId)
       this.testsService.getTest(this.testId).subscribe( testData => {
         this.test = {
           id: testData.test._id,
           title: testData.test.title,
+          delimiter: testData.test.delimiter,
           reportPath: testData.test.reportPath,
           status: testData.test.status,
           esquema: testData.test.esquema,
@@ -76,7 +78,7 @@ export class TestDetailsComponent implements OnInit {
           executable: testData.test.executable,
           datafile: testData.test.datafile,
         };
-        this.testForm.reset({title: this.test.title});
+        this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
         this.selectedEsquema = {
           id: testData.esquema._id,
           title: testData.esquema.title,
@@ -96,9 +98,10 @@ export class TestDetailsComponent implements OnInit {
           contentPath: datafileData.datafile.contentPath,
           errLimit: datafileData.datafile.errLimit,
           delimiter: datafileData.datafile.delimiter,
-          coleccion: datafileData.datafile.coleccion,
+          collection: datafileData.datafile.coleccion,
           workspace: datafileData.datafile.workspace,
         };
+        this.isLoading = false;
         this.esquemas = datafileData.esquemas;
         this.configurations = datafileData.configurations;
 
@@ -119,7 +122,6 @@ export class TestDetailsComponent implements OnInit {
           this.formattedConfigs.push({...config, extraParamsStr});
         });
 
-        this.isLoading = false;
         this.edit = false;
       });
 
@@ -151,16 +153,17 @@ export class TestDetailsComponent implements OnInit {
     const values = this.testForm.getRawValue();
     this.test.title =  values.title;
     this.test.executable = true;
-    // this.testsService.updateTest(this.test).subscribe( responseData => {
-    //   this.testForm.reset({});
-    //   this.router.navigateByUrl('/', {skipLocationChange: true})
-    //   .then(() => {
-    //     this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}/test/${this.testId}`]);
-    //   }).catch( err => {
-    //     console.log("Error on onSave method: "+err);
-    //   });
-    //   this.isSavingTest = false;
-    // });
+    await this.testsService.updateTest(this.test);
+    this.testForm.reset({});
+    this.router.navigateByUrl('/', {skipLocationChange: true})
+    .then(() => {
+      this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}/test/${this.testId}`]);
+      this.isSavingTest = false;
+    }).catch( err => {
+      console.log("Error on onSave method: "+err);
+      this.isSavingTest = false;
+
+    });    
   }
 
   async onSaveContent() {
@@ -187,7 +190,7 @@ export class TestDetailsComponent implements OnInit {
     }
     this.isLoading = true;
     //await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateContent', file);
-    await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description);
+    await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, null);
     this.fileContentForm.get('fileContent').disable();
     this.isLoading = false;
   }
@@ -262,7 +265,7 @@ export class TestDetailsComponent implements OnInit {
 
   onCancelTestForm(){
     this.edit = false;
-    this.testForm.reset({title: this.test.title});
+    this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
   }
 
 

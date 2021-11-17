@@ -101,6 +101,7 @@ exports.createTest = async(req, res, next) => {
         }
         const test = new Test({
             title: req.body.title,
+            delimiter: req.body.delimiter,
             reportPath: null,
             status: 'pending',
             esquema: req.body.esquema,
@@ -128,7 +129,6 @@ exports.updateTest = async(req, res, next) => {
     current_user_id = req.userData.userId;
     try {
         const test = await Test.findById(req.params.testId);
-        console.log("Updating test: " + test.title)
         const datafile = await Datafile.findById(test.datafile);
         if (!datafile) {
             return res.status(500).json({
@@ -142,7 +142,9 @@ exports.updateTest = async(req, res, next) => {
         }
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         if (roles.length !== 1) {
-            return res.status(401).json({ message: "Not authorized to update this test!" });
+            return res.status(401).json({
+                message: "Not authorized to update this test!"
+            });
         }
         const testUpdate = req.body;
         testUpdate.updateMoment = Date.now();

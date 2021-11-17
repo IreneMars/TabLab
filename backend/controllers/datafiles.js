@@ -1,4 +1,4 @@
-const { Role, Collection, Workspace, Datafile, Configuration, Esquema, Test } = require("../models");
+const { Activity, Role, Collection, Workspace, Datafile, Configuration, Esquema, Test, User } = require("../models");
 var fs = require('file-system');
 const xlsxFile = require('read-excel-file/node');
 
@@ -133,16 +133,16 @@ exports.updateDatafile = async(req, res) => {
                 message: "You are not authorized to update a datafile from this workspace."
             });
         }
-        await Datafile.findByIdAndUpdate(req.params.id, { title: req.body.title, description: req.body.description });
+        await Datafile.findByIdAndUpdate(req.params.id, { title: req.body.title, description: req.body.description, coleccion: req.body.collection });
         const updatedDatafile = await Datafile.findById(req.params.id);
 
         const workspace = await Workspace.findById(updatedDatafile.workspace);
         const user = await User.findById(current_user_id);
         var messageAux = "{{author}} modificó el fichero del espacio de trabajo {{workspace}}";
         var coleccionAux = null;
-        if (updatedDatafile.collection) {
+        if (updatedDatafile.coleccion) {
             messageAux = "{{author}} modificó el fichero del espacio de trabajo {{workspace}} (de la colección {{coleccion}})";
-            const coleccion = await Collection.findById(updatedDatafile.collection);
+            const coleccion = await Collection.findById(updatedDatafile.coleccion);
             coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
         }
         const activity = new Activity({

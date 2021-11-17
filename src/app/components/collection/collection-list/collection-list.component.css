@@ -8,10 +8,6 @@ mat-card {
     margin-top: 1rem;
 }
 
-mat-spinner {
-    margin: auto;
-}
-
 input[type="file"] {
     visibility: hidden;
 }
@@ -38,10 +34,6 @@ input[type="file"] {
 .sidenav h4 {
     /* margin: 0px; */
     color: black;
-}
-
-.accordion-button:not(.collapsed) {
-    color: black !important;
 }
 
 .sidenav div {
@@ -90,23 +82,6 @@ input[type="file"] {
     height: 100%;
 }
 
-.accordion-header {
-    background-color: #f2f2f3;
-}
-
-.accordion-header:hover {
-    background-color: #dbdbdb;
-}
-
-.btn-outline-secondary {
-    border: none;
-}
-
-.btn-outline-secondary:hover {
-    color: #6c757d;
-    background-color: #cccccc;
-}
-
 .add-file {
     color: #6c757d;
     border-color: #6c757d;
@@ -118,8 +93,55 @@ input[type="file"] {
     border-color: #cccccc;
 }
 
-.linebreak {
-    border-width: 1px 0 0 0;
-    border-style: solid;
-    border-top-color: #6c757d;
+.mat-accordion .mat-expansion-panel:last-of-type {
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}
+
+.mat-accordion .mat-expansion-panel:first-of-type {
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none !important;
+}
+
+.mat-expansion-panel-spacing {
+    margin: 0px !important;
+}
+
+.mat-expansion-panel-header {
+    background-color: #f2f2f3 !important;
+}
+
+.mat-expansion-panel-header:hover {
+    background-color: #dbdbdb !important;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+    height: 40px !important;
+}
+
+.mat-expansion-panel-header {
+    height: 40px !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+.datafileRow {
+    padding: 0.5rem 1rem 0.5rem 2.3rem;
+    cursor: pointer
+}
+
+.btn-outline-secondary {
+    color: #6c757d !important;
+    border: none !important;
+}
+
+.btn-outline-secondary:hover {
+    color: #6c757d !important;
+    background-color: #cccccc !important;
 }

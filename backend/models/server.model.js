@@ -91,6 +91,8 @@ class Server {
         this.app.use("/api/reports", require('../routes/reports'));
         this.app.use("/api/uploads", require('../routes/uploads'));
         this.app.use("/api/activities", require('../routes/activities'));
+        this.app.use("/api/terminals", require('../routes/terminals'));
+
     }
 
     listen() {

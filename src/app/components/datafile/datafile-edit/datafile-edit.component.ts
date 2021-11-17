@@ -2,8 +2,10 @@ import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Collection } from 'src/app/models/collection.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DatafileService } from 'src/app/services/datafiles.service';
+import { CollectionsService } from '../../../services/collections.service';
 
 @Component({
   selector: 'app-datafile-edit',
@@ -14,17 +16,19 @@ export class DatafileEditComponent implements OnInit, OnDestroy{
   @Input() datafile;
   @Input() datafileId;
   @Input() workspaceId;
-  @Output() editChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() editChange   : EventEmitter<boolean> = new EventEmitter<boolean>();
+  collections            : Collection[];
+  private collectionsSub : Subscription;
 
   datafileEditForm: FormGroup;
   loading = false;
-
+  collectionPicked:string=null;
   userIsAuthenticated = false;
   userId: string;
   private authStatusSub: Subscription;
 
   constructor(public datafileService: DatafileService, public authService: AuthService,  private router: Router,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder, public collectionsService: CollectionsService) {
     this.createForm();
   }
 
@@ -32,6 +36,7 @@ export class DatafileEditComponent implements OnInit, OnDestroy{
     this.datafileEditForm = this.formBuilder.group({
       title       : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       description : ['', [Validators.maxLength(200)]],
+      collection  :  ['', ],
     });
   }
 
@@ -45,10 +50,18 @@ export class DatafileEditComponent implements OnInit, OnDestroy{
       title: this.datafile.title,
       description: this.datafile.description,
     });
+    // Collections
+    this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+    this.collectionsSub = this.collectionsService.getCollectionUpdateListener()
+    .subscribe( (collectionData: {collections: Collection[]}) => {
+      this.collections = collectionData.collections;
+    });
   }
 
   ngOnDestroy(): void {
     this.authStatusSub.unsubscribe();
+    this.collectionsSub.unsubscribe();
+
   }
 
   get invalidTitle() {
@@ -58,7 +71,11 @@ export class DatafileEditComponent implements OnInit, OnDestroy{
   get invalidDescription() {
     return this.datafileEditForm.get('description').invalid && this.datafileEditForm.get('description').touched;
   }
-
+  onCollectionPicked(event: Event) {
+    const collectionId = (event.target as HTMLInputElement).value;
+    this.collectionPicked = collectionId;
+  }
+  
   async onSave() {
     if (this.datafileEditForm.invalid){
       return Object.values(this.datafileEditForm.controls).forEach(control => {
@@ -70,17 +87,13 @@ export class DatafileEditComponent implements OnInit, OnDestroy{
       });
     }
 
-    this.loading = true;
     const values = this.datafileEditForm.getRawValue();
 
-    await this.datafileService.updateDatafile(this.datafileId, values.title, values.description);
+    await this.datafileService.updateDatafile(this.datafileId, values.title, values.description, this.collectionPicked);
     this.datafileEditForm.reset();
     this.editChange.emit(false);
-    this.router.navigateByUrl('/', {skipLocationChange: true})
-    .then(() => {
-      this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-    }).catch( err => {});
-    this.loading = false;
+    window.location.reload();
+
   }
 
   onCancel() {

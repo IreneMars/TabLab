@@ -1,18 +1,12 @@
 <div class="row ps-2 pe-2 complete-height">
     <div class="col-2 collections p-0">
-        <div class="container p-0">
-            <app-collection-list [workspaceId]="workspaceId"></app-collection-list>
-        </div>
+        <app-collection-list [workspaceId]="workspaceId" [(isLoading)]="isLoading"></app-collection-list>
     </div>
-    <div class="col-7">
-        <div class="mt-2" *ngIf="isLoading">
-            <mat-spinner></mat-spinner>
-        </div>
+    <div class="col-7" *ngIf="!isLoading">
         <app-workspace-edit *ngIf="edit" [(edit)]="edit" [workspace]="workspace" [workspaceId]="workspaceId"></app-workspace-edit>
 
-        <div class="container" *ngIf="!isLoading && !edit">
-
-            <div class="row mt-4">
+        <div class="container">
+            <div class="row mt-4" *ngIf="!edit">
                 <div class="col-10">
                     <h2>{{ workspace.title }}</h2>
 
@@ -35,25 +29,26 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-1">
+            <div class="row mt-1" *ngIf="!edit">
                 <div class="col">
                     <p>{{ workspace.description }}</p>
                 </div>
             </div>
-            <app-activity-list></app-activity-list>
+            <div>
+                <app-activity-list></app-activity-list>
+            </div>
         </div>
     </div>
 
-    <div class="col-3 members">
+    <div class="col-3 members" *ngIf="!isLoading">
         <div class="container">
             <div class="row mt-4">
                 <div class="col">
-                    <h2>Empieza!</h2>
                     <button type="button" class="btn add-file btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="!savefileChange">
-                      Crear fichero de datos
+                      Añadir fichero de datos
                     </button>
                     <button type="button" class="btn add-file btn-sm" disabled *ngIf="savefileChange">
-                      Crear fichero de datos
+                        Añadir fichero de datos
                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     </button>
                     <app-datafile-create (savefileChange)="setSaveMode($event)" [workspaceId]="workspaceId" [collections]="collections"></app-datafile-create>
@@ -62,23 +57,19 @@
             <div class="row mt-4">
                 <div class="col">
                     <h2>Members</h2>
-
                     <ul class="list-group">
                         <div *ngFor="let user of users">
                             <li class="list-group-item pt-0 pb-0 d-flex justify-content-between align-items-center">
-
                                 <div class="pt-1 pb-1 user-photo">
                                     <img src="{{user.photo}}" class="border rounded-circle me-2" alt=""> {{user.username}}
                                 </div>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                  
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li><button class="dropdown-item btn-sm" type="button">Admin</button></li>
-                                        <li><button class="dropdown-item btn-sm " type="button">Owner</button></li>
-                                        <li><button class="dropdown-item btn-sm" type="button">Member</button></li>
-                                    </ul>
+                                <div class="btn-group" *ngIf="currentUserRole=='owner' || currentUserRole=='admin'">
+                                    <select class="form-select form-select-sm" (change)="onRolePicked($event,user)" id="{{user.id}}">
+                                        <option value="" selected> {{user.roleName | translate}} </option>
+                                        <option value="owner" *ngIf="user.roleName!='owner'">{{'owner' | translate}}</option>
+                                        <option value="admin" *ngIf="user.roleName!='admin'">{{'admin' | translate}}</option>
+                                        <option value="member" *ngIf="user.roleName!='member'">{{'member' | translate}}</option>
+                                    </select>
                                 </div>
                             </li>
                         </div>

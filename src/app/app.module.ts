@@ -12,16 +12,13 @@ import { AngularMaterialModule } from './angular-material.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from './pages/home/home.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { AuthInterceptor } from './pages/auth/auth-interceptor';
 import { PagesModule } from './pages/pages.module';
 import { ComponentsModule } from './components/components.module';
-
 import { registerLocaleData } from '@angular/common';
 import localEs from '@angular/common/locales/es';
-import { GoogleLoginProvider } from 'angularx-social-login';
-// import { SocketioService } from './services/socketio.service';
+import { TranslatePipe } from './pipes/translate.pipe';
+
 registerLocaleData(localEs);
 
 @NgModule({
@@ -46,10 +43,7 @@ registerLocaleData(localEs);
       provide: LOCALE_ID,
       useValue: 'es'
     },
-
-    ],
-    //SocketioService
-
+  ],
   bootstrap: [AppComponent],
   entryComponents: [ErrorComponent]
 })

@@ -1,5 +1,5 @@
 import os, json, logging, sys, pathlib, logging
-from frictionless import validate, Detector, Resource, errors, describe_schema
+from frictionless import validate, Detector, Resource, describe_schema
 # from backend.scripts.report_summary import (
 #     summarize_report,
 #     log_highlights_for_summarize_report,
@@ -208,7 +208,7 @@ def save_report_to_file(report, file):
     output.write(report_json)
     output.close()
 
-def validate_file(file_path, schema_file=None,  errors_file_name=None, delimiter=None, configurations=None):
+def validate_file(file_path, delimiter, schema_file=None,  errors_file_name=None, configurations=None):
     output_directory = 'backend/output/'
     # Si no existe el path, crearlo
     if not os.path.exists(output_directory):
@@ -235,10 +235,6 @@ def validate_file(file_path, schema_file=None,  errors_file_name=None, delimiter
     if not errors_file_name:
         errors_file_name = name + '_errors.csv'
 
-    dialect = {}
-    if delimiter:
-        dialect['delimiter'] = delimiter
-
     # UNCHECKED_ERRORS, IGNORED_ERRORS, CHECKED_ERRORS
     skip_errors = []
     pick_errors = []
@@ -253,7 +249,7 @@ def validate_file(file_path, schema_file=None,  errors_file_name=None, delimiter
             elif error_code in UNCHECKED_ERRORS:
                 checks.append(configuration)
     dialect = {
-            "delimiter": "|"
+            "delimiter": delimiter
         }
     if schema_file=="":
         schema_file = None
@@ -315,30 +311,21 @@ print(f"Logs started with level {LOG_LEVEL}");
 logger.info(f"Logs started with level {LOG_LEVEL}")
 
 out_path = sys.argv[1]
-esquema_path = sys.argv[2];
-file_path = sys.argv[3];
-configurations = [{'code':sys.argv[4]}]
+delimiter = sys.argv[2]
+esquema_path = sys.argv[3];
+file_path = sys.argv[4];
+configurations = [{'code':sys.argv[5]}]
 
 logger.info('Out Path: '+out_path);
+logger.info('Delimiter: '+delimiter);
 logger.info('Esquema: '+esquema_path);
 logger.info('File: '+file_path);
 logger.info('Out Path: '+out_path);
 logger.info("Configurations:");
 logger.info(configurations);
 
-# outlets_schema_file = 'schema/geomarketing/outlets_schema_2.yaml'
-# outlets_source_file = "data/corporate/POI_POI_2019_H2_GMK_V1212_short.xlsx"
+# file_path = "data/corporate/POI_POI_2019_H2_GMK_V1212_short.xlsx"
+# esquema_path = ""
 # configurations = [{'code':'type-error'}]
-validate_file(file_path, schema_file=esquema_path, configurations=configurations)
-
-# configurations=[{"code":"row-constraint", "formula": "-90.0 <= LATITUDE <= 90.0", "fieldName": "LATITUDE"},
-#                 {"code":"row-constraint", "formula": "-180.0 <= LONGITUDE <= 180.0", "fieldName": "LONGITUDE"}]
-# # validate_file(outlets_source_file, schema_file=outlets_schema_file, configurations=configurations)
-
-# dmf_schema_file = None
-# dmf_source_file = r'backend\uploads\datafiles\capital.csv'
-# configurations = []
-# delimiter=","
-# validate_file(dmf_source_file, schema_file=dmf_schema_file, delimiter=None, configurations=configurations)
-
-# infer_schema("../data/short.xlsx")
+# def validate_file(file_path, delimiter, schema_file=None,  errors_file_name=None, configurations=None):
+validate_file(file_path, delimiter, schema_file=esquema_path, configurations=configurations)

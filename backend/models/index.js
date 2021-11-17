@@ -6,10 +6,11 @@ const Esquema = require('./esquema');
 const FricError = require('./fricError');
 const Invitation = require('./invitation');
 const Role = require('./role');
-const Server = require('./server');
+const Server = require('./server.model');
 const Test = require('./test');
 const User = require('./user');
 const Workspace = require('./workspace');
+const Terminal = require('./terminal');
 
 module.exports = {
     Collection,
@@ -23,5 +24,6 @@ module.exports = {
     Test,
     User,
     Workspace,
-    Activity
+    Activity,
+    Terminal
 }

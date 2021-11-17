@@ -99,12 +99,7 @@ export class ConfigurationCreateComponent implements OnInit, OnDestroy{
   }
 
   async onSave() {
-    // if (this.configuration) { // Modo edición
-    //   if (this.configurationForm.get('title').invalid) {
-    //     this.configurationForm.get('title').markAsTouched();
-    //     return;
-    //   }
-    // } else {
+
     if (this.configurationForm.invalid){
       return Object.values(this.configurationForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
@@ -115,13 +110,11 @@ export class ConfigurationCreateComponent implements OnInit, OnDestroy{
         }
       });
     }
-    // }
     const values = this.configurationForm.getRawValue();
     if (this.configuration) {
       await this.configurationService.updateConfiguration(this.configurationId, values, this.datafileId);
     } else {
       await this.configurationService.addConfiguration(values, this.datafileId);
-      // (document.getElementById('esquemaContent') as HTMLInputElement).value = '';
     }
     this.router.navigateByUrl('/', {skipLocationChange: true})
     .then(() => {

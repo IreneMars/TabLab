@@ -47,47 +47,30 @@ exports.createReport = async(req, res, next) => {
         split1 = datafile.contentPath.split('.');
         split2 = split1[0].split('/');
         const errorReportPath = 'backend/output/' + split2[3] + '_errors.csv';
-        const testData = [test.title, errorReportPath, esquemaContentPath, datafile.contentPath, configurationsAux];
+        const testData = [test.title, errorReportPath, test.delimiter, esquemaContentPath, datafile.contentPath, configurationsAux];
 
         //var myProcess = spawn('python', ["backend/scripts/validation.py", errorReportPath, esquemaContentPath, datafile.contentPath, errorCode]);
 
         const execBuffer = execFileSync(
-            'python', ["backend/scripts/validation.py", testData[1], testData[2], testData[3], testData[4]], { encoding: 'utf-8' }
+            'python', ["backend/scripts/validation.py", testData[1], testData[2], testData[3], testData[4], testData[5]], { encoding: 'utf-8' }
             //'python', ["backend/scripts/validation.py", errorReportPath, esquemaContentPath, datafile.contentPath, configurationsAux], { encoding: 'utf-8' }
         );
-
-        // errorReportPath
+        console.log("execBuffer")
+        console.log(execBuffer)
+            // errorReportPath
         const rawdata = fs.readFileSync(testData[1], options = { encoding: 'utf8' });
-        console.log(rawdata)
         const lines = rawdata.split("\n");
         const errors = lines.length - 1;
-        console.log(errors)
         test.reportPath = errorReportPath
         test.updateMoment = Date.now();
         test.executionMoment = Date.now();
         test.totalErrors = errors;
         test.executable = false;
 
-
-        // fs.readFile(errorReportPath, 'utf8', async(err, data) => {
-        //     if (err) {
-        //         console.log(err);
-        //     } else {
-        //         const lines = data.split("\n");
-        //         const errors = lines.length - 1;
-        //         test.reportPath = errorReportPath
-        //         test.updateMoment = Date.now();
-        //         test.executionMoment = Date.now();
-        //         test.totalErrors = errors;
-        //         test.executable = false;
-
-        //     }
-        // })
-        console.log(test)
-
         return res.status(200).json({
             message: "Creation of error report and update of a test successful! ",
             testUpdates: test,
+            execBuffer: execBuffer
         });
     } catch (err) {
         return res.status(500).json({

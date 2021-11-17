@@ -144,7 +144,7 @@ exports.updateEsquema = async(req, res, next) => {
         });
     } catch (err) {
         return res.status(500).json({
-            message: "Fetching a datafile failed!"
+            message: "Updating an esquema failed!"
         });
     }
 };

@@ -38,6 +38,7 @@ export class TestCreateComponent implements OnInit, OnDestroy{
   createForm() {
     this.testForm = this.formBuilder.group({
       title          : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      delimiter      : [''],
       esquema        : [''],
       configurations : [[]]
     });
@@ -59,6 +60,10 @@ export class TestCreateComponent implements OnInit, OnDestroy{
     return this.testForm.get('title').invalid && this.testForm.get('title').touched;
   }
 
+  get invalidDelimiter() {
+    return this.testForm.get('delimiter').invalid && this.testForm.get('delimiter').touched;
+  }
+  
   async onSave() {
     if (this.testForm.invalid){
       return Object.values(this.testForm.controls).forEach(control => {
@@ -71,7 +76,7 @@ export class TestCreateComponent implements OnInit, OnDestroy{
       });
      }
     const values = this.testForm.getRawValue();
-    await this.testService.addTest(values.title, values.esquema, values.configurations, this.datafileId);
+    await this.testService.addTest(values.title, values.delimiter, values.esquema, values.configurations, this.datafileId);
     this.router.navigateByUrl('/', {skipLocationChange: true})
       .then(() => {
         this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);

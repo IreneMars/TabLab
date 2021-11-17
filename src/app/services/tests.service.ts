@@ -26,6 +26,7 @@ export class TestsService {
         return {
           id: test._id,
           title: test.title,
+          delimiter: test.delimiter,
           reportPath: test.reportPath,
           status: test.status,
           esquema: test.esquema,
@@ -53,11 +54,12 @@ export class TestsService {
     return this.http.get<{message: string, test: any, esquema: any, configurationIDs: string[], reportContent: string}>(BACKEND_URL + testId);
   }
   
-  addTest(title: string, esquemaId: string, configurations: string[], datafileId: string){
+  addTest(title: string, delimiter:string, esquemaId: string, configurations: string[], datafileId: string){
     let res;
     const test: Test = {
       'id': null,
       'title': title,
+      'delimiter': delimiter,
       'reportPath': null,
       'status': null,
       'esquema': esquemaId,
@@ -89,7 +91,6 @@ export class TestsService {
     let res: any;
     this.http.put<{message: string, test: any, content}>(BACKEND_URL + test.id, test).subscribe( responseData => {
       res = responseData;
-      console.log(responseData)
     });
       return new Promise((resolve, reject) => {
       setTimeout(() => {

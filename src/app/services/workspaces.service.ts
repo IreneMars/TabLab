@@ -59,7 +59,7 @@ export class WorkspacesService {
               contentPath: datafile.contentPath,
               errLimit: datafile.errLimit,
               delimiter: datafile.delimiter,
-              coleccion: datafile.coleccion,
+              collection: datafile.coleccion,
               workspace: datafile.workspace
             };
           })  

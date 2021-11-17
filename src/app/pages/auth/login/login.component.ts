@@ -28,11 +28,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   private auth2: gapi.auth2.GoogleAuth;
   private subject = new ReplaySubject<gapi.auth2.GoogleUser>(1);
 
-  constructor( public authService: AuthService, private formBuilder: FormBuilder, private socialAuthService: SocialAuthService ) {
+  constructor( public authService: AuthService, private formBuilder: FormBuilder, 
+               private socialAuthService: SocialAuthService, private router: Router ) {
     this.createForm();
     gapi.load('auth2', () => {
       gapi.auth2.init({
-        client_id: '303403440470-rllj320ep4gefudqkscfovdm7qug9ebd.apps.googleusercontent.com'
+        client_id: '303403440470-ov4hqkp88j4uflfclvd5pltnklc3uejk.apps.googleusercontent.com'
       });
     });
   }
@@ -40,7 +41,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   createForm() {
     this.loginForm = this.formBuilder.group({
       username       : ['', [Validators.required, Validators.minLength(4)]],
-      // email          : ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9._]+\.[a-z]{2,3}$')]],
       password       : ['', Validators.required],
       rememberme     : [false]
     });
@@ -97,12 +97,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     const values = this.loginForm.getRawValue();
     this.authService.login(values.username, values.password);
+    
     if  (values.rememberme) {
       localStorage.setItem('username', values.username);
     } else {
       localStorage.removeItem('username');
     }
     this.isLoading = false;
+    this.router.navigateByUrl('/');
   }
 
   async onGoogleLogin(){

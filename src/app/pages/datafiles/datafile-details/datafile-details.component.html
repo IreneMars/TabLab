@@ -1,16 +1,11 @@
 <div class="row ps-2 pe-2 complete-height">
     <div class="col-2 collections p-0">
-        <div class="container p-0">
-            <app-collection-list [workspaceId]="workspaceId"></app-collection-list>
-        </div>
+        <app-collection-list [workspaceId]="workspaceId" [(isLoading)]="isLoading"></app-collection-list>
     </div>
-    <div class="col-7">
-        <div class="mt-2" *ngIf="isLoading">
-            <mat-spinner></mat-spinner>
-        </div>
+    <div class="col-7" *ngIf="!isLoading">
         <app-datafile-edit *ngIf="edit" [(edit)]="edit" [datafile]="datafile" [datafileId]="datafileId" [workspaceId]="workspaceId"></app-datafile-edit>
 
-        <div class="container" *ngIf="!isLoading">
+        <div class="container" *ngIf="!isSaving && !isDeleting">
             <div class="row mt-4" *ngIf="!edit">
 
                 <div class="col-10">
@@ -103,7 +98,7 @@
             </div>
         </div>
     </div>
-    <div class="col-3">
+    <div class="col-3" *ngIf="!isLoading">
         <div class="container ps-0">
             <app-esquema-list [datafileId]="datafileId" [workspaceId]="workspaceId" [esquemas]="esquemas" [infer]="infer"></app-esquema-list>
         </div>

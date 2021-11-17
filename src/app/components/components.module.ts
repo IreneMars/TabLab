@@ -6,7 +6,6 @@ import { AngularMaterialModule } from 'src/app/angular-material.module';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { InvitationCreateComponent } from './invitation/invitation-create/invitation-create.component';
-import { InvitationListComponent } from '../pages/invitations/invitation-list/invitation-list.component';
 import { WorkspaceEditComponent } from './workspace/workspace-edit/workspace-edit.component';
 import { CollectionCreateComponent } from './collection/collection-create/collection-create.component';
 import { DatafileCreateComponent } from './datafile/datafile-create/datafile-create.component';
@@ -19,7 +18,6 @@ import { ConfigurationCreateComponent } from './configuration/configuration-crea
 import { TestCreateComponent } from './test/test-create/test-create.component';
 import { ActivityListComponent } from './activity/activity-list/activity-list.component';
 import { CollectionListComponent } from './collection/collection-list/collection-list.component';
-
 @NgModule({
   declarations: [
     HeaderComponent,

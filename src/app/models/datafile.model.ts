@@ -5,6 +5,6 @@ export interface Datafile {
   contentPath: string;
   errLimit: number;
   delimiter: string;
-  coleccion: string;
+  collection: string;
   workspace: string;
 }

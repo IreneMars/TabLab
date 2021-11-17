@@ -1,4 +1,4 @@
-const { User, Workspace, Role, Invitation, Collection, Datafile, Test, Esquema, Configuration, Activity } = require("../models");
+const { User, Workspace, Role, Invitation, Collection, Datafile, Test, Esquema, Configuration, Activity, Terminal } = require("../models");
 
 const path = require("path");
 const fullPath = path.resolve("backend/populate.json");
@@ -9,6 +9,8 @@ const populate_json_data = JSON.parse(rawdata);
 
 var create_report = (model_name, result, data) => {
     message = "";
+
+
     report = { 'model': model_name, 'insertionCount': '', 'insertions': [], errors: [] };
     if ('insertedCount' in result && result.insertedCount === data.length) {
         message = "All data was inserted (" + result.insertedCount + " out of " + data.length + ").";
@@ -126,6 +128,16 @@ exports.populate = async(req, res, next) => {
         reports.reports.push({ "message": message, "report": rep });
     } catch (err) {
         reports.errored_models.push({ "Activity": err });
+    }
+
+    // Terminals
+    try {
+        Terminal.collection.drop();
+        var terminalsResult = await Terminal.insertMany(populate_json_data.terminals, { ordered: false, rawResult: true });
+        [message, rep] = create_report('terminal', terminalsResult, populate_json_data.terminals);
+        reports.reports.push({ "message": message, "report": rep });
+    } catch (err) {
+        reports.errored_models.push({ "Terminal": err });
     }
 
     return res.status(200).json({

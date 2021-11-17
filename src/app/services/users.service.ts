@@ -33,6 +33,8 @@ export class UsersService {
           role:user.role,
           status:user.status,
           google:user.google,
+          roleId: user.roleId,
+          roleName: user.roleName
         };
       }),
     };

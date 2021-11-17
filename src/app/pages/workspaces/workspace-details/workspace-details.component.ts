@@ -1,4 +1,4 @@
-import { OnInit, OnDestroy } from '@angular/core';
+import { OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { WorkspacesService } from '../../../services/workspaces.service';
@@ -11,6 +11,7 @@ import { CollectionsService } from 'src/app/services/collections.service';
 import { Collection } from 'src/app/models/collection.model';
 import { DatafileService } from '../../../services/datafiles.service';
 import { UsersService } from '../../../services/users.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-workspace-details',
@@ -28,29 +29,34 @@ export class WorkspaceDetailsComponent implements OnInit, OnDestroy{
   enteredTitle           : string = '';
   workspaceId            : string;
   workspace              : Workspace;
-  users                  : User[];
+  users                  : any[];
   collections            : Collection[];
   private usersSub       : Subscription;
   private authStatusSub  : Subscription;
   private collectionsSub : Subscription;
+  roleForm               : FormGroup;
+  availableRoles         : string[] = ['admin','owner','member']
+  currentUserRole        : string;
+  
 
-  constructor(public workspacesService: WorkspacesService, public rolesService: RolesService, public route: ActivatedRoute,
+  constructor(private formBuilder: FormBuilder, public workspacesService: WorkspacesService, public rolesService: RolesService, public route: ActivatedRoute,
               public usersService: UsersService, public authService: AuthService, public collectionsService: CollectionsService,
-              public datafilesService: DatafileService, private router: Router) {}
-
-  ngOnInit() {
-    this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.authService.getUserId();
+              public datafilesService: DatafileService, private router: Router) {
+    this.createForm();
+  }
+  
+  createForm() {
+    this.roleForm = this.formBuilder.group({
+    role : ['', [Validators.required]],
     });
-    
+  }
+  
+  ngOnInit() {
+    this.isLoading = true;
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       const workId = paramMap.get('workspaceId');
       this.workspaceId = workId;
-      this.isLoading = true;
       this.workspacesService.getWorkspace(workId).subscribe(workspaceData => {
-        this.isLoading = false;
         this.workspace = {
           id: workspaceData.workspace._id,
           title: workspaceData.workspace.title,
@@ -64,11 +70,20 @@ export class WorkspaceDetailsComponent implements OnInit, OnDestroy{
     // Users
     this.usersService.getUsersByWorkspace(this.workspaceId);
     this.usersSub = this.usersService.getUserUpdateListener().subscribe( (userData: {users: User[]}) => {
-      this.isLoading = false;
       this.users = userData.users;
-      console.log(this.users)
+      this.userIsAuthenticated = this.authService.getIsAuth();
+      this.userId = this.authService.getUserId();
+      for (var userIndex in this.users){
+        const user = this.users[userIndex]
+        if(user.id===this.userId){
+          this.currentUserRole = user.roleName;
+        }
+      }
+      this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+      });
     });
-
+    
     // Collections
     this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
     this.collectionsSub = this.collectionsService.getCollectionUpdateListener()
@@ -117,6 +132,27 @@ export class WorkspaceDetailsComponent implements OnInit, OnDestroy{
 
   setSaveMode(newvalue: boolean) {
     this.savefileChange = newvalue;
+  }
+
+  async onRolePicked(event, user) {
+    const workspaceRole = (event.target as HTMLInputElement).value;
+    this.rolesService.updateRole(user.roleId, workspaceRole, this.workspaceId)
+      .then(res=>{
+        this.router.navigateByUrl('/', {skipLocationChange: true})
+          .then(() => {
+            this.router.navigate([`/workspace/${this.workspaceId}`]);
+          }).catch( err => {
+            console.log("Error on onRolePicked method: "+err)
+          });
+      })
+      .catch(err=>{
+        this.router.navigateByUrl('/', {skipLocationChange: true})
+          .then(() => {
+            this.router.navigate([`/workspace/${this.workspaceId}`]);
+          }).catch( err => {
+            console.log("Error on onRolePicked method: "+err)
+          });
+      });
   }
 
 }

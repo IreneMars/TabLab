@@ -31,8 +31,14 @@ exports.updateRole = async(req, res, next) => {
     current_user_id = req.userData.userId;
     try {
         const role = await Role.findById(req.params.id);
-        const current_user_role = await Role.find({ 'user': current_user_id });
+        const current_user_role = await Role.findOne({ 'user': current_user_id, 'workspace': req.body.workspace });
+        const owners = await Role.find({ workspace: req.body.workspace, role: 'owner' });
 
+        if (current_user_role.role === 'owner' && owners.length === 1) {
+            return res.status(403).json({
+                message: "You are not allowed to leave this workspace without an owner!"
+            });
+        }
         if (current_user_role === 'member' || (current_user_role === 'admin' && (role.role === 'owner' || role.role === 'admin'))) {
             return res.status(403).json({
                 message: "You are not allowed to update a role!"
@@ -56,7 +62,7 @@ exports.deleteRole = async(req, res, next) => {
 
     try {
         const role = await Role.findOne({ workspace: req.params.workspaceId, user: current_user_id });
-        const owners = await Role.findOne({ workspace: req.params.workspaceId, role: 'owner' });
+        const owners = await Role.find({ workspace: req.params.workspaceId, role: 'owner' });
         if (role.role === 'owner' && owners.length === 1) { //onleave
             await Workspace.deleteOne({ _id: req.params.workspaceId });
             await Role.deleteMany({ workspace: req.params.workspaceId });
@@ -64,7 +70,6 @@ exports.deleteRole = async(req, res, next) => {
                 message: "Role deletion (and workspace) successful!"
             });
         } else {
-            //await Role.updateOne({ _id: req.params.id, creator: req.userData.userId }, new_owner);
             await Role.deleteOne({ workspace: req.params.workspaceId, user: current_user_id });
             return res.status(200).json({
                 message: "Role deletion successful!"

@@ -24,7 +24,9 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
   userId                : string;
   userIsAuthenticated   : boolean = false;
   isLoading             : boolean = false;
+  isSaving              : boolean = false;
   isUploading           : boolean = false;
+  isDeleting            : boolean = false;
   infer                 : boolean = false;
   edit                  : boolean = false;
   invalidExtension      : boolean = false;
@@ -81,11 +83,9 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
           creationMoment: workspaceData.workspace.creationMoment,
           mandatory: workspaceData.workspace.mandatory
         };
-        this.isLoading = false;
       });
     });
-    
-    
+
     this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
       this.datafile = {
         id: datafileData.datafile.id,
@@ -94,7 +94,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
         contentPath: datafileData.datafile.contentPath,
         errLimit: datafileData.datafile.errLimit,
         delimiter: datafileData.datafile.delimiter,
-        coleccion: datafileData.datafile.coleccion,
+        collection: datafileData.datafile.coleccion,
         workspace: datafileData.datafile.workspace,
       };
 
@@ -117,9 +117,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
         'contentPath': new FormControl(null, {validators: [Validators.required]})
       });
       if (this.datafile.contentPath) {
-        // contentPath: {backend/files/capital-1234.csv",
         // contentPath: {backend/uploads/datafiles/capital-1234.csv",
-
         const nameWExtension = this.datafile.contentPath.split('/');
         const splitNameWExtension = nameWExtension[3].split('.');
         this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
@@ -144,9 +142,10 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
   }
 
   async onDelete(){
-    this.isLoading = true;
+    this.isDeleting = true;
     await this.datafilesService.deleteDatafile(this.datafileId);
     this.router.navigate([`/workspace/${this.datafile.workspace}`]);
+    this.isDeleting = false;
   }
 
   onEdit() {
@@ -170,7 +169,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
       this.file = uploadedFile;
       this.isUploading = true;
       await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateFile', this.file);
-      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description);
+      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, null);
 
       this.router.navigateByUrl('/', {skipLocationChange: true})
       .then(() => {
@@ -202,11 +201,11 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
       } else {
         return;
       }
-      this.isLoading = true;
+      this.isSaving = true;
       await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateContent', file);
-      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description);
+      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, null);
       this.fileContentForm.get('fileContent').disable();
-      this.isLoading = false;
+      this.isSaving = false;
     }
 
     async onDeleteFile() {

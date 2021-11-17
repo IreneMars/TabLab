@@ -76,13 +76,16 @@ export class ConfigurationListComponent implements OnInit, OnDestroy{
       }
       // this.configurationForm.get('esquemaContent').enable();
       this.configurationForm.patchValue({title: configurationData.configuration.title,
+                                         delimiter:configurationData.configuration.delimiter,
                                          errorCode: configurationData.configuration.errorCode});
-      const extraParamsObj = configurationData.configuration.extraParams;
-      Object.keys(extraParamsObj).forEach(extraParam => {
-        this.configurationForm.addControl(extraParam, new FormControl('', {validators: [Validators.required]}));
-        this.extraControls.push(extraParam);
-        this.configurationForm.patchValue(extraParamsObj);
-      });
+      if(configurationData.configuration.extraParams){
+        const extraParamsObj = configurationData.configuration.extraParams;
+        Object.keys(extraParamsObj).forEach(extraParam => {
+          this.configurationForm.addControl(extraParam, new FormControl('', {validators: [Validators.required]}));
+          this.extraControls.push(extraParam);
+          this.configurationForm.patchValue(extraParamsObj);
+        });
+      }
     });
   }
 

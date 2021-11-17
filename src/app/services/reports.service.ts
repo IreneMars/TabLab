@@ -14,7 +14,7 @@ export class ReportsService {
     const executionData: any = { 
       'testId':testId
     };
-    return this.http.put<{message: any, testUpdates: any}>(BACKEND_URL, executionData);
+    return this.http.put<{message: any, testUpdates: any, execBuffer: any}>(BACKEND_URL, executionData);
     // .pipe(map( (testData) => {
     //   return { 
     //     testsUpdates: testData.testsUpdates.map(test => {

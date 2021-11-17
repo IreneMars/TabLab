@@ -1,11 +1,3 @@
-<div class="row mt-2" *ngIf="loading">
-    <div class="row m-0 p-1">
-        <div class="col d-flex justify-content-center">
-            <mat-spinner></mat-spinner>
-        </div>
-    </div>
-</div>
-
 <form class="container mt-4" [formGroup]="datafileEditForm" (ngSubmit)="onSave()" *ngIf="!loading">
 
     <div class="row ms-0 me-0 mb-1 p-0">
@@ -26,6 +18,14 @@
               Ingrese una descripción adecuada
             </small>
             </mat-error>
+        </div>
+    </div>
+    <div class="row ms-0 me-0 mb-1 p-0">
+        <div class="col ps-0 pe-0 d-flex justify-content-start">
+            <select class="form-select form-select-sm" formControlName="collection" (change)="onCollectionPicked($event)">
+                <option value="" disabled> Colección </option>
+                <option *ngFor="let collection of collections" value="{{collection.id}}">{{collection.title}}</option>
+              </select>
         </div>
     </div>
     <div class="row ms-0 me-0 mb-1 p-0">
