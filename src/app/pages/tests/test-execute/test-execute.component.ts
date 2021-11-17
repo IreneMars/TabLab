@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { TerminalsService } from '../../../services/terminals.service';
 import { Terminal } from 'src/app/models/terminal.model';
-
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-test-execute',
   templateUrl: './test-execute.component.html',
