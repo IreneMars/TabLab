@@ -35,7 +35,7 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
               public route: ActivatedRoute, public workspacesService: WorkspacesService, public reportsService: ReportsService,
               public terminalsService: TerminalsService, private router: Router){
   }
-
+//
   ngOnInit(){
     this.isLoading = true;
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
