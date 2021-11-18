@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { WorkspacesService } from 'src/app/services/workspaces.service';
 import { Router } from '@angular/router';
+import { GlobalConfigurationService } from 'src/app/services/globalConfig.service';
+import { GlobalConfiguration } from 'src/app/models/globalConfiguration.model';
 
 @Component({
   selector: 'app-workspace-create',
@@ -16,9 +18,10 @@ export class WorkspaceCreateComponent implements OnInit, OnDestroy{
   create                : boolean = true;
   invitations           : string[] = [];
   workspaceForm         : FormGroup;
-
+  globalConfig          : GlobalConfiguration;
+  
   constructor( public workspacesService: WorkspacesService, private formBuilder: FormBuilder, private authService: AuthService,
-               private router: Router ) {
+               private router: Router, public globalConfigService: GlobalConfigurationService ) {
     this.createForm();
   }
 
@@ -26,7 +29,6 @@ export class WorkspaceCreateComponent implements OnInit, OnDestroy{
     this.workspaceForm = this.formBuilder.group({
       title       : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       description : ['', [Validators.maxLength(200)]],
-      invitations : ['', ],
     });
   }
 
@@ -38,11 +40,25 @@ export class WorkspaceCreateComponent implements OnInit, OnDestroy{
     return this.workspaceForm.get('description').invalid && this.workspaceForm.get('description').touched;
   }
 
+  get invalidInvitations() {
+    return this.invitations.length>=this.globalConfig.limitUsers;
+  }
+
   ngOnInit() {
+    this.isLoading = true;
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.authService.getUserId();
+    });
+
+    this.globalConfigService.getGlobalConfig().subscribe((configurationData)=>{
+      this.globalConfig = {
+        id: configurationData.globalConfiguration._id,
+        limitUsers: configurationData.globalConfiguration.limitUsers,
+        limitWorkspaces:configurationData.globalConfiguration.limitWorkspaces
+      }
+      this.isLoading = false;
     });
   }
 
@@ -51,6 +67,9 @@ export class WorkspaceCreateComponent implements OnInit, OnDestroy{
   }
 
   onSave() {
+    if(this.invitations.length>=this.globalConfig.limitUsers){
+      return;
+    }
     if (this.workspaceForm.invalid){
       return Object.values(this.workspaceForm.controls).forEach(control => {
         if (control instanceof FormGroup) {

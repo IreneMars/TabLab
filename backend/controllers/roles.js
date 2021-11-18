@@ -1,9 +1,16 @@
-const { Role, Workspace } = require("../models");
+const { Role, Workspace, GlobalConfiguration } = require("../models");
 
 exports.createRole = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {
-
+        const configurations = GlobalConfiguration.find();
+        const configuration = configurations[0];
+        const roles = await Role.find({ workspace: req.body.workspace });
+        if (roles.length === configuration.limitUsers) {
+            return res.status(500).json({
+                message: `This workspace is not allowed to have more than ${configuration.limitUsers} users!`
+            });
+        }
         if (req.body.user !== current_user_id) {
             return res.status(500).json({
                 message: "You cannot accept an invitation that is not yours!"

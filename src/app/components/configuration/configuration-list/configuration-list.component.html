@@ -13,7 +13,6 @@
             </button>
             <app-configuration-create [datafileId]="datafileId" [workspaceId]="workspaceId" [configurationId]="configurationId" [configuration]="configuration" [extraControls]="extraControls" [configurationForm]="configurationForm" (configurationChange)="setExtraParams($event)"></app-configuration-create>
         </div>
-        <!-- (savefileChange)="setSaveMode($event)" (esquemaChange)="setEsquema($event)"-->
     </div>
 </div>
 <div class="row mt-2 mb-4">
@@ -46,7 +45,6 @@
                                             </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#configuratioModal" (click)=onEdit(configuration.id)>Editar Configuración</a></li>
-                                    <!--  -->
                                     <li><a class="dropdown-item danger" (click)=onDelete(configuration.id)>Eliminar Configuración</a></li>
                                 </ul>
                             </div>

@@ -1,4 +1,4 @@
-const { Workspace, Role, Invitation, Datafile, Test, User, Activity } = require("../models");
+const { Workspace, Role, Invitation, Datafile, Test, User, Activity, GlobalConfiguration } = require("../models");
 
 exports.getWorkspaces = async(req, res, next) => {
     const pageSize = +req.query.pagesize;
@@ -92,13 +92,22 @@ exports.getWorkspace = async(req, res, next) => {
 
 exports.createWorkspace = async(req, res, next) => {
     const current_user_id = req.userData.userId;
-    const workspace = new Workspace({
-        title: req.body.title,
-        description: req.body.description,
-        creationMoment: null,
-        mandatory: false,
-    });
     try {
+        const configurations = GlobalConfiguration.find();
+        const configuration = configurations[0];
+        const roles = await Role.find({ user: current_user_id });
+        if (roles.length === configuration.limitWorkspaces) {
+            return res.status(500).json({
+                message: `You are not allowed to be in more than ${configuration.limitWorkspaces}`
+            });
+        }
+        const workspace = new Workspace({
+            title: req.body.title,
+            description: req.body.description,
+            creationMoment: null,
+            mandatory: false,
+            owner: current_user_id
+        });
         const createdWorkspace = await workspace.save();
         const role = new Role({
             role: 'owner',

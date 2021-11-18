@@ -144,9 +144,7 @@ export class TestExecuteComponent implements OnInit {
               if (data !==  undefined){
                 this.terminal.content.push(data);
               }
-              console.log(this.terminal.content)
               this.terminalsService.updateTerminal(this.terminal.id,this.userId,this.terminal.content).subscribe(terminalData =>{
-                console.log(terminalData)
                 this.inExecution = false;
               })
             })

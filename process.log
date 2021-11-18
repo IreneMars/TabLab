@@ -3347,3 +3347,19 @@
 2021-11-18 00:52:01,132 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
 2021-11-18 00:52:01,132 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
 2021-11-18 00:52:01,132 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-18 23:37:47,299 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-18 23:37:47,299 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-18 23:37:47,299 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-18 23:37:47,299 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-18 23:37:47,299 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-18 23:37:47,299 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-18 23:37:47,299 [MainThread  ] [INFO ]  Configurations:
+2021-11-18 23:37:47,299 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-18 23:37:47,646 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-18 23:37:47,647 [MainThread  ] [INFO ]  Report summary:
+2021-11-18 23:37:47,648 [MainThread  ] [INFO ]    Validation time: 0.082 seconds
+2021-11-18 23:37:47,648 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-18 23:37:47,648 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-18 23:37:47,648 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-18 23:37:47,648 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-18 23:37:47,648 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.

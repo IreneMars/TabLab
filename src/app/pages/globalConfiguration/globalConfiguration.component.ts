@@ -73,7 +73,6 @@ export class GlobalConfigurationComponent implements OnInit {
                     this.testsService.getTestUpdateListener()
                     .subscribe( (testData: {tests: Test[]}) => {
                         this.tests = testData.tests;
-                        console.log(this.tests)
                         this.isLoading = false;
                     });
                 });

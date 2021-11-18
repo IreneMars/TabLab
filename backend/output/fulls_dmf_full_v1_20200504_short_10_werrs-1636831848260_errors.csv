@@ -1,2 +1,3 @@
 Error Code|Tags|Label|Field Name|Field Position|Row Position|Error Message|Error Cell
-constraint-error|[#table, #row, #cell]||MATCH_INTERNET|1|2|The cell "" in row at position "2" and field "MATCH_INTERNET" at position "1" does not conform to a constraint: constraint "required" is "True"|
+incorrect-label|[#table, #header, #label]|MATCH_INTERNET|INTERNET|1||Label "MATCH_INTERNET" in field INTERNET at position "1" does not match the field name in the schema|
+constraint-error|[#table, #row, #cell]||INTERNET|1|2|The cell "" in row at position "2" and field "INTERNET" at position "1" does not conform to a constraint: constraint "required" is "True"|

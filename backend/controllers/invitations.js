@@ -1,4 +1,4 @@
-const { Invitation, User, Workspace } = require("../models");
+const { Invitation, User, Workspace, Role, GlobalConfiguration } = require("../models");
 
 exports.getInvitations = async(req, res, next) => {
     const pageSize = +req.query.pagesize;
@@ -45,6 +45,14 @@ exports.createInvitation = async(req, res, next) => {
     const current_user_id = req.userData.userId;
 
     try {
+        const configurations = GlobalConfiguration.find();
+        const configuration = configurations[0];
+        const roles = await Role.find({ workspace: req.body.workspace });
+        if (roles.length === configuration.limitUsers) {
+            return res.status(500).json({
+                message: `This workspace is not allowed to have more than ${configuration.limitUsers} users!`
+            });
+        }
         const receiver = await User.findOne({ "email": req.body.receiver });
         if (receiver) {
             return res.status(500).json({

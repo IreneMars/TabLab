@@ -109,7 +109,6 @@ export class ConfigurationCreateComponent implements OnInit{
       this.extraParams = true;
 
     }
-    console.log(this.configurationForm.value)
 
   }
 

@@ -35,18 +35,19 @@
                             </div>
                             <div *ngIf="extraControl.tipo === 'enum'">
                                 <select class="form-select form-select-sm" formControlName="{{extraControl.extraParam}}" [class.is-invalid]="invalidParam(extraControl.extraParam)">
-                              <option value="" selected> {{extraControl.extraParam}} </option>
-                              <option *ngFor="let enumVal of extraControl.enum" value="{{enumVal}}">{{enumVal}}</option>
+                                <option value="" selected> {{extraControl.extraParam}} </option>
+                                <option *ngFor="let enumVal of extraControl.enum" value="{{enumVal}}">{{enumVal}}</option>
                             </select>
                             </div>
                             <div *ngIf="extraControl.tipo === 'number'">
                                 <input type="number" class="form-control" formControlName="{{extraControl.extraParam}}" [class.is-invalid]="invalidParam(extraControl.extraParam)">
                             </div>
-                            <mat-error>
-                                <small *ngIf="invalidParam(extraControl.extraParam)" class="text-danger">
-                          {{extraControl.hint}}
-                          </small>
-                            </mat-error>
+                            <div *ngIf="extraControl.tipo === 'object'">
+                                <input type="text" class="form-control" formControlName="{{extraControl.extraParam}}" [class.is-invalid]="invalidParam(extraControl.extraParam)">
+                            </div>
+                            <div class="form-text">
+                                {{extraControl.hint}}
+                            </div>
                         </div>
                     </div>
                 </form>

@@ -182,7 +182,70 @@
                     "interval": "Este parámetro es numérico y superior o igual a 0."
                 }
             }
-        }
+        },
+        { "_id": "6196cafc0dfec6421fea17fd", "errorCode": "truncated-value", "extraParams": null },
+        {
+            "_id": "6196ce18d1c9fa83687ccb42",
+            "errorCode": "forbidden-value",
+            "extraParams": {
+                "fieldName": "",
+                "values": [],
+                "hints": {
+                    "fieldName": "Debe ingresar el nombre de uno de los campos del contenido del fichero.",
+                    "values": "Este parámetro es una lista de valores prohibidos (separados por comas)."
+                }
+            }
+        },
+        {
+            "_id": "6196ce1c3521828ce11a93af",
+            "errorCode": "sequential-value",
+            "extraParams": {
+                "fieldName": "",
+                "hints": {
+                    "fieldName": "Debe ingresar el nombre de uno de los campos del contenido del fichero."
+                }
+            }
+        },
+        {
+            "_id": "6196ce239ef637420d17d09e",
+            "errorCode": "row-constraint",
+            "extraParams": {
+                "formula": "",
+                "hints": {
+                    "formula": "Debe ingresar una fórmula del formato: salary == bonus * 5."
+                }
+            }
+        },
+        { "_id": "6196ce27058210610ae7f556", "errorCode": "empty-column", "extraParams": null },
+        { "_id": "6196ce2ac35573aef3415331", "errorCode": "general-error", "extraParams": null },
+        { "_id": "6196ce2d0aee1eafa51fb386", "errorCode": "row-error", "extraParams": null },
+        { "_id": "6196ce31794fe5e3bb2557ec", "errorCode": "cell-error", "extraParams": null },
+        { "_id": "6196ce35c7026eb128ddfec5", "errorCode": "error", "extraParams": null },
+        { "_id": "6196ce3bd83a84bebc40345c", "errorCode": "file-error", "extraParams": null },
+        { "_id": "6196ce429967c0a57fe8b2da", "errorCode": "package-error", "extraParams": null },
+        { "_id": "6196ce45889d9a4514438141", "errorCode": "resource-error", "extraParams": null },
+        { "_id": "6196ce48da5f9fa0c712c69c", "errorCode": "pipeline-error", "extraParams": null },
+        { "_id": "6196ce4bd8ae669d61b0530a", "errorCode": "inquiry-error", "extraParams": null },
+        { "_id": "6196ce4efddfcb2f8c6a6d48", "errorCode": "control-error", "extraParams": null },
+        { "_id": "6196ce521c91f9f343b7662f", "errorCode": "dialect-error", "extraParams": null },
+        { "_id": "6196ce5607e6750f120a8e34", "errorCode": "layout-error", "extraParams": null },
+        { "_id": "6196ce596a6bfa1a9b563a17", "errorCode": "schema-error", "extraParams": null },
+        { "_id": "6196ce5dbc93e92730193a6c", "errorCode": "field-error", "extraParams": null },
+        { "_id": "6196ce602eb41b5b445c653d", "errorCode": "report-error", "extraParams": null },
+        { "_id": "6196ce63fb06284a87e4d9a1", "errorCode": "status-error", "extraParams": null },
+        { "_id": "6196ce66f626702fcb69339b", "errorCode": "check-error", "extraParams": null },
+        { "_id": "6196ce6ac6350119d22f3c6d", "errorCode": "step-error", "extraParams": null },
+        { "_id": "6196ce6d739a0d6c46fb0762", "errorCode": "source-error", "extraParams": null },
+        { "_id": "6196ce71d69fde06051aa285", "errorCode": "scheme-error", "extraParams": null },
+        { "_id": "6196ce759f43db0eaec014b5", "errorCode": "format-error", "extraParams": null },
+        { "_id": "6196ce776c62456985c30228", "errorCode": "encoding-error", "extraParams": null },
+        { "_id": "6196ce7b853ecad2f28ed429", "errorCode": "hashing-error", "extraParams": null },
+        { "_id": "6196ce7ef255128bf8669bbd", "errorCode": "compression-error", "extraParams": null },
+        { "_id": "6196ce818869a899e0caf632", "errorCode": "storage-error", "extraParams": null },
+        { "_id": "6196ce848a8051a92033bc6f", "errorCode": "task-error", "extraParams": null },
+        { "_id": "6196ce879998304c84f80f24", "errorCode": "table-error", "extraParams": null },
+        { "_id": "6196ce8a115f741227fcfa61", "errorCode": "header-error", "extraParams": null },
+        { "_id": "6196ce8ea3fdcd2d91b8a686", "errorCode": "label-error", "extraParams": null }
     ]
 
 

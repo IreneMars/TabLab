@@ -19,7 +19,6 @@ export class ActivitiesService {
   }
   
   getActivities(userId: String) {
-    //const queryParams = `?pagesize=${workspacesPerPage}&page=${currentPage}`;
     this.http.get<{message: string, activities: any[]}>(BACKEND_URL + userId)
       .pipe(map( (activityData) => {
         return { 
