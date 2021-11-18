@@ -1,29 +1,25 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Activity } from 'src/app/models/activity.model';
 import { ActivitiesService } from 'src/app/services/activities.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-activity-list',
   templateUrl: './activity-list.component.html',
   styleUrls: ['./activity-list.component.css']
 })
-export class ActivityListComponent implements OnInit, OnDestroy{
+export class ActivityListComponent implements OnInit{
   userId                : string;
   userIsAuthenticated   : boolean = false;
   activities            : Activity[];
-  private activitiesSub : Subscription;                                    
   
-  constructor(private authService: AuthService, public activitiesService: ActivitiesService){
-                
-  }
+  constructor(private authService: AuthService, public activitiesService: ActivitiesService){}
 
   ngOnInit(){
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.userId = this.authService.getUserId();
     this.activitiesService.getActivities(this.userId);
-    this.activitiesSub = this.activitiesService.getActivityUpdateListener()
+    this.activitiesService.getActivityUpdateListener()
     .subscribe((activityData: {activities: Activity[]}) => {
       this.activities = activityData.activities;
       for (var activity of this.activities){
@@ -44,12 +40,6 @@ export class ActivityListComponent implements OnInit, OnDestroy{
 
     });
   }
-
-  ngOnDestroy(){
-    this.activitiesSub.unsubscribe();
-  }
-
-
 }
 
 

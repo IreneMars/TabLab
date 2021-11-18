@@ -1,0 +1,31 @@
+<form class="col" [formGroup]="globalConfigurationEditForm" (ngSubmit)="onSave()">
+
+    <div class="mb-3">
+        <label for="limitUsers" class="form-label">Límite de usuarios por espacio de trabajo:</label>
+        <input type="number" class="form-control" id="limitUsers" placeholder="Límite de usuarios" formControlName="limitUsers" [class.is-invalid]="invalidLimitUsers">
+        <mat-error>
+            <small *ngIf="invalidLimitUsers" class="text-danger">
+                Ingrese un límite de usuarios por espacios de trabajo adecuado (superior a 0).
+              </small>
+        </mat-error>
+    </div>
+    <div class="mb-3">
+        <label for="limitWorkspaces" class="form-label">Límite de espacios de trabajo por usuario:</label>
+        <input type="number" class="form-control" id="limitWorkspaces" placeholder="Límite de espacios de trabajo" formControlName="limitWorkspaces" [class.is-invalid]="invalidLimitWorkspaces">
+        <mat-error>
+            <small *ngIf="invalidLimitWorkspaces" class="text-danger">
+              Ingrese un límite de espacios de trabajo por usuario adecuado (superior a 0).
+            </small>
+        </mat-error>
+    </div>
+
+    <div class="row ms-0 me-0 mb-1 p-0">
+        <div class="col ps-0 pe-0 d-flex justify-content-end">
+            <button type="submit" class="btn btn-sm btn-primary me-1" *ngIf="!isSaving">Guardar</button>
+            <button type="submit" class="btn btn-sm btn-primary me-1" *ngIf="isSaving">
+                Guardar<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+            <a class="btn btn-sm btn-secondary" (click)="onCancel()">Cancel</a>
+        </div>
+    </div>
+</form>

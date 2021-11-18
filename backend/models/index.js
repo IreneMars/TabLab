@@ -11,6 +11,7 @@ const Test = require('./test');
 const User = require('./user');
 const Workspace = require('./workspace');
 const Terminal = require('./terminal');
+const GlobalConfiguration = require('./globalConfiguration');
 
 module.exports = {
     Collection,
@@ -25,5 +26,6 @@ module.exports = {
     User,
     Workspace,
     Activity,
-    Terminal
+    Terminal,
+    GlobalConfiguration,
 }

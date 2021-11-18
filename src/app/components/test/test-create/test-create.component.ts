@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { TestsService } from 'src/app/services/tests.service';
 
@@ -10,19 +9,16 @@ import { TestsService } from 'src/app/services/tests.service';
   templateUrl: './test-create.component.html',
   styleUrls: ['./test-create.component.css']
 })
-export class TestCreateComponent implements OnInit, OnDestroy{
+export class TestCreateComponent implements OnInit{
   userId                   : string;
   userIsAuthenticated      : boolean = false;
   selectedConfigurations   : string[];
   @Input() testForm        : FormGroup;
   @Input() workspaceId     : string;
   @Input() datafileId      : string;
-  //@Input() testSave        : boolean;
-  @Output() testSaveChange : EventEmitter<any> = new EventEmitter<any>();
   @Input() esquemas        : any[];
   @Input() configurations  : any[];
-  //@Input() test            : any;
-  private authStatusSub    : Subscription;
+  @Output() testSaveChange : EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public testService: TestsService, public route: ActivatedRoute,
               private formBuilder: FormBuilder, private router: Router, private usersService: AuthService) {
@@ -46,14 +42,10 @@ export class TestCreateComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.userIsAuthenticated = this.usersService.getIsAuth();
-    this.authStatusSub = this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
+    this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.usersService.getUserId();
     });
-  }
-
-  ngOnDestroy() {
-    this.authStatusSub.unsubscribe();
   }
 
   get invalidTitle() {

@@ -1,25 +1,25 @@
-import { OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { WorkspacesService } from '../../../services/workspaces.service';
 import { RolesService } from '../../../services/roles.service';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { Workspace } from 'src/app/models/workspace.model';
-import { User } from '../../auth/login/login.component';
 import { CollectionsService } from 'src/app/services/collections.service';
 import { Collection } from 'src/app/models/collection.model';
 import { DatafileService } from '../../../services/datafiles.service';
 import { UsersService } from '../../../services/users.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/models/user.model';
+import { Datafile } from 'src/app/models/datafile.model';
 
 @Component({
   selector: 'app-workspace-details',
   templateUrl: './workspace-details.component.html',
   styleUrls: ['./workspace-details.component.css']
 })
-export class WorkspaceDetailsComponent implements OnInit, OnDestroy{
-  isLoading              : boolean = false;
+export class WorkspaceDetailsComponent implements OnInit {
+  isLoading              : boolean = false; 
   userIsAuthenticated    : boolean = false;
   userId                 : string;
   edit                   : boolean = false;
@@ -30,14 +30,12 @@ export class WorkspaceDetailsComponent implements OnInit, OnDestroy{
   workspaceId            : string;
   workspace              : Workspace;
   users                  : any[];
+  user                   : any;
   collections            : Collection[];
-  private usersSub       : Subscription;
-  private authStatusSub  : Subscription;
-  private collectionsSub : Subscription;
   roleForm               : FormGroup;
   availableRoles         : string[] = ['admin','owner','member']
   currentUserRole        : string;
-  
+  orphanedDatafiles      : Datafile[];
 
   constructor(private formBuilder: FormBuilder, public workspacesService: WorkspacesService, public rolesService: RolesService, public route: ActivatedRoute,
               public usersService: UsersService, public authService: AuthService, public collectionsService: CollectionsService,
@@ -62,47 +60,47 @@ export class WorkspaceDetailsComponent implements OnInit, OnDestroy{
           title: workspaceData.workspace.title,
           description: workspaceData.workspace.description,
           creationMoment: workspaceData.workspace.creationMoment,
-          mandatory: workspaceData.workspace.mandatory
+          mandatory: workspaceData.workspace.mandatory,
+          owner:workspaceData.workspace.owner
         };
+        // Users
+        this.usersService.getUsersByWorkspace(this.workspaceId);
+        this.usersService.getUserUpdateListener().subscribe( (userData: {users: User[]}) => {
+          this.users = userData.users;
+          this.userIsAuthenticated = this.authService.getIsAuth();
+          this.userId = this.authService.getUserId();
+          for (var userIndex in this.users){
+            const user = this.users[userIndex]
+            if(user.id===this.userId){
+              this.user = user;
+              this.currentUserRole = user.roleName;
+            }
+          }
+          this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+            this.userIsAuthenticated = isAuthenticated;
+          });
+          // Collections
+          this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+          this.collectionsService.getCollectionUpdateListener().subscribe( (collectionData: {collections: Collection[]}) => {
+            this.collections = collectionData.collections;
+            this.isLoading = false;
+          });  
+        });
       });
     });
     
-    // Users
-    this.usersService.getUsersByWorkspace(this.workspaceId);
-    this.usersSub = this.usersService.getUserUpdateListener().subscribe( (userData: {users: User[]}) => {
-      this.users = userData.users;
-      this.userIsAuthenticated = this.authService.getIsAuth();
-      this.userId = this.authService.getUserId();
-      for (var userIndex in this.users){
-        const user = this.users[userIndex]
-        if(user.id===this.userId){
-          this.currentUserRole = user.roleName;
-        }
-      }
-      this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-        this.userIsAuthenticated = isAuthenticated;
-      });
-    });
     
-    // Collections
-    this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-    this.collectionsSub = this.collectionsService.getCollectionUpdateListener()
-    .subscribe( (collectionData: {collections: Collection[]}) => {
-      this.collections = collectionData.collections;
-    });
-    
-  }
-
-  ngOnDestroy() {
-    this.authStatusSub.unsubscribe();
-    this.usersSub.unsubscribe();
-    this.collectionsSub.unsubscribe();
   }
 
   onDelete(){
     this.isLoading = true;
-    this.workspacesService.deleteWorkspace(this.workspaceId);
-    this.router.navigate(['/workspaces']);
+    if(this.workspace.owner === this.userId || this.user.role === "ADMIN"){
+      this.workspacesService.deleteWorkspace(this.workspaceId);
+      this.router.navigate(['/workspaces']);
+    }else{
+      this.isLoading = false;
+    }
+    
   }
 
   onLeave(){

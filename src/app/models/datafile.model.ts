@@ -4,7 +4,6 @@ export interface Datafile {
   description: string;
   contentPath: string;
   errLimit: number;
-  delimiter: string;
   collection: string;
   workspace: string;
 }

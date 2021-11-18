@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DatafileService } from '../../../services/datafiles.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
@@ -13,7 +12,7 @@ import { Configuration } from '../../../models/configuration.model';
   templateUrl: './configuration-list.component.html',
   styleUrls: ['./configuration-list.component.css']
 })
-export class ConfigurationListComponent implements OnInit, OnDestroy{
+export class ConfigurationListComponent implements OnInit{
   userId                  : string;
   userIsAuthenticated     : boolean = false;
   isDeleting              : boolean = false;
@@ -28,7 +27,6 @@ export class ConfigurationListComponent implements OnInit, OnDestroy{
   configuration           : Configuration = null;
   inferring               : boolean = false;
   extraControls           : string[] = [];
-  private authStatusSub   : Subscription;
 
   constructor(public datafilesService: DatafileService, public route: ActivatedRoute, public usersService: AuthService,
               private router: Router, private configurationsService: ConfigurationService){
@@ -40,15 +38,10 @@ export class ConfigurationListComponent implements OnInit, OnDestroy{
 
   ngOnInit(){
     this.userIsAuthenticated = this.usersService.getIsAuth();
-    this.authStatusSub = this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
+    this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.usersService.getUserId();
     });
-  }
-
-  ngOnDestroy(){
-    // this.configurationsSub.unsubscribe();
-    this.authStatusSub.unsubscribe();
   }
 
   async onDelete( configurationId: string ){

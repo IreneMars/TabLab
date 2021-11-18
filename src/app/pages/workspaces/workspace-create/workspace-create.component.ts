@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { WorkspacesService } from 'src/app/services/workspaces.service';
 import { Router } from '@angular/router';
@@ -17,7 +16,6 @@ export class WorkspaceCreateComponent implements OnInit, OnDestroy{
   create                : boolean = true;
   invitations           : string[] = [];
   workspaceForm         : FormGroup;
-  private authStatusSub : Subscription;
 
   constructor( public workspacesService: WorkspacesService, private formBuilder: FormBuilder, private authService: AuthService,
                private router: Router ) {
@@ -42,7 +40,7 @@ export class WorkspaceCreateComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.authService.getUserId();
     });
@@ -50,7 +48,6 @@ export class WorkspaceCreateComponent implements OnInit, OnDestroy{
 
   ngOnDestroy() {
     this.create = false;
-    this.authStatusSub.unsubscribe();
   }
 
   onSave() {

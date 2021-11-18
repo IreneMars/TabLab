@@ -1,6 +1,20 @@
 const bcrypt = require("bcryptjs");
 const { User, Role, Workspace } = require("../models");
 
+exports.getUsers = async(req, res) => {
+    try {
+        const users = await User.find();
+        return res.status(200).json({
+            message: "Users fetched successfully!",
+            users: users,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: "Fetching users failed!"
+        });
+    }
+};
+
 exports.getUsersByWorkspace = async(req, res) => {
     try {
         const roles = await Role.find({ 'workspace': req.params.workspaceId });

@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { ActivitiesService } from 'src/app/services/activities.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,11 +9,10 @@ import { UsersService } from '../../services/users.service';
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit{
   userIsAuthenticated      : boolean = false;
   userId                   : string;
   user                     : User;
-  private authStatusSub    : Subscription;
 
   constructor( private authService: AuthService, private authStatusService: AuthStatusService, 
                public activitiesService: ActivitiesService, public usersService: UsersService) {
@@ -37,23 +35,16 @@ export class HomeComponent implements OnInit, OnDestroy {
             status: userData.user.status,
             google: userData.user.google
           }
-          this.authStatusService.sendAuthStatus(true,this.user);
+          this.authStatusService.sendAuthStatus(true,this.user);//Its principal use is after login()
         });
       }
-      this.authStatusSub = this.authService
-        .getAuthStatusListener()
-        .subscribe(isAuthenticated => {
-          this.userIsAuthenticated = isAuthenticated;
-        });
+      this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+      });
     }
 
   onLogout() {
     this.authService.logout();
   }
-
-  ngOnDestroy() {
-    //this.authStatusSub.unsubscribe();
-  }
-
 
 }

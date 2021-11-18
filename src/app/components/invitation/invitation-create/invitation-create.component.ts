@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { Invitation } from 'src/app/models/invitation.model';
 import { AuthService } from '../../../services/auth.service';
 import { InvitationService } from '../../../services/invitations.service';
@@ -10,16 +9,14 @@ import { InvitationService } from '../../../services/invitations.service';
   selector: 'app-invitation-create',
   templateUrl: './invitation-create.component.html',
 })
-export class InvitationCreateComponent implements OnInit, OnDestroy{
+export class InvitationCreateComponent implements OnInit{
   isLoading                   : boolean = false;
   workspaceId                 : string;
   invalidEmail                : boolean = false;
+  invitationForm              : FormGroup;
   @Input() create             : any;
   @Input()  invitations       : Invitation[];
   @Output() invitationsChange : any = new EventEmitter();
-  invitationForm              : FormGroup;
-  private authStatusSub       : Subscription;
-
 
   constructor(public invitationsService: InvitationService, public authService: AuthService, private formBuilder: FormBuilder,
               private activatedRoute: ActivatedRoute,  private router: Router) {
@@ -33,16 +30,12 @@ export class InvitationCreateComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe( authStatus => {
+    this.authService.getAuthStatusListener().subscribe( authStatus => {
       // this.isLoading = false;
     });
     this.activatedRoute.paramMap.subscribe(params => {
       this.workspaceId = params.get('workspaceId');
     });
-  }
-
-  ngOnDestroy(): void {
-    this.authStatusSub.unsubscribe();
   }
 
   onInvite() {
@@ -76,9 +69,8 @@ export class InvitationCreateComponent implements OnInit, OnDestroy{
     // this.isLoading = false;
   }
 
-onReset() {
+  onReset() {
     this.invitationForm.reset();
   }
-
 
 }

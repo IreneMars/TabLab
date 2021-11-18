@@ -11,6 +11,9 @@ import { UploadsService } from 'src/app/services/uploads.service';
 import { Configuration } from 'src/app/models/configuration.model';
 import { Test } from 'src/app/models/test.model';
 import { Esquema } from '../../../models/esquema.model';
+import { UsersService } from '../../../services/users.service';
+import { Workspace } from 'src/app/models/workspace.model';
+import { WorkspacesService } from 'src/app/services/workspaces.service';
 
 @Component({
   selector: 'app-test-details',
@@ -19,7 +22,10 @@ import { Esquema } from '../../../models/esquema.model';
 })
 export class TestDetailsComponent implements OnInit {
   isLoading                : boolean = false;
-  
+  userId                : string;
+  user                  : any;
+  userIsAuthenticated   : boolean = false;
+
   testId                   : string;
   test                     : Test;
   selectedEsquema          : Esquema;
@@ -31,7 +37,8 @@ export class TestDetailsComponent implements OnInit {
   esquemas                 : Esquema[];
   configurations           : Configuration[];
   formattedConfigs         : any[] = [];
-  
+  workspace                : Workspace;
+
   extension                : string = null;
   fileName                 : string = null;
   isSavingTest             : boolean = false;
@@ -40,8 +47,9 @@ export class TestDetailsComponent implements OnInit {
   fileContentForm          : FormGroup;
   testForm                 : FormGroup;
 
-  constructor(public testsService: TestsService, public datafilesService: DatafileService, public uploadsService: UploadsService, public route: ActivatedRoute,
-              public usersService: AuthService, private router: Router){
+  constructor(public testsService: TestsService, public datafilesService: DatafileService, public uploadsService: UploadsService, 
+              public route: ActivatedRoute, public workspacesService: WorkspacesService,
+              public authService: AuthService, public usersService: UsersService, private router: Router){
                 this.testForm = new FormGroup({
                   'title': new FormControl(null, {validators: [Validators.required]}),
                   'delimiter': new FormControl(null)
@@ -58,75 +66,101 @@ export class TestDetailsComponent implements OnInit {
   
   ngOnInit(){
     this.isLoading = true;
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      this.datafileId = paramMap.get('datafileId');
-      this.workspaceId = paramMap.get('workspaceId');
-      this.testId = paramMap.get('testId');
-      this.testsService.getTest(this.testId).subscribe( testData => {
-        this.test = {
-          id: testData.test._id,
-          title: testData.test.title,
-          delimiter: testData.test.delimiter,
-          reportPath: testData.test.reportPath,
-          status: testData.test.status,
-          esquema: testData.test.esquema,
-          configurations: testData.test.configurations,
-          creationMoment: testData.test.creationMoment,
-          updateMoment: testData.test.updateMoment,
-          executionMoment: testData.test.executionMoment,
-          totalErrors: testData.test.totalErrors,
-          executable: testData.test.executable,
-          datafile: testData.test.datafile,
-        };
-        this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
-        this.selectedEsquema = {
-          id: testData.esquema._id,
-          title: testData.esquema.title,
-          contentPath: testData.esquema.contentPath,
-          creationMoment: testData.esquema.creationMoment,
-          datafile: testData.esquema.datafile,
-        }
-        this.selectedConfigurationIDs = testData.configurationIDs;
-      });
-      this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
-        this.fileContentForm.patchValue({fileContent: datafileData.content});
-
-        this.datafile = {
-          id: datafileData.datafile.id,
-          title: datafileData.datafile.title,
-          description: datafileData.datafile.description,
-          contentPath: datafileData.datafile.contentPath,
-          errLimit: datafileData.datafile.errLimit,
-          delimiter: datafileData.datafile.delimiter,
-          collection: datafileData.datafile.coleccion,
-          workspace: datafileData.datafile.workspace,
-        };
-        this.isLoading = false;
-        this.esquemas = datafileData.esquemas;
-        this.configurations = datafileData.configurations;
-
-        if (this.datafile.contentPath) {
-          const nameWExtension = datafileData.datafile.contentPath.split('/');
-          const splitNameWExtension = nameWExtension[3].split('.');
-          this.extension = splitNameWExtension[1];
-
-          const nameWDate = splitNameWExtension[0].split('-');
-          const name = nameWDate[0];
-          this.fileName = name + '.' + this.extension;
-        }
-        this.configurations.forEach(config => {
-          const extraParamsJSON = JSON.stringify(config.extraParams).toString();
-          const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
-          const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
-          const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');      
-          this.formattedConfigs.push({...config, extraParamsStr});
-        });
-
-        this.edit = false;
-      });
-
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+      this.userIsAuthenticated = isAuthenticated;
     });
-
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+      this.usersService.getUser(this.userId).subscribe(userData=>{
+        this.user = {
+          id: userData.user._id,
+          username: userData.user.username,
+          email: userData.user.email,
+          password: userData.user.password,
+          photo: userData.user.photo,
+          name: userData.user.name,
+          role: userData.user.role,
+          status: userData.user.status,
+          google: userData.user.google
+        };
+        this.route.paramMap.subscribe((paramMap: ParamMap) => {
+          this.datafileId = paramMap.get('datafileId');
+          this.workspaceId = paramMap.get('workspaceId');
+          this.testId = paramMap.get('testId');
+          this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData => {
+            this.workspace = {
+              id: workspaceData.workspace.id,
+              title: workspaceData.workspace.title,
+              description: workspaceData.workspace.description,
+              creationMoment: workspaceData.workspace.creationMoment,
+              mandatory: workspaceData.workspace.mandatory,
+              owner:workspaceData.workspace.owner
+            };
+            this.testsService.getTest(this.testId).subscribe( testData => {
+              this.test = {
+                id: testData.test._id,
+                title: testData.test.title,
+                delimiter: testData.test.delimiter,
+                reportPath: testData.test.reportPath,
+                status: testData.test.status,
+                esquema: testData.test.esquema,
+                configurations: testData.test.configurations,
+                creationMoment: testData.test.creationMoment,
+                updateMoment: testData.test.updateMoment,
+                executionMoment: testData.test.executionMoment,
+                totalErrors: testData.test.totalErrors,
+                executable: testData.test.executable,
+                datafile: testData.test.datafile,
+              };
+              this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
+              this.selectedEsquema = {
+                id: testData.esquema._id,
+                title: testData.esquema.title,
+                contentPath: testData.esquema.contentPath,
+                creationMoment: testData.esquema.creationMoment,
+                datafile: testData.esquema.datafile,
+              }
+              this.selectedConfigurationIDs = testData.configurationIDs;
+              this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
+                this.fileContentForm.patchValue({fileContent: datafileData.content});
+        
+                this.datafile = {
+                  id: datafileData.datafile.id,
+                  title: datafileData.datafile.title,
+                  description: datafileData.datafile.description,
+                  contentPath: datafileData.datafile.contentPath,
+                  errLimit: datafileData.datafile.errLimit,
+                  collection: datafileData.datafile.coleccion,
+                  workspace: datafileData.datafile.workspace,
+                };
+                this.esquemas = datafileData.esquemas;
+                this.configurations = datafileData.configurations;
+                
+                if (this.datafile.contentPath) {
+                  const nameWExtension = datafileData.datafile.contentPath.split('/');
+                  const splitNameWExtension = nameWExtension[3].split('.');
+                  this.extension = splitNameWExtension[1];
+                  
+                  const nameWDate = splitNameWExtension[0].split('-');
+                  const name = nameWDate[0];
+                  this.fileName = name + '.' + this.extension;
+                }
+                this.configurations.forEach(config => {
+                  const extraParamsJSON = JSON.stringify(config.extraParams).toString();
+                  const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
+                  const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
+                  const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');      
+                  this.formattedConfigs.push({...config, extraParamsStr});
+                });
+                this.isLoading = false;
+                this.edit = false;
+              });
+            });
+          });
+        });
+      });
+    }
   }
 
   async onDelete(){

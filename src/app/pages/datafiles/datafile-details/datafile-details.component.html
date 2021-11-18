@@ -1,6 +1,6 @@
 <div class="row ps-2 pe-2 complete-height">
     <div class="col-2 collections p-0">
-        <app-collection-list [workspaceId]="workspaceId" [(isLoading)]="isLoading"></app-collection-list>
+        <app-collection-list [workspaceId]="workspaceId" [collections]="collections" [orphanedDatafiles]="orphanedDatafiles" [(isLoading)]="isLoading"></app-collection-list>
     </div>
     <div class="col-7" *ngIf="!isLoading">
         <app-datafile-edit *ngIf="edit" [(edit)]="edit" [datafile]="datafile" [datafileId]="datafileId" [workspaceId]="workspaceId"></app-datafile-edit>
@@ -24,7 +24,7 @@
                           <i class="fas fa-ellipsis-h"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item danger" (click)="onDelete()">Eliminar Fichero</a></li>
+                            <li><a class="dropdown-item danger" *ngIf="workspace.owner==user.id || user.role=='ADMIN'" (click)="onDelete()">Eliminar Fichero</a></li>
                         </ul>
                     </div>
                 </div>
@@ -92,8 +92,8 @@
             <div class="row">
                 <mat-error>
                     <small *ngIf="invalidExtension" class="text-danger">
-                              Ingrese un archivo con el formato adecuado (.json o .yaml).
-                            </small>
+                        Ingrese un archivo con el formato adecuado (.json o .yaml).
+                    </small>
                 </mat-error>
             </div>
         </div>

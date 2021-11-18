@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { UsersService } from '../../services/users.service';
@@ -11,16 +11,14 @@ import { AuthStatusService } from 'src/app/services/authStatus.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit{
   isLoading           : boolean = false;
   pendingInvitation   : boolean = false;
   userId              : string;
   userIsAuthenticated : boolean = false;
   user                : User = null;
-  invitationsSub      : Subscription;
   invitations         : Invitation[] = [];
-  private authListenerSubs : Subscription;
-  subscription: Subscription;
+  subscription        : Subscription;
 
   constructor( private authService: AuthService, private authStatusService: AuthStatusService,
                public usersService: UsersService, public invitationsService: InvitationService ) {
@@ -78,20 +76,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }else{
       this.isLoading = false;
     }
-    this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
     });
 
   }
 
-  ngOnDestroy() {
-    this.authListenerSubs.unsubscribe();
-  }
-
   onLogout() {
     this.authService.logout();
   }
-
-  
 
 }

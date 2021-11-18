@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { WorkspaceListComponent } from './pages/workspaces/workspace-list/workspace-list.component';
 import { AuthGuard } from './pages/auth/auth.guard';
-import { InvitationCreateComponent } from './components/invitation/invitation-create/invitation-create.component';
 import { InvitationListComponent } from './pages/invitations/invitation-list/invitation-list.component';
 import { WorkspaceCreateComponent } from './pages/workspaces/workspace-create/workspace-create.component';
 import { WorkspaceDetailsComponent } from './pages/workspaces/workspace-details/workspace-details.component';
@@ -13,13 +12,13 @@ import { TestExecuteComponent } from './pages/tests/test-execute/test-execute.co
 import { ProfileDetailsComponent } from './pages/profile/profile-details/profile-details.component';
 import { ProfileEditComponent } from './pages/profile/profile-edit/profile-edit.component';
 import { ProfileAccountEditComponent } from './pages/profile/profile-account-edit/profile-account-edit.component';
-import { ConfigurationComponent } from './pages/configuration/configuration.component';
+import { GlobalConfigurationComponent } from './pages/globalConfiguration/globalConfiguration.component';
 
 const routes: Routes = [
   // Authentication (login, signup)
   { path: 'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)},
   // Global Configuration
-  { path: 'configuration', component: ConfigurationComponent, canActivate: [AuthGuard]},
+  { path: 'gconfiguration', component: GlobalConfigurationComponent, canActivate: [AuthGuard]},
   // Datafiles (details)
   { path: 'workspace/:workspaceId/datafile/:datafileId', component: DatafileDetailsComponent, canActivate: [AuthGuard]},
   // Home

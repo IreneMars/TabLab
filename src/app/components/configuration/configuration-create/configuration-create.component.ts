@@ -1,18 +1,18 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { Configuration } from 'src/app/models/configuration.model';
 import { FricError } from 'src/app/models/fricError.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
-import { environment } from 'src/environments/environment';
+import { FricErrorsService } from 'src/app/services/fricErrors.service';
+
 @Component({
   selector: 'app-configuration-create',
   templateUrl: './configuration-create.component.html',
   styleUrls: ['./configuration-create.component.css']
 })
-export class ConfigurationCreateComponent implements OnInit, OnDestroy{
+export class ConfigurationCreateComponent implements OnInit{
   userId                        : string;
   userIsAuthenticated           : boolean = false;
   @Input() configurationForm    : FormGroup;
@@ -24,21 +24,24 @@ export class ConfigurationCreateComponent implements OnInit, OnDestroy{
   @Output() configurationChange : EventEmitter<any> = new EventEmitter<any>();
   @Input() configuration        : Configuration;
   pickedError                   : any;
-  fricErrors                    : any;
-  private authStatusSub         : Subscription;
-  // private fricErrorsSub         : Subscription;
+  fricErrors                    : FricError[];
+  extraParams                   : boolean = false;
 
-  constructor(public configurationService: ConfigurationService, public route: ActivatedRoute,
-              private usersService: AuthService, private router: Router) {
+  constructor(public configurationService: ConfigurationService, public fricErrorsService: FricErrorsService, 
+              public route: ActivatedRoute, private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
-    this.fricErrors = environment.errors;
-    this.userIsAuthenticated = this.usersService.getIsAuth();
-  }
-
-  ngOnDestroy() {
-    //this.authStatusSub.unsubscribe();
+    //this.fricErrors = environment.errors;
+    this.fricErrorsService.getFricErrors();
+    this.fricErrorsService.getFricErrorUpdateListener().subscribe(responseData=>{
+      this.fricErrors = responseData.fricErrors;
+    });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+      this.userIsAuthenticated = isAuthenticated;
+      this.userId = this.authService.getUserId();
+    });
   }
 
   get invalidTitle() {
@@ -48,46 +51,66 @@ export class ConfigurationCreateComponent implements OnInit, OnDestroy{
   get invalidErrorCode() {
     return this.configurationForm.get('errorCode').invalid && this.configurationForm.get('errorCode').touched;
   }
-
+  
+  //   invalid(paramName: any, value: any){
+  //     if (paramName === 'interval' && value < 0) {
+  //       return true;
+  //     }
+  //   }
   invalidParam(param: any, value: any) {
-    let invalid = false;
-    if (this.pickedError.extraParams && this.configurationForm.get(param)) {
-      invalid = this.pickedError.extraParams.invalid(param, this.configurationForm.get(param).value);
-      return (invalid || this.configurationForm.get(param).invalid) && this.configurationForm.get(param).touched;
-    } else {
-      return false;
-    }
+    return this.configurationForm.get(param).invalid && this.configurationForm.get(param).touched;
   }
-
+  
+  resetForm(title: string, errorCode: string){
+    this.configurationForm = new FormGroup({
+      'title': new FormControl('', {validators: [Validators.required, Validators.minLength(1), Validators.maxLength(100)]}),
+      'errorCode': new FormControl('', {validators: [Validators.required]}),
+    });
+    this.configurationForm.reset({
+      "title":title,
+      "errorCode":errorCode
+    });
+    this.extraParams = false;
+  }
+  
   onErrorPicked(event: Event) {
     const errorCode = (event.target as HTMLInputElement).value;
-    const fricError: any = this.fricErrors.find(element => element.errorCode === errorCode);
+    const fricError: FricError = this.fricErrors.find(element => element.errorCode === errorCode);
     this.pickedError = fricError;
+    const title = this.configurationForm.get('title').value;
+    this.resetForm(title,errorCode);
+    this.extraControls = [];
     if (fricError.extraParams) {
       Object.keys(fricError.extraParams).forEach(extraParam => {
         let tipo = '';
         let extraControl = {};
-        if ( fricError.extraParams[extraParam].length > 0 ) {
-          tipo = 'enum';
-          extraControl = {
-                          'extraParam': extraParam,
-                          'tipo'      : tipo,
-                          'enum'      : fricError.extraParams[extraParam],
-                          'hint'      : fricError.extraParams.getHint(extraParam)
-                         };
-        } else if (extraParam !== 'hints') {
-          tipo = typeof fricError.extraParams[extraParam];
-          extraControl = {
-                          'extraParam': extraParam,
-                          'tipo'      : tipo,
-                          'hint'      : fricError.extraParams.getHint(extraParam)
-                         };
+        if (extraParam !== 'hints'){
+          if ( fricError.extraParams[extraParam].length > 0 ) {
+            tipo = 'enum';
+            extraControl = {
+                            'extraParam': extraParam,
+                            'tipo'      : tipo,
+                            'enum'      : fricError.extraParams[extraParam],
+                            'hint'      : fricError.extraParams['hints'][extraParam]
+                           };
+          } else {
+            tipo = typeof fricError.extraParams[extraParam];
+            extraControl = {
+                            'extraParam': extraParam,
+                            'tipo'      : tipo,
+                            'hint'      : fricError.extraParams['hints'][extraParam]
+                           };
+          }
+          this.configurationForm.addControl(extraParam, new FormControl('', {validators: [Validators.required]}));
+          this.extraControls.push(extraControl);
         }
-
-        this.configurationForm.addControl(extraParam, new FormControl('', {validators: [Validators.required]}));
-        this.extraControls.push(extraControl);
       });
+
+      this.extraParams = true;
+
     }
+    console.log(this.configurationForm.value)
+
   }
 
   onCancel() {

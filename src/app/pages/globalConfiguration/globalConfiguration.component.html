@@ -1,0 +1,178 @@
+<div class="row ps-2 pe-2 complete-height" *ngIf="!isLoading">
+    <div class="col-3">
+    </div>
+    <div class="col-6" *ngIf="userIsAuthenticated && user.role === 'ADMIN'">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-10">
+                    <h1>Configuración Global</h1>
+                </div>
+                <div class="col-2 d-flex justify-content-end" *ngIf="!edit">
+                    <div class="me-1">
+                        <button class="btn btn-outline-light btn-sm" type="button" (click)="onEdit()">
+                        <i class="fas fa-pen"></i>
+                    </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="!edit">
+                <div class="col">
+                    <h4>Límite de usuarios por espacio de trabajo: {{globalConfig.limitUsers}}</h4>
+                    <h4>Límite de espacios de trabajo por usuario: {{globalConfig.limitWorkspaces}}</h4>
+                </div>
+            </div>
+            <div class="row" *ngIf="edit">
+                <app-globalconfiguration-edit *ngIf="edit" [(edit)]="edit" [globalConfig]="globalConfig"></app-globalconfiguration-edit>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <h1>Usuarios</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-fixed table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="col-2">Nombre de usuario</th>
+                                    <th scope="col" class="col-2">
+                                        <div align="center">Nombre</div>
+                                    </th>
+                                    <th scope="col" class="col-2">
+                                        <div align="center">Email</div>
+                                    </th>
+                                    <th scope="col" class="col-2">
+                                        <div align="center">Rol</div>
+                                    </th>
+                                    <th scope="col" class="col-2">
+                                        <div align="center">Estado Cuenta</div>
+                                    </th>
+                                    <th scope="col" class="col-2">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let user of users">
+                                    <th style="height: 43.8px;" class="col-2">{{user.username}}</th>
+                                    <td style="height: 43.8px;" class="col-2" align="center">{{user.name}}</td>
+                                    <td style="height: 43.8px;" class="col-2" align="center">{{user.email}}</td>
+                                    <td style="height: 43.8px;" class="col-2" align="center">{{user.role}}</td>
+                                    <td style="height: 43.8px;" class="col-2" align="center">{{user.status}}</td>
+                                    <td style="height: 43.8px;" class="col-2">
+                                        <button type="button" class="btn btn-outline-danger btn-sm" (click)="onDeleteAccount(user.id)">
+                                            Desactivar Cuenta
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h1>Espacios de trabajo</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-fixed table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="col-3">Título</th>
+                                    <th scope="col" class="col-3">Descripción</th>
+                                    <th scope="col" class="col-3">
+                                        <div align="center">Momento de Creación</div>
+                                    </th>
+                                    <th scope="col" class="col-3">
+                                        <div align="center">Obligatorio</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let workspace of workspaces" [routerLink]="['/workspace', workspace.id]">
+                                    <th class="col-3">{{workspace.title}}</th>
+                                    <td class="col-3">{{(workspace.description.length>6)?(workspace.description | slice:0:30)+'..':(workspace.description)}}</td>
+                                    <td class="col-3" align="center">{{workspace.creationMoment}}</td>
+                                    <td class="col-3" align="center">{{workspace.mandatory}}</td>
+                                </tr>
+                                <tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h1>Ficheros de datos</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-fixed table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="col-4">Título</th>
+                                    <th scope="col" class="col-4">Descripción</th>
+                                    <th scope="col" class="col-4">
+                                        <div align="center">Límite de errores</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let datafile of datafiles" [routerLink]="['/workspace',datafile.workspace,'datafile', datafile.id]">
+                                    <th class="col-4">{{datafile.title}}</th>
+                                    <td class="col-4">{{datafile.description}}</td>
+                                    <td class="col-4" align="center">{{datafile.errLimit || 0}}</td>
+                                </tr>
+                                <tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h1>Pruebas</h1>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-fixed table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="col-3">Título</th>
+                                    <th scope="col" class="col-3">
+                                        <div align="center">Delimitador</div>
+                                    </th>
+                                    <th scope="col" class="col-3">
+                                        <div align="center">Estado</div>
+                                    </th>
+                                    <th scope="col" class="col-3">
+                                        <div align="center">Errores</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let test of tests" [routerLink]="['/workspace',test.workspace,'datafile', test.datafile, 'test', test.id]">
+                                    <th class="col-3">{{test.title}}</th>
+                                    <td class="col-3" align="center">{{test.delimiter}}</td>
+                                    <td class="col-3" align="center">{{test.status}}</td>
+                                    <td class="col-3" align="center">{{test.totalErrors || 0}}</td>
+                                </tr>
+                                <tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-3">
+    </div>
+</div>

@@ -16,7 +16,7 @@ import { TestExecuteComponent } from './tests/test-execute/test-execute.componen
 import { ProfileDetailsComponent } from './profile/profile-details/profile-details.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
 import { ProfileAccountEditComponent } from './profile/profile-account-edit/profile-account-edit.component';
-import { ConfigurationComponent } from './configuration/configuration.component';
+import { GlobalConfigurationComponent } from './globalConfiguration/globalConfiguration.component';
 import { TranslatePipe } from '../pipes/translate.pipe';
 
 @NgModule({
@@ -32,7 +32,7 @@ import { TranslatePipe } from '../pipes/translate.pipe';
     ProfileDetailsComponent,
     ProfileEditComponent,
     ProfileAccountEditComponent,
-    ConfigurationComponent,
+    GlobalConfigurationComponent,
     TranslatePipe
   ],
   imports: [

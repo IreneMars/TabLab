@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,7 +11,7 @@ import { Esquema } from '../../../models/esquema.model';
   templateUrl: './esquema-list.component.html',
   styleUrls: ['./esquema-list.component.css']
 })
-export class EsquemaListComponent implements OnInit, OnDestroy{
+export class EsquemaListComponent implements OnInit {
   userId               : string;
   userIsAuthenticated  : boolean = false;
   isDeleting           : boolean = false;
@@ -34,13 +34,7 @@ export class EsquemaListComponent implements OnInit, OnDestroy{
                 });
   }
 
-  ngOnInit(){
-
-  }
-
-  ngOnDestroy(){
-
-  }
+  ngOnInit(){}
 
   async onDelete( esquemaId: string ){
     await this.esquemasService.deleteEsquema(esquemaId);

@@ -1,29 +1,22 @@
-import { OnDestroy, OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
-import { ReplaySubject, Subscription, Observable } from 'rxjs';
-
+import { ReplaySubject, Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-export class User {
-  username: string;
-  email: string;
-  password: string;
-}
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  loginForm: FormGroup;
-  isLoading = false;
-  url: RequestInfo;
-  private authStatusSub: Subscription;
-  user: SocialUser;
-  loggedIn: boolean;
+export class LoginComponent implements OnInit {
+  isLoading : boolean = false;
+  loggedIn  : boolean;
+  loginForm : FormGroup;
+  url       : RequestInfo;
+  user      : SocialUser;
 
   private auth2: gapi.auth2.GoogleAuth;
   private subject = new ReplaySubject<gapi.auth2.GoogleUser>(1);
@@ -47,7 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe( authStatus => {
+    this.authService.getAuthStatusListener().subscribe( authStatus => {
       this.isLoading = false;
     });
     if  (localStorage.getItem('email')) {
@@ -65,10 +58,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.user = user;
       this.loggedIn = (user != null);
     });
-  }
-
-  ngOnDestroy(): void {
-    this.authStatusSub.unsubscribe();
   }
 
   get invalidUsername() {

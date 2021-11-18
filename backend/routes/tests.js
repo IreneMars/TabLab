@@ -11,6 +11,7 @@ const {
     validateFields,
 } = require("../middlewares");
 const {
+    getTests,
     getTestsByWorkspace,
     getTest,
     createTest,
@@ -19,6 +20,10 @@ const {
 } = require("../controllers/tests");
 
 router.get("/", [
+    validateJWT,
+], getTests);
+
+router.get("/workspace/:workspaceId", [
     validateJWT,
     check('workspaceId', 'The ID is not a valid Mongo ID').isMongoId(),
     check('workspaceId').custom(workspaceExistsById),

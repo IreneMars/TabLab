@@ -18,6 +18,35 @@ export class UsersService {
     return this.usersUpdated.asObservable();
   }
   
+  getUsers() {
+    return this.http.get<{message: string, users: any[]}>(BACKEND_URL)
+    .pipe(map( (userData) => {
+      return { 
+        users: userData.users.map(user => {
+        return {
+          id:user._id,
+          username: user.username,
+          email:user.email,
+          password:user.password,
+          photo: user.photo,
+          name:user.name,
+          role:user.role,
+          status:user.status,
+          google:user.google,
+          roleId: user.roleId,
+          roleName: user.roleName
+        };
+      }),
+    };
+    }))
+    .subscribe((transformedUserData) => {
+      this.users = transformedUserData.users;
+      this.usersUpdated.next({
+        users: [...this.users]
+      });
+    });
+  }
+  
   getUsersByWorkspace(workspaceId: string) {
     return this.http.get<{message: string, users: any}>(BACKEND_URL + 'workspace/'+workspaceId)
     .pipe(map( (userData) => {

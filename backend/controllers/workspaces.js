@@ -49,7 +49,9 @@ exports.getWorkspace = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {
         const roles = await Role.find({ workspace: req.params.id, user: current_user_id });
-        if (roles.length !== 1) {
+        const user = await User.findById(current_user_id);
+
+        if (roles.length !== 1 || user.role !== 'ADMIN') {
             return res.status(403).json({
                 message: "Not authorized to fetch this workspace!"
             });
@@ -194,7 +196,9 @@ exports.deleteWorkspace = async(req, res, next) => {
 
     try {
         const role = Role.findOne({ workspace: req.params.id, user: current_user_id, role: "owner" });
-        if (!role) {
+        const user = await User.findById(current_user_id);
+
+        if (!role || user.role !== 'ADMIN') {
             return res.status(401).json({
                 message: "You are not authorized to delete that workspace!"
             });
@@ -206,9 +210,9 @@ exports.deleteWorkspace = async(req, res, next) => {
             });
         }
         await Role.deleteMany({ workspace: req.params.id });
+        await Datafile.deleteMany({ workspace: req.params.id });
         await Workspace.deleteOne({ _id: req.params.id });
 
-        const user = await User.findById(current_user_id);
         const activity = new Activity({
             message: "{{author}} eliminó el espacio de trabajo {{workspace}}",
             workspace: { 'id': workspace._id, 'title': workspace.title },

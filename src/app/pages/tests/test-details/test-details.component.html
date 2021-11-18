@@ -54,7 +54,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" routerLink="/workspace/{{workspaceId}}/runner/{{test.id}}">Ejecutar Prueba</a></li>
-                            <li><a class="dropdown-item danger" (click)="onDelete()">Eliminar Prueba</a></li>
+                            <li><a class="dropdown-item danger" *ngIf="workspace.owner==user.id || user.role=='ADMIN'" (click)="onDelete()">Eliminar Prueba</a></li>
                         </ul>
 
                     </div>

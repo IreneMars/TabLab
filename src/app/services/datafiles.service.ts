@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Datafile } from '../models/datafile.model';
@@ -8,11 +9,41 @@ const BACKEND_URL = environment.apiUrl + '/datafiles/';
 
 @Injectable({providedIn: 'root'})
 export class DatafileService {
+  private datafiles: Datafile[] = [];
+  private datafilesUpdated = new Subject<{datafiles: Datafile[]}>();
 
   constructor(private http: HttpClient) {}
   
+  getDatafileUpdateListener() {
+    return this.datafilesUpdated.asObservable();
+  }
+  
+  getDatafiles() {
+    return this.http.get<{message: string, datafiles: any[]}>(BACKEND_URL)
+    .pipe(map( (datafileData) => {
+      return { 
+        datafiles: datafileData.datafiles.map(datafile => {
+        return {
+          id: datafile._id,
+          title: datafile.title, 
+          description: datafile.description, 
+          contentPath: datafile.contentPath, 
+          errLimit: datafile.errLimit,
+          collection: datafile.collection, 
+          workspace: datafile.workspace
+        };
+      }),
+    };
+    }))
+    .subscribe((transformedDatafileData) => {
+      this.datafiles = transformedDatafileData.datafiles;
+      this.datafilesUpdated.next({
+        datafiles: [...this.datafiles]
+      });
+    });
+  }
+  
   getDatafile(datafileId: string) {
-    // 
     return this.http.get<{message: string, datafile: any, content: string, esquemas: any[], configurations: any[], tests: any[]}>(BACKEND_URL + datafileId)
     .pipe(map( (datafileData) => {
       return { 
@@ -32,7 +63,6 @@ export class DatafileService {
             id: configuration._id,
             title: configuration.title,
             creationMoment: configuration.creationMoment,
-            delimiter: configuration.delimiter,
             errorCode: configuration.errorCode,
             extraParams: configuration.extraParams,
             datafile: configuration.datafile,
@@ -67,7 +97,6 @@ export class DatafileService {
       'description': description, 
       'contentPath': null, 
       'errLimit': null,
-      'delimiter': null,
       'collection': collectionId, 
       'workspace': workspaceId
     };
@@ -97,7 +126,6 @@ export class DatafileService {
       'description': description, 
       'contentPath': null, 
       'errLimit': null,
-      'delimiter': null,
       'collection': collection, 
       'workspace': null
     };

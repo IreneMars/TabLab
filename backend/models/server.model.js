@@ -92,6 +92,8 @@ class Server {
         this.app.use("/api/uploads", require('../routes/uploads'));
         this.app.use("/api/activities", require('../routes/activities'));
         this.app.use("/api/terminals", require('../routes/terminals'));
+        this.app.use("/api/fricErrors", require('../routes/fricErrors'));
+        this.app.use("/api/gconfiguration", require('../routes/globalConfiguration'));
 
     }
 

@@ -8,7 +8,6 @@ const {
 
 const {
     userExistsById,
-    workspaceExistsById
 } = require("../helpers");
 
 const {

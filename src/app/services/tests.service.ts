@@ -18,9 +18,8 @@ export class TestsService {
     return this.testsUpdated.asObservable();
   }
   
-  getTests(workspaceId: string) {
-    const queryParams = `?workspaceId=${workspaceId}`;
-    this.http.get<{message: string, tests: any}>(BACKEND_URL + queryParams)
+  getTests() {
+    return this.http.get<{message: string, tests: any[]}>(BACKEND_URL)
     .pipe(map( (testData) => {
       return { tests: testData.tests.map(test => {
         return {
@@ -36,8 +35,41 @@ export class TestsService {
           executionMoment: test.executionMoment,
           totalErrors: test.totalErrors,
           executable: test.executable,
-          datafileId: test.datafile,
-          datafileTitle: test.datafileTitle
+          datafile: test.datafile,
+          workspace: test.workspace
+        };
+      }),
+    };
+    }))
+    .subscribe((transformedTestData) => {
+      this.tests = transformedTestData.tests;
+      this.testsUpdated.next({
+        tests: [...this.tests], // para hacer una verdadera copia y no afectar al original
+      });
+  });
+  }
+  
+  getTestsByWorkspace(workspaceId: string) {
+    this.http.get<{message: string, tests: any}>(BACKEND_URL + "workspace/" + workspaceId)
+    .pipe(map( (testData) => {
+      return { tests: testData.tests.map(test => {
+        return {
+          id: test._id,
+          title: test.title,
+          delimiter: test.delimiter,
+          reportPath: test.reportPath,
+          status: test.status,
+          esquema: test.esquema,
+          configurations: test.configurations,
+          creationMoment: test.creationMoment,
+          updateMoment: test.updateMoment,
+          executionMoment: test.executionMoment,
+          totalErrors: test.totalErrors,
+          executable: test.executable,
+          datafile: test.datafile,
+          datafileTitle: test.datafileTitle,
+          workspace: test.workspace
+
         };
       }),
     };

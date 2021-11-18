@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TestsService } from 'src/app/services/tests.service';
 import { ReportsService } from '../../../services/reports.service';
@@ -6,7 +6,6 @@ import { CollectionsService } from '../../../services/collections.service';
 import { WorkspacesService } from '../../../services/workspaces.service';
 import { Workspace } from 'src/app/models/workspace.model';
 import { Test } from 'src/app/models/test.model';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { TerminalsService } from '../../../services/terminals.service';
 import { Terminal } from 'src/app/models/terminal.model';
@@ -16,7 +15,7 @@ import { saveAs } from 'file-saver';
   templateUrl: './test-execute.component.html',
   styleUrls: ['./test-execute.component.css']
 })
-export class TestExecuteComponent implements OnInit, OnDestroy {
+export class TestExecuteComponent implements OnInit {
   userIsAuthenticated    : boolean = false;
   userId                 : string;
   isLoading              : boolean = false;
@@ -28,8 +27,6 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
   tests                  : Test[];
   inExecution            : boolean = false;
   terminal               : Terminal;
-  private authStatusSub  : Subscription;
-  private testsSub       : Subscription;
   
   constructor(private authService: AuthService, public testsService: TestsService, public collectionsService: CollectionsService, 
               public route: ActivatedRoute, public workspacesService: WorkspacesService, public reportsService: ReportsService,
@@ -45,12 +42,11 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
         this.selectedTestIDs.add(this.testId);     
       }
       // Tests
-      this.testsService.getTests(this.workspaceId);
-      this.testsSub = this.testsService.getTestUpdateListener()
-        .subscribe( (testData: {tests: any[]}) => {
+      this.testsService.getTestsByWorkspace(this.workspaceId);
+      this.testsService.getTestUpdateListener().subscribe( (testData: {tests: any[]}) => {
           this.isLoading = false;
           this.tests = testData.tests;
-        });
+      });
     });
     this.userIsAuthenticated = this.authService.getIsAuth();
     if(this.userIsAuthenticated){
@@ -61,19 +57,11 @@ export class TestExecuteComponent implements OnInit, OnDestroy {
           content:response.terminal.content,
           user:response.terminal.user,
         };
-        console.log(this.terminal.content)
       });
     }
-    this.authStatusSub = this.authService
-      .getAuthStatusListener()
-      .subscribe(isAuthenticated => {
+    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
-      });
-  }
-  
-  ngOnDestroy() {
-    this.authStatusSub.unsubscribe();
-    this.testsSub.unsubscribe();
+    });
   }
 
   onTestPicked(event: Event) {

@@ -1,0 +1,50 @@
+.complete-height {
+    height: 100%;
+}
+
+.btn-outline-light {
+    color: rgb(156, 156, 156) !important;
+    border-color: #ced4da;
+}
+
+.btn-outline-light:hover {
+    color: white !important;
+    background-color: #ced4da !important;
+    border-color: #ced4da;
+}
+
+.danger {
+    color: #dc3845;
+}
+
+.table-fixed tbody {
+    height: 200px;
+    overflow: scroll;
+    width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+    display: block;
+}
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead>tr>th {
+    float: left;
+    position: relative;
+}
+
+tr {
+    cursor: pointer;
+}
+
+.btn-group-sm>.btn,
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: .700rem !important;
+    border-radius: 0.2rem;
+}

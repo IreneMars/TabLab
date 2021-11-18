@@ -13,12 +13,17 @@ const {
     hasRole
 } = require('../middlewares');
 const {
+    getUsers,
     getUsersByWorkspace,
     getUser,
     createUser,
     updateUser,
     deleteAccount
 } = require('../controllers/users');
+//admin
+router.get("/", [
+    validateJWT,
+], getUsers);
 
 router.get("/:id", [
     validateJWT,

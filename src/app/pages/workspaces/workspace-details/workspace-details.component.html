@@ -1,6 +1,6 @@
 <div class="row ps-2 pe-2 complete-height">
     <div class="col-2 collections p-0">
-        <app-collection-list [workspaceId]="workspaceId" [(isLoading)]="isLoading"></app-collection-list>
+        <app-collection-list [workspaceId]="workspaceId" [collections]="collections" [orphanedDatafiles]="orphanedDatafiles" [(isLoading)]="isLoading"></app-collection-list>
     </div>
     <div class="col-7" *ngIf="!isLoading">
         <app-workspace-edit *ngIf="edit" [(edit)]="edit" [workspace]="workspace" [workspaceId]="workspaceId"></app-workspace-edit>
@@ -24,7 +24,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" (click)="onLeave()">Abandonar Espacio</a></li>
-                            <li><a class="dropdown-item danger" (click)="onDelete()">Eliminar Espacio</a></li>
+                            <li><a class="dropdown-item danger" *ngIf="user.roleName=='owner' || user.role=='ADMIN'" (click)="onDelete()">Eliminar Espacio</a></li>
                         </ul>
                     </div>
                 </div>

@@ -29,6 +29,7 @@ export class WorkspacesService {
             description: workspace.description,
             creationMoment: workspace.creationMoment,
             mandatory: workspace.mandatory,
+            owner: workspace.owner,
             users: workspace.users
           };
         }),
@@ -58,7 +59,6 @@ export class WorkspacesService {
               description: datafile.description,
               contentPath: datafile.contentPath,
               errLimit: datafile.errLimit,
-              delimiter: datafile.delimiter,
               collection: datafile.coleccion,
               workspace: datafile.workspace
             };
@@ -70,11 +70,13 @@ export class WorkspacesService {
   addWorkspace(title: string, description: string, mandatory: boolean, invitations: string[]) {
     let res: any;
     const workspaceData = {
+      'id':null,
       'title': title, 
       'description': description, 
       'creationMoment': null,
       'mandatory': mandatory,
-      'invitations': invitations
+      'invitations': invitations,
+      'owner':null
     };
     this.http.post<{message: string, workspace: any}>(BACKEND_URL, workspaceData).subscribe( responseData => {
       res = responseData;  
@@ -99,7 +101,8 @@ export class WorkspacesService {
       'title': title, 
       'description': description, 
       'creationMoment': null,
-      'mandatory': null
+      'mandatory': null,
+      'owner':null
     };
     this.http.put<{message: string, workspace: any}>(BACKEND_URL + workspaceId, workspace).subscribe( response => {
       res = response;

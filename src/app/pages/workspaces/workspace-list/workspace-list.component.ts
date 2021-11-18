@@ -1,6 +1,5 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { Workspace } from 'src/app/models/workspace.model';
 import { WorkspacesService } from '../../../services/workspaces.service';
@@ -20,21 +19,17 @@ export interface PeriodicElement {
   templateUrl: './workspace-list.component.html',
   styleUrls: ['./workspace-list.component.css']
 })
-export class WorkspaceListComponent implements OnInit, OnDestroy{
+export class WorkspaceListComponent implements OnInit {
   userId                   : string;
   userIsAuthenticated      : boolean = false;
   isLoading                : boolean = false;
   displayedColumns         : string[] = ['title', 'description', 'creationMoment', 'users'];
-  //clickedRows              : Set<Workspace> = new Set<Workspace>();
   workspaces               : Workspace[] = [];
   totalWorkspaces          : number = 0;
   workspacesPerPage        : number = 2;
   currentPage              : number = 1;
   dataSource               : any = null;
   pageSizeOptions          : number[] = [1, 2, 5, 10];
-  private workspacesSub    : Subscription;
-  private authStatusSub    : Subscription;
-
   @ViewChild(MatSort) sort : MatSort;
 
   constructor( public workspacesService: WorkspacesService, private authService: AuthService) { }
@@ -44,7 +39,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy{
     this.isLoading = true;
     this.workspacesService.getWorkspaces(this.workspacesPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
-    this.workspacesSub = this.workspacesService.getWorkspaceUpdateListener()
+    //Workspaces
+    this.workspacesService.getWorkspaceUpdateListener()
     .subscribe( (workspaceData: {workspaces: Workspace[], workspaceCount: number, totalWorkspaces:number}) => {
       this.isLoading = false;
       this.totalWorkspaces = workspaceData.totalWorkspaces;
@@ -52,6 +48,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy{
       this.dataSource = new MatTableDataSource(this.workspaces);
       this.dataSource.sort = this.sort;
     });
+    //Users by workspace
     this.workspaces.map(function(workspace) {
       this.authService.getUsersById(workspace.id).subscribe((usersData: {users: any[]}) => {
         this.isLoading = false;
@@ -59,7 +56,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy{
       });
     });
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+    //Auth
+    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.authService.getUserId();
     });
@@ -71,8 +69,4 @@ export class WorkspaceListComponent implements OnInit, OnDestroy{
     this.workspacesService.getWorkspaces(this.workspacesPerPage, this.currentPage);
   }
 
-  ngOnDestroy() {
-    this.workspacesSub.unsubscribe();
-    this.authStatusSub.unsubscribe();
-  }
 }

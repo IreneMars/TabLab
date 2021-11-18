@@ -16,10 +16,10 @@
     ],
 
     "workspaces": [
-        { "_id": "60aeaf40d0e8477348250ac9", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1636544757741", "mandatory": "true" },
-        { "_id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1636547093734", "mandatory": "false" },
-        { "_id": "60aebafbb83c905694cd191d", "title": "Espacio de trabajo normal 2", "description": "Este es un espacio de trabajo normal (2).", "creationMoment": "1636544757741", "mandatory": "false" },
-        { "_id": "60b363c81e7c4e4ff4e724a0", "title": "Espacio de trabajo de user 2", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1636547093734", "mandatory": "false" }
+        { "_id": "60aeaf40d0e8477348250ac9", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1636544757741", "mandatory": "true", "owner": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1636547093734", "mandatory": "false", "owner": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "60aebafbb83c905694cd191d", "title": "Espacio de trabajo normal 2", "description": "Este es un espacio de trabajo normal (2).", "creationMoment": "1636544757741", "mandatory": "false", "owner": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "60b363c81e7c4e4ff4e724a0", "title": "Espacio de trabajo de user 2", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1636547093734", "mandatory": "false", "owner": "60ae10e9c2d2fe5c48e6eeb3" }
     ],
 
     "roles": [
@@ -49,10 +49,10 @@
     ],
 
     "datafiles": [
-        { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": "backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv", "errLimit": null, "delimiter": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
-        { "_id": "60b634e98ab1a18d8850e49f", "title": "Datafile 2", "description": "Este es el datafile 2.", "contentPath": null, "errLimit": null, "delimiter": null, "coleccion": null, "workspace": "60aeaf40d0e8477348250ac9" },
-        { "_id": "619389a81a2dffb23b953917", "title": "Datafile 3", "description": "Este es el datafile 3.", "contentPath": null, "errLimit": null, "delimiter": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
-        { "_id": "6193a80edcc6d2ea6bd3e1b8", "title": "Datafile 4", "description": "Este es el datafile 4.", "contentPath": null, "errLimit": null, "delimiter": null, "coleccion": "60b436d8a0646673b02cb8c3", "workspace": "60aeaf40d0e8477348250ac9" }
+        { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": "backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "60b634e98ab1a18d8850e49f", "title": "Datafile 2", "description": "Este es el datafile 2.", "contentPath": null, "errLimit": null, "coleccion": null, "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "619389a81a2dffb23b953917", "title": "Datafile 3", "description": "Este es el datafile 3.", "contentPath": null, "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "6193a80edcc6d2ea6bd3e1b8", "title": "Datafile 4", "description": "Este es el datafile 4.", "contentPath": null, "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c3", "workspace": "60aeaf40d0e8477348250ac9" }
 
     ],
 
@@ -162,7 +162,29 @@
             "creationMoment": "1636544757745"
         }
 
+    ],
+    "globalConfiguration": [
+        { "_id": "619637dd5e471a3913647ea9", "limitUsers": 5, "limitWorkspaces": 3 }
+    ],
+
+    "fricErrors": [
+        { "_id": "61963cd7faffae787faf9f1a", "errorCode": "duplicate-row", "extraParams": null },
+        {
+            "_id": "61963ce21ba3c4c9f02e589d",
+            "errorCode": "deviated-value",
+            "extraParams": {
+                "fieldName": "",
+                "average": ["mean", "median", "mode"],
+                "interval": 0,
+                "hints": {
+                    "fieldName": "Debe ingresar el nombre de uno de los campos del contenido del fichero.",
+                    "average": "",
+                    "interval": "Este parámetro es numérico y superior o igual a 0."
+                }
+            }
+        }
     ]
+
 
 
 }

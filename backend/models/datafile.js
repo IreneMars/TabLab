@@ -20,10 +20,6 @@ const datafileSchema = mongoose.Schema({
         type: Number,
         required: false
     },
-    delimiter: {
-        type: String,
-        required: false
-    },
     coleccion: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Collection",

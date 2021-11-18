@@ -1,7 +1,6 @@
-import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { DatafileService } from 'src/app/services/datafiles.service';
 
@@ -10,9 +9,8 @@ import { DatafileService } from 'src/app/services/datafiles.service';
   templateUrl: './datafile-create.component.html',
   styleUrls: ['./datafile-create.component.css']
 })
-export class DatafileCreateComponent implements OnInit, OnDestroy{
+export class DatafileCreateComponent implements OnInit{
   datafileForm: FormGroup;
-  private authStatusSub: Subscription;
   userIsAuthenticated = false;
   userId: string;
   @Input() savefile;
@@ -32,14 +30,10 @@ export class DatafileCreateComponent implements OnInit, OnDestroy{
 
   ngOnInit(){
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.authService.getUserId();
     });
-  }
-
-  ngOnDestroy(){
-    this.authStatusSub.unsubscribe();
   }
 
   createForm() {
@@ -49,6 +43,7 @@ export class DatafileCreateComponent implements OnInit, OnDestroy{
       collection : ['', ],
     });
   }
+
   get invalidTitle() {
     return this.datafileForm.get('title').invalid && this.datafileForm.get('title').touched;
   }

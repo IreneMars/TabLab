@@ -1,11 +1,34 @@
-const { Role, Test, Datafile, Esquema } = require("../models");
+const { Role, Test, Datafile, Esquema, User } = require("../models");
 const fs = require('fs');
 
+exports.getTests = async(req, res) => {
+    try {
+        var tests = await Test.find();
+        if (tests.length > 0) {
+            for (var test of tests) {
+                const datafile = await Datafile.findById(test.datafile);
+                test._doc['workspace'] = datafile.workspace;
+            }
+        }
+        return res.status(200).json({
+            message: "Tests fetched successfully!",
+            tests: tests,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: "Fetching tests failed!"
+        });
+    }
+};
+
 exports.getTestsByWorkspace = async(req, res) => {
-    const workspaceId = req.query.workspaceId;
+    const workspaceId = req.params.workspaceId;
     const current_user_id = req.userData.userId;
     try {
+        console.log(req.params)
         const roles = await Role.find({ workspace: workspaceId, user: current_user_id });
+        console.log(roles)
+
         if (roles.length !== 1) {
             return res.status(403).json({
                 message: "Not authorized to fetch this tests!"
@@ -17,18 +40,16 @@ exports.getTestsByWorkspace = async(req, res) => {
         });
         datafile_ids = [...new Set(datafile_ids)];
         const tests = await Test.find({ 'datafile': { $in: datafile_ids } });
-        var updatedTests = []
         if (tests.length > 0) {
             for (var test of tests) {
-                datafile = await Datafile.findById(test.datafile);
-                test._doc.datafileTitle = datafile.title;
-                updatedTests.push(test._doc)
-
+                const datafile = await Datafile.findById(test.datafile);
+                test._doc['datafileTitle'] = datafile.title;
+                test._doc['workspace'] = datafile.workspace;
             }
         }
         return res.status(200).json({
             message: "Tests fetched successfully!",
-            tests: updatedTests,
+            tests: tests,
         });
     } catch (error) {
         return res.status(500).json({
@@ -41,6 +62,7 @@ exports.getTest = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {
         const test = await Test.findById(req.params.id);
+
         const datafile = await Datafile.findById(test.datafile);
         if (!datafile) {
             return res.status(500).json({
@@ -48,7 +70,8 @@ exports.getTest = async(req, res, next) => {
             });
         }
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
-        if (roles.length !== 1) {
+        const user = await User.findById(current_user_id);
+        if (roles.length !== 1 || user.role !== 'ADMIN') {
             return res.status(403).json({
                 message: "Not authorized to fetch this test!"
             });
@@ -174,7 +197,8 @@ exports.deleteTest = async(req, res, next) => {
             });
         }
         const roles = await Role.find({ 'workspace': datafile.workspace, 'user': current_user_id });
-        if (roles.length !== 1) {
+        const user = await User.findById(current_user_id);
+        if (roles.length !== 1 || user.role !== 'ADMIN') {
             return res.status(401).json({ message: "You are not authorized to delete a test from this datafile!" });
         }
         await Test.deleteOne({ _id: req.params.id });

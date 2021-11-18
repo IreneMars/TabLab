@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,7 +11,7 @@ import { Test } from '../../../models/test.model';
   templateUrl: './test-list.component.html',
   styleUrls: ['./test-list.component.css']
 })
-export class TestListComponent implements OnInit, OnDestroy{
+export class TestListComponent implements OnInit{
   userId                  : string;
   userIsAuthenticated     : boolean = false;
   isDeleting              : boolean = false;
@@ -30,15 +30,8 @@ export class TestListComponent implements OnInit, OnDestroy{
               private router: Router, public testsService: TestsService){
   }
 
-  ngOnInit(){
-
-  }
-
-  ngOnDestroy(){
-    // this.testsSub.unsubscribe();
-    // this.authStatusSub.unsubscribe();
-  }
-
+  ngOnInit(){}
+  
   async onDelete( testId: string ){
     await this.testsService.deleteTest(testId);
     this.router.navigateByUrl('/', {skipLocationChange: true})

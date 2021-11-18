@@ -1,4 +1,18 @@
-const { User, Workspace, Role, Invitation, Collection, Datafile, Test, Esquema, Configuration, Activity, Terminal } = require("../models");
+const {
+    User,
+    Workspace,
+    Role,
+    Invitation,
+    Collection,
+    Datafile,
+    Test,
+    Esquema,
+    Configuration,
+    Activity,
+    Terminal,
+    FricError,
+    GlobalConfiguration
+} = require("../models");
 
 const path = require("path");
 const fullPath = path.resolve("backend/populate.json");
@@ -138,6 +152,34 @@ exports.populate = async(req, res, next) => {
         reports.reports.push({ "message": message, "report": rep });
     } catch (err) {
         reports.errored_models.push({ "Terminal": err });
+    }
+
+    // FricErrors
+    try {
+        console.log("FricErrors")
+        FricError.collection.drop();
+        var fricErrorsResult = await FricError.insertMany(populate_json_data.fricErrors, { ordered: false, rawResult: true });
+        [message, rep] = create_report('fricError', fricErrorsResult, populate_json_data.fricErrors);
+        reports.reports.push({ "message": message, "report": rep });
+        console.log(message)
+        console.log(rep)
+    } catch (err) {
+        console.log(err)
+        reports.errored_models.push({ "FricError": err });
+    }
+
+    // Global Config
+    try {
+        console.log("Global Config")
+        GlobalConfiguration.collection.drop();
+        var globalConfigResult = await GlobalConfiguration.insertMany(populate_json_data.globalConfiguration, { ordered: false, rawResult: true });
+        [message, rep] = create_report('globalConfig', globalConfigResult, populate_json_data.globalConfiguration);
+        reports.reports.push({ "message": message, "report": rep });
+        console.log(message)
+        console.log(rep)
+    } catch (err) {
+        console.log(err)
+        reports.errored_models.push({ "Global Configuration": err });
     }
 
     return res.status(200).json({

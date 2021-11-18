@@ -1,3 +1,7 @@
+.complete-height {
+    height: 100%;
+}
+
 .btn-outline-light {
     color: rgb(156, 156, 156) !important;
     border-color: #ced4da;
@@ -11,32 +15,6 @@
 
 .danger {
     color: #dc3845;
-}
-
-.my-custom-scrollbar {
-    height: 60%;
-    overflow: auto;
-}
-
-.border-header {
-    border-top: 1px solid #ced4da;
-    border-right: 1px solid #ced4da;
-    border-left: 1px solid #ced4da;
-    border-radius: 4px 4px 0 0;
-    background-color: #e9ecef;
-}
-
-.border-content {
-    border-radius: 0 0 4px 4px;
-    border: 1px solid #ced4da;
-}
-
-.collections {
-    background-color: #f2f2f3;
-}
-
-.complete-height {
-    height: 100%;
 }
 
 .collections {

@@ -1,7 +1,6 @@
-import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { WorkspacesService } from 'src/app/services/workspaces.service';
 import { Workspace } from '../../../models/workspace.model';
@@ -10,18 +9,15 @@ import { Workspace } from '../../../models/workspace.model';
   selector: 'app-workspace-edit',
   templateUrl: './workspace-edit.component.html',
 })
-export class WorkspaceEditComponent implements OnInit, OnDestroy{
+export class WorkspaceEditComponent implements OnInit{
   userId               : string;
   userIsAuthenticated  : boolean = false;
   loading              : boolean = false;
   workspaceEditForm    : FormGroup;
-  
   @Input() edit        : boolean;
   @Input() workspace   : Workspace;
   @Input() workspaceId : string;
   @Output() editChange : EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  private authStatusSub: Subscription;
 
   constructor(public workspaceService: WorkspacesService, public authService: AuthService,  private router: Router,
               private formBuilder: FormBuilder) {
@@ -37,7 +33,7 @@ export class WorkspaceEditComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.authService.getUserId();
     });
@@ -45,10 +41,6 @@ export class WorkspaceEditComponent implements OnInit, OnDestroy{
       title: this.workspace.title,
       description: this.workspace.description,
     });
-  }
-
-  ngOnDestroy(): void {
-    this.authStatusSub.unsubscribe();
   }
 
   get invalidTitle() {

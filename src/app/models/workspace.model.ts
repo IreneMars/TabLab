@@ -4,4 +4,5 @@ export interface Workspace {
   description: string;
   creationMoment: Date;
   mandatory: boolean;
+  owner: string;
 }

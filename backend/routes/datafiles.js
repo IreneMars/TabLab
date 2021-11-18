@@ -2,21 +2,26 @@ const express = require("express");
 const { check } = require('express-validator');
 const { workspaceExistsById, datafileExistsById } = require('../helpers/db-validators');
 const router = express.Router();
-const { 
-    validateJWT, 
+const {
+    validateJWT,
     validateFields,
 } = require("../middlewares");
 const {
     getDatafile,
     createDatafile,
     updateDatafile,
-    deleteDatafile
+    deleteDatafile,
+    getDatafiles
 } = require("../controllers/datafiles");
+
+router.get("/", [
+    validateJWT,
+], getDatafiles);
 
 router.get("/:id", [
     validateJWT,
     check('id', 'The ID is not a valid Mongo ID').isMongoId(),
-    check('id').custom(datafileExistsById), 
+    check('id').custom(datafileExistsById),
 ], getDatafile);
 
 router.post("", [
@@ -29,14 +34,14 @@ router.post("", [
 ], createDatafile);
 
 router.put("/:id", [
-    validateJWT, 
+    validateJWT,
     check('id', 'The ID is not a valid Mongo ID').isMongoId(),
     check('id').custom(datafileExistsById),
     validateFields,
 ], updateDatafile);
 
 router.delete("/:id", [
-    validateJWT, 
+    validateJWT,
     check('id', 'The ID is not a valid Mongo ID').isMongoId(),
     check('id').custom(datafileExistsById),
     validateFields,

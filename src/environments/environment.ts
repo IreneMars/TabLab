@@ -2,22 +2,22 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { FricError } from 'src/app/models/fricError.model';
+// import { FricError } from 'src/app/models/fricError.model';
 
-const average = [
-  'mean',
-  'median',
-  'mode'
-];
+// const average = [
+//   'mean',
+//   'median',
+//   'mode'
+// ];
 
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/api',
   SOCKET_ENDPOINT: 'http://localhost:3000',
-  errors: [
-    new FricError('duplicate-row', null),
-    new FricError('deviated-value', new DeviatedValueParams('', average, 0))
-  ]
+  // errors: [
+  //   new FricError('duplicate-row', null),
+  //   new FricError('deviated-value', new DeviatedValueParams('', average, 0))
+  // ]
 };
 
 
@@ -30,4 +30,4 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-import { DeviatedValueParams } from '../app/models/fricError.model';
+// import { DeviatedValueParams } from '../app/models/fricError.model';

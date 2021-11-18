@@ -18,6 +18,7 @@ import { ConfigurationCreateComponent } from './configuration/configuration-crea
 import { TestCreateComponent } from './test/test-create/test-create.component';
 import { ActivityListComponent } from './activity/activity-list/activity-list.component';
 import { CollectionListComponent } from './collection/collection-list/collection-list.component';
+import { GlobalConfigurationEditComponent } from './globalConfiguration/globalConfiguration-edit/globalConfiguration-edit.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -34,7 +35,9 @@ import { CollectionListComponent } from './collection/collection-list/collection
     TestListComponent,
     ConfigurationCreateComponent,
     TestCreateComponent,
-    ActivityListComponent
+    ActivityListComponent,    
+    GlobalConfigurationEditComponent
+
   ],
   exports: [
     HeaderComponent,
@@ -51,7 +54,8 @@ import { CollectionListComponent } from './collection/collection-list/collection
     TestListComponent,
     ConfigurationCreateComponent,
     TestCreateComponent, 
-    ActivityListComponent
+    ActivityListComponent,
+    GlobalConfigurationEditComponent
   ],
   imports: [
     CommonModule,

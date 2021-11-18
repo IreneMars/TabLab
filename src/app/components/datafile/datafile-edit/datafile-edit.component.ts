@@ -1,7 +1,6 @@
-import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { Collection } from 'src/app/models/collection.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DatafileService } from 'src/app/services/datafiles.service';
@@ -11,21 +10,19 @@ import { CollectionsService } from '../../../services/collections.service';
   selector: 'app-datafile-edit',
   templateUrl: './datafile-edit.component.html',
 })
-export class DatafileEditComponent implements OnInit, OnDestroy{
+export class DatafileEditComponent implements OnInit{
   @Input() edit;
   @Input() datafile;
   @Input() datafileId;
   @Input() workspaceId;
   @Output() editChange   : EventEmitter<boolean> = new EventEmitter<boolean>();
   collections            : Collection[];
-  private collectionsSub : Subscription;
 
   datafileEditForm: FormGroup;
   loading = false;
   collectionPicked:string=null;
   userIsAuthenticated = false;
   userId: string;
-  private authStatusSub: Subscription;
 
   constructor(public datafileService: DatafileService, public authService: AuthService,  private router: Router,
               private formBuilder: FormBuilder, public collectionsService: CollectionsService) {
@@ -42,7 +39,7 @@ export class DatafileEditComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.authService.getUserId();
     });
@@ -52,16 +49,9 @@ export class DatafileEditComponent implements OnInit, OnDestroy{
     });
     // Collections
     this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-    this.collectionsSub = this.collectionsService.getCollectionUpdateListener()
-    .subscribe( (collectionData: {collections: Collection[]}) => {
+    this.collectionsService.getCollectionUpdateListener().subscribe( (collectionData: {collections: Collection[]}) => {
       this.collections = collectionData.collections;
     });
-  }
-
-  ngOnDestroy(): void {
-    this.authStatusSub.unsubscribe();
-    this.collectionsSub.unsubscribe();
-
   }
 
   get invalidTitle() {

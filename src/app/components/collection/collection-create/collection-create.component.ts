@@ -1,7 +1,6 @@
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CollectionsService } from 'src/app/services/collections.service';
 
@@ -9,22 +8,18 @@ import { CollectionsService } from 'src/app/services/collections.service';
   selector: 'app-collection-create',
   templateUrl: './collection-create.component.html',
 })
-export class CollectionCreateComponent implements OnInit, OnDestroy{
-  collectionForm: FormGroup;
-  isLoading = false;
-  invalidTitle = false;
-  workspaceId;
-  @Input() editMode;
-  @Output() editModeChange = new EventEmitter();
-  @Input()  close;
-  @Output() closeChange = new EventEmitter();
-  @Input()  collectionIndex;
-  @Output() collectionIndexChange = new EventEmitter();
-
-  @Input()  editCollection;
-
-
-  private authStatusSub: Subscription;
+export class CollectionCreateComponent implements OnInit{
+  collectionForm                  : FormGroup;
+  isLoading                       : boolean = false;
+  invalidTitle                    : boolean = false;
+  workspaceId                     : string;
+  @Input() editMode               : boolean;
+  @Output() editModeChange        : any = new EventEmitter();
+  @Input()  close                 : boolean;
+  @Output() closeChange           : any = new EventEmitter();
+  @Input()  collectionIndex       : number;
+  @Output() collectionIndexChange : any = new EventEmitter();
+  @Input()  editCollection        : any;
 
   constructor(public collectionsService: CollectionsService, public authService: AuthService, private formBuilder: FormBuilder,
               private router: Router, private activatedRoute: ActivatedRoute) {
@@ -38,7 +33,7 @@ export class CollectionCreateComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe( authStatus => {
+    this.authService.getAuthStatusListener().subscribe( authStatus => {
     // this.isLoading = false;
     });
     this.activatedRoute.paramMap.subscribe(params => {
@@ -51,10 +46,6 @@ export class CollectionCreateComponent implements OnInit, OnDestroy{
         title: this.editCollection.title
       });
     }
-  }
-
-  ngOnDestroy(): void {
-    this.authStatusSub.unsubscribe();
   }
 
   async onSave() {

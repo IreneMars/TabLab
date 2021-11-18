@@ -2,12 +2,28 @@ const { Activity, Role, Collection, Workspace, Datafile, Configuration, Esquema,
 var fs = require('file-system');
 const xlsxFile = require('read-excel-file/node');
 
+exports.getDatafiles = async(req, res) => {
+    try {
+        const datafiles = await Datafile.find();
+        return res.status(200).json({
+            message: "Datafiles fetched successfully!",
+            datafiles: datafiles,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: "Fetching datafiles failed!"
+        });
+    }
+};
+
 exports.getDatafile = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {
         const datafile = await Datafile.findById(req.params.id);
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
-        if (roles.length !== 1) {
+        const user = await User.findById(current_user_id);
+
+        if (roles.length !== 1 || user.role !== 'ADMIN') {
             return res.status(403).json({
                 message: "You are not authorized to fetch this datafile."
             });
@@ -87,7 +103,6 @@ exports.createDatafile = async(req, res, next) => {
             description: req.body.description,
             contentPath: null,
             errLimit: null,
-            delimiter: null,
             coleccion: req.body.coleccion,
             workspace: req.body.workspace
         });
@@ -172,15 +187,19 @@ exports.deleteDatafile = async(req, res) => {
     try {
         const datafile = await Datafile.findById(req.params.id);
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
-        if (roles.length !== 1) {
+        const user = await User.findById(current_user_id);
+
+        if (roles.length !== 1 || user.role !== 'ADMIN') {
             return res.status(403).json({
                 message: "You are not authorized to delete a datafile from this workspace."
             })
         }
+        await Configuration.deleteMany({ datafile: req.params.id });
+        await Esquema.deleteMany({ datafile: req.params.id });
+        await Test.deleteMany({ datafile: req.params.id });
         await Datafile.deleteOne({ _id: req.params.id });
 
         const workspace = await Workspace.findById(datafile.workspace);
-        const user = await User.findById(current_user_id);
         var messageAux = "{{author}} eliminó el fichero del espacio de trabajo {{workspace}}";
         var coleccionAux = null;
         if (datafile.collection) {
