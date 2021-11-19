@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DatafileService } from '../../../services/datafiles.service';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { Configuration } from '../../../models/configuration.model';
+import { FricError } from 'src/app/models/fricError.model';
+import { FricErrorsService } from 'src/app/services/fricErrors.service';
 
 
 @Component({
@@ -20,16 +22,17 @@ export class ConfigurationListComponent implements OnInit{
   @Input() workspaceId    : string;
   @Input() configurations : Configuration[];
   
-  // Para editar
   configurationForm       : FormGroup;
   saveconfigChange        : boolean = false;
   configurationId         : string;
   configuration           : Configuration = null;
   inferring               : boolean = false;
-  extraControls           : string[] = [];
-
-  constructor(public datafilesService: DatafileService, public route: ActivatedRoute, public usersService: AuthService,
-              private router: Router, private configurationsService: ConfigurationService){
+  extraControls           : object[] = [];
+  extraParams             : boolean = false;  
+  fricErrors              : FricError[];
+  
+  constructor(public datafilesService: DatafileService, public route: ActivatedRoute, public authService: AuthService,
+              private router: Router, private configurationsService: ConfigurationService, public fricErrorsService: FricErrorsService){
     this.configurationForm = new FormGroup({
       'title': new FormControl('', {validators: [Validators.required, Validators.minLength(1), Validators.maxLength(100)]}),
       'errorCode': new FormControl('', {validators: [Validators.required]}),
@@ -37,10 +40,12 @@ export class ConfigurationListComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.userIsAuthenticated = this.usersService.getIsAuth();
-    this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.usersService.getUserId();
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.userId = this.authService.getUserId();
+    // Frictionless Errors
+    this.fricErrorsService.getFricErrors();
+    this.fricErrorsService.getFricErrorUpdateListener().subscribe(responseData=>{
+      this.fricErrors = responseData.fricErrors;
     });
   }
 
@@ -67,24 +72,43 @@ export class ConfigurationListComponent implements OnInit{
         extraParams: configurationData.configuration.extraParams,
         datafile: configurationData.configuration.datafile,
       }
-      // this.configurationForm.get('esquemaContent').enable();
       this.configurationForm.patchValue({title: configurationData.configuration.title,
-                                         delimiter:configurationData.configuration.delimiter,
                                          errorCode: configurationData.configuration.errorCode});
       if(configurationData.configuration.extraParams){
-        const extraParamsObj = configurationData.configuration.extraParams;
-        Object.keys(extraParamsObj).forEach(extraParam => {
+        const extraParams = this.configuration.extraParams;
+        Object.keys(extraParams).forEach(extraParam => {
+          const fricError: FricError = this.fricErrors.find(element => element.errorCode === this.configuration.errorCode);
+          let tipo = '';
+          let extraControl = {};
+          if ( fricError.extraParams[extraParam].length > 0 ) {
+            tipo = 'enum';
+            extraControl = {
+                            'extraParam': extraParam,
+                            'tipo'      : tipo,
+                            'enum'      : fricError.extraParams[extraParam],
+                            'hint'      : fricError.extraParams['hints'][extraParam],
+                            'value'     : extraParams[extraParam]
+                           };
+          } else {
+            tipo = typeof fricError.extraParams[extraParam];
+            extraControl = {
+                            'extraParam': extraParam,
+                            'tipo'      : tipo,
+                            'hint'      : fricError.extraParams['hints'][extraParam],
+                            'value'     : extraParams[extraParam]
+                           };
+          }
+          this.extraControls.push(extraControl);
           this.configurationForm.addControl(extraParam, new FormControl('', {validators: [Validators.required]}));
-          this.extraControls.push(extraParam);
-          this.configurationForm.patchValue(extraParamsObj);
+          this.configurationForm.patchValue(extraParams);
         });
+        this.extraParams = true;
       }
+      console.log(this.configurationForm.value);
+      console.log(this.extraControls)
     });
   }
 
-  // setEsquema(newvalue: any) {
-  //   this.esquema = newvalue;
-  // }
 }
 
 

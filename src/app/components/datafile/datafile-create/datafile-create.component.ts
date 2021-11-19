@@ -10,13 +10,13 @@ import { DatafileService } from 'src/app/services/datafiles.service';
   styleUrls: ['./datafile-create.component.css']
 })
 export class DatafileCreateComponent implements OnInit{
-  datafileForm: FormGroup;
-  userIsAuthenticated = false;
-  userId: string;
-  @Input() savefile;
-  @Output() savefileChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() workspaceId;
-  @Input() collections;
+  datafileForm             : FormGroup;
+  userIsAuthenticated      : boolean = false;
+  userId                   : string;
+  @Input() savefile        : boolean;
+  @Output() savefileChange : EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() workspaceId     : string;
+  @Input() collections     : any[];
 
   constructor(public datafileService: DatafileService, public route: ActivatedRoute,
               private formBuilder: FormBuilder, private authService: AuthService) {
@@ -30,10 +30,7 @@ export class DatafileCreateComponent implements OnInit{
 
   ngOnInit(){
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.authService.getUserId();
-    });
+    this.userId = this.authService.getUserId();
   }
 
   createForm() {

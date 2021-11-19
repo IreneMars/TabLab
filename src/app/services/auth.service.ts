@@ -12,11 +12,16 @@ export class AuthService {
   private token: string;
   private tokenTimer: any;
   private userId: string;
-  private authStatusListener = new Subject<boolean>();
-  private auth2: gapi.auth2.GoogleAuth;
   private username: string = "";
+  private auth2: gapi.auth2.GoogleAuth;
+  private authStatusListener = new Subject<boolean>();
+  
   constructor(private http: HttpClient, private router: Router) {}
 
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
+  }
+  
   getToken() {
     return this.token;
   }
@@ -29,10 +34,6 @@ export class AuthService {
     return this.userId;
   }
   
-  getAuthStatusListener() {
-    return this.authStatusListener.asObservable();
-  }
-
   getUserData() {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
@@ -60,11 +61,9 @@ export class AuthService {
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           this.saveAuthData(token, expirationDate, this.userId, this.username);
-          this.router.navigate(['/']);
-              
+          this.router.navigate(['/']);  
         }
       }, error => {
-        console.log(error)
         this.authStatusListener.next(false);
       });
     }
@@ -118,7 +117,9 @@ export class AuthService {
     this.userId = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
+    console.log("logout")
     this.router.navigate(['/']);
+    window.location.reload();
     if (gapi.auth2){
       this.auth2 = gapi.auth2.getAuthInstance();
       this.auth2.signOut().then(() => {

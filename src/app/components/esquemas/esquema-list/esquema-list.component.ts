@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
 import { DatafileService } from '../../../services/datafiles.service';
 import { EsquemaService } from 'src/app/services/esquemas.service';
 import { Esquema } from '../../../models/esquema.model';
@@ -19,13 +18,12 @@ export class EsquemaListComponent implements OnInit {
   @Input() workspaceId : string;
   @Input() esquemas    : Esquema[];
   @Input() infer       : boolean;
-  // Para editar
   savefileChange       : boolean = false;
   esquema              : Esquema = null;
   inferring            : boolean = false;
   esquemaForm          : FormGroup;
   
-  constructor(public datafilesService: DatafileService, public route: ActivatedRoute, public usersService: AuthService,
+  constructor(public datafilesService: DatafileService, public route: ActivatedRoute, 
               private router: Router, private esquemasService: EsquemaService){
                 this.esquemaForm = new FormGroup({
                   'title': new FormControl('', {validators: [Validators.required,Validators.minLength(1), Validators.maxLength(100)]}),

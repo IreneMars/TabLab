@@ -33,11 +33,11 @@
             <div class="dropdown">
                 <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="mt-2" *ngIf="isLoading">
-                        <img *ngIf="!isLoading" src="/backend/assets/default-user-little.png" class="border rounded-circle" style="width: 40px;" alt="">
+                        <img src="/backend/assets/default-user-little.png" class="border rounded-circle" style="width: 40px;" alt="">
                     </div>
-                    <img *ngIf="!isLoading && user" src="{{user.photo}}" class="border rounded-circle" style="width: 40px;" alt="">
+                    <img src="{{user.photo}}" class="border rounded-circle" style="width: 40px;" alt="">
                 </button>
-                <ul *ngIf="!isLoading && user" class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" routerLink="/profile/{{userId}}">Logueado/a como {{user.username}}</a></li>
                     <li><a class="dropdown-item" routerLink="/account/{{userId}}/edit">Configuración de la cuenta</a></li>
                     <li><a class="dropdown-item" routerLinkActive="active" (click)="onLogout()">Cerrar Sesión</a></li>

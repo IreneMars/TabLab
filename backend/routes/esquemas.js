@@ -1,12 +1,12 @@
 const express = require("express");
 const { check } = require('express-validator');
 const router = express.Router();
-const { 
+const {
     esquemaExistsById,
     datafileExistsById
 } = require('../helpers/db-validators');
-const { 
-    validateJWT, 
+const {
+    validateJWT,
     validateFields,
 } = require("../middlewares");
 const {
@@ -17,23 +17,22 @@ const {
 } = require("../controllers/esquemas");
 
 router.get("/:id", [
-    validateJWT, 
+    validateJWT,
     check('id', 'The ID is not a valid Mongo ID').isMongoId(),
-    check('id').custom(esquemaExistsById), 
- ], getEsquema);
+    check('id').custom(esquemaExistsById),
+], getEsquema);
 
 router.post("/", [
-    validateJWT, 
+    validateJWT,
     check('title', 'The title is mandatory').not().isEmpty(),
     check('title', 'The title must have between 1 and 100 characters').isLength({ min: 1, max: 100 }),
-    // // check('contentPath', 'The content path is mandatory').not().isEmpty(),
     check('datafile', 'The ID is not a valid Mongo ID').isMongoId(),
     check('datafile').custom(datafileExistsById),
     validateFields,
 ], createEsquema);
 
 router.put("/:id", [
-    validateJWT, 
+    validateJWT,
     check('id', 'The ID is not a valid Mongo ID').isMongoId(),
     check('id').custom(esquemaExistsById),
     check('datafile', 'The ID is not a valid Mongo ID').isMongoId(),
@@ -42,7 +41,7 @@ router.put("/:id", [
 ], updateEsquema);
 
 router.delete("/:id", [
-    validateJWT, 
+    validateJWT,
     check('id', 'The ID is not a valid Mongo ID').isMongoId(),
     check('id').custom(esquemaExistsById),
     validateFields,

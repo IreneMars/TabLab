@@ -25,9 +25,7 @@ exports.getTestsByWorkspace = async(req, res) => {
     const workspaceId = req.params.workspaceId;
     const current_user_id = req.userData.userId;
     try {
-        console.log(req.params)
         const roles = await Role.find({ workspace: workspaceId, user: current_user_id });
-        console.log(roles)
 
         if (roles.length !== 1) {
             return res.status(403).json({

@@ -32,11 +32,10 @@ export class WorkspaceEditComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.authService.getUserId();
-    });
+    this.userId = this.authService.getUserId();
+
     this.workspaceEditForm.reset({
       title: this.workspace.title,
       description: this.workspace.description,

@@ -42,27 +42,23 @@ export class InvitationListComponent implements OnInit{
 
   ngOnInit(): void {
     this.isLoading = true;
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.workspaceId = params.workspaceId;
+    });
+    // Current User
     this.userId = this.authService.getUserId();
-    
+    this.userIsAuthenticated = this.authService.getIsAuth();
+
     this.invitationsService.getInvitations(this.invitationsPerPage, this.currentPage);
     this.invitationsService.getInvitationUpdateListener()
     .subscribe( (invitationData: {invitations: Invitation[], invitationCount: number, totalInvitations: number}) => {
-      this.isLoading = false;
       this.totalInvitations = invitationData.totalInvitations;
       this.invitations = invitationData.invitations;
       this.dataSource = new MatTableDataSource(this.invitations);
       this.dataSource.sort = this.sort;
+      this.isLoading = false;
     });
-    this.userIsAuthenticated = this.authService.getIsAuth();
     
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.authService.getUserId();
-    });
-
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.workspaceId = params.workspaceId;
-    });
   }
 
   onChangedPage( pageData: PageEvent ) {
@@ -84,7 +80,6 @@ export class InvitationListComponent implements OnInit{
       });
     }
 
-    // this.isLoading = true;
     const values = this.invitationForm.getRawValue();
     this.invitationsService.addInvitation(values.email, this.workspaceId)
     .then(response=>{
@@ -94,16 +89,19 @@ export class InvitationListComponent implements OnInit{
       console.log("Error on onInvite method: "+err);
     });
     this.invitationForm.reset();
-    // this.isLoading = false;
   }
 
   onEditStatus(object, newStatus) {
     this.invitationsService.updateInvitation(object.id, newStatus)
       .then(response=>{
-        // this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-        // this.router.navigate(['/invitations']));
-        window.location.reload();
-
+        this.invitationsService.getInvitations(this.invitationsPerPage, this.currentPage);
+        this.invitationsService.getInvitationUpdateListener()
+        .subscribe( (invitationData: {invitations: Invitation[], invitationCount: number, totalInvitations: number}) => {
+          this.totalInvitations = invitationData.totalInvitations;
+          this.invitations = invitationData.invitations;
+          this.dataSource = new MatTableDataSource(this.invitations);
+          this.dataSource.sort = this.sort;
+        });
       })
       .catch(err=>{
         console.log("Error on onInvite method: "+err);

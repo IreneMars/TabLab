@@ -19,13 +19,14 @@ export class HomeComponent implements OnInit{
   }
   
   ngOnInit(): void {
+    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
     if(this.userIsAuthenticated){
       const data = this.authService.getUserData();
       this.userId = data.userId;
       this.usersService.getUser(this.userId).subscribe(userData => {
         this.user = {
-            id: userData.user.id,
+            id: userData.user._id,
             username: userData.user.username,
             email: userData.user.email,
             password: userData.user.password,
@@ -38,9 +39,7 @@ export class HomeComponent implements OnInit{
           this.authStatusService.sendAuthStatus(true,this.user);//Its principal use is after login()
         });
       }
-      this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-        this.userIsAuthenticated = isAuthenticated;
-      });
+
     }
 
   onLogout() {

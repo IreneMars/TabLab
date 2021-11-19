@@ -46,12 +46,10 @@ export class WorkspaceCreateComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.isLoading = true;
+    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.authService.getUserId();
-    });
-
+    this.userId = this.authService.getUserId();
+    // Global config
     this.globalConfigService.getGlobalConfig().subscribe((configurationData)=>{
       this.globalConfig = {
         id: configurationData.globalConfiguration._id,

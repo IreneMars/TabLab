@@ -29,7 +29,7 @@ const testSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Configuration",
         required: false
-    }], //{ type: mongoose.Schema.Types.ObjectId, ref: "Esquema", required: false},
+    }],
     creationMoment: {
         type: String,
         required: false

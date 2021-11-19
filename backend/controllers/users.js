@@ -143,7 +143,9 @@ exports.deleteAccount = async(req, res) => {
         const { id } = req.params;
         // We don't delete it physically, but we mark its status as false
         const user = await User.findById(id);
-        if (id !== current_user_id || user.role !== 'ADMIN') {
+        const current_user = await User.findById(current_user_id);
+
+        if (id !== current_user_id && current_user.role !== 'ADMIN') {
             return res.status(403).json({
                 message: "You are not authorized to delete this user!"
             });

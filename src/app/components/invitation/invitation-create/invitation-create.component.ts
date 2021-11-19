@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Invitation } from 'src/app/models/invitation.model';
-import { AuthService } from '../../../services/auth.service';
 import { InvitationService } from '../../../services/invitations.service';
 
 @Component({
@@ -18,7 +17,7 @@ export class InvitationCreateComponent implements OnInit{
   @Input()  invitations       : Invitation[];
   @Output() invitationsChange : any = new EventEmitter();
 
-  constructor(public invitationsService: InvitationService, public authService: AuthService, private formBuilder: FormBuilder,
+  constructor(public invitationsService: InvitationService, private formBuilder: FormBuilder,
               private activatedRoute: ActivatedRoute,  private router: Router) {
     this.createForm();
   }
@@ -30,9 +29,6 @@ export class InvitationCreateComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.authService.getAuthStatusListener().subscribe( authStatus => {
-      // this.isLoading = false;
-    });
     this.activatedRoute.paramMap.subscribe(params => {
       this.workspaceId = params.get('workspaceId');
     });
@@ -50,7 +46,6 @@ export class InvitationCreateComponent implements OnInit{
       }
     });
     }
-    // this.isLoading = true;
     const values = this.invitationForm.getRawValue();
     if ( this.create ) {
 
@@ -66,7 +61,6 @@ export class InvitationCreateComponent implements OnInit{
         });
     }
     this.invitationForm.reset();
-    // this.isLoading = false;
   }
 
   onReset() {

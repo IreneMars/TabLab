@@ -37,29 +37,24 @@ export class WorkspaceListComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.workspacesService.getWorkspaces(this.workspacesPerPage, this.currentPage);
+    // Current User
+    this.userIsAuthenticated = this.authService.getIsAuth();
     this.userId = this.authService.getUserId();
     //Workspaces
+    this.workspacesService.getWorkspaces(this.workspacesPerPage, this.currentPage);
     this.workspacesService.getWorkspaceUpdateListener()
     .subscribe( (workspaceData: {workspaces: Workspace[], workspaceCount: number, totalWorkspaces:number}) => {
-      this.isLoading = false;
       this.totalWorkspaces = workspaceData.totalWorkspaces;
       this.workspaces = workspaceData.workspaces;
       this.dataSource = new MatTableDataSource(this.workspaces);
       this.dataSource.sort = this.sort;
-    });
-    //Users by workspace
-    this.workspaces.map(function(workspace) {
-      this.authService.getUsersById(workspace.id).subscribe((usersData: {users: any[]}) => {
-        this.isLoading = false;
-        workspace['users'] = usersData.users;
+      //Users by workspace
+      this.workspaces.map(function(workspace) {
+        this.authService.getUsersById(workspace.id).subscribe((usersData: {users: any[]}) => {
+          workspace['users'] = usersData.users;
+          this.isLoading = false;
+        });
       });
-    });
-    this.userIsAuthenticated = this.authService.getIsAuth();
-    //Auth
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.authService.getUserId();
     });
   }
 

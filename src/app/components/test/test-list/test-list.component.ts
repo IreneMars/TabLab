@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
 import { DatafileService } from '../../../services/datafiles.service';
 import { TestsService } from '../../../services/tests.service';
 import { Test } from '../../../models/test.model';
@@ -26,7 +25,7 @@ export class TestListComponent implements OnInit{
   @Input() esquemas       : any[];
   @Input() configurations : any[];
 
-  constructor(public datafilesService: DatafileService, public route: ActivatedRoute, public usersService: AuthService,
+  constructor(public datafilesService: DatafileService, public route: ActivatedRoute,
               private router: Router, public testsService: TestsService){
   }
 

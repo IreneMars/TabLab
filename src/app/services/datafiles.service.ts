@@ -129,7 +129,7 @@ export class DatafileService {
       'collection': collection, 
       'workspace': null
     };
-
+    console.log(datafileData)
     this.http.put<{message: string, datafile: any}>(BACKEND_URL + datafileId, datafileData).subscribe( response => {
       res = response;
     });

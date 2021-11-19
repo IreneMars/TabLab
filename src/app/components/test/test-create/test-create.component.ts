@@ -21,7 +21,7 @@ export class TestCreateComponent implements OnInit{
   @Output() testSaveChange : EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public testService: TestsService, public route: ActivatedRoute,
-              private formBuilder: FormBuilder, private router: Router, private usersService: AuthService) {
+              private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
                 this.createForm();
                 this.testForm.reset({
                   title: '',
@@ -41,11 +41,8 @@ export class TestCreateComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.userIsAuthenticated = this.usersService.getIsAuth();
-    this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.usersService.getUserId();
-    });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.userId = this.authService.getUserId();
   }
 
   get invalidTitle() {

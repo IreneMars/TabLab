@@ -15,27 +15,6 @@ export class ReportsService {
       'testId':testId
     };
     return this.http.put<{message: any, testUpdates: any, execBuffer: any}>(BACKEND_URL, executionData);
-    // .pipe(map( (testData) => {
-    //   return { 
-    //     testsUpdates: testData.testsUpdates.map(test => {
-    //         return {
-    //           id: test._id,
-    //           title: test.title,
-    //           reportPath: test.reportPath,
-    //           status: test.status,
-    //           esquema: test.esquema,
-    //           configurations: test.configurations,
-    //           creationMoment: test.creationMoment,
-    //           updateMoment:test .updateMoment,
-    //           executionMoment: test.executionMoment,
-    //           totalErrors: test.totalErrors,
-    //           executable: test.executable,
-    //           datafile: test.datafile,
-    //         };
-    //       })  
-    //   };
-    // }));
-
   }
 
 

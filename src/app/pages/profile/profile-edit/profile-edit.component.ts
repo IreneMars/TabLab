@@ -7,6 +7,7 @@ import { mimeType } from "./mime-type.validator";
 import { UploadsService } from "src/app/services/uploads.service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { UsersService } from "src/app/services/users.service";
+import { User } from 'src/app/models/user.model';
 
 @Component({
     selector: 'app-profile-edit',
@@ -14,52 +15,48 @@ import { UsersService } from "src/app/services/users.service";
     styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit{
-  user: any;
-  isLoading: boolean = false;
-  userForm: FormGroup;
-  photoPreview: string;
-  @ViewChild(HeaderComponent) headerComponent: HeaderComponent;
+  user                                        : User;
+  userId                                      : string;
+  isLoading                                   : boolean = false;
+  userForm                                    : FormGroup;
+  photoPreview                                : string;
+  @ViewChild(HeaderComponent) headerComponent : HeaderComponent;
 
 
   constructor(public authService: AuthService, public usersService: UsersService, public route: ActivatedRoute, 
               public workspacesService: WorkspacesService, private uploadsService: UploadsService) {
   }
-    
-  // createUserForm() {
-  //   this.userForm = this.formBuilder.group({
-  //     username : ['', [Validators.required, Validators.minLength(5)]],
-  //     name     : ['', [Validators.required, Validators.minLength(5)]],
-  //     photo    : [null, [Validators.required, mimeType]]
-  //   })
-  // }
+  
   ngOnInit() {
-    this.userForm = new FormGroup({ 
-      'username': new FormControl(null, {validators: [Validators.minLength(4)]}), 
-      'name': new FormControl(null, {validators: [Validators.minLength(4)]}), 
-      'photo': new FormControl(null, {asyncValidators: [mimeType]}) 
-    });
     
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      const userId = paramMap.get('userId');
+      this.userId = paramMap.get('userId');
       this.isLoading = true;
-      this.usersService.getUser(userId).subscribe(userData => {
-      this.user = {
-        id: userData.user.id,
-        username: userData.user.username,
-        email: userData.user.email,
-        password: userData.user.password,
-        photo: userData.user.photo,
-        name: userData.user.name,
-        role: userData.user.role,
-        status: userData.user.status,
-        google: userData.user.google
-      };
-      this.userForm.reset({
-        name: this.user.name,
-        username: this.user.username,
-        photo: this.user.photo
-      });
-      this.isLoading = false;
+      // User
+      this.usersService.getUser(this.userId).subscribe(userData => {
+        this.user = {
+          id: userData.user._id,
+          username: userData.user.username,
+          email: userData.user.email,
+          password: userData.user.password,
+          photo: userData.user.photo,
+          name: userData.user.name,
+          role: userData.user.role,
+          status: userData.user.status,
+          google: userData.user.google
+        };
+        
+        this.userForm = new FormGroup({ 
+          'username': new FormControl(null, {validators: [Validators.minLength(4)]}), 
+          'name': new FormControl(null, {validators: [Validators.minLength(4)]}), 
+          'photo': new FormControl(null, {asyncValidators: [mimeType]}) 
+        });
+        this.userForm.reset({
+          name: this.user.name,
+          username: this.user.username,
+          photo: this.user.photo
+        });
+        this.isLoading = false;
       });
     });
   }
@@ -111,12 +108,27 @@ export class ProfileEditComponent implements OnInit{
     }
     this.isLoading = true;
     const values = this.userForm.getRawValue();
+    console.log(values)
     if (values.photo) {
-      await this.uploadsService.updatePhoto(this.user.userId,values.photo);
+      await this.uploadsService.updatePhoto(this.userId,values.photo);
     }
-    await this.usersService.updateUser(this.user.userId, values.name, values.username, null, this.user.role, null, null, null);
-    //this.router.navigate([`/profile/${this.user.userId}/edit`]);
-    window.location.reload();
+    await this.usersService.updateUser(this.userId, values.name, values.username, null, this.user.role, null, null, null);
+    this.usersService.getUser(this.userId).subscribe(userData => {
+      this.user = {
+        id: userData.user._id,
+        username: userData.user.username,
+        email: userData.user.email,
+        password: userData.user.password,
+        photo: userData.user.photo,
+        name: userData.user.name,
+        role: userData.user.role,
+        status: userData.user.status,
+        google: userData.user.google
+      };
+      this.isLoading = false;
+
+    });
+    //window.location.reload();
     //this.isLoading = false;
   }
 }

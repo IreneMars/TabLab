@@ -51,9 +51,14 @@ export class WorkspaceDetailsComponent implements OnInit {
   
   ngOnInit() {
     this.isLoading = true;
+    // Current User
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.userId = this.authService.getUserId();
+
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       const workId = paramMap.get('workspaceId');
       this.workspaceId = workId;
+      // Workspace
       this.workspacesService.getWorkspace(workId).subscribe(workspaceData => {
         this.workspace = {
           id: workspaceData.workspace._id,
@@ -67,8 +72,6 @@ export class WorkspaceDetailsComponent implements OnInit {
         this.usersService.getUsersByWorkspace(this.workspaceId);
         this.usersService.getUserUpdateListener().subscribe( (userData: {users: User[]}) => {
           this.users = userData.users;
-          this.userIsAuthenticated = this.authService.getIsAuth();
-          this.userId = this.authService.getUserId();
           for (var userIndex in this.users){
             const user = this.users[userIndex]
             if(user.id===this.userId){
@@ -76,9 +79,6 @@ export class WorkspaceDetailsComponent implements OnInit {
               this.currentUserRole = user.roleName;
             }
           }
-          this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-            this.userIsAuthenticated = isAuthenticated;
-          });
           // Collections
           this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
           this.collectionsService.getCollectionUpdateListener().subscribe( (collectionData: {collections: Collection[]}) => {

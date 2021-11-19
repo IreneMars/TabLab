@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Collection } from 'src/app/models/collection.model';
+import { Datafile } from 'src/app/models/datafile.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DatafileService } from 'src/app/services/datafiles.service';
 import { CollectionsService } from '../../../services/collections.service';
@@ -11,19 +12,19 @@ import { CollectionsService } from '../../../services/collections.service';
   templateUrl: './datafile-edit.component.html',
 })
 export class DatafileEditComponent implements OnInit{
-  @Input() edit;
-  @Input() datafile;
-  @Input() datafileId;
-  @Input() workspaceId;
-  @Output() editChange   : EventEmitter<boolean> = new EventEmitter<boolean>();
-  collections            : Collection[];
-
-  datafileEditForm: FormGroup;
-  loading = false;
-  collectionPicked:string=null;
-  userIsAuthenticated = false;
-  userId: string;
-
+  userIsAuthenticated  : boolean = false;
+  userId               : string;
+  loading              : boolean = false;
+  collectionPicked     : string=null;
+  datafileEditForm     : FormGroup;
+  collections          : Collection[];
+  @Input() edit        : boolean = false;
+  @Input() datafile    : Datafile;
+  @Input() datafileId  : string;
+  @Input() workspaceId : string;
+  @Output() editChange : EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() datafileChange : EventEmitter<Datafile> = new EventEmitter<Datafile>();
+  
   constructor(public datafileService: DatafileService, public authService: AuthService,  private router: Router,
               private formBuilder: FormBuilder, public collectionsService: CollectionsService) {
     this.createForm();
@@ -33,27 +34,31 @@ export class DatafileEditComponent implements OnInit{
     this.datafileEditForm = this.formBuilder.group({
       title       : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       description : ['', [Validators.maxLength(200)]],
-      collection  :  ['', ],
+      collection  : ['', ],
     });
   }
 
   ngOnInit(): void {
+    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.authService.getUserId();
-    });
-    this.datafileEditForm.reset({
-      title: this.datafile.title,
-      description: this.datafile.description,
-    });
+    this.userId = this.authService.getUserId();
+
     // Collections
     this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
     this.collectionsService.getCollectionUpdateListener().subscribe( (collectionData: {collections: Collection[]}) => {
       this.collections = collectionData.collections;
+      //DatafileEditForm
+      this.datafileEditForm.reset({
+        title: this.datafile.title,
+        description: this.datafile.description,
+        collection: this.datafile.collection,
+      });
+  
+      this.collectionPicked = this.datafile.collection;
     });
-  }
 
+  }
+  
   get invalidTitle() {
     return this.datafileEditForm.get('title').invalid && this.datafileEditForm.get('title').touched;
   }
@@ -76,13 +81,28 @@ export class DatafileEditComponent implements OnInit{
         }
       });
     }
-
     const values = this.datafileEditForm.getRawValue();
-
+    console.log(this.collectionPicked);
     await this.datafileService.updateDatafile(this.datafileId, values.title, values.description, this.collectionPicked);
-    this.datafileEditForm.reset();
-    this.editChange.emit(false);
-    window.location.reload();
+    this.datafileService.getDatafile(this.datafileId).subscribe((datafileData)=>{
+      this.datafile = {
+        id: datafileData.datafile._id,
+        title: datafileData.datafile.title,
+        description: datafileData.datafile.description,
+        contentPath: datafileData.datafile.contentPath,
+        errLimit: datafileData.datafile.errLimit,
+        collection: datafileData.datafile.collection,
+        workspace: datafileData.datafile.workspace,
+      };
+      this.datafileChange.emit(this.datafile);
+      this.editChange.emit(false);
+      this.datafileEditForm.reset();
+    });
+      // .then(() => {
+      //   this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
+      // }).catch( err => {
+      //   console.log("Error on onSave() method: "+err)
+      // });
 
   }
 

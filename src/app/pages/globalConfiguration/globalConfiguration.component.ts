@@ -51,24 +51,29 @@ export class GlobalConfigurationComponent implements OnInit {
           status: userData.user.status,
           google: userData.user.google
         };
+        // Global Configuration
         this.globalConfigService.getGlobalConfig().subscribe(globalConfigData=>{
           this.globalConfig = {
             "id": globalConfigData.globalConfiguration._id,
             "limitUsers": globalConfigData.globalConfiguration.limitUsers,
             "limitWorkspaces": globalConfigData.globalConfiguration.limitWorkspaces,
           }
+          // Users
           this.usersService.getUsers();
           this.usersService.getUserUpdateListener()
           .subscribe( (userData: {users: User[]}) => {
             this.users = userData.users;
+            // Workspaces
             this.workspacesService.getWorkspaces(null,null);
             this.workspacesService.getWorkspaceUpdateListener()
             .subscribe( (workspaceData: {workspaces: Workspace[]}) => {
                 this.workspaces = workspaceData.workspaces;
+                // Datafiles
                 this.datafilesService.getDatafiles();
                 this.datafilesService.getDatafileUpdateListener()
                 .subscribe( (datafileData: {datafiles: Datafile[]}) => {
                     this.datafiles = datafileData.datafiles;
+                    //Tests
                     this.testsService.getTests();
                     this.testsService.getTestUpdateListener()
                     .subscribe( (testData: {tests: Test[]}) => {
@@ -94,7 +99,12 @@ export class GlobalConfigurationComponent implements OnInit {
       if (this.userId===userId) {
         this.authService.logout();
       }
-      window.location.reload();
+      // Users
+      this.usersService.getUsers();
+      this.usersService.getUserUpdateListener()
+      .subscribe( (userData: {users: User[]}) => {
+        this.users = userData.users;
+      });
 
     }).catch( err => {
       console.log("Error on onDeleteAccount method: "+err);

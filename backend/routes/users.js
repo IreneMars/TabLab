@@ -56,7 +56,6 @@ router.put('/:id', [
 
 router.delete('/:id', [
     validateJWT,
-    // hasRole('ADMIN', 'USER'),
     check('id', 'The ID is not a valid Mongo ID').isMongoId(),
     check('id').custom(userExistsById),
     validateFields

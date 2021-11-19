@@ -18,29 +18,27 @@ export class ConfigurationCreateComponent implements OnInit{
   @Input() configurationForm    : FormGroup;
   @Input() datafileId           : string;
   @Input() workspaceId          : string;
-  @Input() configurationId        : string;
+  @Input() configurationId      : string;
   @Input() savefile             : string;
   @Input() extraControls        : object[] = [];
   @Output() configurationChange : EventEmitter<any> = new EventEmitter<any>();
   @Input() configuration        : Configuration;
   pickedError                   : any;
   fricErrors                    : FricError[];
-  extraParams                   : boolean = false;
+  @Input() extraParams          : boolean;
 
   constructor(public configurationService: ConfigurationService, public fricErrorsService: FricErrorsService, 
               public route: ActivatedRoute, private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
-    //this.fricErrors = environment.errors;
+    // Current User
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.userId = this.authService.getUserId();
+    // Frictionless Errors
     this.fricErrorsService.getFricErrors();
     this.fricErrorsService.getFricErrorUpdateListener().subscribe(responseData=>{
       this.fricErrors = responseData.fricErrors;
-    });
-    this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.authService.getUserId();
     });
   }
 
@@ -52,11 +50,6 @@ export class ConfigurationCreateComponent implements OnInit{
     return this.configurationForm.get('errorCode').invalid && this.configurationForm.get('errorCode').touched;
   }
   
-  //   invalid(paramName: any, value: any){
-  //     if (paramName === 'interval' && value < 0) {
-  //       return true;
-  //     }
-  //   }
   invalidParam(param: any, value: any) {
     return this.configurationForm.get(param).invalid && this.configurationForm.get(param).touched;
   }
@@ -105,11 +98,10 @@ export class ConfigurationCreateComponent implements OnInit{
           this.extraControls.push(extraControl);
         }
       });
-
       this.extraParams = true;
-
+      console.log(this.extraControls)
+      console.log(this.configurationForm.value)
     }
-
   }
 
   onCancel() {
@@ -145,7 +137,6 @@ export class ConfigurationCreateComponent implements OnInit{
       console.log("Error on onSave method: "+err);
     });
 
-    // Resets
     this.configurationForm.reset();
     this.extraControls.forEach(newControl => {
         this.configurationForm.removeControl(newControl[0]);

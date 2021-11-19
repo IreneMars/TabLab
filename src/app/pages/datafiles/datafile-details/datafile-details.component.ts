@@ -51,6 +51,7 @@ export class DatafileDetailsComponent implements OnInit{
   fileName              : string = '';
   extension             : string;
   orphanedDatafiles         : Datafile[];
+  
   constructor(public datafilesService: DatafileService, public workspacesService: WorkspacesService, 
               public uploadsService: UploadsService, public route: ActivatedRoute, 
               public authService: AuthService, public usersService: UsersService, 
@@ -65,10 +66,8 @@ export class DatafileDetailsComponent implements OnInit{
     
   ngOnInit(){
     this.isLoading = true;
+    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-    });
     if (this.userIsAuthenticated){
       this.userId = this.authService.getUserId();
       this.usersService.getUser(this.userId).subscribe(userData=>{

@@ -40,7 +40,7 @@ export class WorkspacesService {
       .subscribe((transformedWorkspaceData) => {
         this.workspaces = transformedWorkspaceData.workspaces;
         this.workspacesUpdated.next({
-          workspaces: [...this.workspaces], // para hacer una verdadera copia y no afectar al original
+          workspaces: [...this.workspaces],
           workspaceCount: transformedWorkspaceData.maxWorkspaces,
           totalWorkspaces: transformedWorkspaceData.totalWorkspaces});
     });

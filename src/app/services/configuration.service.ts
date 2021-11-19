@@ -12,7 +12,6 @@ export class ConfigurationService {
   constructor(private http: HttpClient) {}
   
   getConfiguration(configurationId: string) {
-    // 
     return this.http.get<{message:string, configuration: any}>(BACKEND_URL + configurationId);
   }
   

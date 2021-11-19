@@ -27,15 +27,13 @@ export class EsquemaCreateComponent implements OnInit{
   @Output() esquemaChange  : EventEmitter<any> = new EventEmitter<any>();
   
   constructor(public esquemaService: EsquemaService, public route: ActivatedRoute, private papa: Papa,
-              private usersService: AuthService, private router: Router) {
+              private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
-    this.userIsAuthenticated = this.usersService.getIsAuth();
-    this.usersService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.usersService.getUserId();
-    });
+    // Current User
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.userId = this.authService.getUserId();
   }
 
   get invalidTitle() {
@@ -69,7 +67,6 @@ export class EsquemaCreateComponent implements OnInit{
               chain = chain + data + '\n';
           }
           (document.getElementById('esquemaContent') as HTMLInputElement).value = chain;
-          // this.esquemaForm.updateValueAndValidity();
         }
       });
   }}

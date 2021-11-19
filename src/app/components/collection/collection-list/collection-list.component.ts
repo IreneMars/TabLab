@@ -32,10 +32,7 @@ export class CollectionListComponent implements OnInit{
 
   ngOnInit(){
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.authService.getUserId();
-    });
+    this.userId = this.authService.getUserId();
   }
 
   onAddCollection() {

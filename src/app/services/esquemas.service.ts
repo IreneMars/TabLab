@@ -11,7 +11,6 @@ export class EsquemaService {
   constructor(private http: HttpClient) {}
   
   getEsquema(esquemaId: string) {
-    // 
     return this.http.get<{message:string, esquema: any, content: any}>(BACKEND_URL + esquemaId);
   }
 

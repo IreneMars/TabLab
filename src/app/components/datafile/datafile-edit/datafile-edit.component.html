@@ -23,7 +23,6 @@
     <div class="row ms-0 me-0 mb-1 p-0">
         <div class="col ps-0 pe-0 d-flex justify-content-start">
             <select class="form-select form-select-sm" formControlName="collection" (change)="onCollectionPicked($event)">
-                <option value="" disabled> Colección </option>
                 <option *ngFor="let collection of collections" value="{{collection.id}}">{{collection.title}}</option>
               </select>
         </div>

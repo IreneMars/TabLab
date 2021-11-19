@@ -40,39 +40,35 @@ export class TestExecuteComponent implements OnInit {
       if (paramMap.get('testId')) {
         this.testId = paramMap.get('testId');
         this.selectedTestIDs.add(this.testId);     
+        // Current User
+        this.userIsAuthenticated = this.authService.getIsAuth();
+        if(this.userIsAuthenticated){
+          this.userId = this.authService.getUserId();
+          // Terminal
+          this.terminalsService.getTerminal(this.userId).subscribe((response)=>{
+            this.terminal = {
+              id:response.terminal._id,
+              content:response.terminal.content,
+              user:response.terminal.user,
+            };
+            // Tests
+            this.testsService.getTestsByWorkspace(this.workspaceId);
+            this.testsService.getTestUpdateListener().subscribe( (testData: {tests: any[]}) => {
+              this.tests = testData.tests;
+              this.isLoading = false;
+            });
+          });
+        }
       }
-      // Tests
-      this.testsService.getTestsByWorkspace(this.workspaceId);
-      this.testsService.getTestUpdateListener().subscribe( (testData: {tests: any[]}) => {
-          this.isLoading = false;
-          this.tests = testData.tests;
-      });
-    });
-    this.userIsAuthenticated = this.authService.getIsAuth();
-    if(this.userIsAuthenticated){
-      this.userId = this.authService.getUserId();
-      this.terminalsService.getTerminal(this.userId).subscribe((response)=>{
-        this.terminal = {
-          id:response.terminal._id,
-          content:response.terminal.content,
-          user:response.terminal.user,
-        };
-      });
-    }
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-        this.userIsAuthenticated = isAuthenticated;
     });
   }
 
   onTestPicked(event: Event) {
     const testId: string = (event.target as HTMLInputElement).value;
     const checked: boolean = (event.target as HTMLInputElement).checked;
-    // const index: number = this.selectedTestIDs.indexOf(testId);
     if (checked) {
-    // if (checked && index < 0) {
       this.selectedTestIDs.add(testId);
     } else if (!checked) {
-    //} else if (!checked && index >= 0) {
       this.selectedTestIDs.delete(testId);
     }
   }

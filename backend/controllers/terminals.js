@@ -30,8 +30,6 @@ exports.getTerminal = async(req, res, next) => {
 exports.updateTerminal = async(req, res, next) => {
     current_user_id = req.userData.userId;
     try {
-        console.log(req.params.id)
-        console.log(req.body.content)
         const terminal = await Terminal.findById(req.params.id);
         if (terminal.user != current_user_id) {
             return res.status(403).json({
@@ -39,10 +37,8 @@ exports.updateTerminal = async(req, res, next) => {
             });
         }
         terminal.content = req.body.content;
-        console.log(terminal)
         await Terminal.findByIdAndUpdate(req.params.id, terminal);
         const updatedTerminal = await Terminal.findById(req.params.id);
-        console.log(updatedTerminal)
         return res.status(200).json({
             message: "Update successful!",
             terminal: updatedTerminal

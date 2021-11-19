@@ -33,12 +33,8 @@ export class CollectionCreateComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.authService.getAuthStatusListener().subscribe( authStatus => {
-    // this.isLoading = false;
-    });
     this.activatedRoute.paramMap.subscribe(params => {
-    this.workspaceId = params.get('workspaceId');
-
+      this.workspaceId = params.get('workspaceId');
     });
     if (this.editCollection) {
       this.editMode = true;
@@ -71,8 +67,10 @@ export class CollectionCreateComponent implements OnInit{
     this.router.navigateByUrl('/', {skipLocationChange: true})
       .then(() => {
         this.router.navigate([`/workspace/${this.workspaceId}`]);
-      }).catch( err => {});
-    this.isLoading = false;
+      }).catch( err => {
+        console.log("Error on onSave() method: "+err)
+      });
+      this.isLoading = false;
   }
 
   onCancel() {

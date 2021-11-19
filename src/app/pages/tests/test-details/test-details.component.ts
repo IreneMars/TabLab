@@ -66,10 +66,8 @@ export class TestDetailsComponent implements OnInit {
   
   ngOnInit(){
     this.isLoading = true;
+    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-    });
     if (this.userIsAuthenticated){
       this.userId = this.authService.getUserId();
       this.usersService.getUser(this.userId).subscribe(userData=>{
@@ -215,9 +213,7 @@ export class TestDetailsComponent implements OnInit {
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, wsorksheetContent, worksheetName);
       const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array'});
-      // 
       const data: Blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-      // 
       file = new File([data], this.fileName, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'});
     } else {
       return;
@@ -234,14 +230,6 @@ export class TestDetailsComponent implements OnInit {
     if (esquemaId){
       this.test.esquema =  esquemaId;
       this.test.executable = true;
-      // this.testsService.updateTest(this.test).subscribe( responseData => {
-      //   this.router.navigateByUrl('/', {skipLocationChange: true})
-      //   .then(() => {
-      //     this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}/test/${this.testId}`]);
-      //   }).catch( err => {
-      //     console.log("Error on onEsquemaPicked method: "+err);
-      //   });
-      // });
     }
   }
 
@@ -257,16 +245,12 @@ export class TestDetailsComponent implements OnInit {
       this.selectedConfigurationIDs.push(configurationId);
       this.test.configurations = this.selectedConfigurationIDs;
       this.test.executable = true;
-      // this.testsService.updateTest(this.test).subscribe( responseData => {
-      //   console.log("Added!")
-      // });
+      await this.testsService.updateTest(this.test);
     } else if (!checked && index >= 0) {
       this.selectedConfigurationIDs.splice(index, 1);
       this.test.configurations = this.selectedConfigurationIDs;
       this.test.executable = true;
-      // this.testsService.updateTest(this.test).subscribe( responseData => {
-      //   console.log("Added!")
-      // });
+      this.testsService.updateTest(this.test);
     }
   }
 
@@ -286,7 +270,6 @@ export class TestDetailsComponent implements OnInit {
       XLSX.utils.book_append_sheet(workbook, wsorksheetContent, worksheetName);
       XLSX.writeFile(workbook, this.fileName); // downloads it
       const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array'});
-      // 
       const data: Blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
       const file: File = new File([data], 'out.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'});
     } else if (this.extension === 'csv') {

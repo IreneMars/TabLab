@@ -15,8 +15,6 @@ export const mimeType = ( control: AbstractControl ): Promise<{ [key: string]: a
         for (let i = 0; i < arr.length; i++) {
           header += arr[i].toString(16);
         }
-        // csv: 69642c6e
-
         switch (header) {
           case '89504e47':
             isValid = true;

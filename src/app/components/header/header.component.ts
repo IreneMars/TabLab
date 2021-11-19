@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit{
       if (!this.user) {
         if(authStatus.user){
           this.user = authStatus.user;
+          this.userId = authStatus.user.id;         
           this.userIsAuthenticated = true;
         }
       }
@@ -48,8 +49,7 @@ export class HeaderComponent implements OnInit{
     this.userIsAuthenticated = this.authService.getIsAuth();
     console.log("User is authenticated: "+this.authService.getIsAuth())
     if(this.userIsAuthenticated){
-      const data = this.authService.getUserData();
-      this.userId = data.userId;
+      this.userId = this.authService.getUserId();
       this.usersService.getUser(this.userId).subscribe(userData => {
         this.user = {
           id: userData.user.id,
@@ -76,10 +76,6 @@ export class HeaderComponent implements OnInit{
     }else{
       this.isLoading = false;
     }
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-    });
-
   }
 
   onLogout() {

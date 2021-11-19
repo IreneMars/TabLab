@@ -44,7 +44,7 @@ export class TestsService {
     .subscribe((transformedTestData) => {
       this.tests = transformedTestData.tests;
       this.testsUpdated.next({
-        tests: [...this.tests], // para hacer una verdadera copia y no afectar al original
+        tests: [...this.tests],
       });
   });
   }
@@ -77,7 +77,7 @@ export class TestsService {
     .subscribe((transformedTestData) => {
       this.tests = transformedTestData.tests;
       this.testsUpdated.next({
-        tests: [...this.tests], // para hacer una verdadera copia y no afectar al original
+        tests: [...this.tests],
       });
   });
   }

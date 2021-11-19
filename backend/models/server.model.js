@@ -33,19 +33,6 @@ class Server {
         return this.port;
     }
 
-    // normalizePort(val) {
-    //     var port = parseInt(val, 10);
-    //     if (isNaN(port)) {
-    //         // named pipe
-    //         return val;
-    //     }
-    //     if (port >= 0) {
-    //         // port number
-    //         return port;
-    //     }
-    //     return false;
-    // }
-
     middlewares() {
         // CORS: para evitar errores del tipo crossed domain access
         this.app.use(cors());

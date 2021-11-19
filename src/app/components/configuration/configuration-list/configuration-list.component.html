@@ -11,7 +11,7 @@
               Añadir configuración
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </button>
-            <app-configuration-create [datafileId]="datafileId" [workspaceId]="workspaceId" [configurationId]="configurationId" [configuration]="configuration" [extraControls]="extraControls" [configurationForm]="configurationForm" (configurationChange)="setExtraParams($event)"></app-configuration-create>
+            <app-configuration-create [datafileId]="datafileId" [workspaceId]="workspaceId" [configurationId]="configurationId" [configuration]="configuration" [extraControls]="extraControls" [configurationForm]="configurationForm" [extraParams]="extraParams" (configurationChange)="setExtraParams($event)"></app-configuration-create>
         </div>
     </div>
 </div>

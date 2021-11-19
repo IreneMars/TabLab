@@ -13,11 +13,12 @@ import { GlobalConfigurationService } from '../../../services/globalConfig.servi
 export class GlobalConfigurationEditComponent implements OnInit{
   userIsAuthenticated          : boolean = false;
   userId                       : string;
+  isSaving                     : boolean = false;
+  globalConfigurationEditForm  : FormGroup;
   @Input() globalConfig        : GlobalConfiguration;
   @Input() edit                : boolean;
+  @Output() globalConfigChange : EventEmitter<GlobalConfiguration> = new EventEmitter<GlobalConfiguration>();
   @Output() editChange         : EventEmitter<boolean> = new EventEmitter<boolean>();
-  globalConfigurationEditForm  : FormGroup;
-  isSaving                     : boolean = false;
 
   constructor(public globalConfigurationService: GlobalConfigurationService, public authService: AuthService,  private router: Router,
               private formBuilder: FormBuilder, public collectionsService: CollectionsService) {
@@ -32,11 +33,10 @@ export class GlobalConfigurationEditComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-      this.userId = this.authService.getUserId();
-    });
+    this.userId = this.authService.getUserId();
+    // GlobalConfigurationForm
     this.globalConfigurationEditForm.reset({
       limitUsers: this.globalConfig.limitUsers,
       limitWorkspaces: this.globalConfig.limitWorkspaces,
@@ -62,14 +62,16 @@ export class GlobalConfigurationEditComponent implements OnInit{
         }
       });
     }
-    // globalConfigurationId: string, limitUsers: number, limitWorkspaces: number){
 
     const values = this.globalConfigurationEditForm.getRawValue();
     await this.globalConfigurationService.updateGlobalConfig(this.globalConfig.id, values.limitUsers, values.limitWorkspaces);
-    this.globalConfigurationEditForm.reset();
-    this.isSaving = false;
-    this.editChange.emit(false);
-    window.location.reload();
+    this.globalConfigurationService.getGlobalConfig().subscribe((globalConfigData)=>{
+      
+      this.globalConfigurationEditForm.reset();
+      this.isSaving = false;
+      this.globalConfigChange.emit(globalConfigData.globalConfiguration)
+      this.editChange.emit(false);
+    });
   }
 
   onCancel() {

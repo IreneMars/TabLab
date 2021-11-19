@@ -3,7 +3,7 @@
         <app-collection-list [workspaceId]="workspaceId" [collections]="collections" [orphanedDatafiles]="orphanedDatafiles" [(isLoading)]="isLoading"></app-collection-list>
     </div>
     <div class="col-7" *ngIf="!isLoading">
-        <app-datafile-edit *ngIf="edit" [(edit)]="edit" [datafile]="datafile" [datafileId]="datafileId" [workspaceId]="workspaceId"></app-datafile-edit>
+        <app-datafile-edit *ngIf="edit" [(edit)]="edit" [(datafile)]="datafile" [datafileId]="datafileId" [workspaceId]="workspaceId"></app-datafile-edit>
 
         <div class="container" *ngIf="!isSaving && !isDeleting">
             <div class="row mt-4" *ngIf="!edit">

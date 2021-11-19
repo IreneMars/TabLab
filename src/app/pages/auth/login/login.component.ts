@@ -46,11 +46,10 @@ export class LoginComponent implements OnInit {
     if  (localStorage.getItem('email')) {
       this.loginForm.reset({
         username: localStorage.getItem('username'),
-        // email: localStorage.getItem('email'),
         rememberme: true,
       });
-
     }
+    
     this.url = (window.location.hostname.includes('localhost')) ?
                             'http://localhost:3000/api/users/google' :
                             'https://restserver-curso-fher.herokuapp.com/api/auth/google';
@@ -104,13 +103,6 @@ export class LoginComponent implements OnInit {
       const id_token = this.auth2.currentUser.get().getAuthResponse().id_token;
       const data1 = { id_token };
       this.authService.googleLogin(id_token);
-
-      // const resp = await fetch( this.url, {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify( data1 )
-      // });
-      // const data2 = await resp.json();
       this.isLoading = false;
   } else {
     console.log('Already signed in!');
