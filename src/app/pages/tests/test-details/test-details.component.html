@@ -2,7 +2,7 @@
     <div class="col-2">
     </div>
     <div class="col-7">
-        <div class="container mt-4">
+        <div class="container mt-4 mb-5">
             <form [formGroup]="testForm" class="p-0" (ngSubmit)="onSave()" *ngIf="edit">
                 <div class="row ms-0 me-0 mb-1 p-0">
                     <div class="col ps-0 pe-0 d-flex justify-content-start">
@@ -78,11 +78,31 @@
                 </div>
 
             </div>
-            <div class="row">
+            <div class="row" *ngIf="!hideEditableContent">
                 <div class="form-floating">
                     <form [formGroup]="fileContentForm">
                         <textarea formControlName="fileContent" class="form-control mt-2 pt-1" id="floatingTextarea2" style="height: 400px"></textarea>
                     </form>
+                </div>
+            </div>
+            <div class="row mt-2" *ngIf="hideEditableContent">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-fixed table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="col-1">Row</th>
+                                    <th scope="col" class="col-11">Content</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let line of contentLines; let i=index">
+                                    <th class="col-1">{{i+1}}</th>
+                                    <td class="col-11">{{line}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -94,7 +114,70 @@
                 <div class="col-6 mt-2 d-flex justify-content-end">
                     <div *ngIf="datafile.contentPath">
                         <button class="btn btn-outline-primary btn-sm me-1" routerLink="/workspace/{{workspaceId}}/runner/{{test.id}}">Ejecutar Prueba</button>
-                        <button class="btn btn-outline-primary btn-sm" type="submit" (click)="onSaveContent()">Guardar cambios</button>
+                        <button class="btn btn-outline-primary btn-sm" type="submit" (click)="onSaveContent()" *ngIf="!hideEditableContent">Guardar cambios</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <h1>Sugerencias</h1>
+                </div>
+            </div>
+            <div class="row" *ngIf="suggestionQueryResult">
+                <div class="col">
+                    <label class="form-label">Resultado de la consulta:</label>
+                    <input type="text" class="form-control" value="{{suggestionQueryResult}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-fixed table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="col-1">Código</th>
+                                    <th scope="col" class="col-2">
+                                        <div align="center">Etiqueta</div>
+                                    </th>
+                                    <th scope="col" class="col-2">
+                                        <div align="center">Nombre del campo</div>
+                                    </th>
+                                    <th scope="col" class="col-1">
+                                        <div align="center">Posición del Campo</div>
+                                    </th>
+                                    <th scope="col" class="col-1">
+                                        <div align="center">Fila</div>
+                                    </th>
+                                    <th scope="col" class="col-4">
+                                        <div align="center">Mensaje</div>
+                                    </th>
+                                    <th scope="col" class="col-1">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let suggestion of suggestions">
+                                    <th style="height: 43.8px;" class="col-1">{{suggestion.errorCode}}</th>
+                                    <td style="height: 43.8px;" class="col-2" align="center">{{suggestion.label}}</td>
+                                    <td style="height: 43.8px;" class="col-2" align="center">{{suggestion.fieldName}}</td>
+                                    <td style="height: 43.8px;" class="col-1" align="center">{{suggestion.fieldPosition}}</td>
+                                    <td style="height: 43.8px;" class="col-1" align="center">{{suggestion.rowPosition}}</td>
+                                    <td style="height: 43.8px;" class="col-4" align="center">{{suggestion.errorMessage}}</td>
+                                    <td style="height: 43.8px;" class="col-1">
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-light btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item" *ngIf="suggestion.rowPosition!=null" data-bs-toggle="modal" data-bs-target="#configuratioModal" (click)="onApplyChanges(suggestion.id,'getRow')">Obtener Fila</a></li>
+                                                <li><a class="dropdown-item danger" *ngIf="suggestion.rowPosition!=null" (click)="onApplyChanges(suggestion.id,'deleteRow')">Eliminar Fila</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>

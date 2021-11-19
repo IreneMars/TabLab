@@ -11,7 +11,8 @@ const {
     Activity,
     Terminal,
     FricError,
-    GlobalConfiguration
+    GlobalConfiguration,
+    Suggestion
 } = require("../models");
 
 const path = require("path");
@@ -172,6 +173,16 @@ exports.populate = async(req, res, next) => {
         reports.reports.push({ "message": message, "report": rep });
     } catch (err) {
         reports.errored_models.push({ "Global Configuration": err });
+    }
+
+    // Suggestions
+    try {
+        Suggestion.collection.drop();
+        var suggestionsResult = await Suggestion.insertMany(populate_json_data.suggestions, { ordered: false, rawResult: true });
+        [message, rep] = create_report('suggestion', suggestionsResult, populate_json_data.suggestions);
+        reports.reports.push({ "message": message, "report": rep });
+    } catch (err) {
+        reports.errored_models.push({ "Suggestion": err });
     }
 
     return res.status(200).json({

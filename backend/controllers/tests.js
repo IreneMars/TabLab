@@ -147,6 +147,7 @@ exports.createTest = async(req, res, next) => {
 };
 
 exports.updateTest = async(req, res, next) => {
+    console.log("Update Test");
     current_user_id = req.userData.userId;
     try {
         const test = await Test.findById(req.params.testId);

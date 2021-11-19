@@ -1,4 +1,4 @@
-const { Role, Esquema, Datafile, Configuration, Test } = require("../models");
+const { Role, Esquema, Datafile, Configuration, Test, Suggestion } = require("../models");
 const { execFileSync } = require('child_process');
 const fs = require('fs');
 
@@ -50,6 +50,9 @@ exports.createReport = async(req, res, next) => {
             //'python', ["backend/scripts/validation.py", errorReportPath, esquemaContentPath, datafile.contentPath, configurationsAux], { encoding: 'utf-8' }
         );
         const rawdata = fs.readFileSync(testData[1], options = { encoding: 'utf8' });
+        var rawDataSplit = rawdata.split('\n');
+        rawDataSplit.shift();
+
         const lines = rawdata.split("\n");
         const errors = lines.length - 1;
         test.reportPath = errorReportPath
@@ -57,13 +60,15 @@ exports.createReport = async(req, res, next) => {
         test.executionMoment = Date.now();
         test.totalErrors = errors;
         test.executable = false;
-
+        //await Suggestion.deleteMany({ datafile: test.datafile });
         return res.status(200).json({
             message: "Creation of error report and update of a test successful! ",
             testUpdates: test,
-            execBuffer: execBuffer
+            execBuffer: execBuffer,
+            rawData: rawDataSplit
         });
     } catch (err) {
+        console.log(err)
         return res.status(500).json({
             message: "Creating an error report and updating a test failed!"
         });

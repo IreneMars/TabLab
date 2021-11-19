@@ -12,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule} from '@angular/material/sort';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({

@@ -1,14 +1,3 @@
-.btn-outline-light {
-    color: rgb(156, 156, 156) !important;
-    border-color: #ced4da;
-}
-
-.btn-outline-light:hover {
-    color: white !important;
-    background-color: #ced4da !important;
-    border-color: #ced4da;
-}
-
 .danger {
     color: #dc3845;
 }
@@ -29,4 +18,29 @@
 .border-content {
     border-radius: 0 0 4px 4px;
     border: 1px solid #ced4da;
+}
+
+.complete-height {
+    height: 100%;
+}
+
+.btn-outline-light {
+    color: rgb(156, 156, 156) !important;
+    border-color: #ced4da;
+}
+
+.btn-outline-light:hover {
+    color: white !important;
+    background-color: #ced4da !important;
+    border-color: #ced4da;
+}
+
+.table-fixed tbody {
+    height: 200px;
+    overflow: scroll;
+}
+
+th {
+    position: sticky;
+    top: 0;
 }

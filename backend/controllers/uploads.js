@@ -54,7 +54,7 @@ exports.updateFile = async(req, res) => {
                         msg: `There is no datafile with id ${ id }`
                     });
                 }
-                roles = await Role.find({ workspace: model.workspace, user: current_user_id });
+                const roles = await Role.find({ workspace: model.workspace, user: current_user_id });
                 if (roles.length !== 1) {
                     return res.status(403).json({
                         message: "The current user is not authorized to perform any actions on this workspace!"

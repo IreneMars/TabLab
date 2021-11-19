@@ -5,7 +5,7 @@
   "tasks": [
     {
       "resource": {
-        "path": "backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv",
+        "path": "backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv",
         "dialect": {
           "delimiter": "|"
         },
@@ -787,7 +787,7 @@
             ""
           ]
         },
-        "name": "fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260",
+        "name": "fulls_dmf_full_v1_20200504_short_10_werrs",
         "profile": "tabular-data-resource",
         "scheme": "file",
         "format": "csv",

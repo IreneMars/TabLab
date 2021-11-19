@@ -1,7 +1,7 @@
 {
   "fields": [
     {
-      "name": "INTERNET",
+      "name": "MATCH_INTERNET",
       "type": "boolean",
       "constraints": {
         "required": true

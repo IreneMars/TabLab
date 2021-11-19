@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,6 +14,8 @@ import { Esquema } from '../../../models/esquema.model';
 import { UsersService } from '../../../services/users.service';
 import { Workspace } from 'src/app/models/workspace.model';
 import { WorkspacesService } from 'src/app/services/workspaces.service';
+import { SuggestionsService } from '../../../services/suggestions.service';
+import { Suggestion } from '../../../models/suggestion.model';
 
 @Component({
   selector: 'app-test-details',
@@ -46,10 +48,16 @@ export class TestDetailsComponent implements OnInit {
   
   fileContentForm          : FormGroup;
   testForm                 : FormGroup;
+  hideEditableContent      : boolean = true;
+  contentLines             : string[];
+  suggestions              : Suggestion[];
+  suggestionQueryResult    : any = null;
 
   constructor(public testsService: TestsService, public datafilesService: DatafileService, public uploadsService: UploadsService, 
               public route: ActivatedRoute, public workspacesService: WorkspacesService,
-              public authService: AuthService, public usersService: UsersService, private router: Router){
+              public authService: AuthService, public usersService: UsersService, public suggestionsService: SuggestionsService,
+              private router: Router){
+
                 this.testForm = new FormGroup({
                   'title': new FormControl(null, {validators: [Validators.required]}),
                   'delimiter': new FormControl(null)
@@ -86,6 +94,7 @@ export class TestDetailsComponent implements OnInit {
           this.datafileId = paramMap.get('datafileId');
           this.workspaceId = paramMap.get('workspaceId');
           this.testId = paramMap.get('testId');
+          // Workspace
           this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData => {
             this.workspace = {
               id: workspaceData.workspace.id,
@@ -95,6 +104,7 @@ export class TestDetailsComponent implements OnInit {
               mandatory: workspaceData.workspace.mandatory,
               owner:workspaceData.workspace.owner
             };
+            // Test, Esquema seleccionado y configuraciones seleccionadas
             this.testsService.getTest(this.testId).subscribe( testData => {
               this.test = {
                 id: testData.test._id,
@@ -120,9 +130,12 @@ export class TestDetailsComponent implements OnInit {
                 datafile: testData.esquema.datafile,
               }
               this.selectedConfigurationIDs = testData.configurationIDs;
+              // Datafile, esquemas y configuraciones
               this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
+                this.contentLines = datafileData.content.split("\n");
                 this.fileContentForm.patchValue({fileContent: datafileData.content});
-        
+                this.fileContentForm.get('fileContent').enable();
+
                 this.datafile = {
                   id: datafileData.datafile.id,
                   title: datafileData.datafile.title,
@@ -151,8 +164,14 @@ export class TestDetailsComponent implements OnInit {
                   const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');      
                   this.formattedConfigs.push({...config, extraParamsStr});
                 });
-                this.isLoading = false;
-                this.edit = false;
+
+                // Suggestions
+                this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
+                this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
+                  this.suggestions = suggestionData.suggestions;
+                  this.isLoading = false;
+                  this.edit = false;
+                });
               });
             });
           });
@@ -199,29 +218,13 @@ export class TestDetailsComponent implements OnInit {
   }
 
   async onSaveContent() {
-    let file: any;
-    const content = this.fileContentForm.value.fileContent;
-    if (this.extension === 'csv') {
-      const blob = new Blob([content], {type: 'text/csv' });
-      file = new File([blob], this.fileName, {type: 'text/csv'});
-    } else if (this.extension === 'xlsx') {
-      const rows = content.split('\n').map(row => {
-        return row.split(',');
-      });
-      const worksheetName = this.fileName;
-      const wsorksheetContent = XLSX.utils.aoa_to_sheet(rows);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, wsorksheetContent, worksheetName);
-      const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array'});
-      const data: Blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-      file = new File([data], this.fileName, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'});
-    } else {
-      return;
-    }
     this.isLoading = true;
-    //await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateContent', file);
-    await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, null);
-    this.fileContentForm.get('fileContent').disable();
+    const content = this.fileContentForm.value.fileContent;
+    const file = this.generateFile(content);
+    if(file){
+      await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", file);
+    }
+    this.hideEditableContent = true;
     this.isLoading = false;
   }
 
@@ -255,10 +258,10 @@ export class TestDetailsComponent implements OnInit {
   }
 
   onEditContent() {
-    if (this.fileContentForm.get('fileContent').disabled) {
-      this.fileContentForm.get('fileContent').enable();
+    if (this.hideEditableContent) {
+      this.hideEditableContent = false;
     } else {
-      this.fileContentForm.get('fileContent').disable();
+      this.hideEditableContent = true;
     }
   }
 
@@ -285,6 +288,48 @@ export class TestDetailsComponent implements OnInit {
     this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
   }
 
+  // onApplyChanges(suggestion.id,'deleteRow')
+  async onApplyChanges(suggestionId:string, operation:string){
+    this.suggestionQueryResult = null;
+    const result = await this.suggestionsService.applySuggestion(suggestionId, operation,this.test.delimiter, this.contentLines);
+    this.suggestionQueryResult = result.data.rowContent;
+    console.log(result)
+    if(operation==="deleteRow"){
+      const newFile = this.generateFile(result.data.content)
+      await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", newFile);
+      await this.suggestionsService.deleteSuggestion(suggestionId);
+      // Datafile, esquemas y configuraciones
+      this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
+        this.contentLines = datafileData.content.split("\n");
+        this.fileContentForm.patchValue({fileContent: datafileData.content});
+        // Suggestions
+        this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
+        this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
+          this.suggestions = suggestionData.suggestions;
+        });
+      });
+    }
+  }
+
+  private generateFile(content:any){
+    if (this.extension === 'csv') {
+      const blob = new Blob([content], {type: 'text/csv' });
+      return new File([blob], this.fileName, {type: 'text/csv'});
+    } else if (this.extension === 'xlsx') {
+      const rows = content.split('\n').map(row => {
+        return row.split(',');
+      });
+      const worksheetName = this.fileName;
+      const wsorksheetContent = XLSX.utils.aoa_to_sheet(rows);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, wsorksheetContent, worksheetName);
+      const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array'});
+      const data: Blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+      return new File([data], this.fileName, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'});
+    } else {
+      return null;
+    }
+  }
 
 }
 

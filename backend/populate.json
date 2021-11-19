@@ -49,7 +49,7 @@
     ],
 
     "datafiles": [
-        { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": "backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": "backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
         { "_id": "60b634e98ab1a18d8850e49f", "title": "Datafile 2", "description": "Este es el datafile 2.", "contentPath": null, "errLimit": null, "coleccion": null, "workspace": "60aeaf40d0e8477348250ac9" },
         { "_id": "619389a81a2dffb23b953917", "title": "Datafile 3", "description": "Este es el datafile 3.", "contentPath": null, "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
         { "_id": "6193a80edcc6d2ea6bd3e1b8", "title": "Datafile 4", "description": "Este es el datafile 4.", "contentPath": null, "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c3", "workspace": "60aeaf40d0e8477348250ac9" }
@@ -246,8 +246,7 @@
         { "_id": "6196ce879998304c84f80f24", "errorCode": "table-error", "extraParams": null },
         { "_id": "6196ce8a115f741227fcfa61", "errorCode": "header-error", "extraParams": null },
         { "_id": "6196ce8ea3fdcd2d91b8a686", "errorCode": "label-error", "extraParams": null }
-    ]
-
-
+    ],
+    "suggestions": []
 
 }

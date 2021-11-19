@@ -12,7 +12,7 @@ const User = require('./user');
 const Workspace = require('./workspace');
 const Terminal = require('./terminal');
 const GlobalConfiguration = require('./globalConfiguration');
-
+const Suggestion = require('./suggestion');
 module.exports = {
     Collection,
     Configuration,
@@ -28,4 +28,5 @@ module.exports = {
     Activity,
     Terminal,
     GlobalConfiguration,
+    Suggestion
 }

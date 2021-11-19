@@ -3363,3 +3363,1015 @@
 2021-11-18 23:37:47,648 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
 2021-11-18 23:37:47,648 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
 2021-11-18 23:37:47,648 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 12:54:09,964 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 12:54:09,964 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:54:09,964 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 12:54:09,965 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 12:54:09,965 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 12:54:09,965 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:54:09,965 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 12:54:09,965 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 12:54:10,277 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 12:54:10,278 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 12:54:10,278 [MainThread  ] [INFO ]    Validation time: 0.096 seconds
+2021-11-19 12:54:10,279 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 12:54:10,279 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 12:54:10,279 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 12:54:10,279 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 12:54:10,279 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 12:54:39,805 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 12:54:39,806 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:54:39,806 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 12:54:39,806 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 12:54:39,806 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 12:54:39,806 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:54:39,806 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 12:54:39,806 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 12:54:40,129 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 12:54:40,131 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 12:54:40,131 [MainThread  ] [INFO ]    Validation time: 0.091 seconds
+2021-11-19 12:54:40,132 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 12:54:40,132 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 12:54:40,132 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 12:54:40,132 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 12:54:40,132 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 12:56:38,730 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 12:56:38,730 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:56:38,730 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 12:56:38,730 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 12:56:38,730 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 12:56:38,730 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:56:38,730 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 12:56:38,730 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 12:56:38,989 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 12:56:38,991 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 12:56:38,991 [MainThread  ] [INFO ]    Validation time: 0.082 seconds
+2021-11-19 12:56:38,991 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 12:56:38,991 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 12:56:38,991 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 12:56:38,991 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 12:56:38,992 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 12:57:07,749 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 12:57:07,749 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:57:07,749 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 12:57:07,749 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 12:57:07,749 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 12:57:07,749 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:57:07,749 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 12:57:07,749 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 12:57:08,019 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 12:57:08,020 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 12:57:08,020 [MainThread  ] [INFO ]    Validation time: 0.09 seconds
+2021-11-19 12:57:08,021 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 12:57:08,021 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 12:57:08,021 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 12:57:08,021 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 12:57:08,021 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 12:57:56,069 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 12:57:56,069 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:57:56,069 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 12:57:56,069 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 12:57:56,069 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 12:57:56,069 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:57:56,069 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 12:57:56,069 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 12:57:56,329 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 12:57:56,331 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 12:57:56,331 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 12:57:56,331 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 12:57:56,331 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 12:57:56,331 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 12:57:56,331 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 12:57:56,332 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 12:59:08,660 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 12:59:08,660 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:59:08,661 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 12:59:08,661 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 12:59:08,661 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 12:59:08,661 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 12:59:08,661 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 12:59:08,661 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 12:59:08,914 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 12:59:08,916 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 12:59:08,916 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 12:59:08,916 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 12:59:08,916 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 12:59:08,916 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 12:59:08,916 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 12:59:08,916 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:01:18,715 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:01:18,715 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:01:18,715 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:01:18,715 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:01:18,715 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:01:18,715 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:01:18,715 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:01:18,715 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:01:18,973 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:01:18,975 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:01:18,975 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 13:01:18,975 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:01:18,975 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:01:18,975 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:01:18,975 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:01:18,976 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:01:52,905 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:01:52,905 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:01:52,905 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:01:52,905 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:01:52,905 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:01:52,905 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:01:52,905 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:01:52,905 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:01:53,166 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:01:53,168 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:01:53,168 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 13:01:53,168 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:01:53,168 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:01:53,168 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:01:53,168 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:01:53,168 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:02:32,371 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:02:32,371 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:02:32,371 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:02:32,371 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:02:32,371 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:02:32,371 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:02:32,371 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:02:32,371 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:02:32,626 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:02:32,628 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:02:32,628 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 13:02:32,628 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:02:32,628 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:02:32,628 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:02:32,628 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:02:32,629 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:10:24,192 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:10:24,192 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:10:24,193 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:10:24,193 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:10:24,193 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:10:24,193 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:10:24,193 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:10:24,193 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:10:24,457 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:10:24,459 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:10:24,459 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 13:10:24,459 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:10:24,459 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:10:24,459 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:10:24,459 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:10:24,459 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:12:51,022 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:12:51,023 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:12:51,023 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:12:51,023 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:12:51,023 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:12:51,023 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:12:51,023 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:12:51,023 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:12:51,283 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:12:51,285 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:12:51,285 [MainThread  ] [INFO ]    Validation time: 0.083 seconds
+2021-11-19 13:12:51,285 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:12:51,285 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:12:51,285 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:12:51,285 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:12:51,285 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:13:20,396 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:13:20,396 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:13:20,396 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:13:20,396 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:13:20,396 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:13:20,396 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:13:20,396 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:13:20,397 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:13:20,651 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:13:20,653 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:13:20,653 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 13:13:20,653 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:13:20,653 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:13:20,653 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:13:20,653 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:13:20,654 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:13:36,670 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:13:36,670 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:13:36,670 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:13:36,670 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:13:36,670 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:13:36,670 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:13:36,670 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:13:36,670 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:13:36,925 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:13:36,927 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:13:36,927 [MainThread  ] [INFO ]    Validation time: 0.082 seconds
+2021-11-19 13:13:36,927 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:13:36,927 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:13:36,927 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:13:36,927 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:13:36,927 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:13:56,124 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:13:56,124 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:13:56,124 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:13:56,124 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:13:56,124 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:13:56,124 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:13:56,124 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:13:56,124 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:13:56,382 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:13:56,384 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:13:56,384 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 13:13:56,384 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:13:56,384 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:13:56,384 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:13:56,384 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:13:56,384 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:14:13,135 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:14:13,135 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:14:13,135 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:14:13,135 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:14:13,135 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:14:13,135 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:14:13,135 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:14:13,136 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:14:13,393 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:14:13,395 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:14:13,395 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 13:14:13,395 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:14:13,395 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:14:13,395 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:14:13,395 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:14:13,395 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:15:37,704 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:15:37,704 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:15:37,704 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:15:37,704 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:15:37,704 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:15:37,704 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:15:37,704 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:15:37,704 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:15:37,970 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:15:37,972 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:15:37,972 [MainThread  ] [INFO ]    Validation time: 0.086 seconds
+2021-11-19 13:15:37,972 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:15:37,972 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:15:37,972 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:15:37,972 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:15:37,972 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:16:35,814 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:16:35,814 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:16:35,814 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:16:35,815 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:16:35,815 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:16:35,815 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:16:35,815 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:16:35,815 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:16:36,087 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:16:36,088 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:16:36,089 [MainThread  ] [INFO ]    Validation time: 0.084 seconds
+2021-11-19 13:16:36,089 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:16:36,089 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:16:36,089 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:16:36,089 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:16:36,089 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:17:03,509 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:17:03,509 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:17:03,509 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:17:03,509 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:17:03,509 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:17:03,509 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:17:03,509 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:17:03,509 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:17:03,830 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:17:03,832 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:17:03,832 [MainThread  ] [INFO ]    Validation time: 0.085 seconds
+2021-11-19 13:17:03,832 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:17:03,832 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:17:03,832 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:17:03,832 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:17:03,832 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:18:41,541 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:18:41,541 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:18:41,541 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:18:41,541 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:18:41,541 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:18:41,541 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:18:41,541 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:18:41,541 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:18:41,803 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:18:41,805 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:18:41,805 [MainThread  ] [INFO ]    Validation time: 0.087 seconds
+2021-11-19 13:18:41,805 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:18:41,805 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:18:41,805 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:18:41,805 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:18:41,806 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:20:22,041 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:20:22,041 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:20:22,041 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:20:22,042 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:20:22,042 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:20:22,042 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:20:22,042 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:20:22,042 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:20:22,296 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:20:22,298 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:20:22,298 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 13:20:22,298 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:20:22,298 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:20:22,298 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:20:22,298 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:20:22,299 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:20:51,510 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:20:51,510 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:20:51,510 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:20:51,510 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:20:51,510 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:20:51,510 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:20:51,510 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:20:51,510 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:20:51,765 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:20:51,767 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:20:51,767 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 13:20:51,767 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:20:51,767 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:20:51,767 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:20:51,767 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:20:51,767 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:21:37,620 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:21:37,620 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:21:37,620 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:21:37,620 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:21:37,620 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:21:37,620 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:21:37,620 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:21:37,620 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:21:37,877 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:21:37,878 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:21:37,878 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 13:21:37,878 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:21:37,878 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:21:37,879 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:21:37,879 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:21:37,879 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:22:32,316 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:22:32,316 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:22:32,316 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:22:32,316 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:22:32,316 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:22:32,316 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:22:32,317 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:22:32,317 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:22:32,575 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:22:32,577 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:22:32,577 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 13:22:32,577 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:22:32,577 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:22:32,577 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:22:32,577 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:22:32,577 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:22:47,874 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:22:47,874 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:22:47,874 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:22:47,874 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:22:47,874 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:22:47,874 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:22:47,874 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:22:47,874 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:22:48,132 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:22:48,134 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:22:48,134 [MainThread  ] [INFO ]    Validation time: 0.082 seconds
+2021-11-19 13:22:48,134 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:22:48,134 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:22:48,134 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:22:48,134 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:22:48,135 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:24:00,324 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:24:00,324 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:24:00,324 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:24:00,324 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:24:00,324 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:24:00,325 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:24:00,325 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:24:00,325 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:24:00,593 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:24:00,595 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:24:00,595 [MainThread  ] [INFO ]    Validation time: 0.084 seconds
+2021-11-19 13:24:00,595 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:24:00,595 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:24:00,595 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:24:00,595 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:24:00,595 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:24:13,199 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:24:13,199 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:24:13,199 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:24:13,199 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:24:13,199 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:24:13,199 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:24:13,199 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:24:13,199 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:24:13,461 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:24:13,463 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:24:13,463 [MainThread  ] [INFO ]    Validation time: 0.085 seconds
+2021-11-19 13:24:13,463 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:24:13,463 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:24:13,463 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:24:13,463 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:24:13,463 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:24:45,489 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:24:45,489 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:24:45,489 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:24:45,489 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:24:45,489 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:24:45,489 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:24:45,490 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:24:45,490 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:24:45,746 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:24:45,748 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:24:45,748 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 13:24:45,748 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:24:45,748 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:24:45,748 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:24:45,748 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:24:45,748 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:24:49,051 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:24:49,051 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:24:49,051 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:24:49,051 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:24:49,051 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:24:49,051 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:24:49,051 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:24:49,051 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:24:49,305 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:24:49,307 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:24:49,307 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 13:24:49,307 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:24:49,307 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:24:49,307 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:24:49,307 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:24:49,307 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:25:45,747 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:25:45,747 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:25:45,747 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:25:45,747 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:25:45,747 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:25:45,747 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:25:45,747 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:25:45,748 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:25:46,008 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:25:46,010 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:25:46,010 [MainThread  ] [INFO ]    Validation time: 0.083 seconds
+2021-11-19 13:25:46,010 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:25:46,010 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:25:46,010 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:25:46,010 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:25:46,010 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:25:49,227 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:25:49,227 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:25:49,227 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:25:49,227 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:25:49,227 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:25:49,228 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:25:49,228 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:25:49,228 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:25:49,483 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:25:49,485 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:25:49,485 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 13:25:49,485 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:25:49,485 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:25:49,485 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:25:49,485 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:25:49,485 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:26:47,933 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:26:47,933 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:26:47,933 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:26:47,933 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:26:47,933 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:26:47,933 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:26:47,933 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:26:47,933 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:26:48,193 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:26:48,195 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:26:48,195 [MainThread  ] [INFO ]    Validation time: 0.082 seconds
+2021-11-19 13:26:48,195 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:26:48,195 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:26:48,195 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:26:48,195 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:26:48,195 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 13:26:51,425 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 13:26:51,425 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:26:51,425 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 13:26:51,425 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 13:26:51,425 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 13:26:51,425 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 13:26:51,425 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 13:26:51,426 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 13:26:51,678 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 13:26:51,680 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 13:26:51,680 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 13:26:51,680 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 13:26:51,680 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 13:26:51,680 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 13:26:51,680 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 13:26:51,681 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:10:42,521 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:10:42,521 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:10:42,521 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:10:42,521 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:10:42,521 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:10:42,521 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:10:42,521 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:10:42,521 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:10:42,798 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:10:42,799 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:10:42,799 [MainThread  ] [INFO ]    Validation time: 0.083 seconds
+2021-11-19 14:10:42,800 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:10:42,800 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:10:42,800 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:10:42,800 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:10:42,800 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:11:27,320 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:11:27,320 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:11:27,320 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:11:27,320 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:11:27,320 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:11:27,320 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:11:27,320 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:11:27,320 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:11:27,577 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:11:27,579 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:11:27,579 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 14:11:27,579 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:11:27,579 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:11:27,579 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:11:27,579 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:11:27,580 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:12:35,839 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:12:35,839 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:12:35,839 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:12:35,839 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:12:35,839 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:12:35,839 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:12:35,839 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:12:35,839 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:12:36,099 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:12:36,100 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:12:36,100 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 14:12:36,100 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:12:36,100 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:12:36,100 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:12:36,100 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:12:36,100 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:13:22,342 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:13:22,342 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:13:22,342 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:13:22,342 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:13:22,342 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:13:22,342 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:13:22,342 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:13:22,342 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:13:22,604 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:13:22,606 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:13:22,606 [MainThread  ] [INFO ]    Validation time: 0.082 seconds
+2021-11-19 14:13:22,606 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:13:22,606 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:13:22,606 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:13:22,606 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:13:22,606 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:14:18,787 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:14:18,787 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:14:18,787 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:14:18,787 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:14:18,787 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:14:18,787 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:14:18,787 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:14:18,787 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:14:19,043 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:14:19,044 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:14:19,044 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 14:14:19,045 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:14:19,045 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:14:19,045 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:14:19,045 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:14:19,045 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:14:34,933 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:14:34,933 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:14:34,933 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:14:34,933 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:14:34,933 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:14:34,933 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:14:34,933 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:14:34,933 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:14:35,188 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:14:35,190 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:14:35,190 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 14:14:35,190 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:14:35,190 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:14:35,190 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:14:35,190 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:14:35,190 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:15:34,754 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:15:34,754 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:15:34,754 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:15:34,754 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:15:34,754 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:15:34,755 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:15:34,755 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:15:34,755 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:15:35,010 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:15:35,011 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:15:35,011 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 14:15:35,011 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:15:35,011 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:15:35,011 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:15:35,012 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:15:35,012 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:16:42,419 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:16:42,419 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:16:42,419 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:16:42,419 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:16:42,419 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:16:42,419 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:16:42,419 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:16:42,419 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:16:42,687 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:16:42,688 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:16:42,689 [MainThread  ] [INFO ]    Validation time: 0.089 seconds
+2021-11-19 14:16:42,689 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:16:42,689 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:16:42,689 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:16:42,689 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:16:42,689 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:17:19,371 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:17:19,371 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:17:19,371 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:17:19,371 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:17:19,371 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:17:19,371 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:17:19,371 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:17:19,371 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:17:19,628 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:17:19,630 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:17:19,630 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 14:17:19,630 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:17:19,630 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:17:19,630 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:17:19,630 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:17:19,631 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:18:10,395 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:18:10,395 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:18:10,395 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:18:10,395 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:18:10,395 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:18:10,395 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:18:10,395 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:18:10,395 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:18:10,653 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:18:10,655 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:18:10,655 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 14:18:10,655 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:18:10,655 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:18:10,655 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:18:10,655 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:18:10,655 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:18:57,182 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:18:57,182 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:18:57,182 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:18:57,182 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:18:57,182 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:18:57,182 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:18:57,182 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:18:57,182 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:18:57,451 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:18:57,453 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:18:57,453 [MainThread  ] [INFO ]    Validation time: 0.089 seconds
+2021-11-19 14:18:57,453 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:18:57,453 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:18:57,453 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:18:57,453 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:18:57,454 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:20:25,422 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:20:25,422 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:20:25,422 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:20:25,422 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:20:25,422 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:20:25,422 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:20:25,422 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:20:25,422 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:20:25,684 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:20:25,686 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:20:25,687 [MainThread  ] [INFO ]    Validation time: 0.085 seconds
+2021-11-19 14:20:25,687 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:20:25,687 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:20:25,687 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:20:25,687 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:20:25,687 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:21:23,803 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:21:23,803 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:21:23,804 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:21:23,804 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:21:23,804 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:21:23,804 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:21:23,804 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:21:23,804 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:21:24,061 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:21:24,062 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:21:24,063 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 14:21:24,063 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:21:24,063 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:21:24,063 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:21:24,063 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:21:24,063 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 14:24:43,896 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 14:24:43,896 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:24:43,896 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 14:24:43,896 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 14:24:43,896 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 14:24:43,896 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 14:24:43,896 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 14:24:43,896 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 14:24:44,160 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 14:24:44,162 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 14:24:44,162 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 14:24:44,162 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 14:24:44,162 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 14:24:44,162 [MainThread  ] [INFO ]  	   - incorrect-label. Found: 1
+2021-11-19 14:24:44,162 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 14:24:44,163 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:23:12,350 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:23:12,351 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:23:12,351 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:23:12,351 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:23:12,351 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:23:12,351 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:23:12,351 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:23:12,351 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:23:12,628 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:23:12,629 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:23:12,630 [MainThread  ] [INFO ]    Validation time: 0.095 seconds
+2021-11-19 15:23:12,630 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:23:12,630 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:23:12,630 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:23:12,630 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:23:18,672 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:23:18,672 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:23:18,672 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:23:18,672 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:23:18,672 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:23:18,672 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:23:18,672 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:23:18,673 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:23:18,927 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:23:18,929 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:23:18,929 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 15:23:18,929 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:23:18,929 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:23:18,929 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:23:18,930 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:23:43,434 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:23:43,435 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:23:43,435 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:23:43,435 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:23:43,435 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:23:43,435 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:23:43,435 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:23:43,435 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:23:43,692 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:23:43,694 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:23:43,694 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 15:23:43,694 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:23:43,694 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:23:43,694 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:23:43,694 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:23:46,952 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:23:46,952 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:23:46,952 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:23:46,952 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:23:46,952 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:23:46,952 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:23:46,952 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:23:46,952 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:23:47,208 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:23:47,210 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:23:47,210 [MainThread  ] [INFO ]    Validation time: 0.082 seconds
+2021-11-19 15:23:47,210 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:23:47,210 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:23:47,210 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:23:47,210 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:24:55,162 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:24:55,162 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:24:55,162 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:24:55,162 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:24:55,162 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:24:55,162 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:24:55,163 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:24:55,163 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:24:55,420 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:24:55,422 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:24:55,422 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 15:24:55,422 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:24:55,422 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:24:55,422 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:24:55,422 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:24:58,788 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:24:58,788 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:24:58,788 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:24:58,788 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:24:58,788 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:24:58,788 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:24:58,788 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:24:58,788 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:24:59,060 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:24:59,061 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:24:59,061 [MainThread  ] [INFO ]    Validation time: 0.086 seconds
+2021-11-19 15:24:59,061 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:24:59,061 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:24:59,062 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:24:59,062 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:26:13,410 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:26:13,410 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:26:13,410 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:26:13,410 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:26:13,410 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:26:13,410 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:26:13,411 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:26:13,411 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:26:13,761 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:26:13,763 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:26:13,763 [MainThread  ] [INFO ]    Validation time: 0.102 seconds
+2021-11-19 15:26:13,763 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:26:13,763 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:26:13,763 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:26:13,763 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:26:17,109 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:26:17,109 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:26:17,109 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:26:17,109 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:26:17,109 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:26:17,109 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:26:17,109 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:26:17,109 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:26:17,366 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:26:17,367 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:26:17,367 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 15:26:17,367 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:26:17,367 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:26:17,367 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:26:17,368 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:29:54,697 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:29:54,697 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:29:54,697 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:29:54,697 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:29:54,697 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:29:54,697 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:29:54,697 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:29:54,697 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:29:54,953 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:29:54,954 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:29:54,954 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 15:29:54,954 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:29:54,954 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:29:54,954 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:29:54,954 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:36:07,738 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:36:07,738 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:36:07,738 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:36:07,738 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:36:07,738 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:36:07,738 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:36:07,738 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:36:07,738 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:36:07,992 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:36:07,994 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:36:07,994 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 15:36:07,994 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:36:07,994 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:36:07,994 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:36:07,994 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:36:31,522 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:36:31,522 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:36:31,522 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:36:31,522 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:36:31,522 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:36:31,522 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:36:31,522 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:36:31,522 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:36:31,786 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:36:31,788 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:36:31,788 [MainThread  ] [INFO ]    Validation time: 0.082 seconds
+2021-11-19 15:36:31,788 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:36:31,788 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:36:31,788 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:36:31,789 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 15:37:17,849 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 15:37:17,849 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:37:17,849 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 15:37:17,849 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 15:37:17,849 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv
+2021-11-19 15:37:17,849 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv
+2021-11-19 15:37:17,849 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 15:37:17,849 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 15:37:18,104 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 15:37:18,105 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 15:37:18,105 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 15:37:18,105 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 15:37:18,105 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260.csv:
+2021-11-19 15:37:18,105 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 15:37:18,106 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1636831848260_errors.csv.
+2021-11-19 17:33:50,188 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 17:33:50,188 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-19 17:33:50,188 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 17:33:50,188 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 17:33:50,188 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-19 17:33:50,188 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-19 17:33:50,189 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 17:33:50,189 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 17:33:50,496 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 17:33:50,497 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 17:33:50,497 [MainThread  ] [INFO ]    Validation time: 0.079 seconds
+2021-11-19 17:33:50,497 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 17:33:50,497 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv:
+2021-11-19 17:33:50,497 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 17:33:50,498 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-19 17:46:36,395 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 17:46:36,395 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-19 17:46:36,395 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 17:46:36,395 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 17:46:36,395 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-19 17:46:36,395 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-19 17:46:36,395 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 17:46:36,395 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 17:46:36,657 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 17:46:36,659 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 17:46:36,659 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 17:46:36,659 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 17:46:36,659 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv:
+2021-11-19 17:46:36,659 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 17:46:36,659 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-19 17:48:30,594 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 17:48:30,594 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-19 17:48:30,594 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 17:48:30,594 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 17:48:30,594 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-19 17:48:30,594 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-19 17:48:30,594 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 17:48:30,594 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 17:48:30,853 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 17:48:30,854 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 17:48:30,854 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 17:48:30,854 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 17:48:30,854 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv:
+2021-11-19 17:48:30,854 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 17:48:30,855 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-19 18:40:15,950 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 18:40:15,951 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-19 18:40:15,951 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 18:40:15,951 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 18:40:15,951 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-19 18:40:15,951 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-19 18:40:15,951 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 18:40:15,951 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 18:40:16,213 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 18:40:16,214 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 18:40:16,214 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 18:40:16,214 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-19 18:40:16,214 [MainThread  ] [INFO ]     · Errors found in task 0 with source backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv:
+2021-11-19 18:40:16,214 [MainThread  ] [INFO ]  	   - constraint-error. Found: 1
+2021-11-19 18:40:16,215 [MainThread  ] [INFO ]  Error file from summarized report saved to backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-19 18:44:27,900 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 18:44:27,900 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1637343844134_errors.csv
+2021-11-19 18:44:27,900 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 18:44:27,900 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 18:44:27,900 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1637343844134.csv
+2021-11-19 18:44:27,900 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1637343844134_errors.csv
+2021-11-19 18:44:27,900 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 18:44:27,900 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 18:44:28,157 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 18:44:28,159 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 18:44:28,159 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-19 18:44:28,159 [MainThread  ] [INFO ]    Validation successful. No errors
+2021-11-19 18:45:03,907 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 18:45:03,907 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1637343844134_errors.csv
+2021-11-19 18:45:03,907 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 18:45:03,907 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 18:45:03,907 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1637343844134.csv
+2021-11-19 18:45:03,907 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1637343844134_errors.csv
+2021-11-19 18:45:03,907 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 18:45:03,907 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 18:45:04,166 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 18:45:04,168 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 18:45:04,168 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 18:45:04,168 [MainThread  ] [INFO ]    Validation successful. No errors
+2021-11-19 18:46:55,853 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-19 18:46:55,853 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1637343844134_errors.csv
+2021-11-19 18:46:55,853 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-19 18:46:55,853 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema-1622816872776.json
+2021-11-19 18:46:55,853 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs-1637343844134.csv
+2021-11-19 18:46:55,853 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs-1637343844134_errors.csv
+2021-11-19 18:46:55,853 [MainThread  ] [INFO ]  Configurations:
+2021-11-19 18:46:55,853 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-19 18:46:56,111 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-19 18:46:56,112 [MainThread  ] [INFO ]  Report summary:
+2021-11-19 18:46:56,112 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-19 18:46:56,112 [MainThread  ] [INFO ]    Validation successful. No errors

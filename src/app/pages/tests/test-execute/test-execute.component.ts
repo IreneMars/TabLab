@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { TerminalsService } from '../../../services/terminals.service';
 import { Terminal } from 'src/app/models/terminal.model';
 import { saveAs } from 'file-saver';
+import { SuggestionsService } from 'src/app/services/suggestions.service';
 @Component({
   selector: 'app-test-execute',
   templateUrl: './test-execute.component.html',
@@ -27,10 +28,10 @@ export class TestExecuteComponent implements OnInit {
   tests                  : Test[];
   inExecution            : boolean = false;
   terminal               : Terminal;
-  
+  rawData                : any;
   constructor(private authService: AuthService, public testsService: TestsService, public collectionsService: CollectionsService, 
               public route: ActivatedRoute, public workspacesService: WorkspacesService, public reportsService: ReportsService,
-              public terminalsService: TerminalsService, private router: Router){
+              public terminalsService: TerminalsService, public suggestionsService: SuggestionsService, private router: Router){
   }
 
   ngOnInit(){
@@ -114,6 +115,7 @@ export class TestExecuteComponent implements OnInit {
       for (var selectedTestId of this.selectedTestIDs){
         this.testsService.getTest(selectedTestId).subscribe((testResponse)=>{
           this.terminal.content.push("Test "+testResponse.test.title+" is being executed.");
+          // Creation of report
           this.reportsService.addReport(selectedTestId).subscribe(async responseData => {
             var buffer = responseData.execBuffer.split("\n");
             for (var line of buffer){
@@ -121,7 +123,7 @@ export class TestExecuteComponent implements OnInit {
             }
             this.terminal.content.push(responseData.execBuffer);
             this.terminal.content.push(responseData.message);
-            const testUpdate: Test = {
+            const testUpdate: any = {
               id: responseData.testUpdates._id,
               title: responseData.testUpdates.title,
               delimiter: responseData.testUpdates.delimiter,
@@ -135,7 +137,12 @@ export class TestExecuteComponent implements OnInit {
               totalErrors: responseData.testUpdates.totalErrors,
               executable: responseData.testUpdates.executable,
               datafile: responseData.testUpdates.datafile,
+              workspace: this.workspaceId
             };
+            this.rawData = responseData.rawData;
+            await this.suggestionsService.deleteSuggestionsByDatafile(testUpdate.datafile);
+            await this.suggestionsService.addSuggestionsByDatafile(testUpdate.datafile,this.rawData, testUpdate.delimiter);
+            // Updating test with report information
             this.testsService.updateTest(testUpdate).then(async (data:any)=>{
               if (data !==  undefined){
                 this.terminal.content.push(data);

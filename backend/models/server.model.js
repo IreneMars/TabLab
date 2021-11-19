@@ -81,6 +81,7 @@ class Server {
         this.app.use("/api/terminals", require('../routes/terminals'));
         this.app.use("/api/fricErrors", require('../routes/fricErrors'));
         this.app.use("/api/gconfiguration", require('../routes/globalConfiguration'));
+        this.app.use("/api/suggestions", require('../routes/suggestions'));
 
     }
 

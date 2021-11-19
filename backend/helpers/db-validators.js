@@ -8,7 +8,8 @@ const {
     Test,
     User,
     Workspace,
-    Terminal
+    Terminal,
+    Suggestion
 } = require('../models');
 
 const isValidRole = async(role = '') => {
@@ -137,6 +138,16 @@ const terminalExistsById = async(id) => {
 }
 
 /**
+ * Suggestion
+ */
+const suggestionExistsById = async(id) => {
+    const suggestionExists = await Suggestion.findById(id);
+    if (!suggestionExists) {
+        throw new Error(`The suggestion with id: ${ id } does not exist.`);
+    }
+}
+
+/**
  * Entity
  */
 //  const entityExistsById = async( id ) => {
@@ -159,5 +170,6 @@ module.exports = {
     testExistsById,
     userExistsById,
     workspaceExistsById,
-    terminalExistsById
+    terminalExistsById,
+    suggestionExistsById
 };
