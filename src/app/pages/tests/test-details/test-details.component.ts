@@ -353,7 +353,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
       });
     });
   }
-  
+  //
   async onApplyChanges(suggestionId:string, operation:string){
     this.suggestionId = suggestionId;
     console.log(this.suggestionId)
