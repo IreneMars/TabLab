@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "16"
 
-if: branch = master
+if: branch = test
 addons:
   chrome: stable
 
