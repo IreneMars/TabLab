@@ -78,7 +78,6 @@ export class WorkspaceEditComponent implements OnInit{
         mandatory: workspaceData.workspace.mandatory,
         owner:workspaceData.workspace.owner
       };
-      console.log(workspace)
       this.workspaceChange.emit(workspace);
       // Activities
       this.activitiesService.getActivitiesByWorkspace(this.workspace.id);

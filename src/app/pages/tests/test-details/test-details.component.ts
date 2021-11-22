@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -24,7 +24,7 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
   templateUrl: './test-details.component.html',
   styleUrls: ['./test-details.component.css']
 })
-export class TestDetailsComponent implements OnInit {
+export class TestDetailsComponent implements OnInit, OnDestroy{
   isLoading                : boolean = false;
   userId                : string;
   user                  : any;
@@ -39,7 +39,7 @@ export class TestDetailsComponent implements OnInit {
   datafileId               : string;
   datafile                 : Datafile;
   esquemas                 : Esquema[];
-  configurations           : Configuration[];
+  configurations           : Configuration[] = [];
   formattedConfigs         : any[] = [];
   workspace                : Workspace;
 
@@ -47,13 +47,16 @@ export class TestDetailsComponent implements OnInit {
   fileName                 : string = null;
   isSavingTest             : boolean = false;
   edit                     : boolean;
-  
+
   fileContentForm          : FormGroup;
   testForm                 : FormGroup;
   hideEditableContent      : boolean = true;
   contentLines             : string[];
   suggestions              : Suggestion[];
   suggestionQueryResult    : any = null;
+  onDestroy                :boolean = false;
+  suggestionForm           : FormGroup = null;
+  suggestionId             : string;
 
   constructor(public testsService: TestsService, public datafilesService: DatafileService, public uploadsService: UploadsService, 
               public route: ActivatedRoute, public workspacesService: WorkspacesService,
@@ -68,6 +71,9 @@ export class TestDetailsComponent implements OnInit {
                 this.fileContentForm = new FormGroup({
                   'fileContent': new FormControl({value: '', disabled: true}),
                 });
+  }
+  ngOnDestroy(): void {
+    this.onDestroy=true;
   }
   
   get invalidTitle() {
@@ -96,6 +102,7 @@ export class TestDetailsComponent implements OnInit {
           this.datafileId = paramMap.get('datafileId');
           this.workspaceId = paramMap.get('workspaceId');
           this.testId = paramMap.get('testId');
+          if(this.datafileId && this.workspaceId && this.testId){
           // Workspace
           this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData => {
             this.workspace = {
@@ -133,7 +140,6 @@ export class TestDetailsComponent implements OnInit {
               }
               this.selectedConfigurationIDs = testData.configurationIDs;
               // Datafile, esquemas y configuraciones
-              console.log(this.datafileId)
               this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
                 this.contentLines = datafileData.content.split("\n");
                 this.fileContentForm.patchValue({fileContent: datafileData.content});
@@ -153,39 +159,46 @@ export class TestDetailsComponent implements OnInit {
                 this.esquemasService.getEsquemaUpdateListener().subscribe(esquemaData =>{
                   this.esquemas = esquemaData.esquemas;
                   // Configurations
-                  this.configurationsService.getConfigurationsByDatafile(this.datafileId);
-                  this.configurationsService.getConfigurationUpdateListener().subscribe(configurationData =>{
-                    this.configurations = configurationData.configurations;
-                
-                    if (this.datafile.contentPath) {
-                      const nameWExtension = datafileData.datafile.contentPath.split('/');
-                      const splitNameWExtension = nameWExtension[3].split('.');
-                      this.extension = splitNameWExtension[1];
-                      
-                      const nameWDate = splitNameWExtension[0].split('-');
-                      const name = nameWDate[0];
-                      this.fileName = name + '.' + this.extension;
-                    }
-                    this.configurations.forEach(config => {
-                      const extraParamsJSON = JSON.stringify(config.extraParams).toString();
-                      const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
-                      const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
-                      const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');      
-                      this.formattedConfigs.push({...config, extraParamsStr});
+
+                  if(!this.onDestroy){
+                    this.configurationsService.getConfigurationsByDatafile(this.datafileId);
+                    this.configurationsService.getConfigurationUpdateListener().subscribe(configurationData =>{
+                      // console.log("Permitido (test):"+!this.onDestroy)
+                      // console.log("Get configurations (test-details)")
+                      this.configurations = configurationData.configurations;
+                      if (this.datafile.contentPath) {
+                        const nameWExtension = datafileData.datafile.contentPath.split('/');
+                        const splitNameWExtension = nameWExtension[3].split('.');
+                        this.extension = splitNameWExtension[1];
+                        
+                        const nameWDate = splitNameWExtension[0].split('-');
+                        const name = nameWDate[0];
+                        this.fileName = name + '.' + this.extension;
+                      }
+                      // console.log("Configs length: "+this.configurations.length)
+                      for (var config of this.configurations){
+                        const extraParamsJSON = JSON.stringify(config.extraParams).toString();
+                        const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
+                        const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
+                        const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');
+                        const configAux = {...config, extraParamsStr};
+                        this.formattedConfigs.push(configAux);
+                      }
+                      // console.log(this.formattedConfigs.length)
+      
+                      // Suggestions
+                      this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
+                      this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
+                        this.suggestions = suggestionData.suggestions;
+                        this.isLoading = false;
+                        this.edit = false;
+                      });
                     });
-    
-                    // Suggestions
-                    this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
-                    this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
-                      this.suggestions = suggestionData.suggestions;
-                      this.isLoading = false;
-                      this.edit = false;
-                    });
-                  });
+                  }
                 });
               });
             });
-          });
+          });}
         });
       });
     }
@@ -308,18 +321,56 @@ export class TestDetailsComponent implements OnInit {
     this.edit = false;
     this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
   }
+  
+  get invalidRowContent() {
+    return this.suggestionForm.get('rowContent').invalid && this.suggestionForm.get('rowContent').touched;
+  }
 
-  // onApplyChanges(suggestion.id,'deleteRow')
-  async onApplyChanges(suggestionId:string, operation:string){
-    this.suggestionQueryResult = null;
-    const result = await this.suggestionsService.applySuggestion(suggestionId, operation,this.test.delimiter, this.contentLines);
+  async onApplyRow() {
+    if (this.suggestionForm.invalid){
+      return Object.values(this.suggestionForm.controls).forEach(control => {
+        if (control instanceof FormGroup) {
+          Object.values(control.controls).forEach( control => control.markAsTouched());
+        } else {
+          control.markAsTouched();
+        }
+      });
+    }
+    const values = this.suggestionForm.getRawValue();
+    const result = await this.suggestionsService.applySuggestion(this.suggestionId, "updateRow", this.test.delimiter, this.contentLines, values.rowContent);
     this.suggestionQueryResult = result.data.rowContent;
+    const newFile = this.generateFile(result.data.content)
+    await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", newFile);
+    await this.suggestionsService.deleteSuggestion(this.suggestionId);
+    // Datafile, esquemas y configuraciones
+    this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
+      this.contentLines = datafileData.content.split("\n");
+      this.fileContentForm.patchValue({fileContent: datafileData.content});
+      // Suggestions
+      this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
+      this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
+        this.suggestions = suggestionData.suggestions;
+      });
+    });
+  }
+  
+  async onApplyChanges(suggestionId:string, operation:string){
+    this.suggestionId = suggestionId;
+    console.log(this.suggestionId)
+    this.suggestionQueryResult = null;
+    const result = await this.suggestionsService.applySuggestion(suggestionId, operation,this.test.delimiter, this.contentLines, null);
+    console.log(result)
+    this.suggestionQueryResult = result.data.rowContent;
+    this.suggestionForm = new FormGroup({
+      'rowContent': new FormControl('', {validators: [Validators.required]}),
+    });
+    this.suggestionForm.reset({'rowContent': result.data.rowContent})
+    console.log(this.suggestionForm)
     if(operation==="deleteRow"){
       const newFile = this.generateFile(result.data.content)
       await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", newFile);
       await this.suggestionsService.deleteSuggestion(suggestionId);
       // Datafile, esquemas y configuraciones
-      console.log(this.datafileId)
       this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
         this.contentLines = datafileData.content.split("\n");
         this.fileContentForm.patchValue({fileContent: datafileData.content});

@@ -53,11 +53,12 @@ export class SuggestionsService {
     return this.http.post<{message: string, suggestions: any[]}>(BACKEND_URL+"add/"+datafileId,suggestionsData).toPromise();
   }
   
-  applySuggestion(suggestionId: string, operation:string, testDelimiter:string, contentLines:string[]){
+  applySuggestion(suggestionId: string, operation:string, testDelimiter:string, contentLines:string[], newRowContent:string){
     const operationData = {
         'operation':operation,
         'contentLines':contentLines,
-        'testDelimiter':testDelimiter
+        'testDelimiter':testDelimiter,
+        'newRowContent':newRowContent
       };
     return this.http.put<{message: string, data:any}>(BACKEND_URL +"apply/"+ suggestionId, operationData).toPromise()
   }

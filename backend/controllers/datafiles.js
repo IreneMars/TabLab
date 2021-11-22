@@ -160,6 +160,11 @@ exports.updateDatafile = async(req, res) => {
         await Datafile.findByIdAndUpdate(req.params.id, { title: req.body.title, description: req.body.description, coleccion: req.body.collection });
         const updatedDatafile = await Datafile.findById(req.params.id);
 
+        const tests = await Test.find({ 'datafile': updatedDatafile._id });
+        for (var test of tests) {
+            await Test.findByIdAndUpdate(test._id, { 'executable': true });
+        }
+
         const workspace = await Workspace.findById(updatedDatafile.workspace);
         const user = await User.findById(current_user_id);
         var messageAux = "{{author}} modificó el fichero del espacio de trabajo {{workspace}}";

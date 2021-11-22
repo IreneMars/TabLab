@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DatafileService } from '../../../services/datafiles.service';
 import { TestsService } from '../../../services/tests.service';
 import { Test } from '../../../models/test.model';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 
 @Component({
   selector: 'app-test-list',
@@ -20,16 +21,27 @@ export class TestListComponent implements OnInit{
   @Input() workspaceId    : string;
   @Input() tests          : Test[];
   @Output() testsChange         : EventEmitter<any[]> = new EventEmitter<any[]>();
+  formattedConfigs      : any[] = [];
 
   //@Input() test           : Test;
   @Input() esquemas       : any[];
   @Input() configurations : any[];
 
   constructor(public datafilesService: DatafileService, public route: ActivatedRoute,
-              private router: Router, public testsService: TestsService){
+              public configurationsService: ConfigurationService, public testsService: TestsService){
   }
 
-  ngOnInit(){}
+  ngOnInit(){
+    this.configurationsService.getConfigurationsByDatafile(this.datafileId);
+    for (var config of this.configurations){
+      const extraParamsJSON = JSON.stringify(config.extraParams).toString();
+      const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
+      const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
+      const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');
+      const configAux = {...config, extraParamsStr};
+      this.formattedConfigs.push(configAux);
+    }
+  }
   
   async onDelete( testId: string ){
     this.testsService.deleteTest(testId)

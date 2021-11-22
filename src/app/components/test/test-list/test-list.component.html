@@ -10,7 +10,7 @@
             <button type="button" class="btn btn-outline-primary btn-sm" disabled *ngIf="isSaving">
               Añadir prueba <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </button>
-            <app-test-create [(isSaving)]="isSaving" [(tests)]="tests" [workspaceId]="workspaceId" [datafileId]="datafileId" [esquemas]="esquemas" [configurations]="configurations"></app-test-create>
+            <app-test-create [(isSaving)]="isSaving" [(tests)]="tests" [workspaceId]="workspaceId" [datafileId]="datafileId" [esquemas]="esquemas" [configurations]="formattedConfigs"></app-test-create>
         </div>
     </div>
 </div>

@@ -43,6 +43,7 @@ export class TestExecuteComponent implements OnInit {
         this.workspaceId = paramMap.get('workspaceId');
         if (paramMap.get('testId')) {
           this.testId = paramMap.get('testId');
+        }
           this.selectedTestIDs.add(this.testId);     
           // Terminal
           this.terminalsService.getTerminal(this.userId).subscribe((response)=>{
@@ -59,7 +60,6 @@ export class TestExecuteComponent implements OnInit {
             });
           });
           
-        }
       });
     }
   }

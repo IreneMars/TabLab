@@ -99,8 +99,15 @@ export class WorkspaceDetailsComponent implements OnInit {
   onDelete(){
     this.isLoading = true;
     if(this.workspace.owner === this.userId || this.user.role === "ADMIN"){
-      this.workspacesService.deleteWorkspace(this.workspaceId);
-      this.router.navigate(['/workspaces']);
+      this.workspacesService.deleteWorkspace(this.workspaceId)
+      .then(workspaceResult=>{
+        this.router.navigate(['/workspaces']);
+        this.isLoading = false;
+      })
+      .catch(err=>{
+        this.isLoading = false;
+        console.log("Error on onDelete() method: "+err.message);
+      })
     }else{
       this.isLoading = false;
     }

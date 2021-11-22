@@ -1,7 +1,7 @@
 const fs = require('fs');
 const bufferedSpawn = require('buffered-spawn');
 
-const { User, Datafile, Role, Esquema } = require('../models');
+const { User, Datafile, Role, Test } = require('../models');
 
 exports.updateFile = async(req, res) => {
     current_user_id = req.userData.userId;
@@ -66,6 +66,10 @@ exports.updateFile = async(req, res) => {
                 }
                 model.contentPath = newContentPath;
                 await Datafile.updateOne({ _id: req.body.datafileId }, model)
+                const tests = await Test.find({ 'datafile': req.body.datafileId });
+                for (var test of tests) {
+                    await Test.findByIdAndUpdate(test._id, { 'executable': true });
+                }
                 break;
 
             default:

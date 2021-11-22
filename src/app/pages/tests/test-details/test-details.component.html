@@ -126,8 +126,15 @@
             </div>
             <div class="row" *ngIf="suggestionQueryResult">
                 <div class="col">
-                    <label class="form-label">Resultado de la consulta:</label>
-                    <input type="text" class="form-control" value="{{suggestionQueryResult}}">
+                    <form [formGroup]="suggestionForm" (ngSubmit)="onApplyRow()" novalidate>
+                        <label class="form-label">Resultado de la consulta:</label>
+                        <input type="text" class="form-control" value="{{suggestionQueryResult}}" formControlName="rowContent" [class.is-invalid]="invalidRowContent">
+                        <mat-error>
+                            <small *ngIf="invalidRowContent" class="text-danger ">
+                            No puede dejar vacía la fila
+                          </small>
+                        </mat-error>
+                    </form>
                 </div>
             </div>
             <div class="row">

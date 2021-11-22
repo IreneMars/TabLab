@@ -54,7 +54,6 @@ export class EsquemaService {
       'creationMoment':null,
       'datafile':datafileId,
     };
-    console.log(operation)
     if (operation === "infer"){
       esquemaData.title = "Inferred esquema - " + title;
     }

@@ -1,3 +1,4 @@
+const { query } = require("express");
 const { Role, Datafile, Suggestion } = require("../models");
 
 exports.getSuggestionsByDatafile = async(req, res) => {
@@ -81,6 +82,7 @@ exports.applySuggestion = async(req, res, next) => {
         const operation = req.body.operation;
         const contentLines = req.body.contentLines;
         const rowNumber = suggestion.rowPosition;
+        console.log(operation)
         if (operation === "getRow") {
             const content = contentLines.join("\n");
             return res.status(200).json({
@@ -97,7 +99,23 @@ exports.applySuggestion = async(req, res, next) => {
             return res.status(200).json({
                 message: "Suggestion used successfully!",
                 data: {
-                    "rowContent": contentLines[rowNumber - 1],
+                    "rowContent": null,
+                    "content": content
+                }
+            });
+        } else if (operation === "updateRow") {
+            console.log(contentLines[rowNumber - 1])
+            console.log("New content:")
+            console.log(req.body.newRowContent)
+            contentLines[rowNumber - 1] = req.body.newRowContent;
+            console.log("New content lines:")
+            console.log(contentLines)
+            const content = contentLines.join("\n");
+            console.log(content)
+            return res.status(200).json({
+                message: "Suggestion used successfully!",
+                data: {
+                    "rowContent": null,
                     "content": content
                 }
             });

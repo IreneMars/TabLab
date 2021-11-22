@@ -46,7 +46,6 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
   workspace             : Workspace;
   esquemas              : Esquema[];
   configurations        : Configuration[];
-  formattedConfigs      : any[] = [];
   tests                 : Test[];
   fileForm              : FormGroup;
   fileContentForm       : FormGroup;
@@ -57,6 +56,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
   fileName              : string = '';
   extension             : string;
   orphanedDatafiles     : Datafile[];
+  onDestroy             : boolean = false;
   private datafilesSub  : Subscription;
 
   constructor(public datafilesService: DatafileService, public workspacesService: WorkspacesService, 
@@ -74,9 +74,12 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
     }
   ngOnDestroy() {
     this.datafilesSub.unsubscribe();
+    this.onDestroy = true;
   }
     
   ngOnInit(){
+    console.log("OnInit of datafile")
+    
     this.isLoading = true;
     this.userIsAuthenticated = this.authService.getIsAuth();
     if (this.userIsAuthenticated){
@@ -98,6 +101,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
         this.route.paramMap.subscribe((paramMap: ParamMap) => {
           this.datafileId = paramMap.get('datafileId');
           this.workspaceId = paramMap.get('workspaceId');
+
           // Workspace and Orphaned Datafiles
           this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData => {
             this.workspace = {
@@ -114,7 +118,6 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
             this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: Collection[]})=>{
               this.collections = collectionData.collections;
               // Datafiles
-              console.log(this.isDeleting)
               if(!this.isDeleting){
               this.datafilesSub = this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
                 this.datafile = {
@@ -136,43 +139,40 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
                   this.esquemasService.getEsquemaUpdateListener().subscribe(esquemaData =>{
                     this.esquemas = esquemaData.esquemas;
                     // Configurations
-                    this.configurationsService.getConfigurationsByDatafile(this.datafileId);
-                    this.configurationsService.getConfigurationUpdateListener().subscribe(configurationData =>{
-                      this.configurations = configurationData.configurations;
-                
-                      this.configurations.forEach(config => {
-                        const extraParamsJSON = JSON.stringify(config.extraParams).toString();
-                        const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
-                        const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
-                        const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');
-                        this.formattedConfigs.push({...config, extraParamsStr});
-                      });
-                      if (this.content !== null) {
-                        this.infer = true;
-                      }
-                      this.fileForm = new FormGroup({
-                        'contentPath': new FormControl(null, {validators: [Validators.required]})
-                      });
-                      if (this.datafile.contentPath) {
-                        // contentPath: {backend/uploads/datafiles/capital-1234.csv",
-                        const nameWExtension = this.datafile.contentPath.split('/');
-                        const splitNameWExtension = nameWExtension[3].split('.');
-                        this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
-                        const nameWDate = nameWExtension[3].split('-');
-                        const name = nameWDate[0];
-                        this.fileName = name + '.' + this.extension;
-                      }
-                      if (this.extension === 'xlsx') {
-                        let res = this.content[0].join(',')+ '\n';
-                        for (let arr of this.content) {
-                          res = res + arr.join(',') + '\n';
+                    if(!this.onDestroy){
+                      this.configurationsService.getConfigurationsByDatafile(this.datafileId);
+                      this.configurationsService.getConfigurationUpdateListener().subscribe(configurationData =>{
+                        // console.log("Permitido (datafile):"+!this.onDestroy)
+                        // console.log("Get configurations (datafile-details)")
+                        this.configurations = configurationData.configurations;
+  
+                        if (this.content !== null) {
+                          this.infer = true;
                         }
-                        this.fileContentForm.patchValue({fileContent: res});
-                      } else if (this.extension === 'csv') {
-                        this.fileContentForm.patchValue({fileContent: datafileData.content });
-                      }
-                      this.isLoading = false;
-                    });
+                        this.fileForm = new FormGroup({
+                          'contentPath': new FormControl(null, {validators: [Validators.required]})
+                        });
+                        if (this.datafile.contentPath) {
+                          // contentPath: {backend/uploads/datafiles/capital-1234.csv",
+                          const nameWExtension = this.datafile.contentPath.split('/');
+                          const splitNameWExtension = nameWExtension[3].split('.');
+                          this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
+                          const nameWDate = nameWExtension[3].split('-');
+                          const name = nameWDate[0];
+                          this.fileName = name + '.' + this.extension;
+                        }
+                        if (this.extension === 'xlsx') {
+                          let res = this.content[0].join(',')+ '\n';
+                          for (let arr of this.content) {
+                            res = res + arr.join(',') + '\n';
+                          }
+                          this.fileContentForm.patchValue({fileContent: res});
+                        } else if (this.extension === 'csv') {
+                          this.fileContentForm.patchValue({fileContent: datafileData.content });
+                        }
+                        this.isLoading = false;
+                      });
+                  }
                   });
                 })
               });}

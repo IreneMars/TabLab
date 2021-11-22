@@ -29,7 +29,6 @@ export class ActivityListComponent implements OnInit{
       }
       this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
         this.activities = activityData.activities;
-        console.log(this.activities);
         // http://localhost:3000
         // environment.SOCKET_ENDPOINT
         // [routerLink]="['/workspace', workspaceId,'datafile',datafileId,'test',test.id]"

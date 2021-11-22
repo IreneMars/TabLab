@@ -7,6 +7,11 @@ exports.createReport = async(req, res, next) => {
     const testId = req.body.testId;
     try {
         const test = await Test.findById(testId);
+        if (!test.executable) {
+            return res.status(403).json({
+                message: "This test is not executable."
+            });
+        }
         const datafile = await Datafile.findById(test.datafile);
         if (!datafile) {
             return res.status(500).json({
@@ -56,6 +61,9 @@ exports.createReport = async(req, res, next) => {
         const lines = rawdata.split("\n");
         const errors = lines.length - 1;
         test.reportPath = errorReportPath
+        if (errors > 0) {
+            test.status = 'failed';
+        }
         test.updateMoment = Date.now();
         test.executionMoment = Date.now();
         test.totalErrors = errors;

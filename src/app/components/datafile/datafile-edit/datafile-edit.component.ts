@@ -84,7 +84,6 @@ export class DatafileEditComponent implements OnInit{
     }
     const values = this.datafileEditForm.getRawValue();
     await this.datafileService.updateDatafile(this.datafileId, values.title, values.description, this.collectionPicked);
-    console.log(this.datafileId)
     this.datafileService.getDatafile(this.datafileId).subscribe((datafileData)=>{
       this.datafile = {
         id: datafileData.datafile._id,

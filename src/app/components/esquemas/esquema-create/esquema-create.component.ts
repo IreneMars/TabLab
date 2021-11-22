@@ -115,7 +115,6 @@ export class EsquemaCreateComponent implements OnInit{
           // Esquemas
           this.esquemasService.getEsquemasByDatafile(this.datafile.id);
           this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
-            console.log(esquemaData.esquemas)
             this.esquemasChange.emit(esquemaData.esquemas);
             this.esquemaForm.reset();
             this.esquemaChange.emit(null);
