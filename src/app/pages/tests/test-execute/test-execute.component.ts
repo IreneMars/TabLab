@@ -36,15 +36,14 @@ export class TestExecuteComponent implements OnInit {
 
   ngOnInit(){
     this.isLoading = true;
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      this.workspaceId = paramMap.get('workspaceId');
-      if (paramMap.get('testId')) {
-        this.testId = paramMap.get('testId');
-        this.selectedTestIDs.add(this.testId);     
-        // Current User
-        this.userIsAuthenticated = this.authService.getIsAuth();
-        if(this.userIsAuthenticated){
-          this.userId = this.authService.getUserId();
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    if (this.userIsAuthenticated) {
+      this.userId = this.authService.getUserId();
+      this.route.paramMap.subscribe((paramMap: ParamMap) => {
+        this.workspaceId = paramMap.get('workspaceId');
+        if (paramMap.get('testId')) {
+          this.testId = paramMap.get('testId');
+          this.selectedTestIDs.add(this.testId);     
           // Terminal
           this.terminalsService.getTerminal(this.userId).subscribe((response)=>{
             this.terminal = {
@@ -59,9 +58,10 @@ export class TestExecuteComponent implements OnInit {
               this.isLoading = false;
             });
           });
+          
         }
-      }
-    });
+      });
+    }
   }
 
   onTestPicked(event: Event) {

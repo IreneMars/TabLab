@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Invitation } from 'src/app/models/invitation.model';
@@ -14,20 +14,21 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./invitation-list.component.css']
 })
 export class InvitationListComponent implements OnInit{
-  userId                   : string;
-  userIsAuthenticated      : boolean = false;
-  isLoading                : boolean = false;
-  workspaceId              : string;
-  invalidEmail             : boolean = false;
-  displayedColumns         : string[] = ['sender', 'workspace', 'status'];
-  invitations              : Invitation[] = [];
-  totalInvitations         : number = 0;
-  invitationsPerPage       : number = 2;
-  currentPage              : number = 1;
-  dataSource               : any = null;
-  pageSizeOptions          : number[] = [1, 2, 5, 10];
-  invitationForm           : FormGroup;
-  @ViewChild(MatSort) sort : MatSort;
+  userId                      : string;
+  userIsAuthenticated         : boolean = false;
+  isLoading                   : boolean = false;
+  workspaceId                 : string;
+  invalidEmail                : boolean = false;
+  displayedColumns            : string[] = ['sender', 'workspace', 'status'];
+  @Input() invitations        : Invitation[] = [];
+  @Output() invitationsChange : EventEmitter<Invitation[]> = new EventEmitter<Invitation[]>();
+  totalInvitations            : number = 0;
+  invitationsPerPage          : number = 2;
+  currentPage                 : number = 1;
+  dataSource                  : any = null;
+  pageSizeOptions             : number[] = [1, 2, 5, 10];
+  invitationForm              : FormGroup;
+  @ViewChild(MatSort) sort    : MatSort;
 
   constructor(public invitationsService: InvitationService, public authService: AuthService, private formBuilder: FormBuilder,
               private activatedRoute: ActivatedRoute, private router: Router) {
@@ -42,23 +43,26 @@ export class InvitationListComponent implements OnInit{
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.workspaceId = params.workspaceId;
-    });
-    // Current User
-    this.userId = this.authService.getUserId();
     this.userIsAuthenticated = this.authService.getIsAuth();
-
-    this.invitationsService.getInvitations(this.invitationsPerPage, this.currentPage);
-    this.invitationsService.getInvitationUpdateListener()
-    .subscribe( (invitationData: {invitations: Invitation[], invitationCount: number, totalInvitations: number}) => {
-      this.totalInvitations = invitationData.totalInvitations;
-      this.invitations = invitationData.invitations;
-      this.dataSource = new MatTableDataSource(this.invitations);
-      this.dataSource.sort = this.sort;
-      this.isLoading = false;
-    });
-    
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.workspaceId = params.workspaceId;
+      });
+      // Current User
+      this.userId = this.authService.getUserId();
+      this.userIsAuthenticated = this.authService.getIsAuth();
+      // Invitations
+      this.invitationsService.getInvitations(this.invitationsPerPage, this.currentPage);
+      this.invitationsService.getInvitationUpdateListener()
+      .subscribe( (invitationData: {invitations: Invitation[], invitationCount: number, totalInvitations: number}) => {
+        this.totalInvitations = invitationData.totalInvitations;
+        this.invitations = invitationData.invitations;
+        this.dataSource = new MatTableDataSource(this.invitations);
+        this.dataSource.sort = this.sort;
+        this.isLoading = false;
+      });
+    }  
   }
 
   onChangedPage( pageData: PageEvent ) {
@@ -81,14 +85,11 @@ export class InvitationListComponent implements OnInit{
     }
 
     const values = this.invitationForm.getRawValue();
-    this.invitationsService.addInvitation(values.email, this.workspaceId)
-    .then(response=>{
-      this.router.navigate(['/']);
+    this.invitationsService.addInvitation(values.email, this.workspaceId).then(invitationData=>{
+      this.invitations.push(invitationData.invitation);
+      this.invitationsChange.emit(this.invitations);
+      this.invitationForm.reset();
     })
-    .catch(err=>{
-      console.log("Error on onInvite method: "+err);
-    });
-    this.invitationForm.reset();
   }
 
   onEditStatus(object, newStatus) {
@@ -104,7 +105,7 @@ export class InvitationListComponent implements OnInit{
         });
       })
       .catch(err=>{
-        console.log("Error on onInvite method: "+err);
+        console.log("Error on onInvite method: "+err.message);
       });
   }
 }

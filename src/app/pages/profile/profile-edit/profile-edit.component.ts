@@ -15,9 +15,11 @@ import { User } from 'src/app/models/user.model';
     styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit{
+  userIsAuthenticated          : boolean = false;
   user                                        : User;
   userId                                      : string;
   isLoading                                   : boolean = false;
+  isSaving                                    : boolean = false;
   userForm                                    : FormGroup;
   photoPreview                                : string;
   @ViewChild(HeaderComponent) headerComponent : HeaderComponent;
@@ -28,37 +30,39 @@ export class ProfileEditComponent implements OnInit{
   }
   
   ngOnInit() {
-    
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      this.userId = paramMap.get('userId');
-      this.isLoading = true;
-      // User
-      this.usersService.getUser(this.userId).subscribe(userData => {
-        this.user = {
-          id: userData.user._id,
-          username: userData.user.username,
-          email: userData.user.email,
-          password: userData.user.password,
-          photo: userData.user.photo,
-          name: userData.user.name,
-          role: userData.user.role,
-          status: userData.user.status,
-          google: userData.user.google
-        };
-        
-        this.userForm = new FormGroup({ 
-          'username': new FormControl(null, {validators: [Validators.minLength(4)]}), 
-          'name': new FormControl(null, {validators: [Validators.minLength(4)]}), 
-          'photo': new FormControl(null, {asyncValidators: [mimeType]}) 
+    this.isLoading = true;
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    if (this.userIsAuthenticated){
+      this.route.paramMap.subscribe((paramMap: ParamMap) => {
+        this.userId = paramMap.get('userId');
+        // User
+        this.usersService.getUser(this.userId).subscribe(userData => {
+          this.user = {
+            id: userData.user._id,
+            username: userData.user.username,
+            email: userData.user.email,
+            password: userData.user.password,
+            photo: userData.user.photo,
+            name: userData.user.name,
+            role: userData.user.role,
+            status: userData.user.status,
+            google: userData.user.google
+          };
+          
+          this.userForm = new FormGroup({ 
+            'username': new FormControl(null, {validators: [Validators.minLength(4)]}), 
+            'name': new FormControl(null, {validators: [Validators.minLength(4)]}), 
+            'photo': new FormControl(null, {asyncValidators: [mimeType]}) 
+          });
+          this.userForm.reset({
+            name: this.user.name,
+            username: this.user.username,
+            photo: this.user.photo
+          });
+          this.isLoading = false;
         });
-        this.userForm.reset({
-          name: this.user.name,
-          username: this.user.username,
-          photo: this.user.photo
-        });
-        this.isLoading = false;
       });
-    });
+    }
   }
 
 
@@ -97,7 +101,9 @@ export class ProfileEditComponent implements OnInit{
   }
 
   async onSaveUser() {
+    this.isSaving = true;
     if (this.userForm.invalid){
+      this.isSaving = false;
       return Object.values(this.userForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
           Object.values(control.controls).forEach( control => control.markAsTouched());
@@ -106,13 +112,12 @@ export class ProfileEditComponent implements OnInit{
         }
       });
     }
-    this.isLoading = true;
     const values = this.userForm.getRawValue();
-    console.log(values)
     if (values.photo) {
       await this.uploadsService.updatePhoto(this.userId,values.photo);
     }
     await this.usersService.updateUser(this.userId, values.name, values.username, null, this.user.role, null, null, null);
+    // User
     this.usersService.getUser(this.userId).subscribe(userData => {
       this.user = {
         id: userData.user._id,
@@ -125,10 +130,7 @@ export class ProfileEditComponent implements OnInit{
         status: userData.user.status,
         google: userData.user.google
       };
-      this.isLoading = false;
-
+      this.isSaving = false;
     });
-    //window.location.reload();
-    //this.isLoading = false;
   }
 }

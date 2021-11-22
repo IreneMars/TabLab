@@ -4,16 +4,13 @@
     </div>
     <div class="col-7 d-flex justify-content-end">
         <div>
-            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#testCreateModal" *ngIf="!savefileChange">
+            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#testModal" *ngIf="!isSaving">
               Añadir prueba
             </button>
-            <button type="button" class="btn btn-outline-primary btn-sm" disabled *ngIf="savefileChange">
-              Añadir prueba
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <button type="button" class="btn btn-outline-primary btn-sm" disabled *ngIf="isSaving">
+              Añadir prueba <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </button>
-            <!-- [esquemaForm]="esquemaForm" (savefileChange)="setSaveMode($event)" (esquemaChange)="setEsquema($event)"-->
-            <app-test-create [workspaceId]="workspaceId" [datafileId]="datafileId" [esquemas]="esquemas" [configurations]="configurations"></app-test-create>
-            <!-- [test]="test" -->
+            <app-test-create [(isSaving)]="isSaving" [(tests)]="tests" [workspaceId]="workspaceId" [datafileId]="datafileId" [esquemas]="esquemas" [configurations]="configurations"></app-test-create>
         </div>
     </div>
 </div>

@@ -26,10 +26,11 @@
                 </div>
                 <div class="row ms-0 me-0 mt-1 mb-1 p-0">
                     <div class="col ps-0 pe-0 d-flex justify-content-end">
-                        <button type="submit" class="btn btn-sm btn-primary me-1" *ngIf="!isSavingTest">Guardar</button>
+                        <button type="submit" class="btn btn-sm btn-primary me-1" *ngIf="!isSavingTest">
+                            Guardar
+                        </button>
                         <button type="submit" class="btn btn-sm btn-primary me-1" *ngIf="isSavingTest" disabled>
-                          Guardar
-                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Guardar <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </button>
 
                         <a class="btn btn-sm btn-secondary" (click)="onCancelTestForm()">Cancel</a>
@@ -168,7 +169,7 @@
                                                 <i class="fas fa-ellipsis-h"></i>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item" *ngIf="suggestion.rowPosition!=null" data-bs-toggle="modal" data-bs-target="#configuratioModal" (click)="onApplyChanges(suggestion.id,'getRow')">Obtener Fila</a></li>
+                                                <li><a class="dropdown-item" *ngIf="suggestion.rowPosition!=null" data-bs-toggle="modal" data-bs-target="#configurationModal" (click)="onApplyChanges(suggestion.id,'getRow')">Obtener Fila</a></li>
                                                 <li><a class="dropdown-item danger" *ngIf="suggestion.rowPosition!=null" (click)="onApplyChanges(suggestion.id,'deleteRow')">Eliminar Fila</a></li>
                                             </ul>
                                         </div>

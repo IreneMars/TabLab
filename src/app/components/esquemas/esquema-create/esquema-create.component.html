@@ -1,8 +1,8 @@
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="esquemaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title mb-0" id="exampleModalLabel">Añadir Esquema</h2>
+                <h2 class="modal-title mb-0">Añadir Esquema</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCancel()"></button>
             </div>
             <div class="modal-body">
@@ -18,9 +18,10 @@
                     <div class="mb-3">
                         <input type="file" class="form-control form-control-sm mb-2" formControlName="esquemaPath" [class.is-invalid]="invalidEsquemaPath" (change)="onFilePicked($event)" *ngIf="!esquema">
                         <div class="form-floating">
-                            <textarea *ngIf="!esquema" id="esquemaContent" class="form-control pt-0" style="height: 400px" [class.is-invalid]="invalidEsquemaPath"></textarea>
+                            {{esquemaContent}}
+                            <textarea *ngIf="!esquema" id="esquemaContent" value="{{esquemaContent}}" class="form-control pt-0" style="height: 400px" [class.is-invalid]="invalidEsquemaPath"></textarea>
 
-                            <textarea *ngIf="esquema" formControlName="esquemaContent" class="form-control pt-0" style="height: 400px" [class.is-invalid]="invalidEsquemaPath"></textarea>
+                            <textarea *ngIf="esquema" id="esquemaContent" value="{{esquemaContent}}" formControlName="esquemaContent" class="form-control pt-0" style="height: 400px" [class.is-invalid]="invalidEsquemaPath"></textarea>
 
                             <label class="pt-1" for="floatingTextarea2"></label>
                             <mat-error>
@@ -36,10 +37,17 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCancel()">Cancelar</button>
-                <button type="submit" class="btn btn-primary" *ngIf="(!esquemaForm.valid || invalidExtension) && !esquema" (click)="onSave()">Crear fichero de datos</button>
-                <button type="submit" class="btn btn-primary" *ngIf="esquema" data-bs-dismiss="modal" (click)="onSave()">Guardar cambios</button>
-                <button type="submit" class="btn btn-primary" *ngIf="esquemaForm.valid" data-bs-dismiss="modal" (click)="onSave()">Crear fichero de datos</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCancel()">
+                    Cancelar</button>
+                <button type="submit" class="btn btn-primary" *ngIf="(!esquemaForm.valid || invalidExtension) && !esquema" (click)="onSave()">
+                    Crear fichero de datos
+                </button>
+                <button type="submit" class="btn btn-primary" *ngIf="esquema" data-bs-dismiss="modal" (click)="onSave()">
+                    Guardar cambios
+                </button>
+                <button type="submit" class="btn btn-primary" *ngIf="esquemaForm.valid" data-bs-dismiss="modal" (click)="onSave()">
+                    Crear fichero de datos
+                </button>
             </div>
         </div>
     </div>

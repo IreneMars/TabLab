@@ -1,12 +1,12 @@
-<div class="modal fade" id="configuratioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="configurationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title mb-0" id="exampleModalLabel">Añadir Configuración</h2>
+                <h2 class="modal-title mb-0">Añadir Configuración</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCancel()"></button>
             </div>
-            <div class="modal-body">
-                <form [formGroup]="configurationForm" (ngSubmit)="onSave()" novalidate>
+            <form [formGroup]="configurationForm" (ngSubmit)="onSave()" novalidate>
+                <div class="modal-body">
                     <div class="mb-3">
                         <input type="text" class="form-control" placeholder="Título" formControlName="title" [class.is-invalid]="invalidTitle">
                         <mat-error>
@@ -50,14 +50,22 @@
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCancel()">Cancelar</button>
-                <button type="submit" class="btn btn-primary" *ngIf="configuration" data-bs-dismiss="modal" (click)="onSave()">Guardar cambios</button>
-                <button type="submit" class="btn btn-primary" *ngIf="!configuration && configurationForm.valid" data-bs-dismiss="modal" (click)="onSave()">Crear configuración</button>
-                <button type="submit" class="btn btn-primary" *ngIf="!configuration && !configurationForm.valid" (click)="onSave()">Crear configuración</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCancel()">
+                        Cancelar
+                        </button>
+                    <button type="submit" class="btn btn-primary" *ngIf="configuration" data-bs-dismiss="modal" (click)="onSave()">
+                        Guardar cambios
+                    </button>
+                    <button type="submit" class="btn btn-primary" *ngIf="!configuration && configurationForm.valid" data-bs-dismiss="modal" (click)="onSave()">
+                        Crear configuración
+                    </button>
+                    <button type="submit" class="btn btn-primary" *ngIf="!configuration && !configurationForm.valid" (click)="onSave()">
+                        Crear configuración
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

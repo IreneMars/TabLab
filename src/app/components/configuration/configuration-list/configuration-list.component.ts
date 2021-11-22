@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,9 +21,9 @@ export class ConfigurationListComponent implements OnInit{
   @Input() datafileId     : string;
   @Input() workspaceId    : string;
   @Input() configurations : Configuration[];
-  
+  @Output() configurationsChange : EventEmitter<any[]> = new EventEmitter<any[]>();
+  isSaving                       : boolean = false;
   configurationForm       : FormGroup;
-  saveconfigChange        : boolean = false;
   configurationId         : string;
   configuration           : Configuration = null;
   inferring               : boolean = false;
@@ -32,29 +32,39 @@ export class ConfigurationListComponent implements OnInit{
   fricErrors              : FricError[];
   
   constructor(public datafilesService: DatafileService, public route: ActivatedRoute, public authService: AuthService,
-              private router: Router, private configurationsService: ConfigurationService, public fricErrorsService: FricErrorsService){
+    private eRef: ElementRef, private configurationsService: ConfigurationService, public fricErrorsService: FricErrorsService){
     this.configurationForm = new FormGroup({
       'title': new FormControl('', {validators: [Validators.required, Validators.minLength(1), Validators.maxLength(100)]}),
       'errorCode': new FormControl('', {validators: [Validators.required]}),
     });
   }
-
+  
   ngOnInit(){
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.userId = this.authService.getUserId();
-    // Frictionless Errors
-    this.fricErrorsService.getFricErrors();
-    this.fricErrorsService.getFricErrorUpdateListener().subscribe(responseData=>{
-      this.fricErrors = responseData.fricErrors;
-    });
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+      // Frictionless Errors
+      this.fricErrorsService.getFricErrors();
+      this.fricErrorsService.getFricErrorUpdateListener().subscribe(responseData=>{
+        this.fricErrors = responseData.fricErrors;
+      });
+    }
   }
 
   async onDelete( configurationId: string ){
-    await this.configurationsService.deleteConfiguration(configurationId);
-    this.router.navigateByUrl('/', {skipLocationChange: true})
-      .then(() => {
-        this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-      }).catch( err => {});
+    this.isDeleting = true;
+    this.configurationsService.deleteConfiguration(configurationId)
+    .then(response=>{
+      // Collections
+      this.configurationsService.getConfigurationsByDatafile(this.datafileId);
+      this.configurationsService.getConfigurationUpdateListener().subscribe((configurationData: {configurations: Configuration[]})=>{
+        this.configurationsChange.emit(configurationData.configurations)
+        this.isDeleting = false;
+      }); 
+    })
+    .catch(err=>{
+      console.log("Error on onDelete method: "+err.message);
+    });
   }
 
   setExtraParams(newvalue: any) {
@@ -104,8 +114,6 @@ export class ConfigurationListComponent implements OnInit{
         });
         this.extraParams = true;
       }
-      console.log(this.configurationForm.value);
-      console.log(this.extraControls)
     });
   }
 

@@ -24,7 +24,7 @@ router.get("/:id", [
     check('id').custom(datafileExistsById),
 ], getDatafile);
 
-router.post("", [
+router.post("/", [
     validateJWT,
     check('title', 'The title is mandatory').not().isEmpty(),
     check('title', 'The title must have between 1 and 100 characters').isLength({ min: 1, max: 100 }),

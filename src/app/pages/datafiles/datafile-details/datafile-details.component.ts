@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,6 +15,10 @@ import { Test } from '../../../models/test.model';
 import { UsersService } from '../../../services/users.service';
 import { CollectionsService } from 'src/app/services/collections.service';
 import { Collection } from 'src/app/models/collection.model';
+import { EsquemaService } from '../../../services/esquemas.service';
+import { ConfigurationService } from '../../../services/configuration.service';
+import { TestsService } from '../../../services/tests.service';
+import { Subject, Subscription } from 'rxjs';
 
 
 @Component({
@@ -22,18 +26,20 @@ import { Collection } from 'src/app/models/collection.model';
   templateUrl: './datafile-details.component.html',
   styleUrls: ['./datafile-details.component.css']
 })
-export class DatafileDetailsComponent implements OnInit{
+export class DatafileDetailsComponent implements OnInit, OnDestroy{
   userId                : string;
   user                  : any;
   userIsAuthenticated   : boolean = false;
   isLoading             : boolean = false;
   isSaving              : boolean = false;
   isUploading           : boolean = false;
+  isDeletingFile        : boolean = false;
+
   isDeleting            : boolean = false;
   infer                 : boolean = false;
   edit                  : boolean = false;
   invalidExtension      : boolean = false;
-  collections           : any[];
+  collections           : Collection[];
   datafileId            : string;
   datafile              : Datafile;
   workspaceId           : string;
@@ -50,12 +56,15 @@ export class DatafileDetailsComponent implements OnInit{
   file                  : any = null;
   fileName              : string = '';
   extension             : string;
-  orphanedDatafiles         : Datafile[];
-  
+  orphanedDatafiles     : Datafile[];
+  private datafilesSub  : Subscription;
+
   constructor(public datafilesService: DatafileService, public workspacesService: WorkspacesService, 
               public uploadsService: UploadsService, public route: ActivatedRoute, 
               public authService: AuthService, public usersService: UsersService, 
-              public collectionsService: CollectionsService, private router: Router){
+              public collectionsService: CollectionsService, private router: Router,
+              public esquemasService: EsquemaService, public configurationsService: ConfigurationService,
+              public testsService: TestsService){
                 this.fileForm = new FormGroup({
                   'contentPath': new FormControl(null, {validators: [Validators.required]})
                 });
@@ -63,13 +72,16 @@ export class DatafileDetailsComponent implements OnInit{
                   'fileContent': new FormControl({value: '', disabled: true}),
                 });
     }
+  ngOnDestroy() {
+    this.datafilesSub.unsubscribe();
+  }
     
   ngOnInit(){
     this.isLoading = true;
-    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
     if (this.userIsAuthenticated){
       this.userId = this.authService.getUserId();
+      // Current User
       this.usersService.getUser(this.userId).subscribe(userData=>{
         this.user = {
           id: userData.user._id,
@@ -86,7 +98,7 @@ export class DatafileDetailsComponent implements OnInit{
         this.route.paramMap.subscribe((paramMap: ParamMap) => {
           this.datafileId = paramMap.get('datafileId');
           this.workspaceId = paramMap.get('workspaceId');
-          
+          // Workspace and Orphaned Datafiles
           this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData => {
             this.workspace = {
               id: workspaceData.workspace.id,
@@ -97,57 +109,73 @@ export class DatafileDetailsComponent implements OnInit{
               owner:workspaceData.workspace.owner
             };
             this.orphanedDatafiles = workspaceData.orphanedDatafiles;
+            // Collections
             this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
             this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: Collection[]})=>{
               this.collections = collectionData.collections;
-              this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
+              // Datafiles
+              console.log(this.isDeleting)
+              if(!this.isDeleting){
+              this.datafilesSub = this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
                 this.datafile = {
-                  id: datafileData.datafile.id,
+                  id: datafileData.datafile._id,
                   title: datafileData.datafile.title,
                   description: datafileData.datafile.description,
                   contentPath: datafileData.datafile.contentPath,
                   errLimit: datafileData.datafile.errLimit,
-                  collection: datafileData.datafile.coleccion,
+                  coleccion: datafileData.datafile.coleccion,
                   workspace: datafileData.datafile.workspace,
                 };
                 this.content = datafileData.content;
-                this.esquemas = datafileData.esquemas;
-                this.configurations = datafileData.configurations;
-                this.tests = datafileData.tests;
-          
-                this.configurations.forEach(config => {
-                  const extraParamsJSON = JSON.stringify(config.extraParams).toString();
-                  const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
-                  const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
-                  const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');
-                  this.formattedConfigs.push({...config, extraParamsStr});
-                });
-                if (this.content !== null) {
-                  this.infer = true;
-                }
-                this.fileForm = new FormGroup({
-                  'contentPath': new FormControl(null, {validators: [Validators.required]})
-                });
-                if (this.datafile.contentPath) {
-                  // contentPath: {backend/uploads/datafiles/capital-1234.csv",
-                  const nameWExtension = this.datafile.contentPath.split('/');
-                  const splitNameWExtension = nameWExtension[3].split('.');
-                  this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
-                  const nameWDate = nameWExtension[3].split('-');
-                  const name = nameWDate[0];
-                  this.fileName = name + '.' + this.extension;
-                }
-                if (this.extension === 'xlsx') {
-                  let res = this.content[0].join(',')+ '\n';
-                  for (let arr of this.content) {
-                    res = res + arr.join(',') + '\n';
-                  }
-                  this.fileContentForm.patchValue({fileContent: res});
-                } else if (this.extension === 'csv') {
-                  this.fileContentForm.patchValue({fileContent: datafileData.content });
-                }
-                this.isLoading = false;
-              });
+                // Tests
+                this.testsService.getTestsByDatafile(this.datafileId, this.workspaceId);
+                this.testsService.getTestUpdateListener().subscribe(testData=>{
+                  this.tests = testData.tests;
+                  // Esquemas
+                  this.esquemasService.getEsquemasByDatafile(this.datafileId);
+                  this.esquemasService.getEsquemaUpdateListener().subscribe(esquemaData =>{
+                    this.esquemas = esquemaData.esquemas;
+                    // Configurations
+                    this.configurationsService.getConfigurationsByDatafile(this.datafileId);
+                    this.configurationsService.getConfigurationUpdateListener().subscribe(configurationData =>{
+                      this.configurations = configurationData.configurations;
+                
+                      this.configurations.forEach(config => {
+                        const extraParamsJSON = JSON.stringify(config.extraParams).toString();
+                        const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
+                        const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
+                        const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');
+                        this.formattedConfigs.push({...config, extraParamsStr});
+                      });
+                      if (this.content !== null) {
+                        this.infer = true;
+                      }
+                      this.fileForm = new FormGroup({
+                        'contentPath': new FormControl(null, {validators: [Validators.required]})
+                      });
+                      if (this.datafile.contentPath) {
+                        // contentPath: {backend/uploads/datafiles/capital-1234.csv",
+                        const nameWExtension = this.datafile.contentPath.split('/');
+                        const splitNameWExtension = nameWExtension[3].split('.');
+                        this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
+                        const nameWDate = nameWExtension[3].split('-');
+                        const name = nameWDate[0];
+                        this.fileName = name + '.' + this.extension;
+                      }
+                      if (this.extension === 'xlsx') {
+                        let res = this.content[0].join(',')+ '\n';
+                        for (let arr of this.content) {
+                          res = res + arr.join(',') + '\n';
+                        }
+                        this.fileContentForm.patchValue({fileContent: res});
+                      } else if (this.extension === 'csv') {
+                        this.fileContentForm.patchValue({fileContent: datafileData.content });
+                      }
+                      this.isLoading = false;
+                    });
+                  });
+                })
+              });}
             })
           });
         });
@@ -156,10 +184,16 @@ export class DatafileDetailsComponent implements OnInit{
   }
 
   async onDelete(){
-    this.isDeleting = true;
-    await this.datafilesService.deleteDatafile(this.datafileId);
-    this.router.navigate([`/workspace/${this.datafile.workspace}`]);
-    this.isDeleting = false;
+    this.isLoading = true;
+    this.datafilesService.deleteDatafile(this.datafileId)
+    .then(datafileData=>{
+        this.router.navigate([`/workspace/${this.workspaceId}`]);    
+        this.isLoading = false;
+        this.isDeleting = true;
+    })
+    .catch(err=>{
+      console.log("Error on onDelete() method: "+err.message)
+    })
   }
 
   onEdit() {
@@ -185,16 +219,50 @@ export class DatafileDetailsComponent implements OnInit{
       await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateFile', this.file);
       await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, null);
 
-      this.router.navigateByUrl('/', {skipLocationChange: true})
-      .then(() => {
-        this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-      }).catch( err => {
-        console.log("Error on onFilePicked method: "+err);
+      // Datafiles
+      this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
+        this.datafile = {
+          id: datafileData.datafile._id,
+          title: datafileData.datafile.title,
+          description: datafileData.datafile.description,
+          contentPath: datafileData.datafile.contentPath,
+          errLimit: datafileData.datafile.errLimit,
+          coleccion: datafileData.datafile.coleccion,
+          workspace: datafileData.datafile.workspace,
+        };
+        this.content = datafileData.content;
+        // Tests
+        if (this.content !== null) {
+          this.infer = true;
+        }
+        this.fileForm = new FormGroup({
+          'contentPath': new FormControl(null, {validators: [Validators.required]})
+        });
+        if (this.datafile.contentPath) {
+          // contentPath: {backend/uploads/datafiles/capital-1234.csv",
+          const nameWExtension = this.datafile.contentPath.split('/');
+          const splitNameWExtension = nameWExtension[3].split('.');
+          this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
+          const nameWDate = nameWExtension[3].split('-');
+          const name = nameWDate[0];
+          this.fileName = name + '.' + this.extension;
+        }
+        if (this.extension === 'xlsx') {
+          let res = this.content[0].join(',')+ '\n';
+          for (let arr of this.content) {
+            res = res + arr.join(',') + '\n';
+          }
+          this.fileContentForm.patchValue({fileContent: res});
+        } else if (this.extension === 'csv') {
+          this.fileContentForm.patchValue({fileContent: datafileData.content });
+        }
+        this.isUploading = false;
+
       });
-      this.isUploading = false;
     }}
 
     async onSave() {
+      this.isSaving = true;
       let file: any;
       let content = this.fileContentForm.value.fileContent;
       if (this.extension === 'csv') {
@@ -215,7 +283,6 @@ export class DatafileDetailsComponent implements OnInit{
       } else {
         return;
       }
-      this.isSaving = true;
       await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateContent', file);
       await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, null);
       this.fileContentForm.get('fileContent').disable();
@@ -223,16 +290,24 @@ export class DatafileDetailsComponent implements OnInit{
     }
 
     async onDeleteFile() {
-      this.isUploading = true;
+      this.isDeletingFile = true;
       await this.uploadsService.updateFile(this.userId, this.datafileId,'deleteFile', null);
-      this.router.navigateByUrl('/', {skipLocationChange: true})
-        .then(() => {
-          this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-        }).catch( err => {
-          console.log("Error on onDeleteFile method: "+err);
-        });
-
-      this.isUploading = false;
+      // Datafiles
+      this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
+        this.datafile = {
+          id: datafileData.datafile._id,
+          title: datafileData.datafile.title,
+          description: datafileData.datafile.description,
+          contentPath: datafileData.datafile.contentPath,
+          errLimit: datafileData.datafile.errLimit,
+          coleccion: datafileData.datafile.coleccion,
+          workspace: datafileData.datafile.workspace,
+        };
+        this.content = datafileData.content;
+        this.fileContentForm.reset();
+        this.fileName = null;
+        this.isDeletingFile = false;
+      });
     }
 
     onDownload() {

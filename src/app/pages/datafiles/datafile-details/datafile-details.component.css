@@ -13,6 +13,10 @@
     border-color: #ced4da;
 }
 
+.uploading {
+    border-color: white !important;
+}
+
 .danger {
     color: #dc3845;
 }

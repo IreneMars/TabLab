@@ -20,6 +20,11 @@ exports.getDatafile = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {
         const datafile = await Datafile.findById(req.params.id);
+        if (!datafile) {
+            return res.status(500).json({
+                message: "Datafile not found."
+            });
+        }
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         const user = await User.findById(current_user_id);
 
@@ -87,12 +92,14 @@ exports.createDatafile = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {
         const roles = await Role.find({ "workspace": req.body.workspace, "user": current_user_id });
+
         if (roles.length !== 1) {
             return res.status(403).json({
                 message: "You are not authorized to create a datafile inside this workspace."
             });
         }
         const collections = await Collection.find({ "_id": req.body.collection, "workspace": req.body.workspace });
+
         if (collections.length === 0 && req.body.collection != null) {
             return res.status(500).json({
                 message: "There is no collection with that id and the current workspace."
@@ -106,15 +113,17 @@ exports.createDatafile = async(req, res, next) => {
             coleccion: req.body.coleccion,
             workspace: req.body.workspace
         });
+
         const createdDatafile = await datafile.save();
 
         const workspace = await Workspace.findById(createdDatafile.workspace);
+
         const user = await User.findById(current_user_id);
-        var messageAux = "{{author}} añadió el fichero al espacio de trabajo {{workspace}}";
+        var messageAux = "{{author}} añadió el fichero {{datafile}} al espacio de trabajo {{workspace}}";
         var coleccionAux = null;
-        if (createdDatafile.collection) {
-            messageAux = "{{author}} añadió el fichero al espacio de trabajo {{workspace}} (en la colección {{coleccion}})";
-            const coleccion = await Collection.findById(createdDatafile.collection);
+        if (req.body.coleccion != null) {
+            messageAux = "{{author}} añadió el fichero {{datafile}} al espacio de trabajo {{workspace}} (en la colección {{coleccion}})";
+            const coleccion = await Collection.findById(req.body.coleccion);
             coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
         }
         const activity = new Activity({
@@ -194,6 +203,7 @@ exports.deleteDatafile = async(req, res) => {
                 message: "You are not authorized to delete a datafile from this workspace."
             })
         }
+        const datafileTitle = datafile.title;
         await Configuration.deleteMany({ datafile: req.params.id });
         await Esquema.deleteMany({ datafile: req.params.id });
         await Test.deleteMany({ datafile: req.params.id });
@@ -202,9 +212,9 @@ exports.deleteDatafile = async(req, res) => {
         const workspace = await Workspace.findById(datafile.workspace);
         var messageAux = "{{author}} eliminó el fichero del espacio de trabajo {{workspace}}";
         var coleccionAux = null;
-        if (datafile.collection) {
+        if (datafile.coleccion) {
             messageAux = "{{author}} eliminó el fichero del espacio de trabajo {{workspace}} (de la colección {{coleccion}})";
-            const coleccion = await Collection.findById(datafile.collection);
+            const coleccion = await Collection.findById(datafile.coleccion);
             coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
         }
         const activity = new Activity({
@@ -212,7 +222,7 @@ exports.deleteDatafile = async(req, res) => {
             workspace: { 'id': workspace._id, 'title': workspace.title },
             author: { 'id': current_user_id, 'name': user.name },
             coleccion: coleccionAux,
-            datafile: { 'id': datafile._id, 'title': datafile.title },
+            datafile: { 'id': null, 'title': datafileTitle },
             creationMoment: null
         });
         await activity.save();

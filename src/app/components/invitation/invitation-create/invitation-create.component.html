@@ -1,11 +1,24 @@
 <form class="row mt-2" [formGroup]="invitationForm" (ngSubmit)="onInvite()">
-    <div class="row m-0 p-0" *ngIf="!create">
-        <div class="col input-group input-group-sm">
-            <input type="email" class="form-control" placeholder="Introduce un email..." formControlName="email" [class.is-invalid]="invalidEmail">
+    <div *ngIf="!create">
+        <div class="row m-0 p-0">
+            <div class="col p-0 input-group input-group-sm">
+                <input type="email" class="form-control" placeholder="Introduce un email..." formControlName="email" [class.is-invalid]="invalidEmail">
+                <a class="btn btn-outline-secondary btn-sm" (click)="onReset()">
+                    <i class="fas fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <div class="row m-0 p-0" *ngIf="invitationAdded">
+            <div class="col p-0 pt-2">
+                <p>Enviado!</p>
+            </div>
         </div>
     </div>
     <div class="input-group" *ngIf="create">
         <input type="email" class="form-control" placeholder="Introduce un email..." formControlName="email" [class.is-invalid]="invalidEmail">
+        <a class="btn btn-outline-secondary btn-sm" (click)="onReset()">
+            <i class="fas fa-times"></i>
+        </a>
         <button class="btn btn-outline-secondary btn-sm" type="button" type="submit" id="button-addon2">Añadir</button>
     </div>
     <div class="row ms-0 mb-2 p-0">
@@ -37,12 +50,6 @@
                     </li>
                 </div>
             </ul>
-        </div>
-    </div>
-    <div class="row mt-1 m-0 p-0" *ngIf="!create">
-        <div class="col  d-flex justify-content-end">
-            <button type="submit" class="btn btn-sm btn-primary me-1">Invitar</button>
-            <a class="btn btn-sm btn-secondary" (click)="onReset()">Cancelar</a>
         </div>
     </div>
 </form>

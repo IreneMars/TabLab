@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { TestsService } from 'src/app/services/tests.service';
+import { Test } from '../../../models/test.model';
+import { DatafileService } from '../../../services/datafiles.service';
 
 @Component({
   selector: 'app-test-create',
@@ -13,6 +15,11 @@ export class TestCreateComponent implements OnInit{
   userId                   : string;
   userIsAuthenticated      : boolean = false;
   selectedConfigurations   : string[];
+  @Input() tests           : Test[];
+  @Output() testsChange    : EventEmitter<any[]> = new EventEmitter<any[]>();
+
+  @Input() isSaving        : boolean = false;
+  @Output() isSavingChange : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() testForm        : FormGroup;
   @Input() workspaceId     : string;
   @Input() datafileId      : string;
@@ -21,7 +28,7 @@ export class TestCreateComponent implements OnInit{
   @Output() testSaveChange : EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public testService: TestsService, public route: ActivatedRoute,
-              private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
+              private formBuilder: FormBuilder, public datafilesService: DatafileService, private authService: AuthService) {
                 this.createForm();
                 this.testForm.reset({
                   title: '',
@@ -42,7 +49,9 @@ export class TestCreateComponent implements OnInit{
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.userId = this.authService.getUserId();
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+    }
   }
 
   get invalidTitle() {
@@ -54,10 +63,11 @@ export class TestCreateComponent implements OnInit{
   }
   
   async onSave() {
+    this.isSavingChange.emit(true);
     if (this.testForm.invalid){
+      this.isSavingChange.emit(false);
       return Object.values(this.testForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
-          
           Object.values(control.controls).forEach( control => control.markAsTouched());
         } else {
           control.markAsTouched();
@@ -66,14 +76,14 @@ export class TestCreateComponent implements OnInit{
      }
     const values = this.testForm.getRawValue();
     await this.testService.addTest(values.title, values.delimiter, values.esquema, values.configurations, this.datafileId);
-    this.router.navigateByUrl('/', {skipLocationChange: true})
-      .then(() => {
-        this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-      }).catch( err => {
-        console.log("Error on onSave method: "+err);
-      });
-    this.testForm.reset({});
-    this.selectedConfigurations = [];
+    // Tests
+    this.testService.getTestsByDatafile(this.datafileId,this.workspaceId);
+    this.testService.getTestUpdateListener().subscribe(testData => {
+      this.testsChange.emit(testData.tests);
+      this.testForm.reset({});
+      this.selectedConfigurations = [];
+      this.isSavingChange.emit(false);  
+    });
   }
 
   onConfigurationPicked(event: Event) {

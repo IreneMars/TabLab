@@ -1,6 +1,6 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Configuration } from 'src/app/models/configuration.model';
 import { FricError } from 'src/app/models/fricError.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -13,33 +13,40 @@ import { FricErrorsService } from 'src/app/services/fricErrors.service';
   styleUrls: ['./configuration-create.component.css']
 })
 export class ConfigurationCreateComponent implements OnInit{
-  userId                        : string;
-  userIsAuthenticated           : boolean = false;
-  @Input() configurationForm    : FormGroup;
-  @Input() datafileId           : string;
-  @Input() workspaceId          : string;
-  @Input() configurationId      : string;
-  @Input() savefile             : string;
-  @Input() extraControls        : object[] = [];
-  @Output() configurationChange : EventEmitter<any> = new EventEmitter<any>();
-  @Input() configuration        : Configuration;
-  pickedError                   : any;
-  fricErrors                    : FricError[];
-  @Input() extraParams          : boolean;
+  userId                         : string = "";
+  userIsAuthenticated            : boolean = false;
+  @Input() isSaving              : boolean = false;
+  @Output() isSavingChange       : EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() configurations        : Configuration[];
+  @Output() configurationsChange : EventEmitter<any[]> = new EventEmitter<any[]>();
+  
+  @Input() configurationForm     : FormGroup;
+  @Input() datafileId            : string;
+  @Input() workspaceId           : string;
+  @Input() configurationId       : string;
+  @Input() savefile              : string;
+  @Input() extraControls         : object[] = [];
+  @Output() configurationChange  : EventEmitter<Configuration[]> = new EventEmitter<any>();
+  @Input() configuration         : Configuration;
+  @Input() extraParams           : boolean;
+  pickedError                    : any;
+  fricErrors                     : FricError[];
 
   constructor(public configurationService: ConfigurationService, public fricErrorsService: FricErrorsService, 
-              public route: ActivatedRoute, private authService: AuthService, private router: Router) {
+              public route: ActivatedRoute, private authService: AuthService, 
+              public configurationsService: ConfigurationService, private eRef: ElementRef,) {
   }
 
   ngOnInit() {
-    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.userId = this.authService.getUserId();
-    // Frictionless Errors
-    this.fricErrorsService.getFricErrors();
-    this.fricErrorsService.getFricErrorUpdateListener().subscribe(responseData=>{
-      this.fricErrors = responseData.fricErrors;
-    });
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+      // Frictionless Errors
+      this.fricErrorsService.getFricErrors();
+      this.fricErrorsService.getFricErrorUpdateListener().subscribe(responseData=>{
+        this.fricErrors = responseData.fricErrors;
+      });
+    }
   }
 
   get invalidTitle() {
@@ -99,8 +106,6 @@ export class ConfigurationCreateComponent implements OnInit{
         }
       });
       this.extraParams = true;
-      console.log(this.extraControls)
-      console.log(this.configurationForm.value)
     }
   }
 
@@ -113,11 +118,11 @@ export class ConfigurationCreateComponent implements OnInit{
   }
 
   async onSave() {
-
+    this.isSavingChange.emit(true);
     if (this.configurationForm.invalid){
+      this.isSavingChange.emit(false);
       return Object.values(this.configurationForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
-          
           Object.values(control.controls).forEach( control => control.markAsTouched());
         } else {
           control.markAsTouched();
@@ -125,25 +130,41 @@ export class ConfigurationCreateComponent implements OnInit{
       });
     }
     const values = this.configurationForm.getRawValue();
+    var updatedConfiguration: Configuration = null;
     if (this.configuration) {
-      await this.configurationService.updateConfiguration(this.configurationId, values, this.datafileId);
+      const result = await this.configurationService.updateConfiguration(this.configurationId, values, this.datafileId);
+      updatedConfiguration = {
+        id: result.configuration._id,
+        title: result.configuration.title,
+        creationMoment: result.configuration.creationMoment,
+        errorCode: result.configuration.errorCode,
+        extraParams: result.configuration.extraParams,
+        datafile: result.configuration.datafile,
+      }
     } else {
-      await this.configurationService.addConfiguration(values, this.datafileId);
+      const result = await this.configurationService.addConfiguration(values, this.datafileId);
+      updatedConfiguration = {
+        id: result.configuration._id,
+        title: result.configuration.title,
+        creationMoment: result.configuration.creationMoment,
+        errorCode: result.configuration.errorCode,
+        extraParams: result.configuration.extraParams,
+        datafile: result.configuration.datafile,
+      }
     }
-    this.router.navigateByUrl('/', {skipLocationChange: true})
-    .then(() => {
-      this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-    }).catch( err => {
-      console.log("Error on onSave method: "+err);
-    });
-
     this.configurationForm.reset();
     this.extraControls.forEach(newControl => {
-        this.configurationForm.removeControl(newControl[0]);
-      });
-    this.configurationChange.emit([]);
-
+      this.configurationForm.removeControl(newControl[0]);
+    });
+    this.configurationsService.getConfigurationsByDatafile(this.datafileId);
+    this.configurationService.getConfigurationUpdateListener().subscribe(response=>{
+      this.configurations = response.configurations;
+      this.configurationsChange.emit(response.configurations);
+      this.configurationChange.emit([]);
+      this.isSavingChange.emit(false);
+    })
   }
+
 
 }
 

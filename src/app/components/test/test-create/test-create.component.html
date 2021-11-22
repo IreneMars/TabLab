@@ -1,4 +1,4 @@
-<div class="modal fade" id="testCreateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="testModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class=" modal-content " style="width:auto;display: inline-block; ">
             <div class="modal-header ">
@@ -71,9 +71,15 @@
                 </form>
             </div>
             <div class="modal-footer ">
-                <button type="button " class="btn btn-secondary " data-bs-dismiss="modal" (click)="onCancel()">Cancelar</button>
-                <button type="submit " class="btn btn-primary " *ngIf="!testForm.valid" (click)="onSave()">Crear prueba</button>
-                <button type="submit " class="btn btn-primary " *ngIf="testForm.valid" data-bs-dismiss="modal" (click)="onSave()">Crear prueba</button>
+                <button type="button " class="btn btn-secondary " data-bs-dismiss="modal" (click)="onCancel()">
+                    Cancelar
+                </button>
+                <button type="submit " class="btn btn-primary " *ngIf="!testForm.valid" (click)="onSave()">
+                    Crear prueba
+                </button>
+                <button type="submit " class="btn btn-primary " *ngIf="testForm.valid" data-bs-dismiss="modal" (click)="onSave()">
+                    Crear prueba
+                </button>
             </div>
         </div>
     </div>

@@ -15,17 +15,13 @@ const {
     Suggestion
 } = require("../models");
 
-const path = require("path");
-const fullPath = path.resolve("backend/populate.json");
 const fs = require('fs');
-
-const rawdata = fs.readFileSync(fullPath);
-const populate_json_data = JSON.parse(rawdata);
+const path = require("path");
+const fullDataPath = path.resolve("backend/populate.json");
+const fullProdDataPath = path.resolve("backend/populate_prod.json");
 
 var create_report = (model_name, result, data) => {
     message = "";
-
-
     report = { 'model': model_name, 'insertionCount': '', 'insertions': [], errors: [] };
     if ('insertedCount' in result && result.insertedCount === data.length) {
         message = "All data was inserted (" + result.insertedCount + " out of " + data.length + ").";
@@ -47,6 +43,13 @@ var create_report = (model_name, result, data) => {
 };
 
 exports.populate = async(req, res, next) => {
+    var rawData = null;
+    if (req.query.production === 'true') {
+        rawData = fs.readFileSync(fullProdDataPath);
+    } else {
+        rawData = fs.readFileSync(fullDataPath);
+    }
+    const populate_json_data = JSON.parse(rawData);
     reports = { "errored_models": [], "reports": [] };
     //users
     try {
@@ -176,14 +179,14 @@ exports.populate = async(req, res, next) => {
     }
 
     // Suggestions
-    try {
-        Suggestion.collection.drop();
-        var suggestionsResult = await Suggestion.insertMany(populate_json_data.suggestions, { ordered: false, rawResult: true });
-        [message, rep] = create_report('suggestion', suggestionsResult, populate_json_data.suggestions);
-        reports.reports.push({ "message": message, "report": rep });
-    } catch (err) {
-        reports.errored_models.push({ "Suggestion": err });
-    }
+    // try {
+    //     Suggestion.collection.drop();
+    //     var suggestionsResult = await Suggestion.insertMany(populate_json_data.suggestions, { ordered: false, rawResult: true });
+    //     [message, rep] = create_report('suggestion', suggestionsResult, populate_json_data.suggestions);
+    //     reports.reports.push({ "message": message, "report": rep });
+    // } catch (err) {
+    //     reports.errored_models.push({ "Suggestion": err });
+    // }
 
     return res.status(200).json({
         data: reports

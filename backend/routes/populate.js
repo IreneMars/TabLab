@@ -1,10 +1,10 @@
 const express = require("express");
 
-const {populate} = require("../controllers/populate")
+const { populate } = require("../controllers/populate")
 
 const router = express.Router();
 
-router.get("", 
+router.get("",
     populate);
 
 module.exports = router;

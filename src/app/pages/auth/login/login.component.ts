@@ -12,11 +12,11 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  isLoading : boolean = false;
-  loggedIn  : boolean;
-  loginForm : FormGroup;
-  url       : RequestInfo;
-  user      : SocialUser;
+  isLoading           : boolean = false;
+  loggedIn            : boolean;
+  loginForm           : FormGroup;
+  url                 : RequestInfo;
+  user                : SocialUser;
 
   private auth2: gapi.auth2.GoogleAuth;
   private subject = new ReplaySubject<gapi.auth2.GoogleUser>(1);
@@ -40,19 +40,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.getAuthStatusListener().subscribe( authStatus => {
-      this.isLoading = false;
-    });
-    if  (localStorage.getItem('email')) {
+    if (localStorage.getItem('email')) {
       this.loginForm.reset({
         username: localStorage.getItem('username'),
         rememberme: true,
       });
     }
-    
     this.url = (window.location.hostname.includes('localhost')) ?
-                            'http://localhost:3000/api/users/google' :
-                            'https://restserver-curso-fher.herokuapp.com/api/auth/google';
+                            'http://localhost:3000/api/auth/google' :
+                            'https://tablab-app.herokuapp.com/api/auth/google';
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);

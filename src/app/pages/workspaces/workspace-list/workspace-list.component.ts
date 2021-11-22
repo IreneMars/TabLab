@@ -6,6 +6,7 @@ import { WorkspacesService } from '../../../services/workspaces.service';
 
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { UsersService } from '../../../services/users.service';
 
 export interface PeriodicElement {
   name: string;
@@ -32,30 +33,26 @@ export class WorkspaceListComponent implements OnInit {
   pageSizeOptions          : number[] = [1, 2, 5, 10];
   @ViewChild(MatSort) sort : MatSort;
 
-  constructor( public workspacesService: WorkspacesService, private authService: AuthService) { }
+  constructor( private authService: AuthService, public workspacesService: WorkspacesService, public usersService: UsersService) { }
 
 
   ngOnInit() {
     this.isLoading = true;
     // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.userId = this.authService.getUserId();
-    //Workspaces
-    this.workspacesService.getWorkspaces(this.workspacesPerPage, this.currentPage);
-    this.workspacesService.getWorkspaceUpdateListener()
-    .subscribe( (workspaceData: {workspaces: Workspace[], workspaceCount: number, totalWorkspaces:number}) => {
-      this.totalWorkspaces = workspaceData.totalWorkspaces;
-      this.workspaces = workspaceData.workspaces;
-      this.dataSource = new MatTableDataSource(this.workspaces);
-      this.dataSource.sort = this.sort;
-      //Users by workspace
-      this.workspaces.map(function(workspace) {
-        this.authService.getUsersById(workspace.id).subscribe((usersData: {users: any[]}) => {
-          workspace['users'] = usersData.users;
-          this.isLoading = false;
-        });
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+      //Workspaces
+      this.workspacesService.getWorkspaces(this.workspacesPerPage, this.currentPage);
+      this.workspacesService.getWorkspaceUpdateListener()
+      .subscribe( (workspaceData: {workspaces: Workspace[], workspaceCount: number, totalWorkspaces:number}) => {
+        this.totalWorkspaces = workspaceData.totalWorkspaces;
+        this.workspaces = workspaceData.workspaces;
+        this.dataSource = new MatTableDataSource(this.workspaces);
+        this.dataSource.sort = this.sort;
+        this.isLoading = false;
       });
-    });
+    }
   }
 
   onChangedPage( pageData: PageEvent ) {

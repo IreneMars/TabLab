@@ -2,8 +2,6 @@ const { Role, Datafile, Suggestion } = require("../models");
 
 exports.getSuggestionsByDatafile = async(req, res) => {
     try {
-        console.log("getSuggestionsByTest")
-        console.log("params: " + req.params)
         const suggestions = await Suggestion.find({ datafile: req.params.datafileId });
         return res.status(200).json({
             message: "Suggestions fetched successfully!",
@@ -65,11 +63,9 @@ exports.createSuggestionsByDatafile = async(req, res, next) => {
 };
 
 exports.applySuggestion = async(req, res, next) => {
-    console.log("Apply changes")
     const current_user_id = req.userData.userId;
     try {
         const suggestion = await Suggestion.findById(req.params.id);
-        console.log(suggestion)
         const datafile = await Datafile.findById(suggestion.datafile);
         if (!datafile) {
             return res.status(500).json({

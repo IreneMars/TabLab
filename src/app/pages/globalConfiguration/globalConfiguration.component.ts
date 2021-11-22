@@ -107,7 +107,7 @@ export class GlobalConfigurationComponent implements OnInit {
       });
 
     }).catch( err => {
-      console.log("Error on onDeleteAccount method: "+err);
+      console.log("Error on onDeleteAccount method: "+err.message);
     });
     
   }

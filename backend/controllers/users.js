@@ -60,12 +60,14 @@ exports.getUser = async(req, res) => {
 
 exports.createUser = async(req, res) => {
     try {
+        const url = req.protocol + "://" + req.get("host") + "/";
         const { username, email, password } = req.body;
         const hash = await bcrypt.hash(password, 10);
         const user = new User({
             username: username,
             email: email,
             password: hash,
+            photo: url + "assets/default-user-little.png",
             role: "USER",
         });
         const savedUser = await user.save();
@@ -74,8 +76,10 @@ exports.createUser = async(req, res) => {
             description: '',
             creationMoment: null,
             mandatory: false,
+            owner: user._id
         });
         const savedWorkspace = await workspace.save();
+
         const role = new Role({
             role: 'owner',
             workspace: savedWorkspace._id,

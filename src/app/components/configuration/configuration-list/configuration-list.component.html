@@ -4,14 +4,14 @@
     </div>
     <div class="col-7 d-flex justify-content-end">
         <div>
-            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#configuratioModal" *ngIf="!saveconfigChange">
+            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#configurationModal" *ngIf="!isSaving">
               Añadir configuración
             </button>
-            <button type="button" class="btn btn-outline-primary btn-sm" disabled *ngIf="saveconfigChange">
-              Añadir configuración
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <button type="button" class="btn btn-outline-primary btn-sm" disabled *ngIf="isSaving">
+              Añadir configuración <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </button>
-            <app-configuration-create [datafileId]="datafileId" [workspaceId]="workspaceId" [configurationId]="configurationId" [configuration]="configuration" [extraControls]="extraControls" [configurationForm]="configurationForm" [extraParams]="extraParams" (configurationChange)="setExtraParams($event)"></app-configuration-create>
+            <app-configuration-create [(configurations)]="configurations" [datafileId]="datafileId" [workspaceId]="workspaceId" [configurationId]="configurationId" [configuration]="configuration" [extraControls]="extraControls" [configurationForm]="configurationForm"
+                [extraParams]="extraParams" (configurationChange)="setExtraParams($event)" [(isSaving)]="isSaving"></app-configuration-create>
         </div>
     </div>
 </div>
@@ -44,7 +44,7 @@
                                               <i class="fas fa-ellipsis-h"></i>
                                             </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#configuratioModal" (click)=onEdit(configuration.id)>Editar Configuración</a></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#configurationModal" (click)=onEdit(configuration.id)>Editar Configuración</a></li>
                                     <li><a class="dropdown-item danger" (click)=onDelete(configuration.id)>Eliminar Configuración</a></li>
                                 </ul>
                             </div>

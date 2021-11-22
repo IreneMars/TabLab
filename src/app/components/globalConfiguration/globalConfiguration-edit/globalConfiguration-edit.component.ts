@@ -33,14 +33,15 @@ export class GlobalConfigurationEditComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.userId = this.authService.getUserId();
-    // GlobalConfigurationForm
-    this.globalConfigurationEditForm.reset({
-      limitUsers: this.globalConfig.limitUsers,
-      limitWorkspaces: this.globalConfig.limitWorkspaces,
-    });
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+
+      this.globalConfigurationEditForm.reset({
+        limitUsers: this.globalConfig.limitUsers,
+        limitWorkspaces: this.globalConfig.limitWorkspaces,
+      });
+    }
   }
 
   get invalidLimitUsers() {
@@ -66,7 +67,6 @@ export class GlobalConfigurationEditComponent implements OnInit{
     const values = this.globalConfigurationEditForm.getRawValue();
     await this.globalConfigurationService.updateGlobalConfig(this.globalConfig.id, values.limitUsers, values.limitWorkspaces);
     this.globalConfigurationService.getGlobalConfig().subscribe((globalConfigData)=>{
-      
       this.globalConfigurationEditForm.reset();
       this.isSaving = false;
       this.globalConfigChange.emit(globalConfigData.globalConfiguration)

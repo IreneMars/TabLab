@@ -56,6 +56,30 @@ exports.getTestsByWorkspace = async(req, res) => {
     }
 };
 
+exports.getTestsByDatafile = async(req, res) => {
+    const workspaceId = req.params.workspaceId;
+    const datafileId = req.params.datafileId;
+    const current_user_id = req.userData.userId;
+
+    try {
+        const roles = await Role.find({ 'workspace': workspaceId, 'user': current_user_id });
+        if (roles.length !== 1) {
+            return res.status(403).json({
+                message: "Not authorized to fetch this tests!"
+            });
+        }
+        const tests = await Test.find({ 'datafile': datafileId });
+        return res.status(200).json({
+            message: "Tests fetched successfully!",
+            tests: tests,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Fetching tests failed!"
+        });
+    }
+};
+
 exports.getTest = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {
@@ -147,7 +171,6 @@ exports.createTest = async(req, res, next) => {
 };
 
 exports.updateTest = async(req, res, next) => {
-    console.log("Update Test");
     current_user_id = req.userData.userId;
     try {
         const test = await Test.findById(req.params.testId);

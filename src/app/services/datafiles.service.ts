@@ -29,7 +29,7 @@ export class DatafileService {
           description: datafile.description, 
           contentPath: datafile.contentPath, 
           errLimit: datafile.errLimit,
-          collection: datafile.collection, 
+          coleccion: datafile.collection, 
           workspace: datafile.workspace
         };
       }),
@@ -44,120 +44,43 @@ export class DatafileService {
   }
   
   getDatafile(datafileId: string) {
-    return this.http.get<{message: string, datafile: any, content: string, esquemas: any[], configurations: any[], tests: any[]}>(BACKEND_URL + datafileId)
+    return this.http.get<{message: string, datafile: any, content: string}>(BACKEND_URL + datafileId)
     .pipe(map( (datafileData) => {
       return { 
         datafile: datafileData.datafile,         
         content: datafileData.content,
-        esquemas: datafileData.esquemas.map( esquema => {
-          return {
-            id: esquema._id,
-            title: esquema.title,
-            contentPath: esquema.contentPath,
-            creationMoment: esquema.creationMoment,
-            datafile: esquema.datafile,
-          };
-        }),
-        configurations: datafileData.configurations.map( configuration => {
-          return {
-            id: configuration._id,
-            title: configuration.title,
-            creationMoment: configuration.creationMoment,
-            errorCode: configuration.errorCode,
-            extraParams: configuration.extraParams,
-            datafile: configuration.datafile,
-          };
-        }),
-        tests: datafileData.tests.map( test => {
-          return {
-            id: test._id,
-            title: test.title,
-            delimiter: test.delimiter,
-            reportPath: test.reportPath,
-            status: test.status,
-            esquema: test.esquema,
-            configurations: test.configurations,
-            creationMoment: test.creationMoment,
-            updateMoment: test.updateMoment,
-            executionMoment: test.executionMoment,
-            totalErrors: test.totalErrors,
-            executable: test.executable,
-            datafile: test.datafile
-          };
-        })
       };
     }));
   }
 
-  addDatafile( title: string, description: string, collectionId: string, workspaceId: string) {
-    let res;
+  addDatafile( title: string, description: string, coleccionId: string, workspaceId: string) {
     const datafileData: Datafile = {
       'id': null,
       'title': title, 
       'description': description, 
       'contentPath': null, 
       'errLimit': null,
-      'collection': collectionId, 
+      'coleccion': coleccionId, 
       'workspace': workspaceId
     };
-    this.http.post<{message: string, datafile: any}>(
-        BACKEND_URL,
-        datafileData
-      )
-      .subscribe( responseData => {
-        res = responseData;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Creating a datafile failed!');
-        } else {
-          resolve('Datafile added successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.post<{message: string, datafile: any}>(BACKEND_URL, datafileData).toPromise();
   }
       
-  updateDatafile(datafileId: string, title: string, description: string, collection:string) {
-    let res;
+  updateDatafile(datafileId: string, title: string, description: string, coleccion:string) {
     const datafileData: Datafile = {
       'id':datafileId,
       'title': title, 
       'description': description, 
       'contentPath': null, 
       'errLimit': null,
-      'collection': collection, 
+      'coleccion': coleccion, 
       'workspace': null
     };
-    console.log(datafileData)
-    this.http.put<{message: string, datafile: any}>(BACKEND_URL + datafileId, datafileData).subscribe( response => {
-      res = response;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          resolve('Updating a datafile failed!');
-        } else {
-          resolve('Datafile updated successfully!');
-        }
-      }, 3000);
-    });
+    return this.http.put<{message: string, datafile: any}>(BACKEND_URL + datafileId, datafileData).toPromise();
   }
   
   deleteDatafile(datafileId: string) {
-    let res;
-    this.http.delete<{message: string}>(BACKEND_URL +  datafileId).subscribe( responseData => {
-        res = responseData;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Deleting a datafile failed!');
-        } else {
-          resolve('Datafile deleted successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.delete<{message: string}>(BACKEND_URL +  datafileId).toPromise();
   }
 
 }

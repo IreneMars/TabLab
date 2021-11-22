@@ -10,11 +10,18 @@ const {
     validateFields,
 } = require("../middlewares");
 const {
+    getEsquemasByDatafile,
     getEsquema,
     createEsquema,
     updateEsquema,
     deleteEsquema
 } = require("../controllers/esquemas");
+
+router.get("/datafile/:datafileId", [
+    validateJWT,
+    check('datafileId', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('datafileId').custom(datafileExistsById),
+], getEsquemasByDatafile);
 
 router.get("/:id", [
     validateJWT,

@@ -16,6 +16,8 @@ import { Workspace } from 'src/app/models/workspace.model';
 import { WorkspacesService } from 'src/app/services/workspaces.service';
 import { SuggestionsService } from '../../../services/suggestions.service';
 import { Suggestion } from '../../../models/suggestion.model';
+import { EsquemaService } from 'src/app/services/esquemas.service';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 
 @Component({
   selector: 'app-test-details',
@@ -56,7 +58,7 @@ export class TestDetailsComponent implements OnInit {
   constructor(public testsService: TestsService, public datafilesService: DatafileService, public uploadsService: UploadsService, 
               public route: ActivatedRoute, public workspacesService: WorkspacesService,
               public authService: AuthService, public usersService: UsersService, public suggestionsService: SuggestionsService,
-              private router: Router){
+              private router: Router, public esquemasService: EsquemaService, public configurationsService: ConfigurationService){
 
                 this.testForm = new FormGroup({
                   'title': new FormControl(null, {validators: [Validators.required]}),
@@ -74,10 +76,10 @@ export class TestDetailsComponent implements OnInit {
   
   ngOnInit(){
     this.isLoading = true;
-    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
     if (this.userIsAuthenticated){
       this.userId = this.authService.getUserId();
+      // Current User
       this.usersService.getUser(this.userId).subscribe(userData=>{
         this.user = {
           id: userData.user._id,
@@ -131,6 +133,7 @@ export class TestDetailsComponent implements OnInit {
               }
               this.selectedConfigurationIDs = testData.configurationIDs;
               // Datafile, esquemas y configuraciones
+              console.log(this.datafileId)
               this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
                 this.contentLines = datafileData.content.split("\n");
                 this.fileContentForm.patchValue({fileContent: datafileData.content});
@@ -142,35 +145,43 @@ export class TestDetailsComponent implements OnInit {
                   description: datafileData.datafile.description,
                   contentPath: datafileData.datafile.contentPath,
                   errLimit: datafileData.datafile.errLimit,
-                  collection: datafileData.datafile.coleccion,
+                  coleccion: datafileData.datafile.coleccion,
                   workspace: datafileData.datafile.workspace,
                 };
-                this.esquemas = datafileData.esquemas;
-                this.configurations = datafileData.configurations;
+                // Esquemas
+                this.esquemasService.getEsquemasByDatafile(this.datafileId);
+                this.esquemasService.getEsquemaUpdateListener().subscribe(esquemaData =>{
+                  this.esquemas = esquemaData.esquemas;
+                  // Configurations
+                  this.configurationsService.getConfigurationsByDatafile(this.datafileId);
+                  this.configurationsService.getConfigurationUpdateListener().subscribe(configurationData =>{
+                    this.configurations = configurationData.configurations;
                 
-                if (this.datafile.contentPath) {
-                  const nameWExtension = datafileData.datafile.contentPath.split('/');
-                  const splitNameWExtension = nameWExtension[3].split('.');
-                  this.extension = splitNameWExtension[1];
-                  
-                  const nameWDate = splitNameWExtension[0].split('-');
-                  const name = nameWDate[0];
-                  this.fileName = name + '.' + this.extension;
-                }
-                this.configurations.forEach(config => {
-                  const extraParamsJSON = JSON.stringify(config.extraParams).toString();
-                  const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
-                  const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
-                  const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');      
-                  this.formattedConfigs.push({...config, extraParamsStr});
-                });
-
-                // Suggestions
-                this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
-                this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
-                  this.suggestions = suggestionData.suggestions;
-                  this.isLoading = false;
-                  this.edit = false;
+                    if (this.datafile.contentPath) {
+                      const nameWExtension = datafileData.datafile.contentPath.split('/');
+                      const splitNameWExtension = nameWExtension[3].split('.');
+                      this.extension = splitNameWExtension[1];
+                      
+                      const nameWDate = splitNameWExtension[0].split('-');
+                      const name = nameWDate[0];
+                      this.fileName = name + '.' + this.extension;
+                    }
+                    this.configurations.forEach(config => {
+                      const extraParamsJSON = JSON.stringify(config.extraParams).toString();
+                      const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
+                      const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
+                      const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');      
+                      this.formattedConfigs.push({...config, extraParamsStr});
+                    });
+    
+                    // Suggestions
+                    this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
+                    this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
+                      this.suggestions = suggestionData.suggestions;
+                      this.isLoading = false;
+                      this.edit = false;
+                    });
+                  });
                 });
               });
             });
@@ -191,6 +202,7 @@ export class TestDetailsComponent implements OnInit {
   }
 
   async onSave() {
+    this.isSavingTest = true;
     if (this.testForm.invalid){
       return Object.values(this.testForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
@@ -200,21 +212,30 @@ export class TestDetailsComponent implements OnInit {
         }
       });
     }
-    this.isSavingTest = true;
     const values = this.testForm.getRawValue();
     this.test.title =  values.title;
     this.test.executable = true;
     await this.testsService.updateTest(this.test);
-    this.testForm.reset({});
-    this.router.navigateByUrl('/', {skipLocationChange: true})
-    .then(() => {
-      this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}/test/${this.testId}`]);
+    this.testsService.getTest(this.testId).subscribe( testData => {
+      this.test = {
+        id: testData.test._id,
+        title: testData.test.title,
+        delimiter: testData.test.delimiter,
+        reportPath: testData.test.reportPath,
+        status: testData.test.status,
+        esquema: testData.test.esquema,
+        configurations: testData.test.configurations,
+        creationMoment: testData.test.creationMoment,
+        updateMoment: testData.test.updateMoment,
+        executionMoment: testData.test.executionMoment,
+        totalErrors: testData.test.totalErrors,
+        executable: testData.test.executable,
+        datafile: testData.test.datafile,
+      };
+      this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
+      this.edit = false;
       this.isSavingTest = false;
-    }).catch( err => {
-      console.log("Error on onSave method: "+err);
-      this.isSavingTest = false;
-
-    });    
+    });
   }
 
   async onSaveContent() {
@@ -293,12 +314,12 @@ export class TestDetailsComponent implements OnInit {
     this.suggestionQueryResult = null;
     const result = await this.suggestionsService.applySuggestion(suggestionId, operation,this.test.delimiter, this.contentLines);
     this.suggestionQueryResult = result.data.rowContent;
-    console.log(result)
     if(operation==="deleteRow"){
       const newFile = this.generateFile(result.data.content)
       await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", newFile);
       await this.suggestionsService.deleteSuggestion(suggestionId);
       // Datafile, esquemas y configuraciones
+      console.log(this.datafileId)
       this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
         this.contentLines = datafileData.content.split("\n");
         this.fileContentForm.patchValue({fileContent: datafileData.content});

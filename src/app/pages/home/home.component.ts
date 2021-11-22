@@ -19,11 +19,11 @@ export class HomeComponent implements OnInit{
   }
   
   ngOnInit(): void {
-    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
     if(this.userIsAuthenticated){
       const data = this.authService.getUserData();
       this.userId = data.userId;
+      // Current User
       this.usersService.getUser(this.userId).subscribe(userData => {
         this.user = {
             id: userData.user._id,

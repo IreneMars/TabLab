@@ -65,7 +65,6 @@ export class InvitationService {
   }
 
   addInvitation( receiverEmail: string, workspaceId: string) {
-    let res: any;
     const invitation: Invitation = { 
       'id':null, 
       'sender':null, 
@@ -73,23 +72,10 @@ export class InvitationService {
       'status':'pending', 
       'workspace': workspaceId 
     };
-
-    this.http.post<{message: string, invitation: any}>(BACKEND_URL, invitation).subscribe( responseData => {
-      res = responseData;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Creating an invitation failed!');
-        } else {
-          resolve('Invitation added successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.post<{message: string, invitation: any}>(BACKEND_URL, invitation).toPromise();
   }
 
   updateInvitation(invitationId: string, status: string){
-    let res: any;
     const invitationData: Invitation = { 
       'id':invitationId, 
       'sender':null, 
@@ -97,34 +83,10 @@ export class InvitationService {
       'status':status, 
       'workspace': null 
     };
-    this.http.put<{message: string, invitation: any}>(BACKEND_URL + invitationId, invitationData)
-      .subscribe( responseData => {
-        res = responseData
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Updating an invitation failed!');
-        } else {
-          resolve('Invitation updated successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.put<{message: string, invitation: any}>(BACKEND_URL + invitationId, invitationData).toPromise();
   }
 
   deleteInvitation(invitationId: string){
-    let res: any;
-    this.http.delete<{message: string}>(BACKEND_URL +  invitationId).subscribe( responseData => {
-      res = responseData;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Deleting an invitation failed!');
-        } else {
-          resolve('Invitation deleted successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.delete<{message: string}>(BACKEND_URL +  invitationId).toPromise();
   }
 }

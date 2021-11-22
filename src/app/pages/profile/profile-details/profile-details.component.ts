@@ -10,7 +10,8 @@ import { WorkspacesService } from "src/app/services/workspaces.service";
     templateUrl: './profile-details.component.html',
     styleUrls: ['./profile-details.component.css']
   })
-  export class ProfileDetailsComponent implements OnInit{
+export class ProfileDetailsComponent implements OnInit{
+    userIsAuthenticated          : boolean = false;
     user: User;
     userId: string;
     isLoading: boolean = false;
@@ -18,23 +19,27 @@ import { WorkspacesService } from "src/app/services/workspaces.service";
                 public route: ActivatedRoute, public workspacesService: WorkspacesService) {}
 
     ngOnInit() {
-        this.route.paramMap.subscribe((paramMap: ParamMap) => {
-            this.userId = paramMap.get('userId');
-            this.isLoading = true;
-            this.usersService.getUser(this.userId).subscribe(userData => {
-                this.user = {
-                    id: userData.user.id,
-                    username: userData.user.username,
-                    email: userData.user.email,
-                    password: userData.user.password,
-                    photo: userData.user.photo,
-                    name: userData.user.name,
-                    role: userData.user.role,
-                    status: userData.user.status,
-                    google: userData.user.google
-                };
-                this.isLoading = false;
-            });
-        });    
+        this.isLoading = true;
+        this.userIsAuthenticated = this.authService.getIsAuth();
+        if (this.userIsAuthenticated){
+            this.route.paramMap.subscribe((paramMap: ParamMap) => {
+                this.userId = paramMap.get('userId');
+                // Current User
+                this.usersService.getUser(this.userId).subscribe(userData => {
+                    this.user = {
+                        id: userData.user.id,
+                        username: userData.user.username,
+                        email: userData.user.email,
+                        password: userData.user.password,
+                        photo: userData.user.photo,
+                        name: userData.user.name,
+                        role: userData.user.role,
+                        status: userData.user.status,
+                        google: userData.user.google
+                    };
+                    this.isLoading = false;
+                });
+            });    
+        }
     }
 }

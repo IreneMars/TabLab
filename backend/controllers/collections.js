@@ -111,6 +111,7 @@ exports.deleteCollection = async(req, res) => {
                 message: "You are not authorized to delete a collection from this workspace."
             });
         }
+        const collectionTitle = collection.title;
         await Collection.deleteOne({ _id: req.params.id });
 
         const user = await User.findById(current_user_id);
@@ -119,7 +120,7 @@ exports.deleteCollection = async(req, res) => {
             message: "{{author}} eliminó la colección {{coleccion}} del espacio de trabajo {{workspace}}",
             workspace: { 'id': workspace._id, 'title': workspace.title },
             author: { 'id': current_user_id, 'name': user.name },
-            coleccion: { 'id': collection._id, 'title': collection.title },
+            coleccion: { 'id': null, 'title': collectionTitle },
             datafile: null,
             creationMoment: null
         });

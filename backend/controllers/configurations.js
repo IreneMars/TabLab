@@ -1,5 +1,20 @@
 const { Role, Configuration, Datafile } = require("../models");
 
+exports.getConfigurationsByDatafile = async(req, res) => {
+    try {
+        const configurations = await Configuration.find({ 'datafile': req.params.datafileId });
+
+        return res.status(200).json({
+            message: "Configurations fetched successfully!",
+            configurations: configurations,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Fetching configurations failed!"
+        });
+    }
+};
+
 exports.getConfiguration = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {

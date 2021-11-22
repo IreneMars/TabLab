@@ -13,6 +13,7 @@ const {
 const {
     getTests,
     getTestsByWorkspace,
+    getTestsByDatafile,
     getTest,
     createTest,
     updateTest,
@@ -28,6 +29,14 @@ router.get("/workspace/:workspaceId", [
     check('workspaceId', 'The ID is not a valid Mongo ID').isMongoId(),
     check('workspaceId').custom(workspaceExistsById),
 ], getTestsByWorkspace);
+
+router.get("/workspace/:workspaceId/datafile/:datafileId", [
+    validateJWT,
+    check('workspaceId', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('workspaceId').custom(workspaceExistsById),
+    check('datafileId', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('datafileId').custom(datafileExistsById),
+], getTestsByDatafile);
 
 router.get("/:id", [
     validateJWT,

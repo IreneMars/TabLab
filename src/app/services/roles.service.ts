@@ -11,26 +11,13 @@ export class RolesService {
   constructor(private http: HttpClient) {}
 
   addRole(workspaceId: string, userId: string){
-    let res: any;
     const role: Role = {
       'id': null,
       'role': null, 
       'workspace': workspaceId, 
       'user': userId
     };
-    this.http.post<{message: string, role: any}>(BACKEND_URL, role).subscribe( responseData => {
-      res = responseData;  
-    });
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Creating a role failed!');
-        } else {
-          resolve('Role added successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.post<{message: string, role: any}>(BACKEND_URL, role).toPromise();
   }
   
   updateRole(roleId: string, roleName: string, workspaceId: string){
@@ -41,34 +28,11 @@ export class RolesService {
       'user': null,
       'workspace': workspaceId
     };
-    this.http.put<{message: string, role: any}>(BACKEND_URL + roleId, role).subscribe( response => {
-      res = response;
-    });
-    return new Promise((resolve, reject) => {
-      
-      if (res === undefined) {
-        reject('Updating a role failed!');
-      } else {
-        resolve('Role updated successfully!');
-      }
-      
-    });
+    return this.http.put<{message: string, role: any}>(BACKEND_URL + roleId, role).toPromise();
   }
 
   deleteRole(workspaceId: string){
-    let res: any;
-    this.http.delete<{message: string}>(BACKEND_URL + workspaceId).subscribe( responseData => {
-      res = responseData;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Deleting a role failed!');
-        } else {
-          resolve('Role deleted successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.delete<{message: string}>(BACKEND_URL + workspaceId).toPromise();
   }
   
 }

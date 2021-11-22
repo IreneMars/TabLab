@@ -15,7 +15,6 @@ export class TerminalsService {
   }
   
   updateTerminal(terminalId: string, userId:string, content: string[]){
-    let res: any;
     const terminal: Terminal = {
       'id': terminalId,
       'content': content,

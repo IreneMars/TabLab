@@ -1,17 +1,15 @@
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { HttpClient } from '@angular/common/http';
-import { Router } from "@angular/router";
 
 const BACKEND_URL = environment.apiUrl + '/uploads/';
 
 @Injectable({ providedIn: 'root' })
 export class UploadsService {
   
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
   updatePhoto(userId: string, photo: string | File){
-    let res;
     let userData: any | FormData;
     if (typeof(photo) === 'object') { 
         userData = new FormData();
@@ -21,25 +19,10 @@ export class UploadsService {
     } else { 
         userData = {'userId':userId,'entity':'users','filePath': photo}; 
     } 
-    this.http
-      .put(BACKEND_URL + userId, userData)
-      .subscribe( response => {
-        res = response;
-    });
-    
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject();
-        } else {
-          resolve(true);
-        }
-      }, 1000);
-    });
+    return this.http.put(BACKEND_URL + "users/" + userId, userData).toPromise()
   }
 
   updateFile(userId: string, datafileId: string, operation: string, file: string | File){
-    let res: any;
     let datafileData: any | FormData;
     if (typeof(file) === 'object') { 
       datafileData = new FormData();
@@ -51,20 +34,28 @@ export class UploadsService {
     } else { 
       datafileData = {'userId':userId, 'datafileId':datafileId,'entity':'datafiles','operation':operation,'filePath': file}; 
     } 
-    this.http
-      .put(BACKEND_URL + datafileId, datafileData)
-      .subscribe( response => {
-        res = response;
-    });
-    
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject();
-        } else {
-          resolve(true);
-        }
-      }, 1000);
-    });
+    return this.http.put(BACKEND_URL + "datafiles/" + datafileId, datafileData).toPromise();
+  }
+
+  updateEsquemaContent(esquemaId: string, fileName: string, contentPath: string, datafileId: string, esquemaContent: string, operation: string){
+    const esquemaData = {
+      'id': esquemaId,
+      'fileName':null,
+      'contentPath': contentPath, 
+      'esquemaContent': esquemaContent,
+      'datafile':datafileId,
+      'operation': operation,
+      'entity':'esquemas'
+    };
+
+    if (fileName){//Manual creation
+      esquemaData.fileName = fileName;
+      const split = fileName.split('.');
+      const extension = '.' + split[1].toLowerCase();
+      const newFileName = split[0].toLowerCase().split(' ').join('_') + "-" + Date.now() + extension;
+      const localPath = 'backend/uploads/esquemas/' + newFileName;            
+      esquemaData.contentPath = localPath;
+    }
+    return this.http.put<{message: string, fileName: any, filePath:any}>(BACKEND_URL+'esquema', esquemaData).toPromise();
   }
 }

@@ -1,18 +1,27 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Activity } from 'src/app/models/activity.model';
+import { Collection } from 'src/app/models/collection.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CollectionsService } from 'src/app/services/collections.service';
+import { ActivitiesService } from '../../../services/activities.service';
 
 @Component({
   selector: 'app-collection-create',
   templateUrl: './collection-create.component.html',
 })
 export class CollectionCreateComponent implements OnInit{
+  userId                          : string = "";
+  userIsAuthenticated             : boolean = false;
   collectionForm                  : FormGroup;
-  isLoading                       : boolean = false;
+  isSaving                        : boolean = false;
   invalidTitle                    : boolean = false;
   workspaceId                     : string;
+  @Input() collections            : Collection[];
+  @Output() collectionsChange     : EventEmitter<Collection[]> = new EventEmitter();
+  @Input() activities             : Activity[];
+  @Output() activitiesChange      : EventEmitter<Activity[]> = new EventEmitter();
   @Input() editMode               : boolean;
   @Output() editModeChange        : any = new EventEmitter();
   @Input()  close                 : boolean;
@@ -22,7 +31,7 @@ export class CollectionCreateComponent implements OnInit{
   @Input()  editCollection        : any;
 
   constructor(public collectionsService: CollectionsService, public authService: AuthService, private formBuilder: FormBuilder,
-              private router: Router, private activatedRoute: ActivatedRoute) {
+              public activitiesService: ActivitiesService, private activatedRoute: ActivatedRoute) {
       this.createForm();
 }
 
@@ -33,13 +42,17 @@ export class CollectionCreateComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.workspaceId = params.get('workspaceId');
-    });
-    if (this.editCollection) {
-      this.editMode = true;
-      this.collectionForm.reset({
-        title: this.editCollection.title
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+      this.activatedRoute.paramMap.subscribe(params => {
+        this.workspaceId = params.get('workspaceId');
+        if (this.editCollection) {
+          this.editMode = true;
+          this.collectionForm.reset({
+            title: this.editCollection.title
+          });
+        }
       });
     }
   }
@@ -55,22 +68,49 @@ export class CollectionCreateComponent implements OnInit{
         }
       });
   }
-    this.isLoading = true;
+    this.isSaving = true;
     const values = this.collectionForm.getRawValue();
 
     if (this.editMode) {
-      await this.collectionsService.updateCollection(this.editCollection.id, values.title, this.workspaceId);
-    } else {
-      await this.collectionsService.addCollection(values.title, this.workspaceId);
-    }
-    this.collectionForm.reset();
-    this.router.navigateByUrl('/', {skipLocationChange: true})
-      .then(() => {
-        this.router.navigate([`/workspace/${this.workspaceId}`]);
-      }).catch( err => {
-        console.log("Error on onSave() method: "+err)
+      this.collectionsService.updateCollection(this.editCollection.id, values.title, this.workspaceId)
+      .then(response=>{
+        // Collections
+        this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+        this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: Collection[]})=>{
+          this.collectionsChange.emit(collectionData.collections);
+          // Activities
+          this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+          this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
+            this.activitiesChange.emit(activityData.activities)
+            this.isSaving = false;
+            this.collectionForm.reset();
+          });
+        }); 
+      })
+      .catch(err=>{
+        console.log("Error on onSave() (edit mode) method: "+err.message);
       });
-      this.isLoading = false;
+    } else {
+      this.collectionsService.addCollection(values.title, this.workspaceId)
+      .then(response=>{
+        // Collections
+        this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+        this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: Collection[]})=>{
+          this.collectionsChange.emit(collectionData.collections);
+          // Activities
+          this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+          this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
+            this.activitiesChange.emit(activityData.activities)
+            this.isSaving = false;
+            this.collectionForm.reset();
+          });
+        }); 
+      })
+      .catch(err=>{
+        console.log("Error on onSave() (create mode) method: "+err.message);
+      });
+    }
+
   }
 
   onCancel() {

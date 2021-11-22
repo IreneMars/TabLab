@@ -45,18 +45,19 @@ exports.createInvitation = async(req, res, next) => {
     const current_user_id = req.userData.userId;
 
     try {
-        const configurations = GlobalConfiguration.find();
+        const configurations = await GlobalConfiguration.find();
         const configuration = configurations[0];
         const roles = await Role.find({ workspace: req.body.workspace });
+
         if (roles.length === configuration.limitUsers) {
             return res.status(500).json({
                 message: `This workspace is not allowed to have more than ${configuration.limitUsers} users!`
             });
         }
         const receiver = await User.findOne({ "email": req.body.receiver });
-        if (receiver) {
+        if (!receiver) {
             return res.status(500).json({
-                message: "Creating an invitation failed!"
+                message: "Creating an invitation failed! User not found!"
             });
         }
         if (receiver._id == current_user_id) {

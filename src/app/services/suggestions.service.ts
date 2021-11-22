@@ -50,7 +50,6 @@ export class SuggestionsService {
       'rawData': rawData, 
       'testDelimiter':testDelimiter
     };
-    console.log(suggestionsData)
     return this.http.post<{message: string, suggestions: any[]}>(BACKEND_URL+"add/"+datafileId,suggestionsData).toPromise();
   }
   

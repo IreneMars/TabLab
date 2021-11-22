@@ -1,8 +1,8 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="datafileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Crear fichero de datos</h5>
+                <h5 class="modal-title">Crear fichero de datos</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -38,10 +38,15 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary" *ngIf="!datafileForm.valid" (click)="onSave()">Crear fichero de datos</button>
-
-                <button type="submit" class="btn btn-primary" *ngIf="datafileForm.valid" data-bs-dismiss="modal" (click)="onSave()">Crear fichero de datos</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" *ngIf="!datafileForm.valid" (click)="onSave()">
+                    Crear fichero de datos
+                </button>
+                <button type="submit" class="btn btn-primary" *ngIf="datafileForm.valid" data-bs-dismiss="modal" (click)="onSave()">
+                    Crear fichero de datos
+                </button>
             </div>
         </div>
     </div>

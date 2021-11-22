@@ -1,11 +1,11 @@
-<div class="row ps-2 pe-2 complete-height">
+<div class="row ps-2 pe-2 complete-height" *ngIf="!isLoading">
     <div class="col-2 collections p-0">
-        <app-collection-list [workspaceId]="workspaceId" [collections]="collections" [orphanedDatafiles]="orphanedDatafiles" [(isLoading)]="isLoading"></app-collection-list>
+        <app-collection-list [workspaceId]="workspaceId" [(collections)]="collections" [orphanedDatafiles]="orphanedDatafiles" [(isLoading)]="isLoading"></app-collection-list>
     </div>
     <div class="col-7" *ngIf="!isLoading">
         <app-datafile-edit *ngIf="edit" [(edit)]="edit" [(datafile)]="datafile" [datafileId]="datafileId" [workspaceId]="workspaceId"></app-datafile-edit>
 
-        <div class="container" *ngIf="!isSaving && !isDeleting">
+        <div class="container" *ngIf="!isDeleting">
             <div class="row mt-4" *ngIf="!edit">
 
                 <div class="col-10">
@@ -39,13 +39,29 @@
                     <h2 class="mb-0">Contenido</h2>
                 </div>
                 <div class="col-10 ps-0" *ngIf="!content">
-                    <div>
-                        <form [formGroup]="fileForm" (ngSubmit)="onSave()">
-                            <input type="file" (change)="onFilePicked($event)" formControlName="contentPath" class="form-control form-control-sm" name="uploaded_file">
-                        </form>
+                    <div class="container p-0">
+                        <div class="row">
+                            <div class="col-2 d-flex justify-content-end p-0">
+                                <div *ngIf="isUploading">
+                                    <button class="btn btn-outline-secondary btn-sm uploading" type="button" disabled>
+                                        Subiendo <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <form [formGroup]="fileForm" (ngSubmit)="onSave()">
+                                    <input type="file" (change)="onFilePicked($event)" formControlName="contentPath" class="form-control form-control-sm" name="uploaded_file">
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-10 d-flex justify-content-end ps-0" *ngIf="content">
+                    <div class="me-1" *ngIf="isUploading">
+                        <button class="btn btn-outline-secondary btn-sm uploading" type="button" disabled>
+                        Subiendo <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>
+                    </div>
                     <div class="me-1">
                         <form [formGroup]="fileForm" (ngSubmit)="onSave()">
                             <input type="file" (change)="onFilePicked($event)" formControlName="contentPath" class="form-control form-control-sm" name="uploaded_file">
@@ -59,13 +75,16 @@
                     </div>
                     <div class="me-1">
                         <button class="btn btn-outline-light btn-sm" type="button" (click)="onEditContent()" *ngIf="content">
-                        <i class="fas fa-pen"></i>
-                      </button>
+                            <i class="fas fa-pen"></i>
+                        </button>
                     </div>
                     <div>
-                        <button class="btn btn-outline-light btn-sm" type="button" (click)="onDeleteFile()" *ngIf="content">
-                        <i class="fas fa-trash-alt danger"></i>
-                      </button>
+                        <button class="btn btn-outline-light btn-sm" type="button" (click)="onDeleteFile()" *ngIf="content && !isDeletingFile">
+                            <i class="fas fa-trash-alt danger"></i>
+                        </button>
+                        <button class="btn btn-outline-light btn-sm" type="button" disabled *ngIf="content && isDeletingFile">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>
                     </div>
                 </div>
 
@@ -85,7 +104,12 @@
                 </div>
                 <div class="col-6 mt-2 d-flex justify-content-end">
                     <div>
-                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content" [disabled]="disabledContent" (click)="onSave()">Guardar cambios</button>
+                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content && !isSaving" [disabled]="disabledContent" (click)="onSave()">
+                            Guardar cambios
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content && isSaving" disabled>
+                            Guardar cambios <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -100,13 +124,13 @@
     </div>
     <div class="col-3" *ngIf="!isLoading">
         <div class="container ps-0">
-            <app-esquema-list [datafileId]="datafileId" [workspaceId]="workspaceId" [esquemas]="esquemas" [infer]="infer"></app-esquema-list>
+            <app-esquema-list [datafile]="datafile" [workspaceId]="workspaceId" [(esquemas)]="esquemas" [infer]="infer"></app-esquema-list>
         </div>
         <div class="container ps-0">
-            <app-configuration-list [datafileId]="datafileId" [workspaceId]="workspaceId" [configurations]="configurations"></app-configuration-list>
+            <app-configuration-list [datafileId]="datafileId" [workspaceId]="workspaceId" [(configurations)]="configurations"></app-configuration-list>
         </div>
         <div class="container ps-0">
-            <app-test-list [datafileId]="datafileId" [workspaceId]="workspaceId" [tests]="tests" [esquemas]="esquemas" [configurations]="formattedConfigs"></app-test-list>
+            <app-test-list [datafileId]="datafileId" [workspaceId]="workspaceId" [(tests)]="tests" [esquemas]="esquemas" [configurations]="formattedConfigs"></app-test-list>
         </div>
     </div>
 </div>

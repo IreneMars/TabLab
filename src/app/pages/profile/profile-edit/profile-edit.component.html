@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5" *ngIf="!isLoading">
     <div class="row justify-content-center">
         <div class="col-9 col-auto ">
             <div class="row">
@@ -48,8 +48,12 @@
                         </small>
                             </mat-error>
                         </div>
-                        <div *ngIf="!isLoading">Cambios guardados!</div>
-                        <button class="btn btn-primary me-1 mt-2" type="submit">Guardar Cambios</button>
+                        <button type="submit" class="btn btn-primary me-1 mt-2" *ngIf="!isSaving">
+                            Guardar Cambios
+                        </button>
+                        <button type="submit" class="btn btn-primary me-1 mt-2" disabled *ngIf="isSaving">
+                            Guardar Cambios <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>
                         <button class="btn btn-secondary mt-2" (click)="onCancelUserForm()" [disabled]="pristineUser">Cancelar</button>
                     </form>
                 </div>

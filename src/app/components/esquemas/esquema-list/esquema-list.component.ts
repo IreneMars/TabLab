@@ -1,9 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DatafileService } from '../../../services/datafiles.service';
 import { EsquemaService } from 'src/app/services/esquemas.service';
 import { Esquema } from '../../../models/esquema.model';
+import { UploadsService } from 'src/app/services/uploads.service';
+import { Datafile } from '../../../models/datafile.model';
 
 @Component({
   selector: 'app-esquema-list',
@@ -13,18 +15,22 @@ import { Esquema } from '../../../models/esquema.model';
 export class EsquemaListComponent implements OnInit {
   userId               : string;
   userIsAuthenticated  : boolean = false;
+  isSaving             : boolean = false;
+  isAdding             : boolean = false;
+  isInferring            : boolean = false;
   isDeleting           : boolean = false;
-  @Input() datafileId  : string;
+  esquemaContent       : any;
+  @Input() datafile    : Datafile;
   @Input() workspaceId : string;
   @Input() esquemas    : Esquema[];
+  @Output() esquemasChange : EventEmitter<any[]> = new EventEmitter<any[]>();
   @Input() infer       : boolean;
   savefileChange       : boolean = false;
   esquema              : Esquema = null;
-  inferring            : boolean = false;
   esquemaForm          : FormGroup;
   
   constructor(public datafilesService: DatafileService, public route: ActivatedRoute, 
-              private router: Router, private esquemasService: EsquemaService){
+              private esquemasService: EsquemaService, public uploadsService: UploadsService){
                 this.esquemaForm = new FormGroup({
                   'title': new FormControl('', {validators: [Validators.required,Validators.minLength(1), Validators.maxLength(100)]}),
                   'esquemaContent': new FormControl({value: '', disabled: true}),
@@ -35,11 +41,19 @@ export class EsquemaListComponent implements OnInit {
   ngOnInit(){}
 
   async onDelete( esquemaId: string ){
-    await this.esquemasService.deleteEsquema(esquemaId);
-    this.router.navigateByUrl('/', {skipLocationChange: true})
-      .then(() => {
-        this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-      }).catch( err => {});
+    this.isDeleting = true;
+    this.esquemasService.deleteEsquema(esquemaId)
+    .then(response=>{
+      // Esquemas
+      this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+      this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
+        this.esquemasChange.emit(esquemaData.esquemas)
+        this.isDeleting = false;
+      }); 
+    })
+    .catch(err=>{
+      console.log("Error on onDelete method: "+err.message);
+    });
   }
 
   setSaveMode(newvalue: boolean) {
@@ -60,7 +74,7 @@ export class EsquemaListComponent implements OnInit {
         title: esquemaData.esquema.title, 
         esquemaContent: esquemaData.content
       });
-      (document.getElementById('esquemaContent') as HTMLInputElement).value = this.esquemaForm.get('esquemaPath').value;
+      this.esquemaContent = this.esquemaForm.get('esquemaPath').value;
    });
   }
 
@@ -70,25 +84,30 @@ export class EsquemaListComponent implements OnInit {
   }
 
   onInfer() {
-    this.inferring = true;
-    this.esquemasService.addEsquema(null, null, null, this.datafileId, this.workspaceId)
-    .then(response => {
-       this.inferring = false;
-       this.router.navigateByUrl('/', {skipLocationChange: true})
-       .then(() => {
-         this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-       })
-       .catch( err => {
-        console.log("Error on onInfer method: "+ err);
-       });
-     })
-     .catch(error => {
-        console.log("Error on onInfer method: "+error);
-     });
-  }
+    console.log(this.datafile)
+    this.isInferring = true;
+    this.uploadsService.updateEsquemaContent(null, null, null, this.datafile.id, null, 'infer')
+      .then(updateResponse=>{
+        
+        this.esquemasService.addEsquema(this.datafile.title, this.datafile.id, updateResponse.filePath, 'infer')
+        .then(response => {
+          // Esquemas
+          this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+          this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
+            this.esquemasChange.emit(esquemaData.esquemas)
+            this.isInferring = false;
+          });      
+         })
+        .catch(err => {
+          console.log("Error on onUpdateContent (infer mode) method: "+err.message.message);
+        });
+  })
+  .catch(err=>{
+    console.log("Error on onInfer method: "+err.message.message);
+  });
 
 }
-
+}
 
 
 

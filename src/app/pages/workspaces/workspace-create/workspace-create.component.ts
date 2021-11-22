@@ -46,18 +46,20 @@ export class WorkspaceCreateComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.isLoading = true;
-    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.userId = this.authService.getUserId();
-    // Global config
-    this.globalConfigService.getGlobalConfig().subscribe((configurationData)=>{
-      this.globalConfig = {
-        id: configurationData.globalConfiguration._id,
-        limitUsers: configurationData.globalConfiguration.limitUsers,
-        limitWorkspaces:configurationData.globalConfiguration.limitWorkspaces
-      }
-      this.isLoading = false;
-    });
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+      // Global config
+      this.globalConfigService.getGlobalConfig().subscribe((configurationData)=>{
+        this.globalConfig = {
+          id: configurationData.globalConfiguration._id,
+          limitUsers: configurationData.globalConfiguration.limitUsers,
+          limitWorkspaces:configurationData.globalConfiguration.limitWorkspaces
+        }
+        this.isLoading = false;
+      });
+    }
+    this.invitations = []
   }
 
   ngOnDestroy() {
@@ -84,7 +86,7 @@ export class WorkspaceCreateComponent implements OnInit, OnDestroy{
       this.router.navigate(['/workspaces']);
     })
     .catch(err=>{
-      console.log("Error on onSave() method: "+err)
+      console.log("Error on onSave() method: "+err.message)
     });
     this.isLoading = false;
   }

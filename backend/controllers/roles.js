@@ -3,7 +3,7 @@ const { Role, Workspace, GlobalConfiguration } = require("../models");
 exports.createRole = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {
-        const configurations = GlobalConfiguration.find();
+        const configurations = await GlobalConfiguration.find();
         const configuration = configurations[0];
         const roles = await Role.find({ workspace: req.body.workspace });
         if (roles.length === configuration.limitUsers) {

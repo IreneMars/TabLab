@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit{
     console.log("User is authenticated: "+this.authService.getIsAuth())
     if(this.userIsAuthenticated){
       this.userId = this.authService.getUserId();
+      // Current User
       this.usersService.getUser(this.userId).subscribe(userData => {
         this.user = {
           id: userData.user.id,
@@ -62,6 +63,7 @@ export class HeaderComponent implements OnInit{
           status: userData.user.status,
           google: userData.user.google
         }
+        // Invitations
         this.invitationsService.getInvitationsHeader().subscribe( (invitationData: {invitations: Invitation[]}) => {
           this.invitations = invitationData.invitations;
           for (var invitation of this.invitations) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatafileService } from '../../../services/datafiles.service';
@@ -14,13 +14,13 @@ export class TestListComponent implements OnInit{
   userId                  : string;
   userIsAuthenticated     : boolean = false;
   isDeleting              : boolean = false;
-  
-  testForm                : FormGroup;
-  savefileChange          : boolean = false;
-  
+  isSaving                : boolean = false;
+  testForm                : FormGroup;  
   @Input() datafileId     : string;
   @Input() workspaceId    : string;
   @Input() tests          : Test[];
+  @Output() testsChange         : EventEmitter<any[]> = new EventEmitter<any[]>();
+
   //@Input() test           : Test;
   @Input() esquemas       : any[];
   @Input() configurations : any[];
@@ -32,14 +32,17 @@ export class TestListComponent implements OnInit{
   ngOnInit(){}
   
   async onDelete( testId: string ){
-    await this.testsService.deleteTest(testId);
-    this.router.navigateByUrl('/', {skipLocationChange: true})
-      .then(() => {
-        this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-      })
-      .catch( err => {
-        console.log("Error on onDelete method: "+err)
+    this.testsService.deleteTest(testId)
+    .then(testResponse=>{
+      this.testsService.getTestsByDatafile(this.datafileId, this.workspaceId);
+      this.testsService.getTestUpdateListener().subscribe(testData=>{
+        this.testsChange.emit(testData.tests);
       });
+    })
+    .catch(err=>{
+      console.log("Error on onDelete() method: "+err.message.message);
+    });
+    
   }
 
 }

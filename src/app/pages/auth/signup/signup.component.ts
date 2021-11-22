@@ -58,12 +58,15 @@ export class SignupComponent implements OnInit{
     this.isLoading = true;
     const values = this.signupForm.getRawValue();
     this.usersService.addUser(values.username, values.email, values.password)
-    .then(()=>{
+    .then(response =>{
       this.router.navigate(['/']);
     })
     .catch(err=>{
-      console.log("Error on onSignUp() method: "+err)
+      console.log("Error creating an user: "+err.message)
     });
+    
+
+    
   }
 }
 

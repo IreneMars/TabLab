@@ -42,7 +42,6 @@ const userSchema = Schema({
 
 userSchema.pre('save', function(next) {
     this.name = this.username; // considering _id is input by client
-    this.photo = "http://localhost:3000/assets/default-user-little.png";
     next();
 });
 

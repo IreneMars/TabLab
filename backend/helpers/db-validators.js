@@ -14,7 +14,6 @@ const {
 
 const isValidRole = async(role = '') => {
     const roleExists = ["USER", "ADMIN"].includes(role);
-    //const roleExists = await Role.findOne({ role });
     if (!roleExists) {
         throw new Error(`The role: ${ role } is not contemplated in the BD.`);
     }
@@ -26,15 +25,6 @@ const emailExists = async(email = '') => {
         throw new Error(`The email: ${ email }, is already registered.`);
     }
 };
-
-const allowedEntities = (entity = '', entities = []) => {
-
-    const included = entities.includes(entity);
-    if (!included) {
-        throw new Error(`The entity ${ entity } is not allowed (allowed entities:${ entities })`);
-    }
-    return true;
-}
 
 /**
  * Collection
@@ -160,7 +150,6 @@ const suggestionExistsById = async(id) => {
 module.exports = {
     isValidRole,
     emailExists,
-    allowedEntities,
     collectionExistsById,
     configurationExistsById,
     datafileExistsById,

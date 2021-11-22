@@ -81,7 +81,6 @@ export class UsersService {
   }
 
   addUser(username: string, email: string, password: string) {
-    let res: any;
     const authData: User = { 
       'id':null, 
       'username':username, 
@@ -93,23 +92,10 @@ export class UsersService {
       'status':null, 
       'google':null 
     };
-    this.http.post<{message: string, user: any}>(BACKEND_URL, authData).subscribe( response => {
-      res = response;
-    });
-   
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Creating an user failed!');
-        } else {
-          resolve('User created successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.post<{message: string, user: any}>(BACKEND_URL, authData).toPromise();
   }
 
   updateUser(userId: string, name: string, username: string, email: string, role: string, actualPass: string, newPass: string, repeatPass: string){
-    let res;
     const userData = {
       'id': userId, 
       'name': name, 
@@ -120,35 +106,11 @@ export class UsersService {
       'newPass': newPass, 
       'repeatPass': repeatPass
     };
-    this.http.put<{message: string, user: any}>(BACKEND_URL + userId, userData).subscribe( responseData => {
-        res = responseData;
-    });
-    
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Updating an user failed!');
-        } else {
-          resolve('User updated successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.put<{message: string, user: any}>(BACKEND_URL + userId, userData).toPromise();
   }
 
   deleteAccount(userId: string) {
-    let res: any;
-    this.http.delete<{message: string}>(BACKEND_URL + userId).subscribe( responseData => {
-        res = responseData;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Deleting an user failed!');
-        } else {
-          resolve('User deleted successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.delete<{message: string}>(BACKEND_URL + userId).toPromise();
   }
 
 

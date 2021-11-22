@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Activity } from 'src/app/models/activity.model';
+import { ActivitiesService } from 'src/app/services/activities.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { WorkspacesService } from 'src/app/services/workspaces.service';
 import { Workspace } from '../../../models/workspace.model';
@@ -10,17 +12,18 @@ import { Workspace } from '../../../models/workspace.model';
   templateUrl: './workspace-edit.component.html',
 })
 export class WorkspaceEditComponent implements OnInit{
-  userId               : string;
-  userIsAuthenticated  : boolean = false;
-  loading              : boolean = false;
-  workspaceEditForm    : FormGroup;
-  @Input() edit        : boolean;
-  @Input() workspace   : Workspace;
-  @Input() workspaceId : string;
-  @Output() editChange : EventEmitter<boolean> = new EventEmitter<boolean>();
+  userId                    : string;
+  userIsAuthenticated       : boolean = false;
+  isSaving                  : boolean = false;
+  workspaceEditForm         : FormGroup;
+  @Input() edit             : boolean;
+  @Output() editChange      : EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() workspace        : Workspace;
+  @Output() workspaceChange : EventEmitter<Workspace> = new EventEmitter<Workspace>();
 
-  constructor(public workspaceService: WorkspacesService, public authService: AuthService,  private router: Router,
-              private formBuilder: FormBuilder) {
+
+  constructor(public workspaceService: WorkspacesService, public authService: AuthService,
+              public activitiesService: ActivitiesService, private formBuilder: FormBuilder) {
     this.createForm();
   }
 
@@ -51,7 +54,9 @@ export class WorkspaceEditComponent implements OnInit{
   }
 
   async onSave() {
+    this.isSaving = true;
     if (this.workspaceEditForm.invalid){
+      this.isSaving = false;
       return Object.values(this.workspaceEditForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
           Object.values(control.controls).forEach( control => control.markAsTouched());
@@ -61,17 +66,28 @@ export class WorkspaceEditComponent implements OnInit{
       });
     }
 
-    this.loading = true;
     const values = this.workspaceEditForm.getRawValue();
-
-    await this.workspaceService.updateWorkspace(this.workspaceId, values.title, values.description);
-    this.workspaceEditForm.reset();
-    this.editChange.emit(false);
-    this.router.navigateByUrl('/', {skipLocationChange: true})
-    .then(() => {
-      this.router.navigate([`/workspace/${this.workspaceId}`]);
-    }).catch( err => {});
-    this.loading = false;
+    await this.workspaceService.updateWorkspace(this.workspace.id, values.title, values.description);
+    // Workspace
+    this.workspaceService.getWorkspace(this.workspace.id).subscribe(workspaceData => {
+      const workspace = {
+        id: workspaceData.workspace._id,
+        title: workspaceData.workspace.title,
+        description: workspaceData.workspace.description,
+        creationMoment: workspaceData.workspace.creationMoment,
+        mandatory: workspaceData.workspace.mandatory,
+        owner:workspaceData.workspace.owner
+      };
+      console.log(workspace)
+      this.workspaceChange.emit(workspace);
+      // Activities
+      this.activitiesService.getActivitiesByWorkspace(this.workspace.id);
+      this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
+        this.editChange.emit(false);
+        this.workspaceEditForm.reset();
+        this.isSaving = false;
+      });
+    });
   }
 
   onCancel() {

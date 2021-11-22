@@ -68,7 +68,6 @@ exports.createReport = async(req, res, next) => {
             rawData: rawDataSplit
         });
     } catch (err) {
-        console.log(err)
         return res.status(500).json({
             message: "Creating an error report and updating a test failed!"
         });

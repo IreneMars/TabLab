@@ -1,10 +1,13 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Papa } from 'ngx-papaparse';
 import { AuthService } from 'src/app/services/auth.service';
+import { DatafileService } from 'src/app/services/datafiles.service';
 import { EsquemaService } from 'src/app/services/esquemas.service';
 import { Esquema } from '../../../models/esquema.model';
+import { UploadsService } from '../../../services/uploads.service';
+import { Datafile } from '../../../models/datafile.model';
 
 @Component({
   selector: 'app-esquema-create',
@@ -18,22 +21,30 @@ export class EsquemaCreateComponent implements OnInit{
   invalidExtension         : boolean = false;
   file                     : any = null;
   chain                    : string = '';
+  @Input() isSaving        : boolean = false;
+  @Output() isSavingChange : EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() isAdding        : boolean = false;
+  @Output() isAddingChange : EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() esquemas        : Esquema[];
+  @Output() esquemasChange : EventEmitter<any[]> = new EventEmitter<any[]>();
+  @Input() esquemaContent  : any;
   @Input() esquemaForm     : FormGroup;
   @Input() workspaceId     : string;
-  @Input() datafileId      : string;
+  @Input() datafile        : Datafile;
   @Input() savefile        : any;
   @Input() esquema         : Esquema;
-  @Output() savefileChange : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() esquemaChange  : EventEmitter<any> = new EventEmitter<any>();
   
   constructor(public esquemaService: EsquemaService, public route: ActivatedRoute, private papa: Papa,
-              private authService: AuthService, private router: Router) {
+              private authService: AuthService, public datafilesService: DatafileService, 
+              public esquemasService: EsquemaService, public uploadsService: UploadsService) {
   }
 
   ngOnInit() {
-    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.userId = this.authService.getUserId();
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+    }
   }
 
   get invalidTitle() {
@@ -78,8 +89,7 @@ export class EsquemaCreateComponent implements OnInit{
         return;
       }
     } else {
-      const content = (document.getElementById('esquemaContent') as HTMLInputElement).value;
-      this.esquemaForm.patchValue({esquemaContent: content});
+      this.esquemaForm.patchValue({esquemaContent: this.esquemaContent});
       if (this.esquemaForm.invalid){
         if (this.esquemaForm.get('esquemaPath').invalid) {
           this.invalidFile = true;
@@ -87,7 +97,6 @@ export class EsquemaCreateComponent implements OnInit{
         }
         return Object.values(this.esquemaForm.controls).forEach(control => {
           if (control instanceof FormGroup) {
-            
             Object.values(control.controls).forEach( control => control.markAsTouched());
           } else {
             control.markAsTouched();
@@ -95,42 +104,63 @@ export class EsquemaCreateComponent implements OnInit{
         });
       }
     }
-    this.savefileChange.emit(true);
     const values = this.esquemaForm.getRawValue();
+    const esquemaContent = (document.getElementById('esquemaContent') as HTMLInputElement).value
     if (this.esquema) {
-      await this.esquemaService.updateEsquema(this.esquema.id, values.title, this.esquema.contentPath, values.esquemaContent, this.datafileId);
-      this.router.navigateByUrl('/', {skipLocationChange: true})
-        .then(() => {
-          this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-        }).catch( err => {});
-    } else {
-      this.esquemaService.addEsquema(values.title, values.esquemaContent, this.file.name, this.datafileId, this.workspaceId)
-      .then(response => {
-        this.router.navigateByUrl('/', {skipLocationChange: true})
-        .then(() => {
-          this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
+      this.isSavingChange.emit(true);
+      this.uploadsService.updateEsquemaContent(this.esquema.id, null, this.esquema.contentPath, this.datafile.id, esquemaContent, 'update')
+      .then(updateResponse=>{
+        this.esquemaService.updateEsquema(this.esquema.id, values.title, updateResponse.filePath, this.datafile.id)
+        .then(response=>{
+          // Esquemas
+          this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+          this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
+            console.log(esquemaData.esquemas)
+            this.esquemasChange.emit(esquemaData.esquemas);
+            this.esquemaForm.reset();
+            this.esquemaChange.emit(null);
+            this.isSavingChange.emit(false);  
+          }); 
         })
-        .catch( err => {
-         console.log("Error on onSave method: "+ err);
+        .catch(err=>{
+          console.log("Error on onUpdateContent (edit mode) method: "+err.message.message);
         });
       })
-      .catch(error => {
-         console.log("Error on onSave method: "+error);
+      .catch(err=>{
+        console.log("Error on onSave (edit mode) method: "+err.message.message);
       });
-    }
-    (document.getElementById('esquemaContent') as HTMLInputElement).value = '';
-    this.esquemaForm.reset();
-    this.esquemaChange.emit(null);
-    this.savefileChange.emit(false);
+    } else {
+      this.isAddingChange.emit(true);
+      (document.getElementById('esquemaContent') as HTMLInputElement).value = ""
 
+      this.uploadsService.updateEsquemaContent(null, this.file.name, null, this.datafile.id, esquemaContent, 'create')
+      .then(updateResponse=>{
+        this.esquemaService.addEsquema(values.title, this.datafile.id, updateResponse.filePath, 'create')
+        .then(response=>{
+          // Esquemas
+          this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+          this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
+            this.esquemasChange.emit(esquemaData.esquemas);
+            this.esquemaForm.reset();
+            this.esquemaChange.emit(null);
+            this.isAddingChange.emit(false);  
+          }); 
+        })
+        .catch(err=>{
+          console.log("Error on onUpdateContent (create mode) method: "+err.message.message);
+        });
+      })
+      .catch(err=>{
+        console.log("Error on onSave (create mode) method: "+err.message.message);
+      });
+
+    }
   }
 
   onCancel() {
     this.esquemaForm.reset();
+    (document.getElementById('esquemaContent') as HTMLInputElement).value = ""
     this.esquemaChange.emit(null);
-    if (!this.esquema) {
-      (document.getElementById('esquemaContent') as HTMLInputElement).value = '';
-    }
     this.esquemaForm.patchValue({esquemaPath: null});
     this.invalidFile = false;
   }

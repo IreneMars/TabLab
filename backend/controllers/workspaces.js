@@ -93,7 +93,7 @@ exports.getWorkspace = async(req, res, next) => {
 exports.createWorkspace = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {
-        const configurations = GlobalConfiguration.find();
+        const configurations = await GlobalConfiguration.find();
         const configuration = configurations[0];
         const roles = await Role.find({ user: current_user_id });
         if (roles.length === configuration.limitWorkspaces) {
@@ -212,19 +212,22 @@ exports.deleteWorkspace = async(req, res, next) => {
                 message: "You are not authorized to delete that workspace!"
             });
         }
-        const workspace = Workspace.findById(req.params.id);
+        const workspace = await Workspace.findById(req.params.id);
         if (workspace.mandatory) {
             return res.status(403).json({
                 message: "You are not authorized to delete that workspace!"
             });
         }
+        const workspaceTitle = workspace.title;
+
         await Role.deleteMany({ workspace: req.params.id });
         await Datafile.deleteMany({ workspace: req.params.id });
+        await Activity.deleteMany({ 'workspace.id': req.params.id });
         await Workspace.deleteOne({ _id: req.params.id });
 
         const activity = new Activity({
             message: "{{author}} eliminó el espacio de trabajo {{workspace}}",
-            workspace: { 'id': workspace._id, 'title': workspace.title },
+            workspace: { 'id': null, 'title': workspaceTitle },
             author: { 'id': current_user_id, 'name': user.name },
             coleccion: null,
             datafile: null,

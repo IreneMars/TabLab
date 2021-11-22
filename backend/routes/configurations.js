@@ -10,11 +10,18 @@ const {
     validateFields,
 } = require("../middlewares");
 const {
+    getConfigurationsByDatafile,
     getConfiguration,
     createConfiguration,
     updateConfiguration,
     deleteConfiguration,
 } = require("../controllers/configurations");
+
+router.get("/datafile/:datafileId", [
+    validateJWT,
+    check('datafileId', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('datafileId').custom(datafileExistsById),
+], getConfigurationsByDatafile);
 
 router.get("/:id", [
     validateJWT,

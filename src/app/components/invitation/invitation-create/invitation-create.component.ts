@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Invitation } from 'src/app/models/invitation.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { InvitationService } from '../../../services/invitations.service';
 
 @Component({
@@ -9,7 +10,11 @@ import { InvitationService } from '../../../services/invitations.service';
   templateUrl: './invitation-create.component.html',
 })
 export class InvitationCreateComponent implements OnInit{
+  userIsAuthenticated         : boolean = false;
+  userId                      : string;
   isLoading                   : boolean = false;
+  invitationAdded             : boolean = false;
+
   workspaceId                 : string;
   invalidEmail                : boolean = false;
   invitationForm              : FormGroup;
@@ -17,7 +22,7 @@ export class InvitationCreateComponent implements OnInit{
   @Input()  invitations       : Invitation[];
   @Output() invitationsChange : any = new EventEmitter();
 
-  constructor(public invitationsService: InvitationService, private formBuilder: FormBuilder,
+  constructor(public invitationsService: InvitationService, public authService: AuthService, private formBuilder: FormBuilder,
               private activatedRoute: ActivatedRoute,  private router: Router) {
     this.createForm();
   }
@@ -31,10 +36,15 @@ export class InvitationCreateComponent implements OnInit{
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       this.workspaceId = params.get('workspaceId');
+      this.userIsAuthenticated = this.authService.getIsAuth();
+      if (this.userIsAuthenticated){
+        this.userId = this.authService.getUserId();
+      }
     });
   }
 
   onInvite() {
+    this.invitationAdded = false;
     if (this.invitationForm.invalid){
     this.invalidEmail = true;
     return Object.values(this.invitationForm.controls).forEach(control => {
@@ -54,10 +64,10 @@ export class InvitationCreateComponent implements OnInit{
     }  else {
       this.invitationsService.addInvitation(values.email, this.workspaceId)
         .then(response=>{
-          this.router.navigate(['/']);
+          this.invitationAdded = true;
         })
         .catch(err=>{
-          console.log("Error on onInvite method: "+err);
+          console.log("Error on onInvite method: "+err.message.message);
         });
     }
     this.invitationForm.reset();

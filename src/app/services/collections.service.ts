@@ -27,6 +27,7 @@ export class CollectionsService {
           return {
             id: collection._id,
             title: collection.title,
+            workspace: collection.workspace,
             datafiles: collection.datafiles
           };
       }),
@@ -41,61 +42,26 @@ export class CollectionsService {
   }
 
   addCollection(title: string, workspaceId: string) {
-    let res: any;
     const collection: Collection = { 
       'id': null,
       'title': title, 
-      'workspace': workspaceId 
+      'workspace': workspaceId,
+      'datafiles':null
     };
-    this.http.post<{message: string, collection: any}>(BACKEND_URL, collection).subscribe( responseData => {
-      res = responseData;
-    });
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Creating a collection failed!');
-        } else {
-          resolve('Collection added successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.post<{message: string, collection: any}>(BACKEND_URL, collection).toPromise();
   }
 
   updateCollection(collectionId: string, title: string, workspaceId: string){
-    let res: any;
     const collection: Collection = { 
       'id': collectionId,
       'title': title, 
-      'workspace': workspaceId 
+      'workspace': workspaceId,
+      'datafiles':null
     };
-    this.http.put<{message: string, collection: any}>(BACKEND_URL + collectionId, collection).subscribe( response => {
-      res = response;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Updating a collection failed!');
-        } else {
-          resolve('Collection updated successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.put<{message: string, collection: any}>(BACKEND_URL + collectionId, collection).toPromise();
   }
   
   deleteCollection(collectionId: string) {
-    let res: any;
-    this.http.delete<{message: string}>(BACKEND_URL + collectionId).subscribe( responseData => {
-        res = responseData;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Deleting a collection failed!');
-        } else {
-          resolve('Collection deleted successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.delete<{message: string}>(BACKEND_URL + collectionId).toPromise()
   }
 }

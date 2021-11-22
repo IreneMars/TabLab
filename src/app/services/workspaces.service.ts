@@ -59,7 +59,7 @@ export class WorkspacesService {
               description: datafile.description,
               contentPath: datafile.contentPath,
               errLimit: datafile.errLimit,
-              collection: datafile.coleccion,
+              coleccion: datafile.coleccion,
               workspace: datafile.workspace
             };
           })  
@@ -78,19 +78,7 @@ export class WorkspacesService {
       'invitations': invitations,
       'owner':null
     };
-    this.http.post<{message: string, workspace: any}>(BACKEND_URL, workspaceData).subscribe( responseData => {
-      res = responseData;  
-    });
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Creating a workspace failed!');
-        } else {
-          resolve('Workspace added successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.post<{message: string, workspace: any}>(BACKEND_URL, workspaceData).toPromise();
 
   }
 
@@ -104,34 +92,11 @@ export class WorkspacesService {
       'mandatory': null,
       'owner':null
     };
-    this.http.put<{message: string, workspace: any}>(BACKEND_URL + workspaceId, workspace).subscribe( response => {
-      res = response;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Updating a workspace failed!');
-        } else {
-          resolve('Workspace updated successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.put<{message: string, workspace: any}>(BACKEND_URL + workspaceId, workspace).toPromise();
   }
 
   deleteWorkspace(workspaceId: string) {
-    let res: any;
-    this.http.delete<{message: string}>(BACKEND_URL +  workspaceId).subscribe( responseData => {
-      res = responseData;
-    });
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (res === undefined) {
-          reject('Deleting a workspace failed!');
-        } else {
-          resolve('Workspace deleted successfully!');
-        }
-      }, 1000);
-    });
+    return this.http.delete<{message: string}>(BACKEND_URL +  workspaceId).toPromise();
   }
 
 }

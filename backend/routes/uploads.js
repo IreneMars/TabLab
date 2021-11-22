@@ -1,18 +1,31 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const UploadsController = require("../controllers/uploads");
-
-const { allowedEntities } = require('../helpers');
+const { userExistsById, datafileExistsById } = require('../helpers');
 const validateFile = require('../middlewares/validate-file');
 
 const { validateJWT, validateFields } = require('../middlewares');
 const router = Router();
+const {
+    updateFile,
+    updateEsquemaContent
+} = require("../controllers/uploads");
 
-router.put("/:id",
+router.put("/users/:id", [
     validateJWT, validateFile,
     check('id', 'El id debe de ser de mongo').isMongoId(),
-    check('entity').custom(e => allowedEntities(e, ['users', 'datafiles'])),
-    validateFields,
-    UploadsController.updateFile);
+    check('id').custom(userExistsById),
+    validateFields
+], updateFile);
+
+router.put("/datafiles/:id", [
+    validateJWT, validateFile,
+    check('id', 'El id debe de ser de mongo').isMongoId(),
+    check('id').custom(datafileExistsById),
+    validateFields
+], updateFile);
+
+router.put("/esquema", [
+    validateJWT,
+], updateEsquemaContent);
 
 module.exports = router;

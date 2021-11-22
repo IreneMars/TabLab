@@ -1,7 +1,8 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Activity } from 'src/app/models/activity.model';
 import { ActivitiesService } from 'src/app/services/activities.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-activity-list',
@@ -9,36 +10,51 @@ import { ActivitiesService } from 'src/app/services/activities.service';
   styleUrls: ['./activity-list.component.css']
 })
 export class ActivityListComponent implements OnInit{
-  userId                : string;
+  userId                : string = "";
+  @Input() workspaceId  : string = "";
   userIsAuthenticated   : boolean = false;
-  activities            : Activity[];
-  
+  @Input() activities            : Activity[];
   constructor(private authService: AuthService, public activitiesService: ActivitiesService){}
 
   ngOnInit(){
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.userId = this.authService.getUserId();
-    this.activitiesService.getActivities(this.userId);
-    this.activitiesService.getActivityUpdateListener()
-    .subscribe((activityData: {activities: Activity[]}) => {
-      this.activities = activityData.activities;
-      for (var activity of this.activities){
-        var workspaceLink :string = '<a href="/workspace/'+activity.workspace['id']+'">'+activity.workspace['title']+'</a>'
-        activity.message = activity.message.replace("{{workspace}}",workspaceLink);
-        
-        activity.message = activity.message.replace("{{author}}",activity.author['name']);
-        if (activity.coleccion){
-          var coleccionLink :string = '<a href="/workspace/'+activity.workspace['id']+'">'+activity.coleccion['title']+'</a>'
-          activity.message = activity.message.replace("{{coleccion}}",coleccionLink);
-        } 
-        if (activity.datafile) {
-          var datafileLink :string = '<a href="/workspace/'+activity.workspace['id']+'/datafile/'+activity.datafile['id']+'">'+activity.datafile['title']+'</a>'
-          activity.message = activity.message.replace("{{datafile}}",datafileLink);
-        
-        }       
-      }
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+      // Activities
+      if(this.workspaceId!=''){
+        this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+      }else{
+        this.activitiesService.getActivitiesByUser(this.userId);
 
-    });
+      }
+      this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
+        this.activities = activityData.activities;
+        console.log(this.activities);
+        // http://localhost:3000
+        // environment.SOCKET_ENDPOINT
+        // [routerLink]="['/workspace', workspaceId,'datafile',datafileId,'test',test.id]"
+        var host:string = 'http://localhost:4200/#/';
+        if (environment.production){
+          var host:string = 'https://tablab-app.herokuapp.com/#/';
+        }
+        for (var activity of this.activities){
+          var workspaceLink :string = '<a href="'+host+'workspace/'+activity.workspace['id']+'">'+activity.workspace['title']+'</a>'
+          activity.message = activity.message.replace("{{workspace}}",workspaceLink);
+          
+          activity.message = activity.message.replace("{{author}}",activity.author['name']);
+          if (activity.coleccion){
+            var coleccionLink :string = '<a href="'+host+'workspace/'+activity.workspace['id']+'">'+activity.coleccion['title']+'</a>'
+            activity.message = activity.message.replace("{{coleccion}}",coleccionLink);
+          } 
+          if (activity.datafile) {
+            var datafileLink :string = '<a href="'+host+'workspace/'+activity.workspace['id']+'/datafile/'+activity.datafile['id']+'">'+activity.datafile['title']+'</a>'
+            activity.message = activity.message.replace("{{datafile}}",datafileLink);
+          }       
+        }
+      });
+
+    }
+
   }
 }
 

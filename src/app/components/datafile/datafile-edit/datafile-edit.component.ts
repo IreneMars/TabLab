@@ -15,6 +15,7 @@ export class DatafileEditComponent implements OnInit{
   userIsAuthenticated  : boolean = false;
   userId               : string;
   loading              : boolean = false;
+  isSaving             : boolean = false;
   collectionPicked     : string=null;
   datafileEditForm     : FormGroup;
   collections          : Collection[];
@@ -39,24 +40,22 @@ export class DatafileEditComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // Current User
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.userId = this.authService.getUserId();
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();  
+      // Collections
+      this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+      this.collectionsService.getCollectionUpdateListener().subscribe( (collectionData: {collections: Collection[]}) => {
+        this.collections = collectionData.collections;
 
-    // Collections
-    this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-    this.collectionsService.getCollectionUpdateListener().subscribe( (collectionData: {collections: Collection[]}) => {
-      this.collections = collectionData.collections;
-      //DatafileEditForm
-      this.datafileEditForm.reset({
-        title: this.datafile.title,
-        description: this.datafile.description,
-        collection: this.datafile.collection,
+        this.datafileEditForm.reset({
+          title: this.datafile.title,
+          description: this.datafile.description,
+          colection: this.datafile.coleccion,
+        });
+        this.collectionPicked = this.datafile.coleccion;
       });
-  
-      this.collectionPicked = this.datafile.collection;
-    });
-
+    }
   }
   
   get invalidTitle() {
@@ -72,7 +71,9 @@ export class DatafileEditComponent implements OnInit{
   }
   
   async onSave() {
+    this.isSaving = true;
     if (this.datafileEditForm.invalid){
+      this.isSaving = false;
       return Object.values(this.datafileEditForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
           Object.values(control.controls).forEach( control => control.markAsTouched());
@@ -82,8 +83,8 @@ export class DatafileEditComponent implements OnInit{
       });
     }
     const values = this.datafileEditForm.getRawValue();
-    console.log(this.collectionPicked);
     await this.datafileService.updateDatafile(this.datafileId, values.title, values.description, this.collectionPicked);
+    console.log(this.datafileId)
     this.datafileService.getDatafile(this.datafileId).subscribe((datafileData)=>{
       this.datafile = {
         id: datafileData.datafile._id,
@@ -91,19 +92,14 @@ export class DatafileEditComponent implements OnInit{
         description: datafileData.datafile.description,
         contentPath: datafileData.datafile.contentPath,
         errLimit: datafileData.datafile.errLimit,
-        collection: datafileData.datafile.collection,
+        coleccion: datafileData.datafile.coleccion,
         workspace: datafileData.datafile.workspace,
       };
       this.datafileChange.emit(this.datafile);
       this.editChange.emit(false);
       this.datafileEditForm.reset();
+      this.isSaving = false;
     });
-      // .then(() => {
-      //   this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
-      // }).catch( err => {
-      //   console.log("Error on onSave() method: "+err)
-      // });
-
   }
 
   onCancel() {

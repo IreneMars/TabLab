@@ -22,7 +22,12 @@
                             </mat-error>
                         </div>
 
-                        <button class="btn btn-primary me-1 mt-2" type="submit">Actualizar Correo</button>
+                        <button type="submit" class="btn btn-primary me-1 mt-2" *ngIf="!isSavingEmail">
+                            Actualizar Correo
+                        </button>
+                        <button type="submit" class="btn btn-primary me-1 mt-2" disabled *ngIf="isSavingEmail">
+                            Actualizar Correo <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>
                         <button class="btn btn-secondary me-1 mt-2" (click)="onCancelEmailForm()" [disabled]="pristineEmail">Cancelar</button>
                     </form>
 
@@ -63,7 +68,7 @@
                     </form>
                     <button type="button" class="btn btn-outline-danger mt-4" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">Eliminar cuenta</button>
 
-                    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="deleteAccountModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
