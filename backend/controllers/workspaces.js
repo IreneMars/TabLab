@@ -51,7 +51,7 @@ exports.getWorkspace = async(req, res, next) => {
         const roles = await Role.find({ workspace: req.params.id, user: current_user_id });
         const user = await User.findById(current_user_id);
 
-        if (roles.length !== 1 || user.role !== 'ADMIN') {
+        if (roles.length !== 1 && user.role !== 'ADMIN') {
             return res.status(403).json({
                 message: "Not authorized to fetch this workspace!"
             });
