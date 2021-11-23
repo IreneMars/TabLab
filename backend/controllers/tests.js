@@ -186,6 +186,7 @@ exports.updateTest = async(req, res, next) => {
             });
         }
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
+        console.log(roles)
         if (roles.length !== 1) {
             return res.status(401).json({
                 message: "Not authorized to update this test!"

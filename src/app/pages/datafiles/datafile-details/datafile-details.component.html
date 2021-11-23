@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="col-10">
-                                <form [formGroup]="fileForm" (ngSubmit)="onSave()">
+                                <form [formGroup]="fileForm">
                                     <input type="file" (change)="onFilePicked($event)" formControlName="contentPath" class="form-control form-control-sm" name="uploaded_file">
                                 </form>
                             </div>
@@ -63,7 +63,7 @@
                         </button>
                     </div>
                     <div class="me-1">
-                        <form [formGroup]="fileForm" (ngSubmit)="onSave()">
+                        <form [formGroup]="fileForm">
                             <input type="file" (change)="onFilePicked($event)" formControlName="contentPath" class="form-control form-control-sm" name="uploaded_file">
                         </form>
                     </div>

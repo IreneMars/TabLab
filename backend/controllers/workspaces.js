@@ -98,7 +98,7 @@ exports.createWorkspace = async(req, res, next) => {
         const roles = await Role.find({ user: current_user_id });
         if (roles.length === configuration.limitWorkspaces) {
             return res.status(500).json({
-                message: `You are not allowed to be in more than ${configuration.limitWorkspaces}`
+                message: `You are not allowed to be in more than ${configuration.limitWorkspaces} workspaces`
             });
         }
         const workspace = new Workspace({

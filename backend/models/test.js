@@ -64,4 +64,9 @@ testSchema.pre('save', function(next) {
     next();
 });
 
+testSchema.methods.toJSON = function() {
+    const { __v, ...test } = this.toObject();
+    return test;
+}
+
 module.exports = mongoose.model('Test', testSchema);

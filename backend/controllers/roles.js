@@ -41,7 +41,7 @@ exports.updateRole = async(req, res, next) => {
         const current_user_role = await Role.findOne({ 'user': current_user_id, 'workspace': req.body.workspace });
         const owners = await Role.find({ workspace: req.body.workspace, role: 'owner' });
 
-        if (current_user_role.role === 'owner' && owners.length === 1) {
+        if (current_user_role.role === 'owner' && current_user_role.role === role && owners.length === 1) {
             return res.status(403).json({
                 message: "You are not allowed to leave this workspace without an owner!"
             });
@@ -71,6 +71,10 @@ exports.deleteRole = async(req, res, next) => {
         const role = await Role.findOne({ workspace: req.params.workspaceId, user: current_user_id });
         const owners = await Role.find({ workspace: req.params.workspaceId, role: 'owner' });
         if (role.role === 'owner' && owners.length === 1) { //onleave
+            return res.status(403).json({
+                message: "You are not allowed to leave this workspace without an owner!"
+            });
+        } else if (role.role === 'owner' && owners.length > 1) {
             await Workspace.deleteOne({ _id: req.params.workspaceId });
             await Role.deleteMany({ workspace: req.params.workspaceId });
             return res.status(200).json({

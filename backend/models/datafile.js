@@ -32,4 +32,9 @@ const datafileSchema = mongoose.Schema({
     }
 });
 
+datafileSchema.methods.toJSON = function() {
+    const { __v, ...datafile } = this.toObject();
+    return datafile;
+}
+
 module.exports = mongoose.model('Datafile', datafileSchema);

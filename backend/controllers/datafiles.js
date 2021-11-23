@@ -19,6 +19,8 @@ exports.getDatafiles = async(req, res) => {
 exports.getDatafile = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     try {
+        const url = req.protocol + "://" + req.get("host") + "/";
+
         const datafile = await Datafile.findById(req.params.id);
         if (!datafile) {
             return res.status(500).json({
@@ -39,7 +41,9 @@ exports.getDatafile = async(req, res, next) => {
         if (datafile.contentPath != null) {
             var extension = datafile.contentPath.split('.').pop().toLowerCase();
             if (extension === 'csv') {
-                fs.readFile(datafile.contentPath, 'utf8', (err, data) => {
+                actualFilePath = datafile.contentPath.replace(url, 'backend/uploads/');
+
+                fs.readFile(actualFilePath, 'utf8', (err, data) => {
                     if (err) {
                         return res.status(500).json({
                             message: "Fetching the content of the csv file of this datafile failed!"

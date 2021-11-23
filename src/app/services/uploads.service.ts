@@ -14,10 +14,9 @@ export class UploadsService {
     if (typeof(photo) === 'object') { 
         userData = new FormData();
         userData.append('userId',userId);
-        userData.append('entity','users');
         userData.append('file', photo);
     } else { 
-        userData = {'userId':userId,'entity':'users','filePath': photo}; 
+        userData = {'userId':userId,'filePath': photo}; 
     } 
     return this.http.put(BACKEND_URL + "users/" + userId, userData).toPromise()
   }
@@ -27,20 +26,17 @@ export class UploadsService {
     if (typeof(file) === 'object') { 
       datafileData = new FormData();
       datafileData.append('userId',userId);
-      datafileData.append('datafileId',datafileId);
-      datafileData.append('entity','datafiles');
       datafileData.append('operation',operation);
       datafileData.append('file', file);
     } else { 
-      datafileData = {'userId':userId, 'datafileId':datafileId,'entity':'datafiles','operation':operation,'filePath': file}; 
+      datafileData = {'userId':userId, 'operation':operation,'filePath': file}; 
     } 
     return this.http.put(BACKEND_URL + "datafiles/" + datafileId, datafileData).toPromise();
   }
 
   updateEsquemaContent(esquemaId: string, fileName: string, contentPath: string, datafileId: string, esquemaContent: string, operation: string){
     const esquemaData = {
-      'id': esquemaId,
-      'fileName':null,
+      'fileName':fileName,
       'contentPath': contentPath, 
       'esquemaContent': esquemaContent,
       'datafile':datafileId,
@@ -49,12 +45,10 @@ export class UploadsService {
     };
 
     if (fileName){//Manual creation
-      esquemaData.fileName = fileName;
       const split = fileName.split('.');
       const extension = '.' + split[1].toLowerCase();
       const newFileName = split[0].toLowerCase().split(' ').join('_') + "-" + Date.now() + extension;
-      const localPath = 'backend/uploads/esquemas/' + newFileName;            
-      esquemaData.contentPath = localPath;
+      esquemaData.fileName = newFileName;
     }
     return this.http.put<{message: string, fileName: any, filePath:any}>(BACKEND_URL+'esquema', esquemaData).toPromise();
   }

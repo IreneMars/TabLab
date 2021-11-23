@@ -36,4 +36,9 @@ activitySchema.pre('save', function(next) {
     next();
 });
 
+activitySchema.methods.toJSON = function() {
+    const { __v, ...activity } = this.toObject();
+    return activity;
+}
+
 module.exports = mongoose.model('Activity', activitySchema);

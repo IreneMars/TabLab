@@ -11,4 +11,9 @@ const fricErrorSchema = mongoose.Schema({
     },
 });
 
+fricErrorSchema.methods.toJSON = function() {
+    const { __v, ...fricError } = this.toObject();
+    return fricError;
+}
+
 module.exports = mongoose.model('FricError', fricErrorSchema);

@@ -7,6 +7,7 @@ const { validateJWT, validateFields } = require('../middlewares');
 const router = Router();
 const {
     updateFile,
+    updatePhoto,
     updateEsquemaContent
 } = require("../controllers/uploads");
 
@@ -15,7 +16,7 @@ router.put("/users/:id", [
     check('id', 'El id debe de ser de mongo').isMongoId(),
     check('id').custom(userExistsById),
     validateFields
-], updateFile);
+], updatePhoto);
 
 router.put("/datafiles/:id", [
     validateJWT, validateFile,

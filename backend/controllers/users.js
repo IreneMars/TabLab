@@ -104,6 +104,12 @@ exports.createUser = async(req, res) => {
 exports.updateUser = async(req, res) => {
     current_user_id = req.userData.userId;
     try {
+        const current_user = await User.findById(current_user_id);
+        if (current_user != req.params.id && current_user.role != 'ADMIN') {
+            return res.status(403).json({
+                message: "Unauthorized to update this user!"
+            });
+        }
         const user = await User.findById(req.params.id);
         if (req.body.email !== null) {
             user.email = req.body.email;
@@ -148,7 +154,6 @@ exports.deleteAccount = async(req, res) => {
         // We don't delete it physically, but we mark its status as false
         const user = await User.findById(id);
         const current_user = await User.findById(current_user_id);
-
         if (id !== current_user_id && current_user.role !== 'ADMIN') {
             return res.status(403).json({
                 message: "You are not authorized to delete this user!"

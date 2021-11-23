@@ -4,7 +4,7 @@ const router = express.Router();
 const {
     getActivityByUser,
     getActivityByWorkspace,
-    deleteActivitiesByUser
+    // deleteActivitiesByUser
 } = require("../controllers/activities");
 
 const {
@@ -31,12 +31,12 @@ router.get("/workspace/:workspaceId", [
     validateFields
 ], getActivityByWorkspace);
 
-router.delete("/:userId", [
-    validateJWT,
-    //isAdminRole,
-    check('userId', 'The ID is not a valid Mongo ID').isMongoId(),
-    check('userId').custom(userExistsById),
-    validateFields,
-], deleteActivitiesByUser);
+// router.delete("/:userId", [
+//     validateJWT,
+//     //isAdminRole,
+//     check('userId', 'The ID is not a valid Mongo ID').isMongoId(),
+//     check('userId').custom(userExistsById),
+//     validateFields,
+// ], deleteActivitiesByUser);
 
 module.exports = router;

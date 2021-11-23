@@ -65,6 +65,7 @@ exports.createInvitation = async(req, res, next) => {
                 message: "You cannot send an invitation to yourself!"
             });
         }
+
         const invitations = await Invitation.find({ "receiver": receiver._id, "sender": current_user_id });
         if (invitations.length > 0) {
             return res.status(500).json({
@@ -74,10 +75,12 @@ exports.createInvitation = async(req, res, next) => {
             const invitation = new Invitation({
                 sender: current_user_id,
                 receiver: receiver._id,
-                status: req.body.status,
+                status: "pending",
                 workspace: req.body.workspace
             });
+            console.log(invitation)
             const createdInvitation = await invitation.save();
+            console.log(createdInvitation)
             return res.status(201).json({
                 message: "Invitation created successfully!",
                 invitation: createdInvitation

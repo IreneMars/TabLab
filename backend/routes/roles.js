@@ -2,7 +2,6 @@ const express = require("express");
 const { check } = require('express-validator');
 const router = express.Router();
 const {
-    createRole,
     updateRole,
     deleteRole
 } = require("../controllers/roles");
@@ -15,16 +14,6 @@ const {
     validateJWT,
     validateFields
 } = require("../middlewares");
-
-router.post("/", [
-    validateJWT,
-    check('role', 'The role is mandatory').not().isEmpty(),
-    check('workspace', 'The workspace ID is not a valid Mongo ID').isMongoId(),
-    check('workspace').custom(workspaceExistsById),
-    check('user', 'The user ID is not a valid Mongo ID').isMongoId(),
-    check('user').custom(userExistsById),
-    validateFields,
-], createRole);
 
 router.put("/:id", [
     validateJWT,

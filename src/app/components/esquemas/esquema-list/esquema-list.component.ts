@@ -87,8 +87,7 @@ export class EsquemaListComponent implements OnInit {
     console.log(this.datafile)
     this.isInferring = true;
     this.uploadsService.updateEsquemaContent(null, null, null, this.datafile.id, null, 'infer')
-      .then(updateResponse=>{
-        
+      .then(updateResponse=>{    
         this.esquemasService.addEsquema(this.datafile.title, this.datafile.id, updateResponse.filePath, 'infer')
         .then(response => {
           // Esquemas

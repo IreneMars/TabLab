@@ -49,7 +49,7 @@ exports.createReport = async(req, res, next) => {
         const testData = [test.title, errorReportPath, test.delimiter, esquemaContentPath, datafile.contentPath, configurationsAux];
 
         //var myProcess = spawn('python', ["backend/scripts/validation.py", errorReportPath, esquemaContentPath, datafile.contentPath, errorCode]);
-
+        testData[3]
         const execBuffer = execFileSync(
             'python', ["backend/scripts/validation.py", testData[1], testData[2], testData[3], testData[4], testData[5]], { encoding: 'utf-8' }
             //'python', ["backend/scripts/validation.py", errorReportPath, esquemaContentPath, datafile.contentPath, configurationsAux], { encoding: 'utf-8' }

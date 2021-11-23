@@ -61,6 +61,10 @@ exports.createEsquema = async(req, res, next) => {
     const current_user_id = req.userData.userId;
 
     try {
+        var title = req.body.title;
+        if (req.body.operation === "infer") {
+            title = "Inferred esquema - " + req.body.title;
+        }
         const datafile = await Datafile.findById(req.body.datafile);
         const roles = await Role.find({ 'workspace': datafile.workspace, 'user': current_user_id });
         if (roles.length !== 1) {
@@ -69,7 +73,7 @@ exports.createEsquema = async(req, res, next) => {
             })
         }
         const esquema = new Esquema({
-            title: req.body.title,
+            title: title,
             contentPath: req.body.contentPath,
             creationMoment: null,
             datafile: req.body.datafile

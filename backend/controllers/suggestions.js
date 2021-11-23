@@ -82,7 +82,6 @@ exports.applySuggestion = async(req, res, next) => {
         const operation = req.body.operation;
         const contentLines = req.body.contentLines;
         const rowNumber = suggestion.rowPosition;
-        console.log(operation)
         if (operation === "getRow") {
             const content = contentLines.join("\n");
             return res.status(200).json({

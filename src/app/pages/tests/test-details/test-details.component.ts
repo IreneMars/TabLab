@@ -356,10 +356,9 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
   
   async onApplyChanges(suggestionId:string, operation:string){
     this.suggestionId = suggestionId;
-    console.log(this.suggestionId)
     this.suggestionQueryResult = null;
+    console.log(this.contentLines)
     const result = await this.suggestionsService.applySuggestion(suggestionId, operation,this.test.delimiter, this.contentLines, null);
-    console.log(result)
     this.suggestionQueryResult = result.data.rowContent;
     this.suggestionForm = new FormGroup({
       'rowContent': new FormControl('', {validators: [Validators.required]}),

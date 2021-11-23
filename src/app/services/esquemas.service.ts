@@ -47,16 +47,15 @@ export class EsquemaService {
   }
 
   addEsquema(title: string, datafileId: string, contentPath:string, operation:string){
-    let esquemaData: Esquema = {
+    let esquemaData = {
       'id': null,
       'title': title, 
       'contentPath': contentPath, 
       'creationMoment':null,
       'datafile':datafileId,
+      'operation':operation
     };
-    if (operation === "infer"){
-      esquemaData.title = "Inferred esquema - " + title;
-    }
+    
     return this.http.post<{message: string, esquema: any}>(BACKEND_URL, esquemaData).toPromise();
   }
 

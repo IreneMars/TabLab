@@ -23,4 +23,9 @@ roleSchema.pre('save', function(next) {
     next();
 });
 
+roleSchema.methods.toJSON = function() {
+    const { __v, ...role } = this.toObject();
+    return role;
+}
+
 module.exports = model('Role', roleSchema);
