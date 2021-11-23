@@ -32,21 +32,17 @@ export class ActivityListComponent implements OnInit{
         // http://localhost:3000
         // environment.SOCKET_ENDPOINT
         // [routerLink]="['/workspace', workspaceId,'datafile',datafileId,'test',test.id]"
-        var host:string = 'http://localhost:4200/#/';
-        if (environment.production){
-          var host:string = 'https://tablab-app.herokuapp.com/#/';
-        }
         for (var activity of this.activities){
-          var workspaceLink :string = '<a href="'+host+'workspace/'+activity.workspace['id']+'">'+activity.workspace['title']+'</a>'
+          var workspaceLink :string = '<a href="'+environment.host+'workspace/'+activity.workspace['id']+'">'+activity.workspace['title']+'</a>'
           activity.message = activity.message.replace("{{workspace}}",workspaceLink);
           
           activity.message = activity.message.replace("{{author}}",activity.author['name']);
           if (activity.coleccion){
-            var coleccionLink :string = '<a href="'+host+'workspace/'+activity.workspace['id']+'">'+activity.coleccion['title']+'</a>'
+            var coleccionLink :string = '<a href="'+environment.host+'workspace/'+activity.workspace['id']+'">'+activity.coleccion['title']+'</a>'
             activity.message = activity.message.replace("{{coleccion}}",coleccionLink);
           } 
           if (activity.datafile) {
-            var datafileLink :string = '<a href="'+host+'workspace/'+activity.workspace['id']+'/datafile/'+activity.datafile['id']+'">'+activity.datafile['title']+'</a>'
+            var datafileLink :string = '<a href="'+environment.host+'workspace/'+activity.workspace['id']+'/datafile/'+activity.datafile['id']+'">'+activity.datafile['title']+'</a>'
             activity.message = activity.message.replace("{{datafile}}",datafileLink);
           }       
         }
