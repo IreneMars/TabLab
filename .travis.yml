@@ -13,5 +13,13 @@ cache:
 install:
   - npm install
 
-script:
-  - npm run test -- --no-watch --no-progress
+jobs:
+  include:
+    - stage: unit tests
+      script: npm run test -- --no-watch --no-progress
+    - stage: deploy to heroku
+        script: skip
+        deploy: &heroku
+          provider: heroku
+          app: tablab-app
+          api_key: $HEROKU_AUTH_TOKEN
