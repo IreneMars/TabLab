@@ -18,8 +18,8 @@ jobs:
     - stage: unit tests
       script: npm run test -- --no-watch --no-progress
     - stage: deploy to heroku
-        script: ignore
-        deploy: &heroku
-          provider: heroku
-          api_key: $HEROKU_AUTH_TOKEN
-          app: tablab-app
+      script: ignore
+      deploy: &heroku
+        provider: heroku
+        api_key: $HEROKU_AUTH_TOKEN
+        app: tablab-app
