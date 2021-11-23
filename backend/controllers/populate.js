@@ -48,6 +48,7 @@ exports.populate = async(req, res, next) => {
         rawData = fs.readFileSync(fullDataPath);
     } else {
         rawData = fs.readFileSync(fullProdDataPath);
+        console.log(rawData)
     }
     const populate_json_data = JSON.parse(rawData);
     reports = { "errored_models": [], "reports": [] };
