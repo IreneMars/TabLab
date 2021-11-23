@@ -108,11 +108,9 @@ export class EsquemaCreateComponent implements OnInit{
     const esquemaContent = (document.getElementById('esquemaContent') as HTMLInputElement).value
     if (this.esquema) {
       this.isSavingChange.emit(true);
-      this.uploadsService.updateEsquemaContent(this.esquema.id, null, this.esquema.contentPath, this.datafile.id, esquemaContent, 'update')
+      this.uploadsService.updateEsquemaContent(this.esquema.id, values.title, this.datafile.id, esquemaContent)
       .then(updateResponse=>{
-        this.esquemaService.updateEsquema(this.esquema.id, values.title, updateResponse.filePath, this.datafile.id)
-        .then(response=>{
-          // Esquemas
+
           this.esquemasService.getEsquemasByDatafile(this.datafile.id);
           this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
             this.esquemasChange.emit(esquemaData.esquemas);
@@ -120,10 +118,7 @@ export class EsquemaCreateComponent implements OnInit{
             this.esquemaChange.emit(null);
             this.isSavingChange.emit(false);  
           }); 
-        })
-        .catch(err=>{
-          console.log("Error on onUpdateContent (edit mode) method: "+err.message.message);
-        });
+
       })
       .catch(err=>{
         console.log("Error on onSave (edit mode) method: "+err.message.message);
@@ -133,11 +128,9 @@ export class EsquemaCreateComponent implements OnInit{
       (document.getElementById('esquemaContent') as HTMLInputElement).value = ""
       console.log(this.file.name)
       console.log(typeof(esquemaContent))
-      this.uploadsService.updateEsquemaContent(null, this.file.name, null, this.datafile.id, esquemaContent, 'create')
+      this.uploadsService.addEsquemaContent(values.title, this.datafile.id, this.file.name, esquemaContent)
       .then(updateResponse=>{
-        this.esquemaService.addEsquema(values.title, this.datafile.id, updateResponse.filePath, 'create')
-        .then(response=>{
-          // Esquemas
+        
           this.esquemasService.getEsquemasByDatafile(this.datafile.id);
           this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
             this.esquemasChange.emit(esquemaData.esquemas);
@@ -145,10 +138,7 @@ export class EsquemaCreateComponent implements OnInit{
             this.esquemaChange.emit(null);
             this.isAddingChange.emit(false);  
           }); 
-        })
-        .catch(err=>{
-          console.log("Error on onUpdateContent (create mode) method: "+err.message.message);
-        });
+
       })
       .catch(err=>{
         console.log("Error on onSave (create mode) method: "+err.message.message);

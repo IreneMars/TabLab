@@ -44,10 +44,10 @@ var create_report = (model_name, result, data) => {
 
 exports.populate = async(req, res, next) => {
     var rawData = null;
-    if (req.query.production === 'true') {
-        rawData = fs.readFileSync(fullProdDataPath);
-    } else {
+    if (req.get("host").includes("localhost")) {
         rawData = fs.readFileSync(fullDataPath);
+    } else {
+        rawData = fs.readFileSync(fullProdDataPath);
     }
     const populate_json_data = JSON.parse(rawData);
     reports = { "errored_models": [], "reports": [] };
@@ -188,7 +188,54 @@ exports.populate = async(req, res, next) => {
     //     reports.errored_models.push({ "Suggestion": err });
     // }
 
+    fs.readdir(path.join("backend/uploads/datafiles"), (err, files) => {
+        if (err) console.log(err);
+
+        for (const file of files) {
+            fs.unlink(path.join(path.join("backend/uploads/datafiles"), file), err => {
+                if (err) throw err;
+            });
+        }
+    });
+
+    fs.readdir(path.join("backend/uploads/esquemas"), (err, files) => {
+        if (err) console.log(err);
+
+        for (const file of files) {
+            fs.unlink(path.join(path.join("backend/uploads/esquemas"), file), err => {
+                if (err) throw err;
+            });
+        }
+    });
+
+    fs.readdir(path.join("backend/uploads/users"), (err, files) => {
+        if (err) console.log(err);
+
+        for (const file of files) {
+            fs.unlink(path.join(path.join("backend/uploads/users"), file), err => {
+                if (err) throw err;
+            });
+        }
+    });
+
     return res.status(200).json({
         data: reports
     });
 };
+
+exports.populateFile = async(req, res, next) => {
+    try {
+        if (req.file) {
+            console.log(req.file.filename)
+        }
+        return res.status(200).json({
+            message: "Uploaded file!",
+            fileName: req.file.filename
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: err
+        })
+    }
+
+}

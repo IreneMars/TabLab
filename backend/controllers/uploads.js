@@ -1,7 +1,7 @@
 const fs = require('fs');
 const bufferedSpawn = require('buffered-spawn');
 
-const { User, Datafile, Role, Test } = require('../models');
+const { User, Datafile, Role, Test, Esquema } = require('../models');
 
 exports.updatePhoto = async(req, res) => {
     current_user_id = req.userData.userId;
@@ -129,15 +129,11 @@ exports.updateFile = async(req, res) => {
     }
 }
 
-exports.updateEsquemaContent = async(req, res) => {
+exports.addEsquemaContent = async(req, res) => {
     current_user_id = req.userData.userId;
-    console.log("updateEsquemaContent")
 
     try {
         const url = req.protocol + "://" + req.get("host") + "/";
-
-        console.log(req.body)
-        console.log(req.body.datafile)
         const datafile = await Datafile.findById(req.body.datafile);
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         if (roles.length !== 1) {
@@ -145,53 +141,108 @@ exports.updateEsquemaContent = async(req, res) => {
                 message: "The current user is not authorized to perform any actions on this workspace!"
             });
         }
-        console.log(req.body.operation)
-        if (req.body.operation === 'update' || req.body.operation === 'create') {
-            var actualFilePath = "";
-            var newFilePath = "";
-            if (req.body.operation === 'update') {
-                actualFilePath = req.body.contentPath.replace(url, 'backend/uploads/');
-                fs.unlinkSync(actualFilePath);
-                newFilePath = req.body.contentPath;
-            } else {
-                newFilePath = url + "esquemas/" + req.body.fileName;
-            }
-            console.log("Actual: " + actualFilePath)
-            console.log("New: " + newFilePath)
-            auxFilePath = 'backend/uploads/esquemas/' + req.body.fileName;
-            console.log(auxFilePath)
-            console.log(req.body.esquemaContent)
-            fs.writeFile(auxFilePath, req.body.esquemaContent, (err) => {
-                if (err) {
-                    console.log(err)
-                    return res.status(500).json({
-                        message: "Writing an esquema failed!"
-                    });
-                }
-                return res.status(200).json({
-                    message: "File updated!",
-                    filePath: newFilePath
-                });
-            });
-        } else if (req.body.operation === 'infer') {
-            const fileName = 'inferred_schema' + "-" + Date.now() + '.yaml';
-            bufferedSpawn('python', ["backend/scripts/infer_esquema.py", datafile.contentPath, fileName])
-                .then((output) => {
-                    const newFilePath = url + "esquemas/" + fileName;
-                    return res.status(200).json({
-                        message: "Esquema inferred successfully",
-                        filePath: newFilePath
-                    });
-                }, (err) => {
-                    return res.status(500).json({
-                        message: "Inferring an esquema failed!",
-                    });
-                });
-        } else if (!req.body.contentPath && !datafile.contentPath) {
-            return res.status(500).json({
-                message: "There is no content to infer an esquema!"
+        var split = req.body.fileName.split(".");
+        const name = split[0].toLowerCase().split(" ").join("_");
+        const extension = split[1].toLowerCase();
+
+        const auxName = name + "-" + Date.now() + "." + extension;
+        const newFilePath = url + "esquemas/" + auxName;
+        auxFilePath = 'backend/uploads/esquemas/' + auxName;
+        const esquema = new Esquema({
+            title: req.body.title,
+            contentPath: newFilePath,
+            creationMoment: null,
+            datafile: req.body.datafile
+        });
+        const createdEsquema = await esquema.save();
+        fs.writeFileSync(auxFilePath, req.body.esquemaContent);
+
+        return res.status(200).json({
+            message: "Esquema added!",
+            esquema: createdEsquema,
+            newContent: req.body.esquemaContent
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: "Updating an esquema file failed!"
+        });
+    }
+}
+
+exports.updateEsquemaContent = async(req, res) => {
+    current_user_id = req.userData.userId;
+
+    try {
+        const url = req.protocol + "://" + req.get("host") + "/";
+        const datafile = await Datafile.findById(req.body.datafile);
+        const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
+        if (roles.length !== 1) {
+            return res.status(403).json({
+                message: "The current user is not authorized to perform any actions on this workspace!"
             });
         }
+
+        const esquema = await Esquema.findById(req.params.esquemaId);
+        const actualFilePath = esquema.contentPath.replace(url, 'backend/uploads/');
+
+        await Esquema.findByIdAndUpdate(req.params.esquemaId, { title: req.body.title });
+        const updatedEsquema = await Esquema.findById(req.params.esquemaId);
+        fs.writeFile(actualFilePath, req.body.esquemaContent, (err) => {
+            if (err) {
+                return res.status(500).json({
+                    message: "Updating an esquema failed!"
+                });
+            }
+            return res.status(200).json({
+                message: "Esquema updated!",
+                esquema: updatedEsquema,
+                newContent: req.body.esquemaContent
+            });
+        });
+
+    } catch (err) {
+        return res.status(500).json({
+            message: "Updating an esquema file failed!"
+        });
+    }
+}
+
+exports.inferEsquemaContent = async(req, res) => {
+    current_user_id = req.userData.userId;
+
+    try {
+        const url = req.protocol + "://" + req.get("host") + "/";
+        const datafile = await Datafile.findById(req.params.datafileId);
+
+        const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
+        if (roles.length !== 1) {
+            return res.status(403).json({
+                message: "The current user is not authorized to perform any actions on this workspace!"
+            });
+        }
+        const fileName = 'inferred_schema' + "-" + Date.now() + '.yaml'
+        const newFilePath = url + "esquemas/" + fileName;
+        console.log(fileName)
+
+        bufferedSpawn('python', ["backend/scripts/infer_esquema.py", datafile.contentPath, fileName])
+            .then(async(output) => {
+                const esquema = new Esquema({
+                    title: "Inferred Esquema - " + datafile.title,
+                    contentPath: newFilePath,
+                    creationMoment: null,
+                    datafile: req.params.datafileId
+                });
+                const createdEsquema = await esquema.save();
+                return res.status(200).json({
+                    message: "Esquema inferred successfully",
+                    esquema: createdEsquema,
+                });
+            }, (err) => {
+                return res.status(500).json({
+                    message: "Inferring an esquema failed!",
+                });
+            });
+
     } catch (err) {
         return res.status(500).json({
             message: "Updating an esquema file failed!"

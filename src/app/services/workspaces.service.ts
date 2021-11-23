@@ -83,16 +83,12 @@ export class WorkspacesService {
   }
 
   updateWorkspace(workspaceId: string, title: string, description: string){
-    let res: any;
-    const workspace: Workspace = {
+    const workspaceData = {
       'id': workspaceId,
       'title': title, 
       'description': description, 
-      'creationMoment': null,
-      'mandatory': null,
-      'owner':null
     };
-    return this.http.put<{message: string, workspace: any}>(BACKEND_URL + workspaceId, workspace).toPromise();
+    return this.http.put<{message: string, workspace: any}>(BACKEND_URL + workspaceId, workspaceData).toPromise();
   }
 
   deleteWorkspace(workspaceId: string) {

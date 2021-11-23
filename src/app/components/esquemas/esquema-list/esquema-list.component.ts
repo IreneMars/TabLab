@@ -86,20 +86,15 @@ export class EsquemaListComponent implements OnInit {
   onInfer() {
     console.log(this.datafile)
     this.isInferring = true;
-    this.uploadsService.updateEsquemaContent(null, null, null, this.datafile.id, null, 'infer')
+    this.uploadsService.inferEsquemaContent(this.datafile.id)
       .then(updateResponse=>{    
-        this.esquemasService.addEsquema(this.datafile.title, this.datafile.id, updateResponse.filePath, 'infer')
-        .then(response => {
-          // Esquemas
+
           this.esquemasService.getEsquemasByDatafile(this.datafile.id);
           this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
             this.esquemasChange.emit(esquemaData.esquemas)
             this.isInferring = false;
           });      
-         })
-        .catch(err => {
-          console.log("Error on onUpdateContent (infer mode) method: "+err.message.message);
-        });
+
   })
   .catch(err=>{
     console.log("Error on onInfer method: "+err.message.message);

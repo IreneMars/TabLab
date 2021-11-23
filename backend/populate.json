@@ -57,8 +57,8 @@
     ],
 
     "esquemas": [
-        { "_id": "60c164a855a6814cb879a775", "title": "Esquema Prueba", "contentPath": "http://localhost:3000/esquemas/populate_schema-1622816872776.json", "creationMoment": "1622816872776", "datafile": "60b634e98ab1a18d8850e49e" },
-        { "_id": "60c1669355a6814cb879a77a", "title": "Esquema Prueba 2", "contentPath": "http://localhost:3000/esquemas/populate_schema_2-1623287443765.json", "creationMoment": "1623287443765", "datafile": "60b634e98ab1a18d8850e49e" }
+        { "_id": "60c164a855a6814cb879a775", "title": "Esquema 1", "contentPath": "http://localhost:3000/esquemas/populate_schema-1622816872776.json", "creationMoment": "1622816872776", "datafile": "60b634e98ab1a18d8850e49e" },
+        { "_id": "60c1669355a6814cb879a77a", "title": "Esquema 2", "contentPath": "http://localhost:3000/esquemas/populate_schema_2-1623287443765.json", "creationMoment": "1623287443765", "datafile": "60b634e98ab1a18d8850e49e" }
     ],
 
     "configurations": [{

@@ -41,11 +41,10 @@ class Server {
         this.app.use(express.json());
         this.app.use(express.static('/app/dist/tablab'));
         this.app.use(express.urlencoded({ extended: false }));
+
         this.app.use("/users", express.static(path.join("backend/uploads/users")));
         this.app.use("/datafiles", express.static(path.join("backend/uploads/datafiles")));
-
         this.app.use("/assets", express.static(path.join("backend/assets")));
-        this.app.use("/files", express.static(path.join("backend/files")));
 
         this.app.use((req, res, next) => {
             // Permitimos solo a nuestra aplicacion de angular hacer llamadas a nuestra api

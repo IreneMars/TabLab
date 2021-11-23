@@ -34,22 +34,28 @@ export class UploadsService {
     return this.http.put(BACKEND_URL + "datafiles/" + datafileId, datafileData).toPromise();
   }
 
-  updateEsquemaContent(esquemaId: string, fileName: string, contentPath: string, datafileId: string, esquemaContent: string, operation: string){
+  addEsquemaContent(title:string, datafileId: string, fileName: string, esquemaContent: string){
     const esquemaData = {
-      'fileName':fileName,
-      'contentPath': contentPath, 
-      'esquemaContent': esquemaContent,
+      'title': title,
       'datafile':datafileId,
-      'operation': operation,
-      'entity':'esquemas'
+      'fileName':fileName,
+      'esquemaContent': esquemaContent,
     };
 
-    if (fileName){//Manual creation
-      const split = fileName.split('.');
-      const extension = '.' + split[1].toLowerCase();
-      const newFileName = split[0].toLowerCase().split(' ').join('_') + "-" + Date.now() + extension;
-      esquemaData.fileName = newFileName;
-    }
-    return this.http.put<{message: string, fileName: any, filePath:any}>(BACKEND_URL+'esquema', esquemaData).toPromise();
+    return this.http.post<{message: string, esquema: any, newContent:any}>(BACKEND_URL+'esquema/create', esquemaData).toPromise();
+  }
+
+  updateEsquemaContent(esquemaId: string, title:string, datafileId: string, esquemaContent: string){
+    const esquemaData = {
+      'title': title,
+      'datafile':datafileId,
+      'esquemaContent': esquemaContent,
+    };
+
+    return this.http.put<{message: string, esquema: any, newContent:any}>(BACKEND_URL+'esquema/'+esquemaId, esquemaData).toPromise();
+  }
+
+  inferEsquemaContent(datafileId: string){
+    return this.http.get<{message: string, esquema:any}>(BACKEND_URL+'esquema/infer/'+datafileId).toPromise();
   }
 }
