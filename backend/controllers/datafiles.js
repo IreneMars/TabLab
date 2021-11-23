@@ -42,7 +42,8 @@ exports.getDatafile = async(req, res, next) => {
             var extension = datafile.contentPath.split('.').pop().toLowerCase();
             if (extension === 'csv') {
                 actualFilePath = datafile.contentPath.replace(url, 'backend/uploads/');
-
+                console.log(url)
+                console.log(actualFilePath)
                 fs.readFile(actualFilePath, 'utf8', (err, data) => {
                     if (err) {
                         return res.status(500).json({

@@ -155,9 +155,9 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
                         if (this.datafile.contentPath) {
                           // contentPath: {backend/uploads/datafiles/capital-1234.csv",
                           const nameWExtension = this.datafile.contentPath.split('/');
-                          const splitNameWExtension = nameWExtension[3].split('.');
+                          const splitNameWExtension = nameWExtension[4].split('.');
                           this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
-                          const nameWDate = nameWExtension[3].split('-');
+                          const nameWDate = nameWExtension[4].split('-');
                           const name = nameWDate[0];
                           this.fileName = name + '.' + this.extension;
                         }
