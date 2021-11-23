@@ -23,3 +23,5 @@ jobs:
         provider: heroku
         api_key: $HEROKU_AUTH_TOKEN
         app: tablab-app
+        on:
+          all_branches: true
