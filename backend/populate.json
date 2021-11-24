@@ -50,10 +50,10 @@
         { "_id": "60b36426894076503c4de405", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb5" },
         { "_id": "60b36426894076503c4de407", "role": "admin", "workspace": "60b363c81e7c4e4ff4e724a0", "user": "60ad88d2a74d2e58cc611a31" },
 
-        { "_id": "619ec2db388ad000333348ff", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb2" },
-        { "_id": "619ec2e01672a7605c981607", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb3" },
-        { "_id": "619ec2e38530fa882724d251", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb4" },
-        { "_id": "619ec2e6b4cf59e12cc74b89", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb5" }
+        { "_id": "60b36426894076503c4de402", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb2" },
+        { "_id": "60b36426894076503c4de403", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb3" },
+        { "_id": "60b36426894076503c4de404", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb4" },
+        { "_id": "60b36426894076503c4de405", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb5" }
     ],
 
     "invitations": [
@@ -61,9 +61,9 @@
         { "_id": "60b364acfb597b8300722348", "sender": "60ad88d2a74d2e58cc611a31", "receiver": "60ae10e9c2d2fe5c48e6eeb2", "status": "accepted", "workspace": "60aebafbb83c905694cd191c" },
         { "_id": "60b364acfb597b8300722349", "sender": "60ae10e9c2d2fe5c48e6eeb3", "receiver": "60ae10e9c2d2fe5c48e6eeb2", "status": "pending", "workspace": "60b363c81e7c4e4ff4e724a0" },
         { "_id": "60b364acfb597b830072234a", "sender": "60ae10e9c2d2fe5c48e6eeb2", "receiver": "60ad88d2a74d2e58cc611a31", "status": "pending", "workspace": "60b363c81e7c4e4ff4e724a0" },
-        { "_id": "619ec34f37acd6a5893e3053", "sender": "60ae10e9c2d2fe5c48e6eeb3", "receiver": "60ad88d2a74d2e58cc611a31", "status": "seen", "workspace": "60b363c81e7c4e4ff4e724a0" },
-        { "_id": "619ec354c4e66ebf135883d0", "sender": "60ae10e9c2d2fe5c48e6eeb4", "receiver": "60ad88d2a74d2e58cc611a31", "status": "accepted", "workspace": "60b363c81e7c4e4ff4e724a0" },
-        { "_id": "619ec357f2260f179755b0e1", "sender": "60ae10e9c2d2fe5c48e6eeb5", "receiver": "60ad88d2a74d2e58cc611a31", "status": "rejected", "workspace": "60b363c81e7c4e4ff4e724a0" }
+        { "_id": "60b364acfb597b830072234a", "sender": "60ae10e9c2d2fe5c48e6eeb3", "receiver": "60ad88d2a74d2e58cc611a31", "status": "seen", "workspace": "60b363c81e7c4e4ff4e724a0" },
+        { "_id": "60b364acfb597b830072234a", "sender": "60ae10e9c2d2fe5c48e6eeb4", "receiver": "60ad88d2a74d2e58cc611a31", "status": "accepted", "workspace": "60b363c81e7c4e4ff4e724a0" },
+        { "_id": "60b364acfb597b830072234a", "sender": "60ae10e9c2d2fe5c48e6eeb5", "receiver": "60ad88d2a74d2e58cc611a31", "status": "rejected", "workspace": "60b363c81e7c4e4ff4e724a0" }
     ],
 
     "collections": [
