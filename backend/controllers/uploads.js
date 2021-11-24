@@ -222,7 +222,6 @@ exports.inferEsquemaContent = async(req, res) => {
         }
         const fileName = 'inferred_schema' + "-" + Date.now() + '.yaml'
         const newFilePath = url + "esquemas/" + fileName;
-        console.log(fileName)
 
         bufferedSpawn('python', ["backend/scripts/infer_esquema.py", datafile.contentPath, fileName])
             .then(async(output) => {

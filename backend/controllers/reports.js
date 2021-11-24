@@ -5,6 +5,8 @@ const fs = require('fs');
 exports.createReport = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     const testId = req.body.testId;
+    const url = req.protocol + "://" + req.get("host") + "/";
+
     try {
         const test = await Test.findById(testId);
         if (!test.executable) {
@@ -22,6 +24,7 @@ exports.createReport = async(req, res, next) => {
         var esquemaContentPath = "";
         if (esquema) {
             esquemaContentPath = esquema.contentPath;
+            esquemaContentPath = esquema.contentPath.replace(url, 'backend/uploads/');
         }
 
         const configurations = await Configuration.find({ _id: { $in: test.configurations } });
@@ -43,13 +46,14 @@ exports.createReport = async(req, res, next) => {
             }
             configurationsAux.push(configAux);
         }
+        datafile.contentPath = datafile.contentPath.replace(url, 'backend/uploads/');
         split1 = datafile.contentPath.split('.');
         split2 = split1[0].split('/');
         const errorReportPath = 'backend/output/' + split2[3] + '_errors.csv';
+
         const testData = [test.title, errorReportPath, test.delimiter, esquemaContentPath, datafile.contentPath, configurationsAux];
 
         //var myProcess = spawn('python', ["backend/scripts/validation.py", errorReportPath, esquemaContentPath, datafile.contentPath, errorCode]);
-        testData[3]
         const execBuffer = execFileSync(
             'python', ["backend/scripts/validation.py", testData[1], testData[2], testData[3], testData[4], testData[5]], { encoding: 'utf-8' }
             //'python', ["backend/scripts/validation.py", errorReportPath, esquemaContentPath, datafile.contentPath, configurationsAux], { encoding: 'utf-8' }
@@ -69,6 +73,7 @@ exports.createReport = async(req, res, next) => {
         test.totalErrors = errors;
         test.executable = false;
         //await Suggestion.deleteMany({ datafile: test.datafile });
+
         return res.status(200).json({
             message: "Creation of error report and update of a test successful! ",
             testUpdates: test,

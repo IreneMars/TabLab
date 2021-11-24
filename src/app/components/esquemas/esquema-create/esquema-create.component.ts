@@ -70,7 +70,6 @@ export class EsquemaCreateComponent implements OnInit{
         this.invalidExtension = false;
       }
       this.file = uploadedFile;
-      console.log(this.file)
       this.papa.parse(uploadedFile, {
         complete(results) {
           let chain = '';
@@ -126,8 +125,6 @@ export class EsquemaCreateComponent implements OnInit{
     } else {
       this.isAddingChange.emit(true);
       (document.getElementById('esquemaContent') as HTMLInputElement).value = ""
-      console.log(this.file.name)
-      console.log(typeof(esquemaContent))
       this.uploadsService.addEsquemaContent(values.title, this.datafile.id, this.file.name, esquemaContent)
       .then(updateResponse=>{
         

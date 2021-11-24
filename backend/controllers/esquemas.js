@@ -36,12 +36,10 @@ exports.getEsquema = async(req, res, next) => {
             });
         }
         const url = req.protocol + "://" + req.get("host") + "/";
-
         actualFilePath = esquema.contentPath.replace(url, 'backend/uploads/');
 
         fs.readFile(actualFilePath, 'utf8', (err, data) => {
             if (err) {
-                console.log(err)
                 return res.status(500).json({
                     message: "Fetching an esquema failed!",
                     error: err

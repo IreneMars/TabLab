@@ -39,28 +39,34 @@ export class TestExecuteComponent implements OnInit {
     this.userIsAuthenticated = this.authService.getIsAuth();
     if (this.userIsAuthenticated) {
       this.userId = this.authService.getUserId();
-      this.route.paramMap.subscribe((paramMap: ParamMap) => {
-        this.workspaceId = paramMap.get('workspaceId');
-        if (paramMap.get('testId')) {
-          this.testId = paramMap.get('testId');
-        }
-          this.selectedTestIDs.add(this.testId);     
-          // Terminal
-          this.terminalsService.getTerminal(this.userId).subscribe((response)=>{
-            this.terminal = {
-              id:response.terminal._id,
-              content:response.terminal.content,
-              user:response.terminal.user,
-            };
+          this.route.paramMap.subscribe((paramMap: ParamMap) => {
+            this.workspaceId = paramMap.get('workspaceId');
             // Tests
             this.testsService.getTestsByWorkspace(this.workspaceId);
             this.testsService.getTestUpdateListener().subscribe( (testData: {tests: any[]}) => {
               this.tests = testData.tests;
-              this.isLoading = false;
-            });
+              // Terminal
+              this.terminalsService.getTerminal(this.userId).subscribe((response)=>{
+                this.terminal = {
+                  id:response.terminal._id,
+                  content:response.terminal.content,
+                  user:response.terminal.user,
+                };
+              });
+              if (paramMap.get('testId')) {
+                this.testId = paramMap.get('testId');
+                //Test
+                this.testsService.getTest(this.testId).subscribe((testData)=>{
+                  if(testData.test.executable){
+                    this.selectedTestIDs.add(this.testId);     
+                  }
+                  this.isLoading = false;
+                })
+              }else{
+                this.isLoading = false;
+              } 
+            });            
           });
-          
-      });
     }
   }
 
@@ -121,8 +127,6 @@ export class TestExecuteComponent implements OnInit {
             for (var line of buffer){
               this.terminal.content.push(line)
             }
-            this.terminal.content.push(responseData.execBuffer);
-            this.terminal.content.push(responseData.message);
             const testUpdate: any = {
               id: responseData.testUpdates._id,
               title: responseData.testUpdates.title,
@@ -139,13 +143,17 @@ export class TestExecuteComponent implements OnInit {
               datafile: responseData.testUpdates.datafile,
               workspace: this.workspaceId
             };
+            if(!testUpdate.executable){
+              this.selectedTestIDs.delete(testUpdate.id);
+
+            }
             this.rawData = responseData.rawData;
             await this.suggestionsService.deleteSuggestionsByDatafile(testUpdate.datafile);
             await this.suggestionsService.addSuggestionsByDatafile(testUpdate.datafile,this.rawData, testUpdate.delimiter);
             // Updating test with report information
             this.testsService.updateTest(testUpdate).then(async (data:any)=>{
               if (data !==  undefined){
-                this.terminal.content.push(data);
+                this.terminal.content.push(data.message);
               }
               this.terminalsService.updateTerminal(this.terminal.id,this.userId,this.terminal.content).subscribe(terminalData =>{
                 this.inExecution = false;

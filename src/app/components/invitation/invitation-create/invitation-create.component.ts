@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Invitation } from 'src/app/models/invitation.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { InvitationService } from '../../../services/invitations.service';
+import { WorkspacesService } from '../../../services/workspaces.service';
 
 @Component({
   selector: 'app-invitation-create',
@@ -15,15 +16,15 @@ export class InvitationCreateComponent implements OnInit{
   isLoading                   : boolean = false;
   invitationAdded             : boolean = false;
 
-  workspaceId                 : string;
+  @Input() workspaceId        : string;
   invalidEmail                : boolean = false;
   invitationForm              : FormGroup;
   @Input() create             : any;
   @Input()  invitations       : Invitation[];
   @Output() invitationsChange : any = new EventEmitter();
-
+  personal                    : boolean = false;
   constructor(public invitationsService: InvitationService, public authService: AuthService, private formBuilder: FormBuilder,
-              private activatedRoute: ActivatedRoute,  private router: Router) {
+              private workspacesService: WorkspacesService) {
     this.createForm();
   }
 
@@ -34,13 +35,16 @@ export class InvitationCreateComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.workspaceId = params.get('workspaceId');
-      this.userIsAuthenticated = this.authService.getIsAuth();
-      if (this.userIsAuthenticated){
-        this.userId = this.authService.getUserId();
-      }
-    });
+    this.isLoading = true;          
+
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+      this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData=>{
+          this.personal = workspaceData.workspace.mandatory;
+          this.isLoading = false;          
+      });
+    }
   }
 
   onInvite() {

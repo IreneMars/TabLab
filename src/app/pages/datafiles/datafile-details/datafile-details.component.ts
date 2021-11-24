@@ -77,9 +77,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
     this.onDestroy = true;
   }
     
-  ngOnInit(){
-    console.log("OnInit of datafile")
-    
+  ngOnInit(){  
     this.isLoading = true;
     this.userIsAuthenticated = this.authService.getIsAuth();
     if (this.userIsAuthenticated){
@@ -142,8 +140,6 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
                     if(!this.onDestroy){
                       this.configurationsService.getConfigurationsByDatafile(this.datafileId);
                       this.configurationsService.getConfigurationUpdateListener().subscribe(configurationData =>{
-                        // console.log("Permitido (datafile):"+!this.onDestroy)
-                        // console.log("Get configurations (datafile-details)")
                         this.configurations = configurationData.configurations;
   
                         if (this.content !== null) {
@@ -155,11 +151,14 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
                         if (this.datafile.contentPath) {
                           // contentPath: {backend/uploads/datafiles/capital-1234.csv",
                           const nameWExtension = this.datafile.contentPath.split('/');
-                          const splitNameWExtension = nameWExtension[3].split('.');
+                          const splitNameWExtension = nameWExtension[4].split('.');
                           this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
-                          const nameWDate = nameWExtension[3].split('-');
-                          const name = nameWDate[0];
-                          this.fileName = name + '.' + this.extension;
+                          var name = nameWExtension[4];
+                          if (nameWExtension[4].includes("-")){
+                            const nameWDate = nameWExtension[4].split('-');
+                            name = nameWDate[0] + '.' + this.extension;
+                          }
+                          this.fileName = name;
                         }
                         if (this.extension === 'xlsx') {
                           let res = this.content[0].join(',')+ '\n';

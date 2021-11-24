@@ -1,5 +1,5 @@
-<form class="row mt-2" [formGroup]="invitationForm" (ngSubmit)="onInvite()">
-    <div *ngIf="!create">
+<form class="row mt-2" [formGroup]="invitationForm" (ngSubmit)="onInvite()" *ngIf="!isLoading">
+    <div *ngIf="!create && !personal">
         <div class="row m-0 p-0">
             <div class="col p-0 input-group input-group-sm">
                 <input type="email" class="form-control" placeholder="Introduce un email..." formControlName="email" [class.is-invalid]="invalidEmail">

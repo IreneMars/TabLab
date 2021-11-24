@@ -103,14 +103,8 @@ exports.applySuggestion = async(req, res, next) => {
                 }
             });
         } else if (operation === "updateRow") {
-            console.log(contentLines[rowNumber - 1])
-            console.log("New content:")
-            console.log(req.body.newRowContent)
             contentLines[rowNumber - 1] = req.body.newRowContent;
-            console.log("New content lines:")
-            console.log(contentLines)
             const content = contentLines.join("\n");
-            console.log(content)
             return res.status(200).json({
                 message: "Suggestion used successfully!",
                 data: {

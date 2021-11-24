@@ -40,6 +40,7 @@ exports.getUsersByWorkspace = async(req, res) => {
 };
 
 exports.getUser = async(req, res) => {
+
     const current_user_id = req.userData.userId;
     try {
         //Error if the user is fetching the data of another user
@@ -102,6 +103,7 @@ exports.createUser = async(req, res) => {
 
 
 exports.updateUser = async(req, res) => {
+
     current_user_id = req.userData.userId;
     try {
         const current_user = await User.findById(current_user_id);

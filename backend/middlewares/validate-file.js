@@ -17,9 +17,7 @@ const MIME_TYPE_MAP_PICS = {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        console.log("file")
         if (file) {
-            console.log(file)
             var extension = file.originalname.split('.').pop().toLowerCase();
             const validExtension = Object.values(MIME_TYPE_MAP).includes(extension);
 

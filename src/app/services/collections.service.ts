@@ -19,7 +19,7 @@ export class CollectionsService {
   }
 
   getCollectionsByWorkspace(workspaceId: string) {
-    return this.http.get<{message: string, collections: any[], orphanedDatafiles: any[]}>(BACKEND_URL + workspaceId)
+    return this.http.get<{message: string, collections: any[]}>(BACKEND_URL + workspaceId)
     .pipe(map( (collectionData) => {
       return { 
         collections: collectionData.collections

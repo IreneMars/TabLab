@@ -42,7 +42,6 @@ exports.getDatafile = async(req, res, next) => {
             var extension = datafile.contentPath.split('.').pop().toLowerCase();
             if (extension === 'csv') {
                 actualFilePath = datafile.contentPath.replace(url, 'backend/uploads/');
-
                 fs.readFile(actualFilePath, 'utf8', (err, data) => {
                     if (err) {
                         return res.status(500).json({
@@ -123,20 +122,27 @@ exports.createDatafile = async(req, res, next) => {
         const workspace = await Workspace.findById(createdDatafile.workspace);
 
         const user = await User.findById(current_user_id);
-        var messageAux = "{{author}} añadió el fichero {{datafile}} al espacio de trabajo {{workspace}}";
+        var messageAux = "$author$ añadió el fichero $datafile$ al espacio de trabajo $workspace$";
         var coleccionAux = null;
+        var coleccionTitleAux = null;
         if (req.body.coleccion != null) {
             messageAux = "{{author}} añadió el fichero {{datafile}} al espacio de trabajo {{workspace}} (en la colección {{coleccion}})";
             const coleccion = await Collection.findById(req.body.coleccion);
-            coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
+            coleccionAux = coleccion._id;
+            coleccionTitleAux = coleccion.title;
         }
         const activity = new Activity({
             message: messageAux,
-            workspace: { 'id': workspace._id, 'title': workspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
+            workspace: workspace._id,
+            workspaceTitle: workspace.title,
+            author: current_user_id,
+            authorName: user.name,
             coleccion: coleccionAux,
-            datafile: { 'id': datafile._id, 'title': datafile.title },
+            coleccionTitle: coleccionTitleAux,
+            datafile: datafile._id,
+            datafileTitle: datafile.title,
             creationMoment: null
+
         });
         await activity.save();
 
@@ -171,19 +177,25 @@ exports.updateDatafile = async(req, res) => {
 
         const workspace = await Workspace.findById(updatedDatafile.workspace);
         const user = await User.findById(current_user_id);
-        var messageAux = "{{author}} modificó el fichero del espacio de trabajo {{workspace}}";
+        var messageAux = "$author$ modificó el fichero del espacio de trabajo {{workspace}}";
         var coleccionAux = null;
+        var coleccionTitleAux = null;
         if (updatedDatafile.coleccion) {
             messageAux = "{{author}} modificó el fichero del espacio de trabajo {{workspace}} (de la colección {{coleccion}})";
             const coleccion = await Collection.findById(updatedDatafile.coleccion);
-            coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
+            coleccionAux = coleccion._id;
+            coleccionTitleAux = coleccion.title;
         }
         const activity = new Activity({
             message: messageAux,
-            workspace: { 'id': workspace._id, 'title': workspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
+            workspace: workspace._id,
+            workspaceTitle: workspace.title,
+            author: current_user_id,
+            authorName: user.name,
             coleccion: coleccionAux,
-            datafile: { 'id': datafile._id, 'title': datafile.title },
+            coleccionTitle: coleccionTitleAux,
+            datafile: datafile._id,
+            datafileTitle: datafile.title,
             creationMoment: null
         });
         await activity.save();
@@ -219,19 +231,25 @@ exports.deleteDatafile = async(req, res) => {
         await Datafile.deleteOne({ _id: req.params.id });
 
         const workspace = await Workspace.findById(datafile.workspace);
-        var messageAux = "{{author}} eliminó el fichero del espacio de trabajo {{workspace}}";
+        var messageAux = "$author$ eliminó el fichero del espacio de trabajo {{workspace}}";
         var coleccionAux = null;
+        var coleccionTitleAux = null
         if (datafile.coleccion) {
             messageAux = "{{author}} eliminó el fichero del espacio de trabajo {{workspace}} (de la colección {{coleccion}})";
             const coleccion = await Collection.findById(datafile.coleccion);
-            coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
+            coleccionAux = coleccion._id;
+            coleccionTitleAux = coleccion.title;
         }
         const activity = new Activity({
             message: messageAux,
-            workspace: { 'id': workspace._id, 'title': workspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
+            workspace: workspace._id,
+            workspaceTitle: workspace.title,
+            author: current_user_id,
+            authorName: user.name,
             coleccion: coleccionAux,
-            datafile: { 'id': null, 'title': datafileTitle },
+            coleccionTitle: coleccionTitleAux,
+            datafile: null,
+            datafileTitle: datafileTitle,
             creationMoment: null
         });
         await activity.save();

@@ -25,9 +25,7 @@ const MIME_TYPE_MAP_ESQUEMAS = {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        console.log("file")
         if (file) {
-            console.log(file.mimetype)
             var extension = file.originalname.split('.').pop().toLowerCase();
             const validExtension = Object.values(MIME_TYPE_MAP).includes(extension);
 

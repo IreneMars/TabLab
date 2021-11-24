@@ -31,7 +31,7 @@ export class CollectionListComponent implements OnInit{
   @Input() workspaceId        : string;
   @Input() isLoading          : boolean;
   @Output() isLoadingChange   : EventEmitter<boolean> = new EventEmitter();
-
+  hideButton                  : boolean = false;
   constructor(public collectionsService: CollectionsService, public authService: AuthService,
               public workspacesService: WorkspacesService, public router: Router,
               public activitiesService: ActivitiesService) {
@@ -44,6 +44,7 @@ export class CollectionListComponent implements OnInit{
 
   onAddCollection() {
     this.close = false;
+    this.hideButton = true;
   }
 
   async onUpdateCollection(index: number) {

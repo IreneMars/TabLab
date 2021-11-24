@@ -1,19 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
-    <a class="navbar-brand" routerLink="/">TabLab</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02" *ngIf="!isLoading">
+    <a class="navbar-brand" routerLink="/" *ngIf="!isLoading">TabLab</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="!isLoading">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            {{checkUser()}}
+
             <li *ngIf="userIsAuthenticated" class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['workspaces']">Espacios de Trabajo</a>
             </li>
             <li *ngIf="userIsAuthenticated" class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['invitations']">
-                    Invitaciones
-                    <i *ngIf="userIsAuthenticated && pendingInvitation" class="ms-1 fas fa-envelope" style="width: 40px; color: rgb(169, 85, 248);"></i>
+                    Invitaciones 
+                    <i *ngIf="hasInvitations" class="ms-1 fas fa-envelope" style="width: 40px; color: rgb(169, 85, 248);"></i>
                 </a>
             </li>
 
@@ -29,7 +28,6 @@
                 </a>
             </li>
         </ul>
-
         <form class="form-inline" *ngIf="!userIsAuthenticated">
             <a class="btn btn-outline-primary me-2" routerLinkActive="active" [routerLink]="['auth/login']">Iniciar Sesión</a>
             <a class="btn btn-outline-primary" routerLinkActive="active" [routerLink]="['auth/signup']">Registro</a>

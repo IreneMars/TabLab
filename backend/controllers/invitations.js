@@ -47,28 +47,34 @@ exports.createInvitation = async(req, res, next) => {
     try {
         const configurations = await GlobalConfiguration.find();
         const configuration = configurations[0];
+        const workspace = await Workspace.findById(req.body.workspace);
+        if (workspace.mandatory) {
+            return res.status(403).json({
+                message: `You can not invite users to your personal workspace!`
+            });
+        }
         const roles = await Role.find({ workspace: req.body.workspace });
 
         if (roles.length === configuration.limitUsers) {
-            return res.status(500).json({
+            return res.status(403).json({
                 message: `This workspace is not allowed to have more than ${configuration.limitUsers} users!`
             });
         }
         const receiver = await User.findOne({ "email": req.body.receiver });
         if (!receiver) {
-            return res.status(500).json({
+            return res.status(403).json({
                 message: "Creating an invitation failed! User not found!"
             });
         }
         if (receiver._id == current_user_id) {
-            return res.status(500).json({
+            return res.status(403).json({
                 message: "You cannot send an invitation to yourself!"
             });
         }
 
         const invitations = await Invitation.find({ "receiver": receiver._id, "sender": current_user_id });
         if (invitations.length > 0) {
-            return res.status(500).json({
+            return res.status(403).json({
                 message: "That user has already received an invitation!"
             });
         } else {
@@ -78,9 +84,7 @@ exports.createInvitation = async(req, res, next) => {
                 status: "pending",
                 workspace: req.body.workspace
             });
-            console.log(invitation)
             const createdInvitation = await invitation.save();
-            console.log(createdInvitation)
             return res.status(201).json({
                 message: "Invitation created successfully!",
                 invitation: createdInvitation

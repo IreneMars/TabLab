@@ -13,7 +13,7 @@ export class ActivityListComponent implements OnInit{
   userId                : string = "";
   @Input() workspaceId  : string = "";
   userIsAuthenticated   : boolean = false;
-  @Input() activities            : Activity[];
+  activities            : Activity[];
   constructor(private authService: AuthService, public activitiesService: ActivitiesService){}
 
   ngOnInit(){
@@ -27,22 +27,20 @@ export class ActivityListComponent implements OnInit{
         this.activitiesService.getActivitiesByUser(this.userId);
 
       }
-      this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
+      this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: any}) => {
         this.activities = activityData.activities;
-        // http://localhost:3000
-        // environment.SOCKET_ENDPOINT
-        // [routerLink]="['/workspace', workspaceId,'datafile',datafileId,'test',test.id]"
+       
         for (var activity of this.activities){
-          var workspaceLink :string = '<a href="'+environment.host+'workspace/'+activity.workspace['id']+'">'+activity.workspace['title']+'</a>'
+          var workspaceLink :string = '<a href="'+environment.host+'workspace/'+activity.workspace+'">'+activity.workspaceTitle+'</a>'
           activity.message = activity.message.replace("{{workspace}}",workspaceLink);
           
-          activity.message = activity.message.replace("{{author}}",activity.author['name']);
+          activity.message = activity.message.replace("{{author}}",activity.authorName);
           if (activity.coleccion){
-            var coleccionLink :string = '<a href="'+environment.host+'workspace/'+activity.workspace['id']+'">'+activity.coleccion['title']+'</a>'
+            var coleccionLink :string = '<a href="'+environment.host+'workspace/'+activity.workspace+'">'+activity.coleccionTitle+'</a>'
             activity.message = activity.message.replace("{{coleccion}}",coleccionLink);
           } 
           if (activity.datafile) {
-            var datafileLink :string = '<a href="'+environment.host+'workspace/'+activity.workspace['id']+'/datafile/'+activity.datafile['id']+'">'+activity.datafile['title']+'</a>'
+            var datafileLink :string = '<a href="'+environment.host+'workspace/'+activity.workspace+'/datafile/'+activity.datafile+'">'+activity.datafileTitle+'</a>'
             activity.message = activity.message.replace("{{datafile}}",datafileLink);
           }       
         }
