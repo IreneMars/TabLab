@@ -16,8 +16,7 @@ const {
 } = require("../models");
 const fs = require('fs');
 const path = require("path");
-const fullDataPath = path.resolve("backend/populate.json");
-const fullProdDataPath = path.resolve("backend/populate_prod.json");
+
 
 var create_report = (model_name, result, data) => {
     message = "";
@@ -44,12 +43,15 @@ var create_report = (model_name, result, data) => {
 exports.populate = async(req, res, next) => {
     console.log("Populating database...")
     console.log("Using host: " + req.get("host"))
-    var rawData = null;
+    var dataPath = null;
     if (req.get("host").includes("localhost")) {
-        rawData = fs.readFileSync(fullDataPath);
+        dataPath = path.resolve("backend/populate.json");
+    } else if (req.get("host").includes("prepro")) {
+        dataPath = path.resolve("backend/populate_prepro.json");
     } else {
-        rawData = fs.readFileSync(fullProdDataPath);
+        dataPath = path.resolve("backend/populate_prod.json");
     }
+    const rawData = fs.readFileSync(dataPath);
     const populate_json_data = JSON.parse(rawData);
     reports = { "errored_models": [], "reports": [] };
 
