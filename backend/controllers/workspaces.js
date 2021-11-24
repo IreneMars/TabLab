@@ -19,9 +19,10 @@ exports.getWorkspaces = async(req, res, next) => {
             workspaceQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
         }
 
-        var documents = await workspaceQuery.exec();
-        for (doc in documents) {
-            const roles = await Role.find({ workspace: documents[doc]._id });
+        var workspaces = await workspaceQuery.exec();
+
+        for (var workspace of workspaces) {
+            const roles = await Role.find({ workspace: workspace._id });
             var user_ids = roles.map(function(elem) {
                 return elem.user.toString();
             });
@@ -29,13 +30,13 @@ exports.getWorkspaces = async(req, res, next) => {
             var user_updated = users.map(function(elem) {
                 return { "id": elem._id, "photo": elem.photo };
             });
-            documents[doc]._doc['users'] = user_updated;
+            workspace._doc['users'] = user_updated;
         }
 
         return res.status(200).json({
             message: "Workspaces fetched successfully!",
-            workspaces: documents,
-            maxWorkspaces: documents.length,
+            workspaces: workspaces,
+            maxWorkspaces: workspaces.length,
             totalWorkspaces: allWorkspaces.length
         });
     } catch (err) {
@@ -141,10 +142,14 @@ exports.createWorkspace = async(req, res, next) => {
             const user = await User.findById(current_user_id);
             const activity = new Activity({
                 message: "{{author}} creó el espacio de trabajo {{workspace}}",
-                workspace: { 'id': createdWorkspace._id, 'title': createdWorkspace.title },
-                author: { 'id': current_user_id, 'name': user.name },
+                workspace: createdWorkspace._id,
+                workspaceTitle: createdWorkspace.title,
+                author: current_user_id,
+                authorName: user.name,
                 coleccion: null,
+                coleccionTitle: null,
                 datafile: null,
+                datafileTitle: null,
                 creationMoment: null
             });
             await activity.save();
@@ -181,10 +186,14 @@ exports.updateWorkspace = async(req, res, next) => {
         const user = await User.findById(current_user_id);
         const activity = new Activity({
             message: "{{author}} modificó el espacio de trabajo {{workspace}}",
-            workspace: { 'id': updatedWorkspace._id, 'title': updatedWorkspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
+            workspace: updatedWorkspace._id,
+            workspaceTitle: updatedWorkspace.title,
+            author: current_user_id,
+            authorName: user.name,
             coleccion: null,
+            coleccionTitle: null,
             datafile: null,
+            datafileTitle: null,
             creationMoment: null
         });
         await activity.save();
@@ -227,10 +236,14 @@ exports.deleteWorkspace = async(req, res, next) => {
 
         const activity = new Activity({
             message: "{{author}} eliminó el espacio de trabajo {{workspace}}",
-            workspace: { 'id': null, 'title': workspaceTitle },
-            author: { 'id': current_user_id, 'name': user.name },
+            workspace: null,
+            workspaceTitle: workspaceTitle,
+            author: current_user_id,
+            authorName: user.name,
             coleccion: null,
+            coleccionTitle: null,
             datafile: null,
+            datafileTitle: null,
             creationMoment: null
         });
         await activity.save();

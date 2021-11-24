@@ -2,11 +2,11 @@ const { Role, Collection, Datafile, User, Workspace, Activity } = require("../mo
 
 exports.getCollectionsByWorkspace = async(req, res) => {
     try {
-        collections = await Collection.find({ 'workspace': req.params.workspaceId });
+        var collections = await Collection.find({ 'workspace': req.params.workspaceId });
         var updatedCollections = [];
         if (collections.length > 0) {
             for (var collection of collections) {
-                datafiles = await Datafile.find({ 'coleccion': collection._id });
+                var datafiles = await Datafile.find({ 'coleccion': collection._id });
                 const updatedCollection = {
                     ...collection._doc,
                     datafiles: datafiles
@@ -44,14 +44,18 @@ exports.createCollection = async(req, res) => {
         const workspace = await Workspace.findById(createdCollection.workspace);
         const activity = new Activity({
             message: "{{author}} añadió la colección {{coleccion}} al espacio de trabajo {{workspace}}",
-            workspace: { 'id': workspace._id, 'title': workspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
-            coleccion: { 'id': createdCollection._id, 'title': createdCollection.title },
+            workspace: workspace._id,
+            workspaceTitle: workspace.title,
+            author: current_user_id,
+            authorName: user.name,
+            coleccion: createdCollection._id,
+            coleccionTitle: createdCollection.title,
             datafile: null,
+            datafileTitle: null,
             creationMoment: null
         });
-        await activity.save();
 
+        created = await activity.save();
         return res.status(201).json({
             message: "Collection created successfully!",
             collection: createdCollection
@@ -80,10 +84,14 @@ exports.updateCollection = async(req, res) => {
             const workspace = await Workspace.findById(updatedCollection.workspace);
             const activity = new Activity({
                 message: "{{author}} modificó la colección {{coleccion}} del espacio de trabajo {{workspace}}",
-                workspace: { 'id': workspace._id, 'title': workspace.title },
-                author: { 'id': current_user_id, 'name': user.name },
-                coleccion: { 'id': updatedCollection._id, 'title': updatedCollection.title },
+                workspace: workspace._id,
+                workspaceTitle: workspace.title,
+                author: current_user_id,
+                authorName: user.name,
+                coleccion: updatedCollection._id,
+                coleccionTitle: updatedCollection.title,
                 datafile: null,
+                datafileTitle: null,
                 creationMoment: null
             });
             await activity.save();
@@ -118,10 +126,14 @@ exports.deleteCollection = async(req, res) => {
         const workspace = await Workspace.findById(collection.workspace);
         const activity = new Activity({
             message: "{{author}} eliminó la colección {{coleccion}} del espacio de trabajo {{workspace}}",
-            workspace: { 'id': workspace._id, 'title': workspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
-            coleccion: { 'id': null, 'title': collectionTitle },
+            workspace: workspace._id,
+            workspaceTitle: workspace.title,
+            author: current_user_id,
+            authorName: user.name,
+            coleccion: null,
+            coleccionTitle: collectionTitle,
             datafile: null,
+            datafileTitle: null,
             creationMoment: null
         });
         await activity.save();

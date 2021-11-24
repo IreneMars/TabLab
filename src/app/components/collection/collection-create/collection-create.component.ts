@@ -18,8 +18,8 @@ export class CollectionCreateComponent implements OnInit{
   isSaving                        : boolean = false;
   invalidTitle                    : boolean = false;
   workspaceId                     : string;
-  @Input() collections            : Collection[];
-  @Output() collectionsChange     : EventEmitter<Collection[]> = new EventEmitter();
+  @Input() collections            : any[];
+  @Output() collectionsChange     : EventEmitter<any[]> = new EventEmitter();
   @Input() activities             : Activity[];
   @Output() activitiesChange      : EventEmitter<Activity[]> = new EventEmitter();
   @Input() editMode               : boolean;
@@ -29,6 +29,8 @@ export class CollectionCreateComponent implements OnInit{
   @Input()  collectionIndex       : number;
   @Output() collectionIndexChange : any = new EventEmitter();
   @Input()  editCollection        : any;
+  @Input() hideButton             : boolean;
+  @Output() hideButtonChange      : any = new EventEmitter();
 
   constructor(public collectionsService: CollectionsService, public authService: AuthService, private formBuilder: FormBuilder,
               public activitiesService: ActivitiesService, private activatedRoute: ActivatedRoute) {
@@ -76,13 +78,15 @@ export class CollectionCreateComponent implements OnInit{
       .then(response=>{
         // Collections
         this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-        this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: Collection[]})=>{
+        this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: any[]})=>{
           this.collectionsChange.emit(collectionData.collections);
           // Activities
           this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
           this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
             this.activitiesChange.emit(activityData.activities)
             this.isSaving = false;
+            this.editModeChange.emit(false);
+            this.hideButtonChange.emit(false);
             this.collectionForm.reset();
           });
         }); 
@@ -95,13 +99,14 @@ export class CollectionCreateComponent implements OnInit{
       .then(response=>{
         // Collections
         this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-        this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: Collection[]})=>{
+        this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: any[]})=>{
           this.collectionsChange.emit(collectionData.collections);
           // Activities
           this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
           this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
             this.activitiesChange.emit(activityData.activities)
             this.isSaving = false;
+            this.hideButtonChange.emit(false);
             this.collectionForm.reset();
           });
         }); 
@@ -116,6 +121,7 @@ export class CollectionCreateComponent implements OnInit{
   onCancel() {
     this.collectionForm.reset();
     if (this.editMode) {
+      this.hideButtonChange.emit(false);
       this.editModeChange.emit(false);
       this.collectionIndexChange.emit(undefined);
     } else {

@@ -16,31 +16,54 @@
     ],
 
     "workspaces": [
-        { "_id": "60aeaf40d0e8477348250ac9", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1636544757741", "mandatory": "true", "owner": "60ad88d2a74d2e58cc611a31" },
-        { "_id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1636547093734", "mandatory": "false", "owner": "60ad88d2a74d2e58cc611a31" },
-        { "_id": "60aebafbb83c905694cd191d", "title": "Espacio de trabajo normal 2", "description": "Este es un espacio de trabajo normal (2).", "creationMoment": "1636544757741", "mandatory": "false", "owner": "60ad88d2a74d2e58cc611a31" },
-        { "_id": "60b363c81e7c4e4ff4e724a0", "title": "Espacio de trabajo de user 2", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1636547093734", "mandatory": "false", "owner": "60ae10e9c2d2fe5c48e6eeb3" }
+        { "_id": "60aeaf40d0e8477348250ac9", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1624626060000", "mandatory": "true", "owner": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "619e23c981adff301791f1f1", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1624788300000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb2" },
+        { "_id": "619e23cd9fbc17bde868fcd3", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1625131920000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb3" },
+        { "_id": "619e23d00015345d7e0ab8eb", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1625508240000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb4" },
+        { "_id": "619e23d468cd44a81f1ea98e", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1625506680000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb5" },
+
+        { "_id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal (irene)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1626873300000", "mandatory": "false", "owner": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "60aebafbb83c905694cd191d", "title": "Espacio de trabajo normal (irene) 2", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1627295460000", "mandatory": "false", "owner": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "60b363c81e7c4e4ff4e724a0", "title": "Espacio de trabajo normal (dani)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1627918800000", "mandatory": "false", "owner": "60ae10e9c2d2fe5c48e6eeb2" },
+        { "_id": "619e27ce6e946ce6c15133d5", "title": "Espacio de trabajo normal (pedro)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1627920060000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb3" },
+        { "_id": "619e27edab3d09d9895a0f5b", "title": "Espacio de trabajo normal (sandra)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1630832700000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb4" },
+        { "_id": "619e27f28dbfea5c5e0b2017", "title": "Espacio de trabajo normal (walo)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1632162120000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb5" }
     ],
 
     "roles": [
         { "_id": "60af80a4149abe5ad034175c", "role": "owner", "workspace": "60aeaf40d0e8477348250ac9", "user": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "619e248f2c29bf3e2e4b9e88", "role": "owner", "workspace": "619e23c981adff301791f1f1", "user": "60ae10e9c2d2fe5c48e6eeb2" },
+        { "_id": "619e2493420ff9140e7a6f71", "role": "owner", "workspace": "619e23cd9fbc17bde868fcd3", "user": "60ae10e9c2d2fe5c48e6eeb3" },
+        { "_id": "619e2497671c44ee78aa36d0", "role": "owner", "workspace": "619e23d00015345d7e0ab8eb", "user": "60ae10e9c2d2fe5c48e6eeb4" },
+        { "_id": "619e249a1c806bdc56546ca0", "role": "owner", "workspace": "619e23d468cd44a81f1ea98e", "user": "60ae10e9c2d2fe5c48e6eeb5" },
+
         { "_id": "60af80a4149abe5ad034175d", "role": "owner", "workspace": "60aebafbb83c905694cd191c", "user": "60ad88d2a74d2e58cc611a31" },
         { "_id": "60af80a4149abe5ad034175e", "role": "owner", "workspace": "60aebafbb83c905694cd191d", "user": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "619e26b063ccd6c5aa0c7f4b", "role": "owner", "workspace": "60b363c81e7c4e4ff4e724a0", "user": "60ae10e9c2d2fe5c48e6eeb2" },
+        { "_id": "619e26b755fafc214635246f", "role": "owner", "workspace": "619e27ce6e946ce6c15133d5", "user": "60ae10e9c2d2fe5c48e6eeb3" },
+        { "_id": "619e26bbaa5653bf2bd6d5a1", "role": "owner", "workspace": "619e27edab3d09d9895a0f5b", "user": "60ae10e9c2d2fe5c48e6eeb4" },
+        { "_id": "619e26bd9147ec7585865eaf", "role": "owner", "workspace": "619e27f28dbfea5c5e0b2017", "user": "60ae10e9c2d2fe5c48e6eeb5" },
 
         { "_id": "60b36426894076503c4de402", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb2" },
         { "_id": "60b36426894076503c4de403", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb3" },
         { "_id": "60b36426894076503c4de404", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb4" },
         { "_id": "60b36426894076503c4de405", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb5" },
+        { "_id": "60b36426894076503c4de407", "role": "admin", "workspace": "60b363c81e7c4e4ff4e724a0", "user": "60ad88d2a74d2e58cc611a31" },
 
-        { "_id": "60b36426894076503c4de406", "role": "owner", "workspace": "60b363c81e7c4e4ff4e724a0", "user": "60ae10e9c2d2fe5c48e6eeb3" },
-        { "_id": "60b36426894076503c4de407", "role": "admin", "workspace": "60b363c81e7c4e4ff4e724a0", "user": "60ae10e9c2d2fe5c48e6eeb4" }
+        { "_id": "60b36426894076503c4de402", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb2" },
+        { "_id": "60b36426894076503c4de403", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb3" },
+        { "_id": "60b36426894076503c4de404", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb4" },
+        { "_id": "60b36426894076503c4de405", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb5" }
     ],
 
     "invitations": [
-        { "_id": "60b364acfb597b8300722349", "sender": "60ae10e9c2d2fe5c48e6eeb3", "receiver": "60ae10e9c2d2fe5c48e6eeb2", "status": "pending", "workspace": "60b363c81e7c4e4ff4e724a0" },
-        { "_id": "60b364acfb597b830072234a", "sender": "60ae10e9c2d2fe5c48e6eeb4", "receiver": "60ae10e9c2d2fe5c48e6eeb2", "status": "seen", "workspace": "60b363c81e7c4e4ff4e724a0" },
         { "_id": "60b364acfb597b8300722347", "sender": "60ad88d2a74d2e58cc611a31", "receiver": "60ae10e9c2d2fe5c48e6eeb2", "status": "rejected", "workspace": "60aebafbb83c905694cd191c" },
-        { "_id": "60b364acfb597b8300722348", "sender": "60ad88d2a74d2e58cc611a31", "receiver": "60ae10e9c2d2fe5c48e6eeb2", "status": "accepted", "workspace": "60aebafbb83c905694cd191c" }
+        { "_id": "60b364acfb597b8300722348", "sender": "60ad88d2a74d2e58cc611a31", "receiver": "60ae10e9c2d2fe5c48e6eeb2", "status": "accepted", "workspace": "60aebafbb83c905694cd191c" },
+        { "_id": "60b364acfb597b8300722349", "sender": "60ae10e9c2d2fe5c48e6eeb3", "receiver": "60ae10e9c2d2fe5c48e6eeb2", "status": "pending", "workspace": "60b363c81e7c4e4ff4e724a0" },
+        { "_id": "60b364acfb597b830072234a", "sender": "60ae10e9c2d2fe5c48e6eeb2", "receiver": "60ad88d2a74d2e58cc611a31", "status": "pending", "workspace": "60b363c81e7c4e4ff4e724a0" },
+        { "_id": "60b364acfb597b830072234a", "sender": "60ae10e9c2d2fe5c48e6eeb3", "receiver": "60ad88d2a74d2e58cc611a31", "status": "seen", "workspace": "60b363c81e7c4e4ff4e724a0" },
+        { "_id": "60b364acfb597b830072234a", "sender": "60ae10e9c2d2fe5c48e6eeb4", "receiver": "60ad88d2a74d2e58cc611a31", "status": "accepted", "workspace": "60b363c81e7c4e4ff4e724a0" },
+        { "_id": "60b364acfb597b830072234a", "sender": "60ae10e9c2d2fe5c48e6eeb5", "receiver": "60ad88d2a74d2e58cc611a31", "status": "rejected", "workspace": "60b363c81e7c4e4ff4e724a0" }
     ],
 
     "collections": [
@@ -53,7 +76,6 @@
         { "_id": "60b634e98ab1a18d8850e49f", "title": "Datafile 2", "description": "Este es el datafile 2.", "contentPath": null, "errLimit": null, "coleccion": null, "workspace": "60aeaf40d0e8477348250ac9" },
         { "_id": "619389a81a2dffb23b953917", "title": "Datafile 3", "description": "Este es el datafile 3.", "contentPath": null, "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
         { "_id": "6193a80edcc6d2ea6bd3e1b8", "title": "Datafile 4", "description": "Este es el datafile 4.", "contentPath": null, "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c3", "workspace": "60aeaf40d0e8477348250ac9" }
-
     ],
 
     "esquemas": [
@@ -64,7 +86,7 @@
     "configurations": [{
             "_id": "60bf55f7556da65e349c6266",
             "title": "Config Filas Duplicadas",
-            "creationMoment": "1622816872776",
+            "creationMoment": "1624791660000",
             "errorCode": "duplicate-row",
             "extraParams": null,
             "datafile": "60b634e98ab1a18d8850e49e"
@@ -72,7 +94,7 @@
         {
             "_id": "60c1665b55a6814cb879a779",
             "title": "Config Valor Desviado",
-            "creationMoment": "1622816872776",
+            "creationMoment": "1624792800000",
             "errorCode": "deviated-value",
             "extraParams": {
                 "field_name": "COUNTRY",
@@ -91,9 +113,9 @@
             "status": "failed",
             "esquema": "60c164a855a6814cb879a775",
             "configurations": ["60bf55f7556da65e349c6266"],
-            "creationMoment": "1623420062999",
-            "updateMoment": "2021-06-11T14:38:35.223Z",
-            "executionMoment": "2021-06-11T14:38:35.223Z",
+            "creationMoment": "1624799280000",
+            "updateMoment": "1624878720000",
+            "executionMoment": "1624878720000",
             "totalErrors": 2,
             "executable": false,
             "datafile": "60b634e98ab1a18d8850e49e"
@@ -106,8 +128,8 @@
             "status": "pending",
             "esquema": "60c1669355a6814cb879a77a",
             "configurations": ["60c1665b55a6814cb879a779"],
-            "creationMoment": "1623420062999",
-            "updateMoment": "2021-06-11T14:01:02.998Z",
+            "creationMoment": "1624877640000",
+            "updateMoment": null,
             "executionMoment": null,
             "totalErrors": null,
             "executable": true,
@@ -116,50 +138,166 @@
     ],
 
     "activities": [{
-            "_id": "60ae10e9c2d2fe5c48e6eeb6",
+            "_id": "619e46146b1c34b17134d850",
             "message": "{{author}} creó el espacio de trabajo {{workspace}}",
-            "workspace": { "id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal" },
-            "author": { "id": "60ad88d2a74d2e58cc611a31", "name": "Irene" },
+            "workspace": "60aebafbb83c905694cd191c",
+            "workspaceTitle": "Espacio de trabajo normal (irene)",
+            "author": "60ad88d2a74d2e58cc611a31",
+            "authorName": "Irene",
             "datafile": null,
+            "datafileTitle": null,
             "coleccion": null,
-            "creationMoment": "1636544757741"
+            "coleccionTitle": null,
+            "creationMoment": "1626873300000"
 
         },
         {
-            "_id": "60ae10e9c2d2fe5c48e6eeb7",
-            "message": "{{author}} creó la colección {{coleccion}} en el espacio de trabajo {{workspace}}",
-            "workspace": { "id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal" },
-            "author": { "id": "60ad88d2a74d2e58cc611a31", "name": "Irene" },
+            "_id": "619e46170bcdaad3a24e4094",
+            "message": "{{author}} creó el espacio de trabajo {{workspace}}",
+            "workspace": "60aebafbb83c905694cd191d",
+            "workspaceTitle": "Espacio de trabajo normal (irene) 2",
+            "author": "60ad88d2a74d2e58cc611a31",
+            "authorName": "Irene",
             "datafile": null,
-            "coleccion": { "id": "60b436d8a0646673b02cb8c2", "title": "Colección 1" },
-            "creationMoment": "1636544757742"
-        },
-        {
-            "_id": "60ae10e9c2d2fe5c48e6eeb8",
-            "message": "{{author}} creó la colección {{coleccion}} en el espacio de trabajo {{workspace}}",
-            "workspace": { "id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal" },
-            "author": { "id": "60ad88d2a74d2e58cc611a31", "name": "Irene" },
-            "datafile": null,
-            "coleccion": { "id": "60b436d8a0646673b02cb8c3", "title": "Colección 2" },
-            "creationMoment": "1636544757743"
-        },
-        {
-            "_id": "60ae10e9c2d2fe5c48e6eeb9",
-            "message": "{{author}} añadió el archivo {{datafile}} a la coleccion {{coleccion}} del espacio de trabajo {{workspace}}",
-            "workspace": { "id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal" },
-            "author": { "id": "60ad88d2a74d2e58cc611a31", "name": "Irene" },
-            "datafile": { "id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1" },
-            "coleccion": { "id": "60b436d8a0646673b02cb8c2", "title": "Colección 1" },
-            "creationMoment": "1636544757744"
-        },
-        {
-            "_id": "60ae10e9c2d2fe5c48e6eeb0",
-            "message": "{{author}} añadió el archivo {{datafile}} al espacio de trabajo {{workspace}}",
-            "workspace": { "id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal" },
-            "author": { "id": "60ad88d2a74d2e58cc611a31", "name": "Irene" },
-            "datafile": { "id": "60b634e98ab1a18d8850e49e", "title": "Datafile 2" },
+            "datafileTitle": null,
             "coleccion": null,
-            "creationMoment": "1636544757745"
+            "coleccionTitle": null,
+            "creationMoment": "1627295460000"
+
+        },
+        {
+            "_id": "619e461b05ae682982e763d0",
+            "message": "{{author}} creó el espacio de trabajo {{workspace}}",
+            "workspace": "60b363c81e7c4e4ff4e724a0",
+            "workspaceTitle": "Espacio de trabajo normal (dani)",
+            "author": "60ae10e9c2d2fe5c48e6eeb2",
+            "authorName": "Daniel",
+            "datafile": null,
+            "datafileTitle": null,
+            "coleccion": null,
+            "coleccionTitle": null,
+            "creationMoment": "1627918800000"
+
+        },
+        {
+            "_id": "619e4620fcdf2e3cd5d6ca1b",
+            "message": "{{author}} creó el espacio de trabajo {{workspace}}",
+            "workspace": "619e27ce6e946ce6c15133d5",
+            "workspaceTitle": "Espacio de trabajo normal (pedro)",
+            "author": "60ae10e9c2d2fe5c48e6eeb3",
+            "authorName": "Pedro",
+            "datafile": null,
+            "datafileTitle": null,
+            "coleccion": null,
+            "coleccionTitle": null,
+            "creationMoment": "1627920060000"
+
+        },
+        {
+            "_id": "619e462345500c441549d12a",
+            "message": "{{author}} creó el espacio de trabajo {{workspace}}",
+            "workspace": "619e27edab3d09d9895a0f5b",
+            "workspaceTitle": "Espacio de trabajo normal (sandra)",
+            "author": "60ae10e9c2d2fe5c48e6eeb4",
+            "authorName": "Sandra",
+            "datafile": null,
+            "datafileTitle": null,
+            "coleccion": null,
+            "coleccionTitle": null,
+            "creationMoment": "1630832700000"
+
+        },
+        {
+            "_id": "619e4629d85a756b8cd95737",
+            "message": "{{author}} creó el espacio de trabajo {{workspace}}",
+            "workspace": "619e27f28dbfea5c5e0b2017",
+            "workspaceTitle": "Espacio de trabajo normal (walo)",
+            "author": "60ae10e9c2d2fe5c48e6eeb5",
+            "authorName": "Walo",
+            "datafile": null,
+            "datafileTitle": null,
+            "coleccion": null,
+            "coleccionTitle": null,
+            "creationMoment": "1632162120000"
+
+        },
+        {
+            "_id": "619e462d772cf667507e5555",
+            "message": "{{author}} creó la colección {{coleccion}} en el espacio de trabajo {{workspace}}",
+            "workspace": "60aeaf40d0e8477348250ac9",
+            "workspaceTitle": "Espacio de trabajo personal",
+            "author": "60ad88d2a74d2e58cc611a31",
+            "authorName": "Irene",
+            "datafile": null,
+            "datafileTitle": null,
+            "coleccion": "60b436d8a0646673b02cb8c2",
+            "coleccionTitle": "Colección 1",
+            "creationMoment": "1624705680000"
+        },
+        {
+            "_id": "619e4630987c0d16a30f46bc",
+            "message": "{{author}} creó la colección {{coleccion}} en el espacio de trabajo {{workspace}}",
+            "workspace": "60aeaf40d0e8477348250ac9",
+            "workspaceTitle": "Espacio de trabajo personal",
+            "author": "60ad88d2a74d2e58cc611a31",
+            "authorName": "Irene",
+            "datafile": null,
+            "datafileTitle": null,
+            "coleccion": "60b436d8a0646673b02cb8c3",
+            "coleccionTitle": "Colección 2",
+            "creationMoment": "1624705800000"
+        },
+        {
+            "_id": "619e463410ca7f7ad7dc679e",
+            "message": "{{author}} añadió el archivo {{datafile}} a la coleccion {{coleccion}} del espacio de trabajo {{workspace}}",
+            "workspace": "60aeaf40d0e8477348250ac9",
+            "workspaceTitle": "Espacio de trabajo personal",
+            "author": "60ad88d2a74d2e58cc611a31",
+            "authorName": "Irene",
+            "datafile": "60b634e98ab1a18d8850e49e",
+            "datafileTitle": "Datafile 1",
+            "coleccion": "60b436d8a0646673b02cb8c2",
+            "coleccionTitle": "Colección 1",
+            "creationMoment": "1624788300000"
+        },
+        {
+            "_id": "619e46385bdd2652ab3516fc",
+            "message": "{{author}} añadió el archivo {{datafile}} al espacio de trabajo {{workspace}}",
+            "workspace": "60aeaf40d0e8477348250ac9",
+            "workspaceTitle": "Espacio de trabajo personal",
+            "author": "60ad88d2a74d2e58cc611a31",
+            "authorName": "Irene",
+            "datafile": "60b634e98ab1a18d8850e49f",
+            "datafileTitle": "Datafile 2",
+            "coleccion": null,
+            "coleccionTitle": null,
+            "creationMoment": "1624789800000"
+        },
+        {
+            "_id": "619e463ce988d151f92db31f",
+            "message": "{{author}} añadió el archivo {{datafile}} al espacio de trabajo {{workspace}}",
+            "workspace": "60aeaf40d0e8477348250ac9",
+            "workspaceTitle": "Espacio de trabajo personal",
+            "author": "60ad88d2a74d2e58cc611a31",
+            "authorName": "Irene",
+            "datafile": "619389a81a2dffb23b953917",
+            "datafileTitle": "Datafile 3",
+            "coleccion": "60b436d8a0646673b02cb8c2",
+            "coleccionTitle": "Colección 1",
+            "creationMoment": "1624879800000"
+        },
+        {
+            "_id": "619e4641874e3c32a8dcae22",
+            "message": "{{author}} añadió el archivo {{datafile}} al espacio de trabajo {{workspace}}",
+            "workspace": "60aeaf40d0e8477348250ac9",
+            "workspaceTitle": "Espacio de trabajo personal",
+            "author": "60ad88d2a74d2e58cc611a31",
+            "authorName": "Irene",
+            "datafile": "6193a80edcc6d2ea6bd3e1b8",
+            "datafileTitle": "Datafile 4",
+            "coleccion": "60b436d8a0646673b02cb8c3",
+            "coleccionTitle": "Colección 2",
+            "creationMoment": "1624887720000"
         }
 
     ],
@@ -247,6 +385,17 @@
         { "_id": "6196ce8a115f741227fcfa61", "errorCode": "header-error", "extraParams": null },
         { "_id": "6196ce8ea3fdcd2d91b8a686", "errorCode": "label-error", "extraParams": null }
     ],
-    "suggestions": []
+    "suggestions": [{
+        "_id": "619e31a05fc61a4db08bbe9e",
+        "tags": ["#table", "#row", "#cell"],
+        "errorCode": "constraint-error",
+        "label": "",
+        "fieldName": "MATCH_INTERNET",
+        "fieldPosition": 1,
+        "rowPosition": 2,
+        "errorMessage": "The cell '' in row at position '2' and field 'MATCH_INTERNET' at position '1' does not conform to a constraint: constraint 'required' is 'True'",
+        "errorCell": "",
+        "datafile": "60b634e98ab1a18d8850e49e"
+    }]
 
 }

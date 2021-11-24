@@ -120,7 +120,6 @@ export class TestsService {
   }
   
   addTest(title: string, delimiter:string, esquemaId: string, configurations: string[], datafileId: string){
-    let res;
     const test: Test = {
       'id': null,
       'title': title,
@@ -136,7 +135,6 @@ export class TestsService {
       'executable': null,
       'datafile': datafileId,
     };
-    
     return this.http.post<{message: string, test: any}>(BACKEND_URL, test).toPromise();
   }
     

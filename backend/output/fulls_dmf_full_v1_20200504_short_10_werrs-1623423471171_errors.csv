@@ -1,3 +1,0 @@
-Error Code|Tags|Label|Field Name|Field Position|Row Position|Error Message|Error Cell
-constraint-error|[table, #row, cell]||MATCH_INTERNET|1|2|The cell "" in row at position "2" and field "MATCH_INTERNET" at position "1" does not conform to a constraint: constraint "required" is "True"|
-duplicate-row|[#table, #row]||||12|Row at position 12 is duplicated: the same as row at position "11"|

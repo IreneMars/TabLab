@@ -35,9 +35,9 @@
 
     </div>
     <div class="row mt-2 ps-4 pe-3">
-        <app-collection-create [(close)]="close" *ngIf="!close"></app-collection-create>
+        <app-collection-create [(close)]="close" *ngIf="!close" [(editMode)]="editMode" [(hideButton)]="hideButton" [(collections)]="collections"></app-collection-create>
     </div>
-    <div class="row mt-2 ps-4 pe-3">
+    <div class="row mt-2 ps-4 pe-3" *ngIf="!hideButton">
         <div class="col">
             <div class="d-grid gap-2">
                 <button class="btn btn-outline-primary btn-sm" type="button" [disabled]="" (click)="onAddCollection()">

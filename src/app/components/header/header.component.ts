@@ -6,6 +6,7 @@ import { User } from '../../models/user.model';
 import { InvitationService } from '../../services/invitations.service';
 import { Invitation } from 'src/app/models/invitation.model';
 import { AuthStatusService } from 'src/app/services/authStatus.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-header',
@@ -13,42 +14,36 @@ import { AuthStatusService } from 'src/app/services/authStatus.service';
 })
 export class HeaderComponent implements OnInit{
   isLoading           : boolean = false;
-  pendingInvitation   : boolean = false;
+  hasInvitations   : boolean = false;
   userId              : string;
   userIsAuthenticated : boolean = false;
   user                : User = null;
-  invitations         : Invitation[] = [];
-  subscription        : Subscription;
 
   constructor( private authService: AuthService, private authStatusService: AuthStatusService,
                public usersService: UsersService, public invitationsService: InvitationService ) {
   }
   
-  checkUser(){
-    this.subscription = this.authStatusService.currentAuthStatus.subscribe((authStatus:any) => {
-      if (!this.user) {
-        if(authStatus.user){
-          this.user = authStatus.user;
-          this.userId = authStatus.user.id;         
-          this.userIsAuthenticated = true;
-        }
-      }
-    })
-  }
-
   isAdmin(){
-    var res = false;
-    if (this.user && this.user.role=="admin") {
-      res = true;     
-    }
-    return res;
+    return this.user && this.user.role=="admin";
   }
   
   ngOnInit(): void {
     this.isLoading = true;
     this.userIsAuthenticated = this.authService.getIsAuth();
-    console.log("User is authenticated: "+this.authService.getIsAuth())
+    this.authService.getAuthStatusListener().subscribe(authStatus=>{
+      this.initResources(authStatus);
+    });
     if(this.userIsAuthenticated){
+      this.initResources(this.userIsAuthenticated)
+    }else{
+      this.isLoading = false;
+    }
+
+  }
+  
+  initResources(authStatus:boolean){
+    this.userIsAuthenticated = authStatus;
+      console.log("User is authenticated: "+authStatus)
       this.userId = this.authService.getUserId();
       // Current User
       this.usersService.getUser(this.userId).subscribe(userData => {
@@ -63,25 +58,41 @@ export class HeaderComponent implements OnInit{
           status: userData.user.status,
           google: userData.user.google
         }
+        
         // Invitations
         this.invitationsService.getInvitationsHeader().subscribe( (invitationData: {invitations: Invitation[]}) => {
-          this.invitations = invitationData.invitations;
-          for (var invitation of this.invitations) {
+          var invitations = invitationData.invitations;
+          for (var invitation of invitations) {
             if(invitation.status==='pending'){
-              this.pendingInvitation = true;
-              break;
+              this.hasInvitations = true;
             }
           }
           this.isLoading = false;
         });
       });
-    }else{
-      this.isLoading = false;
-    }
   }
 
+
   onLogout() {
+    this.isLoading = false;
     this.authService.logout();
+  }
+
+  checkInvitations(){
+    if(this.userIsAuthenticated){
+      // Invitations
+      this.invitationsService.getInvitationsHeader().subscribe( (invitationData: {invitations: Invitation[]}) => {
+        var invitations = invitationData.invitations;
+        for (var invitation of invitations) {
+          if(invitation.status==='pending'){
+            this.hasInvitations = true;
+            return true;
+          }
+        }
+      });
+    }else{
+      return false;
+    }
   }
 
 }

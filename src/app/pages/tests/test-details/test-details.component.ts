@@ -163,19 +163,19 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
                   if(!this.onDestroy){
                     this.configurationsService.getConfigurationsByDatafile(this.datafileId);
                     this.configurationsService.getConfigurationUpdateListener().subscribe(configurationData =>{
-                      // console.log("Permitido (test):"+!this.onDestroy)
-                      // console.log("Get configurations (test-details)")
+                      
                       this.configurations = configurationData.configurations;
                       if (this.datafile.contentPath) {
                         const nameWExtension = datafileData.datafile.contentPath.split('/');
-                        const splitNameWExtension = nameWExtension[3].split('.');
+                        const splitNameWExtension = nameWExtension[4].split('.');
                         this.extension = splitNameWExtension[1];
-                        
-                        const nameWDate = splitNameWExtension[0].split('-');
-                        const name = nameWDate[0];
-                        this.fileName = name + '.' + this.extension;
+                        var name = nameWExtension[4];
+                        if (nameWExtension[4].includes("-")){
+                          const nameWDate = nameWExtension[4].split('-');
+                          name = nameWDate[0] + '.' + this.extension;
+                        }
+                        this.fileName = name;
                       }
-                      // console.log("Configs length: "+this.configurations.length)
                       for (var config of this.configurations){
                         const extraParamsJSON = JSON.stringify(config.extraParams).toString();
                         const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
@@ -184,7 +184,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
                         const configAux = {...config, extraParamsStr};
                         this.formattedConfigs.push(configAux);
                       }
-                      // console.log(this.formattedConfigs.length)
       
                       // Suggestions
                       this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
@@ -357,14 +356,12 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
   async onApplyChanges(suggestionId:string, operation:string){
     this.suggestionId = suggestionId;
     this.suggestionQueryResult = null;
-    console.log(this.contentLines)
     const result = await this.suggestionsService.applySuggestion(suggestionId, operation,this.test.delimiter, this.contentLines, null);
     this.suggestionQueryResult = result.data.rowContent;
     this.suggestionForm = new FormGroup({
       'rowContent': new FormControl('', {validators: [Validators.required]}),
     });
     this.suggestionForm.reset({'rowContent': result.data.rowContent})
-    console.log(this.suggestionForm)
     if(operation==="deleteRow"){
       const newFile = this.generateFile(result.data.content)
       await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", newFile);

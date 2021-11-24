@@ -6,23 +6,39 @@ const activitySchema = mongoose.Schema({
         required: [true, 'The message is mandatory'],
     },
     workspace: {
-        type: Map,
-        of: String,
-        required: [true, 'The workspace is mandatory'],
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Workspace",
+        required: [true, 'Workspace is mandatory'],
+    },
+    workspaceTitle: {
+        type: String,
+        required: [true, 'Workspace title is mandatory'],
     },
     author: {
-        type: Map,
-        of: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: [true, 'The author is mandatory'],
     },
+    authorName: {
+        type: String,
+        required: [true, 'Author name is mandatory'],
+    },
     coleccion: {
-        type: Map,
-        of: String,
-        required: false
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Collection",
+        required: false,
+    },
+    coleccionTitle: {
+        type: String,
+        required: false,
     },
     datafile: {
-        type: Map,
-        of: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Datafile",
+        required: false
+    },
+    datafileTitle: {
+        type: String,
         required: false
     },
     creationMoment: {
