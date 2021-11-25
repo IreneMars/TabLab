@@ -84,7 +84,9 @@ export class TestExecuteComponent implements OnInit {
     const checked: boolean = (event.target as HTMLInputElement).checked;
     if (checked) {
       for (var test of this.tests){
-        this.selectedTestIDs.add(test.id);
+        if(test.executable){
+          this.selectedTestIDs.add(test.id);
+        }
       }
     }
     if (!checked) {

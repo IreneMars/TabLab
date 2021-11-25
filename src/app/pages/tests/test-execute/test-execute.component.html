@@ -4,8 +4,21 @@
     <div class="col-5">
         <div class="container mt-4">
             <div class="row mt-4">
-                <div class="col">
+                <div class="col-6">
                     <h2>Runner</h2>
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                    <div>
+                        <button class="btn btn-primary btn-sm" type="button" *ngIf="!inExecution && selectedTestIDs.size>0" (click)="onExecute()">
+                          <i class="fas fa-play"></i> Ejecutar
+                        </button>
+                        <button class="btn btn-primary btn-sm" type="button" *ngIf="!inExecution && selectedTestIDs.size==0" (click)="onExecute()" disabled>
+                            <i class="fas fa-play"></i> Ejecutar
+                          </button>
+                        <button class="btn btn-outline-light btn-sm" type="button" *ngIf="inExecution">
+                          Stop<i class="fas fa-pen"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="row mt-2">
@@ -15,28 +28,15 @@
                 </div>
             </div>
             <div class="row mt-4">
-                <div class="col-6 d-flex justify-content-end">
-                    <div *ngIf="selectedTestIDs.size>0">
-                        <button class="btn btn-outline-light btn-sm" type="button" *ngIf="!inExecution" (click)="onExecute()">
-                          <i class="fas fa-play"></i> Ejecutar
-                        </button>
-                        <button class="btn btn-outline-light btn-sm" type="button" *ngIf="inExecution">
-                          Stop<i class="fas fa-pen"></i>
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-            <div class="row mt-1">
                 <div class="col-6">
-                    <h2 class="mb-0">Orden de Ejecución</h2>
+                    <h2 class="mb-0">Pruebas a ejecutar</h2>
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                    <div class="form-check">
+                    <div class="form-check pt-2">
                         <input class="form-check-input" type="checkbox" id="selectAllTests" (change)="onSelectAll($event)" [checked]="selectedTestIDs.size === tests.length">
                         <label class="form-check-label" for="selectAllTests">
-                                Seleccionar Todos
-                            </label>
+                            Seleccionar Todos
+                        </label>
                     </div>
                 </div>
             </div>
