@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit{
   }
   
   isAdmin(){
-    return this.user && this.user.role=="admin";
+    return this.user && this.user.role.toUpperCase()=="ADMIN";
   }
   
   ngOnInit(): void {
