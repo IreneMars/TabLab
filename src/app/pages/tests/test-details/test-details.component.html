@@ -1,5 +1,6 @@
 <div class="row complete-height" *ngIf="!isLoading">
-    <div class="col-2">
+    <div class="col-2 collections p-0">
+        <app-collection-list [workspaceId]="workspaceId"></app-collection-list>
     </div>
     <div class="col-7">
         <div class="container mt-4 mb-5">
@@ -199,8 +200,9 @@
                     <h2>Stats</h2>
                 </div>
             </div>
-            <div class="row mt-4 pe-2">
+            <div class="row mt-2 pe-2" *ngIf="test.totalErrors">
                 <div class="col pe-0">
+                    Errores: {{test.totalErrors}}
                 </div>
             </div>
             <div class="row mt-4 pe-2">

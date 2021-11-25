@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Activity } from 'src/app/models/activity.model';
-import { Collection } from 'src/app/models/collection.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CollectionsService } from 'src/app/services/collections.service';
 import { ActivitiesService } from '../../../services/activities.service';
@@ -78,19 +77,13 @@ export class CollectionCreateComponent implements OnInit{
       .then(response=>{
         // Collections
         this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-        this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: any[]})=>{
-          this.collectionsChange.emit(collectionData.collections);
-          // Activities
-          this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
-          this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
-            this.activitiesChange.emit(activityData.activities)
-            this.isSaving = false;
-            this.editModeChange.emit(false);
-            this.hideButtonChange.emit(false);
-            this.collectionForm.reset();
-          });
-        }); 
-      })
+        // Activities
+        this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+        this.isSaving = false;
+        this.editModeChange.emit(false);
+        this.hideButtonChange.emit(false);
+        this.collectionForm.reset();         
+      })      
       .catch(err=>{
         console.log("Error on onSave() (edit mode) method: "+err.message);
       });
@@ -99,17 +92,11 @@ export class CollectionCreateComponent implements OnInit{
       .then(response=>{
         // Collections
         this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-        this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: any[]})=>{
-          this.collectionsChange.emit(collectionData.collections);
-          // Activities
-          this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
-          this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
-            this.activitiesChange.emit(activityData.activities)
-            this.isSaving = false;
-            this.hideButtonChange.emit(false);
-            this.collectionForm.reset();
-          });
-        }); 
+        // Activities
+        this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+        this.isSaving = false;
+        this.hideButtonChange.emit(false);
+        this.collectionForm.reset(); 
       })
       .catch(err=>{
         console.log("Error on onSave() (create mode) method: "+err.message);

@@ -44,6 +44,7 @@ class Server {
 
         this.app.use("/users", express.static(path.join("backend/uploads/users")));
         this.app.use("/datafiles", express.static(path.join("backend/uploads/datafiles")));
+        this.app.use("/esquemas", express.static(path.join("backend/uploads/esquemas")));
         this.app.use("/assets", express.static(path.join("backend/assets")));
 
         this.app.use((req, res, next) => {

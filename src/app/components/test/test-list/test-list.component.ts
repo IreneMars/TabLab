@@ -47,9 +47,6 @@ export class TestListComponent implements OnInit{
     this.testsService.deleteTest(testId)
     .then(testResponse=>{
       this.testsService.getTestsByDatafile(this.datafileId, this.workspaceId);
-      this.testsService.getTestUpdateListener().subscribe(testData=>{
-        this.testsChange.emit(testData.tests);
-      });
     })
     .catch(err=>{
       console.log("Error on onDelete() method: "+err.message.message);

@@ -46,10 +46,7 @@ export class EsquemaListComponent implements OnInit {
     .then(response=>{
       // Esquemas
       this.esquemasService.getEsquemasByDatafile(this.datafile.id);
-      this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
-        this.esquemasChange.emit(esquemaData.esquemas)
-        this.isDeleting = false;
-      }); 
+      this.isDeleting = false;
     })
     .catch(err=>{
       console.log("Error on onDelete method: "+err.message);
@@ -86,18 +83,13 @@ export class EsquemaListComponent implements OnInit {
   onInfer() {
     this.isInferring = true;
     this.uploadsService.inferEsquemaContent(this.datafile.id)
-      .then(updateResponse=>{    
-
-          this.esquemasService.getEsquemasByDatafile(this.datafile.id);
-          this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
-            this.esquemasChange.emit(esquemaData.esquemas)
-            this.isInferring = false;
-          });      
-
-  })
-  .catch(err=>{
-    console.log("Error on onInfer method: "+err.message.message);
-  });
+    .then(updateResponse=>{   
+      this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+      this.isInferring = false;
+    })
+    .catch(err=>{
+      console.log("Error on onInfer method: "+err.message.message);
+    });
 
 }
 }

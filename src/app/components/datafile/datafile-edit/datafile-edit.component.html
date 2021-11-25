@@ -1,4 +1,4 @@
-<form class="container mt-4" [formGroup]="datafileEditForm" (ngSubmit)="onSave()" *ngIf="!loading">
+<form class="container mt-4" [formGroup]="datafileEditForm" (ngSubmit)="onSave()">
 
     <div class="row ms-0 me-0 mb-1 p-0">
         <div class="col ps-0 pe-0 d-flex justify-content-start">
@@ -22,7 +22,8 @@
     </div>
     <div class="row ms-0 me-0 mb-1 p-0">
         <div class="col ps-0 pe-0 d-flex justify-content-start">
-            <select class="form-select form-select-sm" formControlName="collection" (change)="onCollectionPicked($event)">
+            <select class="form-select form-select-sm" formControlName="collection">
+                <option value="None" selected> ----- </option>
                 <option *ngFor="let collection of collections" value="{{collection.id}}">{{collection.title}}</option>
               </select>
         </div>

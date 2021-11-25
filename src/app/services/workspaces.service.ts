@@ -47,24 +47,7 @@ export class WorkspacesService {
   }
   
   getWorkspace(workspaceId: string) {
-    return this.http.get<{message: string, workspace: any, orphanedDatafiles: any[], datafilesWTests: any[], tests: any[]}>(BACKEND_URL + workspaceId)
-    .pipe(map( (workspaceData) => {
-      return { 
-        workspace: workspaceData.workspace,
-        orphanedDatafiles: workspaceData.orphanedDatafiles
-          .map(datafile => {
-            return {
-              id: datafile._id,
-              title: datafile.title,
-              description: datafile.description,
-              contentPath: datafile.contentPath,
-              errLimit: datafile.errLimit,
-              coleccion: datafile.coleccion,
-              workspace: datafile.workspace
-            };
-          })  
-      };
-    }));
+    return this.http.get<{message: string, workspace: any}>(BACKEND_URL + workspaceId);
   }
 
   addWorkspace(title: string, description: string, mandatory: boolean, invitations: string[]) {

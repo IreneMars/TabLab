@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { ActivitiesService } from 'src/app/services/activities.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { AuthStatusService } from '../../services/authStatus.service';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -14,8 +13,8 @@ export class HomeComponent implements OnInit{
   userId                   : string;
   user                     : User;
 
-  constructor( private authService: AuthService, private authStatusService: AuthStatusService, 
-               public activitiesService: ActivitiesService, public usersService: UsersService) {
+  constructor( private authService: AuthService, public activitiesService: ActivitiesService, 
+               public usersService: UsersService) {
   }
   
   ngOnInit(): void {
@@ -36,7 +35,6 @@ export class HomeComponent implements OnInit{
             status: userData.user.status,
             google: userData.user.google
           }
-          this.authStatusService.sendAuthStatus(true,this.user);//Its principal use is after login()
         });
       }
 

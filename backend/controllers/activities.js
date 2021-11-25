@@ -65,7 +65,3 @@ exports.getActivityByWorkspace = async(req, res, next) => {
         });
     }
 };
-
-// exports.deleteActivitiesByUser = async(req, res, next) => {
-
-// }

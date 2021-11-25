@@ -39,9 +39,11 @@ exports.getDatafile = async(req, res, next) => {
         const esquemas = await Esquema.find({ datafile: req.params.id });
         const tests = await Test.find({ datafile: req.params.id });
         if (datafile.contentPath != null) {
+
             var extension = datafile.contentPath.split('.').pop().toLowerCase();
             if (extension === 'csv') {
                 actualFilePath = datafile.contentPath.replace(url, 'backend/uploads/');
+
                 fs.readFile(actualFilePath, 'utf8', (err, data) => {
                     if (err) {
                         return res.status(500).json({
@@ -122,7 +124,7 @@ exports.createDatafile = async(req, res, next) => {
         const workspace = await Workspace.findById(createdDatafile.workspace);
 
         const user = await User.findById(current_user_id);
-        var messageAux = "$author$ añadió el fichero $datafile$ al espacio de trabajo $workspace$";
+        var messageAux = "{{author}} añadió el fichero {{datafile}} al espacio de trabajo {{workspace}}";
         var coleccionAux = null;
         var coleccionTitleAux = null;
         if (req.body.coleccion != null) {
@@ -177,7 +179,7 @@ exports.updateDatafile = async(req, res) => {
 
         const workspace = await Workspace.findById(updatedDatafile.workspace);
         const user = await User.findById(current_user_id);
-        var messageAux = "$author$ modificó el fichero del espacio de trabajo {{workspace}}";
+        var messageAux = "{{author}} modificó el fichero del espacio de trabajo {{workspace}}";
         var coleccionAux = null;
         var coleccionTitleAux = null;
         if (updatedDatafile.coleccion) {
@@ -231,7 +233,7 @@ exports.deleteDatafile = async(req, res) => {
         await Datafile.deleteOne({ _id: req.params.id });
 
         const workspace = await Workspace.findById(datafile.workspace);
-        var messageAux = "$author$ eliminó el fichero del espacio de trabajo {{workspace}}";
+        var messageAux = "{{author}} eliminó el fichero del espacio de trabajo {{workspace}}";
         var coleccionAux = null;
         var coleccionTitleAux = null
         if (datafile.coleccion) {

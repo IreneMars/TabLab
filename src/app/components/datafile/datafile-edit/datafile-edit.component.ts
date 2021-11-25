@@ -14,16 +14,14 @@ import { CollectionsService } from '../../../services/collections.service';
 export class DatafileEditComponent implements OnInit{
   userIsAuthenticated  : boolean = false;
   userId               : string;
-  loading              : boolean = false;
   isSaving             : boolean = false;
-  collectionPicked     : string=null;
   datafileEditForm     : FormGroup;
   collections          : Collection[];
   @Input() edit        : boolean = false;
-  @Input() datafile    : Datafile;
   @Input() datafileId  : string;
   @Input() workspaceId : string;
   @Output() editChange : EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() datafile    : Datafile;
   @Output() datafileChange : EventEmitter<Datafile> = new EventEmitter<Datafile>();
   
   constructor(public datafileService: DatafileService, public authService: AuthService,  private router: Router,
@@ -47,13 +45,15 @@ export class DatafileEditComponent implements OnInit{
       this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
       this.collectionsService.getCollectionUpdateListener().subscribe( (collectionData: {collections: Collection[]}) => {
         this.collections = collectionData.collections;
-
+        var selectedCollection = this.datafile.coleccion;
+        if (selectedCollection == null){
+          selectedCollection = "None";
+        }
         this.datafileEditForm.reset({
           title: this.datafile.title,
           description: this.datafile.description,
-          colection: this.datafile.coleccion,
+          collection: selectedCollection,
         });
-        this.collectionPicked = this.datafile.coleccion;
       });
     }
   }
@@ -64,10 +64,6 @@ export class DatafileEditComponent implements OnInit{
 
   get invalidDescription() {
     return this.datafileEditForm.get('description').invalid && this.datafileEditForm.get('description').touched;
-  }
-  onCollectionPicked(event: Event) {
-    const collectionId = (event.target as HTMLInputElement).value;
-    this.collectionPicked = collectionId;
   }
   
   async onSave() {
@@ -83,7 +79,11 @@ export class DatafileEditComponent implements OnInit{
       });
     }
     const values = this.datafileEditForm.getRawValue();
-    await this.datafileService.updateDatafile(this.datafileId, values.title, values.description, this.collectionPicked);
+    var selectedCollection = values.collection;
+    if (selectedCollection == "None"){
+      selectedCollection = null;
+    }
+    await this.datafileService.updateDatafile(this.datafileId, values.title, values.description, selectedCollection);
     this.datafileService.getDatafile(this.datafileId).subscribe((datafileData)=>{
       this.datafile = {
         id: datafileData.datafile._id,
@@ -94,6 +94,7 @@ export class DatafileEditComponent implements OnInit{
         coleccion: datafileData.datafile.coleccion,
         workspace: datafileData.datafile.workspace,
       };
+      this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
       this.datafileChange.emit(this.datafile);
       this.editChange.emit(false);
       this.datafileEditForm.reset();

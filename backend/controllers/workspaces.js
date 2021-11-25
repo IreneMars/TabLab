@@ -58,31 +58,10 @@ exports.getWorkspace = async(req, res, next) => {
             });
         }
         const workspace = await Workspace.findById(req.params.id);
-        const orphanedDatafiles = await Datafile.find({ "workspace": req.params.id, "coleccion": null });
-        const datafiles = await Datafile.find({ "workspace": req.params.id });
-        var datafileIds = [];
-        var datafilesWTests = [];
-        for (var datafile of datafiles) {
-            const tests = await Test.find({ datafile: datafile._id });
-            if (tests.length > 0) {
-                datafile._doc['tests'] = [];
-                for (var test of tests) {
-                    const testMap = new Map();
-                    testMap.set('id', test._id);
-                    testMap.set('title', test.title);
-                    datafile._doc['tests'].push(testMap);
-                    datafilesWTests.push(datafile);
-                    datafileIds.push(datafile._id);
-                }
-            }
-        }
-        const tests = await Test.find({ datafile: { $in: datafileIds } });
+
         return res.status(200).json({
             message: "Workspace fetched successfully!",
             workspace: workspace,
-            orphanedDatafiles: orphanedDatafiles,
-            datafilesWTests: datafilesWTests,
-            tests: tests
         });
     } catch (err) {
         return res.status(500).json({

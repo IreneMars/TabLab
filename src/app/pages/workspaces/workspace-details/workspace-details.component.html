@@ -1,6 +1,6 @@
 <div class="row ps-2 pe-2 complete-height" *ngIf="!isLoading">
     <div class="col-2 collections p-0">
-        <app-collection-list [workspaceId]="workspaceId" [(collections)]="collections" [(activities)]="activities" [orphanedDatafiles]="orphanedDatafiles" [(isLoading)]="isLoading"></app-collection-list>
+        <app-collection-list [workspaceId]="workspaceId" [(activities)]="activities"></app-collection-list>
     </div>
     <div class="col-7" *ngIf="!isLoading">
         <app-workspace-edit *ngIf="edit" [(edit)]="edit" [(workspace)]="workspace" [(activities)]="activities"></app-workspace-edit>
@@ -50,7 +50,7 @@
                     <button type="button" class="btn add-file btn-sm" disabled *ngIf="isSaving">
                         Añadir fichero de datos <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     </button>
-                    <app-datafile-create [(isSaving)]="isSaving" [workspaceId]="workspaceId" [(collections)]="collections" [(orphanedDatafiles)]="orphanedDatafiles"></app-datafile-create>
+                    <app-datafile-create [(isSaving)]="isSaving" [workspaceId]="workspaceId"></app-datafile-create>
                 </div>
             </div>
             <div class="row mt-4">

@@ -1,6 +1,6 @@
 <div class="row ps-2 pe-2 complete-height" *ngIf="!isLoading">
     <div class="col-2 collections p-0">
-        <app-collection-list [workspaceId]="workspaceId" [(collections)]="collections" [orphanedDatafiles]="orphanedDatafiles" [(isLoading)]="isLoading"></app-collection-list>
+        <app-collection-list [workspaceId]="workspaceId"></app-collection-list>
     </div>
     <div class="col-7" *ngIf="!isLoading">
         <app-datafile-edit *ngIf="edit" [(edit)]="edit" [(datafile)]="datafile" [datafileId]="datafileId" [workspaceId]="workspaceId"></app-datafile-edit>
@@ -104,10 +104,10 @@
                 </div>
                 <div class="col-6 mt-2 d-flex justify-content-end">
                     <div>
-                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content && !isSaving" [disabled]="disabledContent" (click)="onSave()">
+                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content && editContent && !isSaving" [disabled]="disabledContent" (click)="onSave()">
                             Guardar cambios
                         </button>
-                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content && isSaving" disabled>
+                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content && editContent && isSaving" disabled>
                             Guardar cambios <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </button>
                     </div>

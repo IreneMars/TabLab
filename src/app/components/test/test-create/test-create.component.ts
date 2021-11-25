@@ -78,12 +78,10 @@ export class TestCreateComponent implements OnInit{
     await this.testService.addTest(values.title, values.delimiter, values.esquema, values.configurations, this.datafileId);
     // Tests
     this.testService.getTestsByDatafile(this.datafileId,this.workspaceId);
-    this.testService.getTestUpdateListener().subscribe(testData => {
-      this.testsChange.emit(testData.tests);
-      this.testForm.reset({});
-      this.selectedConfigurations = [];
-      this.isSavingChange.emit(false);  
-    });
+    this.testForm.reset({});
+    this.selectedConfigurations = [];
+    this.isSavingChange.emit(false);  
+    
   }
 
   onConfigurationPicked(event: Event) {

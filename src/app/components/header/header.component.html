@@ -33,15 +33,14 @@
             <a class="btn btn-outline-primary" routerLinkActive="active" [routerLink]="['auth/signup']">Registro</a>
         </form>
         <form *ngIf="userIsAuthenticated">
-            <!-- <a class="btn btn-outline-danger me-2" routerLinkActive="active" (click)="onLogout()">Cerrar Sesión</a> -->
             <div class="dropdown">
                 <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="mt-2" *ngIf="isLoading">
-                        <img src="/backend/assets/default-user-little.png" class="border rounded-circle" style="width: 40px;" alt="">
+                    <div class="mt-2" *ngIf="!user">
+                        <img src="{{userDefaultPhotoPath}}" class="border rounded-circle" style="width: 40px;" alt="">
                     </div>
-                    <img src="{{user.photo}}" class="border rounded-circle" style="width: 40px;" alt="">
+                    <img src="{{user.photo}}" class="border rounded-circle" style="width: 40px;" alt="" *ngIf="user">
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1" *ngIf="user">
                     <li><a class="dropdown-item" routerLink="/profile/{{userId}}">Logueado/a como {{user.username}}</a></li>
                     <li><a class="dropdown-item" routerLink="/account/{{userId}}/edit">Configuración de la cuenta</a></li>
                     <li><a class="dropdown-item" routerLinkActive="active" (click)="onLogout()">Cerrar Sesión</a></li>

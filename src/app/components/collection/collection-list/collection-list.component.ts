@@ -18,20 +18,17 @@ export class CollectionListComponent implements OnInit{
   userIsAuthenticated         : boolean = false;
   userId                      : string;
   isDeleting                  : boolean = false;
+  isLoading                   : boolean = false;
   close                       : boolean = true;
-  collectionIndex             : number;
   editMode                    : boolean = false;
-  datafiles                   : any[];
-  selectedDatafileId          : string;
-  @Input() collections        : Collection[];
-  @Output() collectionsChange : EventEmitter<Collection[]> = new EventEmitter();
+  hideButton                  : boolean = false;
+  collectionIndex             : number;
+  collections                 : Collection[];
+  @Input() workspaceId        : string;
+  orphanedDatafiles           : Datafile[];
   @Input() activities         : Activity[];
   @Output() activitiesChange  : EventEmitter<Activity[]> = new EventEmitter();
-  @Input() orphanedDatafiles  : Datafile[];
-  @Input() workspaceId        : string;
-  @Input() isLoading          : boolean;
-  @Output() isLoadingChange   : EventEmitter<boolean> = new EventEmitter();
-  hideButton                  : boolean = false;
+  
   constructor(public collectionsService: CollectionsService, public authService: AuthService,
               public workspacesService: WorkspacesService, public router: Router,
               public activitiesService: ActivitiesService) {
@@ -40,6 +37,12 @@ export class CollectionListComponent implements OnInit{
   ngOnInit(){
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.userId = this.authService.getUserId();
+    // Collections and Orphaned Datafiles
+    this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+    this.collectionsService.getCollectionUpdateListener().subscribe(collectionData=>{
+      this.collections = collectionData.collections;
+      this.orphanedDatafiles = collectionData.orphanedDatafiles;
+    });
   }
 
   onAddCollection() {
@@ -61,13 +64,10 @@ export class CollectionListComponent implements OnInit{
       // Collections
       this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
       this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: Collection[]})=>{
-        this.collectionsChange.emit(collectionData.collections)
+        this.collections=collectionData.collections;
         // Activities
         this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
-        this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
-          this.activitiesChange.emit(activityData.activities)
-          this.isDeleting = false;
-        });
+        this.isDeleting = false;
       }); 
     })
     .catch(err=>{

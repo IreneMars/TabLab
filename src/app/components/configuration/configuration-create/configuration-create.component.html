@@ -35,7 +35,6 @@
                             </div>
                             <div *ngIf="extraControl.tipo === 'enum'">
                                 <select class="form-select form-select-sm" formControlName="{{extraControl.extraParam}}" [class.is-invalid]="invalidParam(extraControl.extraParam)">
-                                <option value="extraControl.value" selected> {{extraControl.extraParam}} </option>
                                 <option *ngFor="let enumVal of extraControl.enum" value="{{enumVal}}">{{enumVal}}</option>
                             </select>
                             </div>

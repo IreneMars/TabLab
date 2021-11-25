@@ -14,11 +14,10 @@ import { Esquema } from '../../../models/esquema.model';
 import { Test } from '../../../models/test.model';
 import { UsersService } from '../../../services/users.service';
 import { CollectionsService } from 'src/app/services/collections.service';
-import { Collection } from 'src/app/models/collection.model';
 import { EsquemaService } from '../../../services/esquemas.service';
 import { ConfigurationService } from '../../../services/configuration.service';
 import { TestsService } from '../../../services/tests.service';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -34,12 +33,12 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
   isSaving              : boolean = false;
   isUploading           : boolean = false;
   isDeletingFile        : boolean = false;
-
   isDeleting            : boolean = false;
   infer                 : boolean = false;
   edit                  : boolean = false;
+  editContent           : boolean = false;
+
   invalidExtension      : boolean = false;
-  collections           : Collection[];
   datafileId            : string;
   datafile              : Datafile;
   workspaceId           : string;
@@ -51,27 +50,26 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
   fileContentForm       : FormGroup;
   filePreview           : string;
   content               : any = null;
-  arrayBuffer           : any;
   file                  : any = null;
   fileName              : string = '';
   extension             : string;
-  orphanedDatafiles     : Datafile[];
   onDestroy             : boolean = false;
   private datafilesSub  : Subscription;
 
   constructor(public datafilesService: DatafileService, public workspacesService: WorkspacesService, 
-              public uploadsService: UploadsService, public route: ActivatedRoute, 
-              public authService: AuthService, public usersService: UsersService, 
-              public collectionsService: CollectionsService, private router: Router,
-              public esquemasService: EsquemaService, public configurationsService: ConfigurationService,
-              public testsService: TestsService){
+              public collectionsService: CollectionsService, public uploadsService: UploadsService, 
+              public route: ActivatedRoute, public authService: AuthService, public usersService: UsersService, 
+              private router: Router, public esquemasService: EsquemaService, 
+              public configurationsService: ConfigurationService, public testsService: TestsService){
+
                 this.fileForm = new FormGroup({
                   'contentPath': new FormControl(null, {validators: [Validators.required]})
                 });
                 this.fileContentForm = new FormGroup({
                   'fileContent': new FormControl({value: '', disabled: true}),
                 });
-    }
+  }
+  
   ngOnDestroy() {
     this.datafilesSub.unsubscribe();
     this.onDestroy = true;
@@ -110,11 +108,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
               mandatory: workspaceData.workspace.mandatory,
               owner:workspaceData.workspace.owner
             };
-            this.orphanedDatafiles = workspaceData.orphanedDatafiles;
-            // Collections
-            this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-            this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: Collection[]})=>{
-              this.collections = collectionData.collections;
+            
               // Datafiles
               if(!this.isDeleting){
               this.datafilesSub = this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
@@ -177,7 +171,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
               });}
             })
           });
-        });
+        
       });
     }
   }
@@ -329,8 +323,10 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
 
     onEditContent() {
       if (this.fileContentForm.get('fileContent').disabled) {
+        this.editContent = true;
         this.fileContentForm.get('fileContent').enable();
       } else {
+        this.editContent = false;
         this.fileContentForm.get('fileContent').disable();
       }
     }

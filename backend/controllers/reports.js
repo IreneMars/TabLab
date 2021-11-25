@@ -72,7 +72,6 @@ exports.createReport = async(req, res, next) => {
         test.executionMoment = Date.now();
         test.totalErrors = errors;
         test.executable = false;
-        //await Suggestion.deleteMany({ datafile: test.datafile });
 
         return res.status(200).json({
             message: "Creation of error report and update of a test successful! ",

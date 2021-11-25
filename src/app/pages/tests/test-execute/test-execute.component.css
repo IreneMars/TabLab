@@ -45,3 +45,8 @@
 .testTitle {
     cursor: pointer;
 }
+
+.explanation {
+    margin: 0;
+    text-align: justify;
+}
