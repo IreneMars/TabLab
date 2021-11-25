@@ -209,7 +209,7 @@ def save_report_to_file(report, file):
     output.close()
 
 def validate_file(file_path, delimiter, schema_file=None,  errors_file_name=None, configurations=None):
-    output_directory = 'D:/irene/Desktop/TabLab/backend/output/'
+    output_directory = '../output/'
     # Si no existe el path, crearlo
     if not os.path.exists(output_directory):
         os.mkdir(output_directory)
