@@ -1,4 +1,4 @@
-if: branch in [prepro, master]
+if: branch IN [prepro, master]
 
 import:
 - source: .travis/prepro.yml
