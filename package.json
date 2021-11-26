@@ -3,14 +3,19 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
+
+        "postinstall": "npm run populate",
         "start": "node server.js",
-        "build": "ng build",
-        "test": "ng test",
-        "lint": "ng lint",
-        "e2e": "ng e2e",
-        "start:server": "nodemon server.js",
-        "heroku-postbuild": "ng build --prod --configuration ${configuration}",
-        "populate": "node ./backend/populate.js"
+        "start-server": "nodemon server.js",
+        "build": "ng build --configuration ${CONFIGURATION}",
+
+        "populate": "node ./backend/populate.js",
+        
+        "test-api": "npm-run-all -p -r start test-wait-api",
+        "test-wait-api": "wait-on http://localhost:3000/api/status && npm run test-newman",
+        
+        "test-newman": "newman run ./postman_tests/tests_collection.json -e ./postman_tests/dev_env.json",
+        "test-prepro": "newman run ./postman_tests/tests_collection.json -e ./postman_tests/prepro_env.json"
     },
     "private": true,
     "dependencies": {
@@ -40,17 +45,19 @@
         "file-system": "^2.2.2",
         "google-auth-library": "^7.9.1",
         "jsonwebtoken": "^8.5.1",
-        "karma-cli": "^2.0.0",
         "mongoose": "^5.12.3",
         "mongoose-type-url": "^2.1.0",
         "mongoose-unique-validator": "^2.0.3",
         "multer": "^1.4.2",
+        "newman": "^5.3.0",
         "ngx-papaparse": "^5.0.0",
         "nodemon": "^2.0.7",
+        "npm-run-all": "^4.1.5",
         "read-excel-file": "^5.1.0",
         "rxjs": "~6.6.0",
         "sweetalert2": "^11.0.11",
         "tslib": "^2.3.1",
+        "wait-on": "^6.0.0",
         "xlsx": "^0.17.4",
         "zone.js": "~0.11.3"
     },
@@ -60,17 +67,8 @@
         "@angular/compiler-cli": "~11.2.6",
         "@angular/localize": "^11.2.9",
         "@types/file-saver": "^2.0.3",
-        "@types/jasmine": "~3.6.0",
         "@types/node": "^12.20.14",
         "codelyzer": "^6.0.0",
-        "jasmine-core": "~3.8.0",
-        "jasmine-spec-reporter": "~5.0.0",
-        "karma": "~6.1.0",
-        "karma-chrome-launcher": "~3.1.0",
-        "karma-coverage": "~2.0.3",
-        "karma-jasmine": "~4.0.0",
-        "karma-jasmine-html-reporter": "^1.6.0",
-        "protractor": "~7.0.0",
         "ts-node": "~8.3.0",
         "tslint": "~6.1.0",
         "typescript": "~4.1.5"

@@ -2,11 +2,6 @@ language: node_js
 node_js:
   - "16"
 
-if: branch = prepro
-
-addons:
-  chrome: stable
-
 cache:
   directories:
      - ./node_modules
@@ -16,15 +11,11 @@ install:
 
 jobs:
   include:
-    - stage: Unit tests
-      if: branch = prepro
-      script: npm run test -- --no-watch --no-progress
     - stage: Deploy to heroku prepro
-      if: branch = prepro
       script: ignore
       deploy: &heroku
         provider: heroku
         api_key: $HEROKU_AUTH_TOKEN
         app: tablab-app-prepro
-        on:
-          prepro
+    - stage: API tests
+      script: npm run test-prepro
