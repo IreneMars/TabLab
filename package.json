@@ -4,12 +4,11 @@
     "scripts": {
         "ng": "ng",
 
-        "postinstall": "npm run populate",
         "start": "node server.js",
         "start-server": "nodemon server.js",
         "build": "ng build --configuration ${CONFIGURATION}",
 
-        "populate": "node ./backend/populate.js",
+        "populate": "node populate.js -h http://localhost:3000",
         
         "test-api": "npm-run-all -p -r start test-wait-api",
         "test-wait-api": "wait-on http://localhost:3000/api/status && npm run test-newman",
