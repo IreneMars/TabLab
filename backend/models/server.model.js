@@ -22,7 +22,7 @@ class Server {
     }
 
     async conectarDB() {
-        await dbConnection();
+        await dbConnection(process.env.MONGODB_CNN);
     }
 
     getApp() {

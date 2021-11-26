@@ -52,8 +52,7 @@ exports.createReport = async(req, res, next) => {
         const errorReportPath = 'backend/output/' + split2[3] + '_errors.csv';
 
         const testData = [test.title, errorReportPath, datafile.delimiter, esquemaContentPath, datafile.contentPath, configurationsAux, datafile.errLimit];
-        console.log(testData)
-            //var myProcess = spawn('python', ["backend/scripts/validation.py", errorReportPath, esquemaContentPath, datafile.contentPath, errorCode]);
+        //var myProcess = spawn('python', ["backend/scripts/validation.py", errorReportPath, esquemaContentPath, datafile.contentPath, errorCode]);
         const execBuffer = execFileSync(
             'python', ["backend/scripts/validation.py", testData[1], testData[2], testData[3], testData[4], testData[5], testData[6]], { encoding: 'utf-8' }
             //'python', ["backend/scripts/validation.py", errorReportPath, esquemaContentPath, datafile.contentPath, configurationsAux], { encoding: 'utf-8' }

@@ -95,7 +95,6 @@ export class DatafileEditComponent implements OnInit{
     if (selectedCollection == "None"){
       selectedCollection = null;
     }
-    console.log(selectedCollection)
     await this.datafileService.updateDatafile(this.datafileId, values.title, values.delimiter, values.errLimit, values.description, selectedCollection);
     this.datafileService.getDatafile(this.datafileId).subscribe((datafileData)=>{
       this.datafile = {
