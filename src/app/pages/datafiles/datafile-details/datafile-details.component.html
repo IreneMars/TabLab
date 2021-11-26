@@ -12,6 +12,8 @@
                     <h2>{{ datafile.title }} (from <a routerLink="/workspace/{{workspaceId}}">
                       {{workspace.title}}
                     </a>)</h2>
+                    <h3>{{ datafile.description }}</h3>
+
                 </div>
                 <div class="col-2 d-flex justify-content-end">
                     <div class="me-1">
@@ -31,7 +33,8 @@
             </div>
             <div class="row mt-1" *ngIf="!edit">
                 <div class="col">
-                    <p>{{ datafile.description }}</p>
+                    <p>Delimitador: {{datafile.delimiter}}</p>
+                    <p>Límite de errores: {{datafile.errLimit}}</p>
                 </div>
             </div>
             <div class="row mt-1">

@@ -114,6 +114,7 @@ exports.createDatafile = async(req, res, next) => {
             title: req.body.title,
             description: req.body.description,
             contentPath: null,
+            delimiter: req.body.delimiter,
             errLimit: null,
             coleccion: req.body.coleccion,
             workspace: req.body.workspace
@@ -169,13 +170,13 @@ exports.updateDatafile = async(req, res) => {
                 message: "You are not authorized to update a datafile from this workspace."
             });
         }
-        await Datafile.findByIdAndUpdate(req.params.id, { title: req.body.title, description: req.body.description, coleccion: req.body.collection });
+        await Datafile.findByIdAndUpdate(req.params.id, {
+            title: req.body.title,
+            description: req.body.description,
+            delimiter: req.body.delimiter,
+            coleccion: req.body.coleccion
+        });
         const updatedDatafile = await Datafile.findById(req.params.id);
-
-        const tests = await Test.find({ 'datafile': updatedDatafile._id });
-        for (var test of tests) {
-            await Test.findByIdAndUpdate(test._id, { 'executable': true });
-        }
 
         const workspace = await Workspace.findById(updatedDatafile.workspace);
         const user = await User.findById(current_user_id);

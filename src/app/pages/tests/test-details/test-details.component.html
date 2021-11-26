@@ -15,16 +15,6 @@
                         </mat-error>
                     </div>
                 </div>
-                <div class="row ms-0 me-0 mb-1 p-0">
-                    <div class="col ps-0 pe-0 d-flex justify-content-start">
-                        <input type="text" class="form-control" placeholder="Delimitador" formControlName="delimiter" [class.is-invalid]="invalidDelimiter">
-                        <mat-error>
-                            <small *ngIf="invalidDelimiter" class="text-danger">
-                              Ingrese un delimitador adecuado.
-                            </small>
-                        </mat-error>
-                    </div>
-                </div>
                 <div class="row ms-0 me-0 mt-1 mb-1 p-0">
                     <div class="col ps-0 pe-0 d-flex justify-content-end">
                         <button type="submit" class="btn btn-sm btn-primary me-1" *ngIf="!isSavingTest">
@@ -42,7 +32,6 @@
                 <div class="col-10">
                     <h2>{{ test.title }} (from <a routerLink="/workspace/{{workspaceId}}/datafile/{{datafileId}}">
                       {{datafile.title}}</a>)</h2>
-                    <h3>Delimiter: {{test.delimiter}}</h3>
                 </div>
                 <div class="col-2 d-flex justify-content-end">
                     <div class="me-1">
@@ -203,6 +192,11 @@
             <div class="row mt-2 pe-2" *ngIf="test.totalErrors">
                 <div class="col pe-0">
                     Errores: {{test.totalErrors}}
+                </div>
+            </div>
+            <div class="row mt-2 pe-2" *ngIf="test.totalErrors">
+                <div class="col pe-0">
+                    Ejecutable: {{test.executable}}
                 </div>
             </div>
             <div class="row mt-4 pe-2">

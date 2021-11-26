@@ -66,7 +66,6 @@ class Server {
     routes() {
         this.app.use("/api/auth", require('../routes/auth'));
         this.app.use("/api/users", require('../routes/users'));
-        this.app.use("/api/populate", require('../routes/populate'));
         this.app.use("/api/workspaces", require('../routes/workspaces'));
         this.app.use("/api/roles", require('../routes/roles'));
         this.app.use("/api/invitations", require('../routes/invitations'));

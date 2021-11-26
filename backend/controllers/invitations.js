@@ -1,9 +1,11 @@
 const { Invitation, User, Workspace, Role, GlobalConfiguration } = require("../models");
 
 exports.getInvitations = async(req, res, next) => {
+    const current_user_id = req.userData.userId;
+
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const current_user_id = req.userData.userId;
+
     try {
         const invitationQuery = Invitation.find({ receiver: current_user_id });
         const allInvitations = await invitationQuery.exec();
@@ -32,6 +34,28 @@ exports.getInvitations = async(req, res, next) => {
             invitations: new_documents,
             maxInvitations: new_documents.length,
             totalInvitations: allInvitations.length
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Fetching invitations failed!"
+        });
+    }
+
+};
+
+exports.checkPendingInvitations = async(req, res, next) => {
+    const current_user_id = req.userData.userId;
+
+    try {
+        const invitations = await Invitation.find({ receiver: current_user_id, status: 'pending' });
+        var pendingInvitations = false;
+        console.log(invitations)
+        if (invitations.length > 0) {
+            pendingInvitations = true;
+        }
+        return res.status(200).json({
+            message: "Invitations fetched successfully!",
+            pendingInvitations: pendingInvitations
         });
     } catch (error) {
         return res.status(500).json({

@@ -45,10 +45,9 @@ export class SuggestionsService {
       });
   }
   
-  addSuggestionsByDatafile(datafileId: string, rawData: any, testDelimiter:string){
+  addSuggestionsByDatafile(datafileId: string, rawData: any){
     const suggestionsData = {
       'rawData': rawData, 
-      'testDelimiter':testDelimiter
     };
     return this.http.post<{message: string, suggestions: any[]}>(BACKEND_URL+"add/"+datafileId,suggestionsData).toPromise();
   }

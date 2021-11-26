@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { Collection } from 'src/app/models/collection.model';
 import { Datafile } from 'src/app/models/datafile.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -24,7 +24,7 @@ export class DatafileEditComponent implements OnInit{
   @Input() datafile    : Datafile;
   @Output() datafileChange : EventEmitter<Datafile> = new EventEmitter<Datafile>();
   
-  constructor(public datafileService: DatafileService, public authService: AuthService,  private router: Router,
+  constructor(public datafileService: DatafileService, public authService: AuthService,
               private formBuilder: FormBuilder, public collectionsService: CollectionsService) {
     this.createForm();
   }
@@ -32,8 +32,10 @@ export class DatafileEditComponent implements OnInit{
   createForm() {
     this.datafileEditForm = this.formBuilder.group({
       title       : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      delimiter   : [''],
       description : ['', [Validators.maxLength(200)]],
-      collection  : ['', ],
+      collection  : [''],
+      errLimit    : ['', [Validators.min(1)]],
     });
   }
 
@@ -51,8 +53,10 @@ export class DatafileEditComponent implements OnInit{
         }
         this.datafileEditForm.reset({
           title: this.datafile.title,
+          delimiter: this.datafile.delimiter,
           description: this.datafile.description,
           collection: selectedCollection,
+          errLimit: this.datafile.errLimit
         });
       });
     }
@@ -66,13 +70,21 @@ export class DatafileEditComponent implements OnInit{
     return this.datafileEditForm.get('description').invalid && this.datafileEditForm.get('description').touched;
   }
   
+  get invalidDelimiter() {
+    return this.datafileEditForm.get('delimiter').invalid && this.datafileEditForm.get('delimiter').touched;
+  }
+
+  get invalidErrLimit() {
+    return this.datafileEditForm.get('errLimit').invalid && this.datafileEditForm.get('errLimit').touched;
+  }
+
   async onSave() {
     this.isSaving = true;
     if (this.datafileEditForm.invalid){
       this.isSaving = false;
       return Object.values(this.datafileEditForm.controls).forEach(control => {
         if (control instanceof FormGroup) {
-          Object.values(control.controls).forEach( control => control.markAsTouched());
+          Object.values(control['controls']).forEach( control => control.markAsTouched());
         } else {
           control.markAsTouched();
         }
@@ -83,11 +95,13 @@ export class DatafileEditComponent implements OnInit{
     if (selectedCollection == "None"){
       selectedCollection = null;
     }
-    await this.datafileService.updateDatafile(this.datafileId, values.title, values.description, selectedCollection);
+    console.log(selectedCollection)
+    await this.datafileService.updateDatafile(this.datafileId, values.title, values.delimiter, values.errLimit, values.description, selectedCollection);
     this.datafileService.getDatafile(this.datafileId).subscribe((datafileData)=>{
       this.datafile = {
         id: datafileData.datafile._id,
         title: datafileData.datafile.title,
+        delimiter: datafileData.datafile.delimiter,
         description: datafileData.datafile.description,
         contentPath: datafileData.datafile.contentPath,
         errLimit: datafileData.datafile.errLimit,

@@ -72,10 +72,10 @@
     ],
 
     "datafiles": [
-        { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": "https://tablab-app-prepro.herokuapp.com/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
-        { "_id": "60b634e98ab1a18d8850e49f", "title": "Datafile 2", "description": "Este es el datafile 2.", "contentPath": null, "errLimit": null, "coleccion": null, "workspace": "60aeaf40d0e8477348250ac9" },
-        { "_id": "619389a81a2dffb23b953917", "title": "Datafile 3", "description": "Este es el datafile 3.", "contentPath": null, "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
-        { "_id": "6193a80edcc6d2ea6bd3e1b8", "title": "Datafile 4", "description": "Este es el datafile 4.", "contentPath": null, "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c3", "workspace": "60aeaf40d0e8477348250ac9" }
+        { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": "https://tablab-app-prepro.herokuapp.com/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv", "delimiter": "|", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "60b634e98ab1a18d8850e49f", "title": "Datafile 2", "description": "Este es el datafile 2.", "contentPath": null, "delimiter": "|", "errLimit": null, "coleccion": null, "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "619389a81a2dffb23b953917", "title": "Datafile 3", "description": "Este es el datafile 3.", "contentPath": null, "delimiter": "|", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "6193a80edcc6d2ea6bd3e1b8", "title": "Datafile 4", "description": "Este es el datafile 4.", "contentPath": null, "delimiter": "|", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c3", "workspace": "60aeaf40d0e8477348250ac9" }
     ],
 
     "esquemas": [
@@ -97,8 +97,8 @@
             "creationMoment": "1624792800000",
             "errorCode": "deviated-value",
             "extraParams": {
-                "field_name": "COUNTRY",
-                "average": "average",
+                "fieldName": "COUNTRY",
+                "average": "mean",
                 "interval": "2"
             },
             "datafile": "60b634e98ab1a18d8850e49e"
@@ -107,8 +107,7 @@
 
     "tests": [{
             "_id": "60c36c9ee5d8ef42848fe2f5",
-            "title": "PRUEBA DMF",
-            "delimiter": "|",
+            "title": "PRUEBA DMF 1",
             "reportPath": "backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv",
             "status": "failed",
             "esquema": "60c164a855a6814cb879a775",
@@ -123,12 +122,25 @@
         {
             "_id": "60c36c9ee5d8ef42848fe2f6",
             "title": "PRUEBA DMF 2",
-            "delimiter": "|",
             "reportPath": null,
             "status": "pending",
             "esquema": "60c1669355a6814cb879a77a",
             "configurations": ["60c1665b55a6814cb879a779"],
             "creationMoment": "1624877640000",
+            "updateMoment": null,
+            "executionMoment": null,
+            "totalErrors": null,
+            "executable": true,
+            "datafile": "60b634e98ab1a18d8850e49e"
+        },
+        {
+            "_id": "619fb1a938b44792e514bdee",
+            "title": "PRUEBA DMF 3",
+            "reportPath": null,
+            "status": "pending",
+            "esquema": "60c1669355a6814cb879a77a",
+            "configurations": [],
+            "creationMoment": "1624970040000",
             "updateMoment": null,
             "executionMoment": null,
             "totalErrors": null,

@@ -59,19 +59,21 @@ export class HeaderComponent implements OnInit{
         status: userData.user.status,
         google: userData.user.google
       }
-      
       // Invitations
-      this.invitationsService.getInvitationsHeader().subscribe( (invitationData: {invitations: Invitation[]}) => {
-        var invitations = invitationData.invitations;
-        for (var invitation of invitations) {
-          if(invitation.status==='pending'){
-            this.hasInvitations = true;
-            break;
-          }
-        }
+      this.invitationsService.checkPendingInvitations().then((response) => {     
+        this.hasInvitations = response.pendingInvitations;
         this.isLoading = false;
       });
     });
+    this.invitationsService.getInvitationUpdateListener().subscribe(invitationsResponse=>{
+      for (var invitation of invitationsResponse.invitations) {
+        if (invitation.status == "pending"){
+          this.hasInvitations = true;
+          break;
+        }
+      }
+      this.isLoading = false;
+    })
   }
 
 
@@ -80,21 +82,5 @@ export class HeaderComponent implements OnInit{
     this.authService.logout();
   }
 
-  checkInvitations(){
-    if(this.userIsAuthenticated){
-      // Invitations
-      this.invitationsService.getInvitationsHeader().subscribe( (invitationData: {invitations: Invitation[]}) => {
-        var invitations = invitationData.invitations;
-        for (var invitation of invitations) {
-          if(invitation.status==='pending'){
-            this.hasInvitations = true;
-            return true;
-          }
-        }
-      });
-    }else{
-      return false;
-    }
-  }
 
 }

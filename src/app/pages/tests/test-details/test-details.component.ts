@@ -65,7 +65,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
 
                 this.testForm = new FormGroup({
                   'title': new FormControl(null, {validators: [Validators.required]}),
-                  'delimiter': new FormControl(null)
                 });
                 
                 this.fileContentForm = new FormGroup({
@@ -118,7 +117,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
               this.test = {
                 id: testData.test._id,
                 title: testData.test.title,
-                delimiter: testData.test.delimiter,
                 reportPath: testData.test.reportPath,
                 status: testData.test.status,
                 esquema: testData.test.esquema,
@@ -130,7 +128,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
                 executable: testData.test.executable,
                 datafile: testData.test.datafile,
               };
-              this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
+              this.testForm.reset({title: this.test.title});
               this.selectedEsquema = {
                 id: testData.esquema._id,
                 title: testData.esquema.title,
@@ -148,6 +146,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
                 this.datafile = {
                   id: datafileData.datafile.id,
                   title: datafileData.datafile.title,
+                  delimiter: datafileData.datafile.delimiter,
                   description: datafileData.datafile.description,
                   contentPath: datafileData.datafile.contentPath,
                   errLimit: datafileData.datafile.errLimit,
@@ -233,7 +232,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
       this.test = {
         id: testData.test._id,
         title: testData.test.title,
-        delimiter: testData.test.delimiter,
         reportPath: testData.test.reportPath,
         status: testData.test.status,
         esquema: testData.test.esquema,
@@ -245,7 +243,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
         executable: testData.test.executable,
         datafile: testData.test.datafile,
       };
-      this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
+      this.testForm.reset({title: this.test.title});
       this.edit = false;
       this.isSavingTest = false;
     });
@@ -319,7 +317,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
 
   onCancelTestForm(){
     this.edit = false;
-    this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
+    this.testForm.reset({title: this.test.title});
   }
   
   get invalidRowContent() {
@@ -337,7 +335,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
       });
     }
     const values = this.suggestionForm.getRawValue();
-    const result = await this.suggestionsService.applySuggestion(this.suggestionId, "updateRow", this.test.delimiter, this.contentLines, values.rowContent);
+    const result = await this.suggestionsService.applySuggestion(this.suggestionId, "updateRow", this.datafile.delimiter, this.contentLines, values.rowContent);
     this.suggestionQueryResult = result.data.rowContent;
     const newFile = this.generateFile(result.data.content)
     await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", newFile);
@@ -357,7 +355,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
   async onApplyChanges(suggestionId:string, operation:string){
     this.suggestionId = suggestionId;
     this.suggestionQueryResult = null;
-    const result = await this.suggestionsService.applySuggestion(suggestionId, operation,this.test.delimiter, this.contentLines, null);
+    const result = await this.suggestionsService.applySuggestion(suggestionId, operation, this.datafile.delimiter, this.contentLines, null);
     this.suggestionQueryResult = result.data.rowContent;
     this.suggestionForm = new FormGroup({
       'rowContent': new FormControl('', {validators: [Validators.required]}),

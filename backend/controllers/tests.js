@@ -146,7 +146,6 @@ exports.createTest = async(req, res, next) => {
         }
         const test = new Test({
             title: req.body.title,
-            delimiter: req.body.delimiter,
             reportPath: null,
             status: 'pending',
             esquema: req.body.esquema,

@@ -54,8 +54,9 @@ export class DatafileCreateComponent implements OnInit{
   createForm() {
     this.datafileForm = this.formBuilder.group({
       title       : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      delimiter   : [''],
       description : ['', [Validators.maxLength(200)]],
-      collection : ['', ],
+      collection  : [''],
     });
   }
 
@@ -65,6 +66,10 @@ export class DatafileCreateComponent implements OnInit{
 
   get invalidDescription() {
     return this.datafileForm.get('description').invalid && this.datafileForm.get('description').touched;
+  }
+
+  get invalidDelimiter() {
+    return this.datafileForm.get('delimiter').invalid && this.datafileForm.get('delimiter').touched;
   }
 
   async onSave() {
@@ -83,7 +88,7 @@ export class DatafileCreateComponent implements OnInit{
     if(values.collection==='Ninguna'){
       values.collection = null;
     }
-    this.datafileService.addDatafile(values.title, values.description, values.collection, this.workspaceId)
+    this.datafileService.addDatafile(values.title, values.delimiter, values.description, values.collection, this.workspaceId)
     .then((response)=>{
       if(values.collection){
         this.collectionsService.getCollectionsByWorkspace(this.workspaceId);

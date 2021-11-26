@@ -115,18 +115,22 @@
                         <table class="table table-fixed table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="col-4">Título</th>
-                                    <th scope="col" class="col-4">Descripción</th>
-                                    <th scope="col" class="col-4">
+                                    <th scope="col" class="col-3">Título</th>
+                                    <th scope="col" class="col-3">
+                                        <div align="center">Delimitador</div>
+                                    </th>
+                                    <th scope="col" class="col-3">Descripción</th>
+                                    <th scope="col" class="col-3">
                                         <div align="center">Límite de errores</div>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let datafile of datafiles" [routerLink]="['/workspace',datafile.workspace,'datafile', datafile.id]">
-                                    <th class="col-4">{{datafile.title}}</th>
-                                    <td class="col-4">{{datafile.description}}</td>
-                                    <td class="col-4" align="center">{{datafile.errLimit || 0}}</td>
+                                    <th class="col-3">{{datafile.title}}</th>
+                                    <td class="col-3" align="center">{{test.delimiter}}</td>
+                                    <td class="col-3">{{datafile.description}}</td>
+                                    <td class="col-3" align="center">{{datafile.errLimit || 0}}</td>
                                 </tr>
                                 <tr>
                             </tbody>
@@ -145,24 +149,20 @@
                         <table class="table table-fixed table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="col-3">Título</th>
-                                    <th scope="col" class="col-3">
-                                        <div align="center">Delimitador</div>
-                                    </th>
-                                    <th scope="col" class="col-3">
+                                    <th scope="col" class="col-4">Título</th>
+                                    <th scope="col" class="col-4">
                                         <div align="center">Estado</div>
                                     </th>
-                                    <th scope="col" class="col-3">
+                                    <th scope="col" class="col-4">
                                         <div align="center">Errores</div>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let test of tests" [routerLink]="['/workspace',test.workspace,'datafile', test.datafile, 'test', test.id]">
-                                    <th class="col-3">{{test.title}}</th>
-                                    <td class="col-3" align="center">{{test.delimiter}}</td>
-                                    <td class="col-3" align="center">{{test.status}}</td>
-                                    <td class="col-3" align="center">{{test.totalErrors || 0}}</td>
+                                    <th class="col-4">{{test.title}}</th>
+                                    <td class="col-4" align="center">{{test.status}}</td>
+                                    <td class="col-4" align="center">{{test.totalErrors || 0}}</td>
                                 </tr>
                                 <tr>
                             </tbody>

@@ -34,7 +34,7 @@ exports.createSuggestionsByDatafile = async(req, res, next) => {
         var suggestions = [];
         for (var line of req.body.rawData) {
             var lineAux = line.replace('\r', '');
-            var values = lineAux.split(req.body.testDelimiter);
+            var values = lineAux.split(datafile.delimiter);
             var tagsStr = values[1].replace(/[\[\]']+/g, '');
             var tags = tagsStr.split(", ");
             const suggestion = new Suggestion({

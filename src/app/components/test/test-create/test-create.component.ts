@@ -41,7 +41,6 @@ export class TestCreateComponent implements OnInit{
   createForm() {
     this.testForm = this.formBuilder.group({
       title          : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      delimiter      : [''],
       esquema        : [''],
       configurations : [[]]
     });
@@ -57,11 +56,7 @@ export class TestCreateComponent implements OnInit{
   get invalidTitle() {
     return this.testForm.get('title').invalid && this.testForm.get('title').touched;
   }
-
-  get invalidDelimiter() {
-    return this.testForm.get('delimiter').invalid && this.testForm.get('delimiter').touched;
-  }
-  
+ 
   async onSave() {
     this.isSavingChange.emit(true);
     if (this.testForm.invalid){
@@ -75,7 +70,7 @@ export class TestCreateComponent implements OnInit{
       });
      }
     const values = this.testForm.getRawValue();
-    await this.testService.addTest(values.title, values.delimiter, values.esquema, values.configurations, this.datafileId);
+    await this.testService.addTest(values.title, values.esquema, values.configurations, this.datafileId);
     // Tests
     this.testService.getTestsByDatafile(this.datafileId,this.workspaceId);
     this.testForm.reset({});

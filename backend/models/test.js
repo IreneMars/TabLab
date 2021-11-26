@@ -7,10 +7,6 @@ const testSchema = mongoose.Schema({
         minLength: 1,
         maxLength: 100
     },
-    delimiter: {
-        type: String,
-        required: [false],
-    },
     reportPath: {
         type: String,
         required: false

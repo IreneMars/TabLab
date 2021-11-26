@@ -208,7 +208,7 @@ def save_report_to_file(report, file):
     output.write(report_json)
     output.close()
 
-def validate_file(file_path, delimiter, schema_file=None,  errors_file_name=None, configurations=None):
+def validate_file(file_path, delimiter, schema_file=None,  errors_file_name=None, configurations=None, total_poss_errors=None):
     output_directory = 'D:/irene/Desktop/TabLab/backend/output/'
     # Si no existe el path, crearlo
     if not os.path.exists(output_directory):
@@ -257,7 +257,9 @@ def validate_file(file_path, delimiter, schema_file=None,  errors_file_name=None
 
     resource = Resource(path=file_path,schema=schema_file,dialect=dialect)
     resource.infer(stats=True)
-    total_poss_errors = resource['stats']['fields']*resource['stats']['rows']
+    total_poss_errors_aux = resource['stats']['fields']*resource['stats']['rows']
+    if total_poss_errors:
+        total_poss_errors_aux = total_poss_errors
     total_rows = resource['stats']['rows']
 
     # Validating against the schema
@@ -266,7 +268,7 @@ def validate_file(file_path, delimiter, schema_file=None,  errors_file_name=None
     schema_report = validate(
         resource,
         layout = {"limitRows": total_rows},#tiene que ser >= 1, antes: limit_rows=VALIDATIONS_ROW_LIMIT
-        limit_errors=total_poss_errors,#limit_errors=VALIDATIONS_ERROR_LIMIT,
+        limit_errors=total_poss_errors_aux,#limit_errors=VALIDATIONS_ERROR_LIMIT,
         detector=Detector(schema_sync=True),#sync_schema=True,
         format=extension.replace(".",""),
         skip_errors = skip_errors,
@@ -317,6 +319,7 @@ delimiter = sys.argv[2]
 esquema_path = sys.argv[3];
 file_path = sys.argv[4];
 configurations = [{'code':sys.argv[5]}]
+total_poss_errors = sys.argv[6];
 
 logger.info('Out Path: '+out_path);
 print('Delimiter: '+delimiter);
@@ -329,9 +332,11 @@ print("Configurations:");
 logger.info("Configurations:");
 print(configurations);
 logger.info(configurations);
+print("Total possible errors:");
+logger.info(total_poss_errors);
 # file_path = "D:/irene/Desktop/TabLab/backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv"
 # delimiter = None
 # esquema_path = "D:/irene/Desktop/TabLab/backend/uploads/esquemas/populate_schema.json"
 # configurations = []
 
-validate_file(file_path, delimiter, schema_file=esquema_path, configurations=configurations)
+validate_file(file_path, delimiter, schema_file=esquema_path, configurations=configurations, total_poss_errors=total_poss_errors)

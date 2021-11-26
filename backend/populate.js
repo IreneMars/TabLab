@@ -13,7 +13,7 @@ const {
     FricError,
     GlobalConfiguration,
     Suggestion
-} = require("../models");
+} = require("./models");
 const fs = require('fs');
 const path = require("path");
 
@@ -40,20 +40,21 @@ var create_report = (model_name, result, data) => {
     return [message, report];
 };
 
-exports.populate = async(req, res, next) => {
+async function populate(host) {
     console.log("Populating database...")
-    console.log("Using host: " + req.get("host"))
+    console.log("Using host: " + host)
     var dataPath = null;
-    if (req.get("host").includes("localhost")) {
-        dataPath = path.resolve("backend/populate_dev.json");
-    } else if (req.get("host").includes("prepro")) {
-        dataPath = path.resolve("backend/populate_prepro.json");
+    if (host == "http://localhost:3000") {
+        dataPath = path.resolve("./populate_dev.json");
+    } else if (host == "https://tablab-app-prepro.herokuapp.com") {
+        dataPath = path.resolve("./populate_prepro.json");
     } else {
-        dataPath = path.resolve("backend/populate_prod.json");
+        dataPath = path.resolve("./populate_prod.json");
     }
     const rawData = fs.readFileSync(dataPath);
     const populate_json_data = JSON.parse(rawData);
     reports = { "errored_models": [], "reports": [] };
+
 
     //users
     try {
@@ -291,54 +292,92 @@ exports.populate = async(req, res, next) => {
         reports.errored_models.push({ "Suggestion": err });
     }
 
-    fs.readdir(path.join("backend/uploads/datafiles"), (err, files) => {
+    fs.readdir(path.join("./uploads/datafiles"), (err, files) => {
+        console.log("Cleaning and populating uploads/datafiles folder")
         if (err) console.log(err);
 
-        for (const file of files) {
-            fs.unlink(path.join(path.join("backend/uploads/datafiles"), file), err => {
+        for (var file of files) {
+            const fileName = file;
+            //eliminamos el file del directorio
+            fs.unlink(path.join(path.join("./uploads/datafiles"), file), err => {
                 if (err) throw err;
             });
+            // lo copiamos de assets (si existe) y lo pegamos en el directorio del que lo eliminamos anteriormente
+            if (host == "http://localhost:3000") {
+                if (fs.existsSync("./assets/" + fileName)) {
+                    fs.copyFile("./assets/" + fileName, "./uploads/datafiles/" + fileName, function(err) {
+                        if (err) throw err
+                        console.log('Successfully copied!')
+                    })
+                }
+            }
         }
     });
 
-    fs.readdir(path.join("backend/uploads/esquemas"), (err, files) => {
+    fs.readdir(path.join("./uploads/esquemas"), (err, files) => {
+        console.log("Cleaning and populating uploads/esquemas folder")
         if (err) console.log(err);
 
-        for (const file of files) {
-            fs.unlink(path.join(path.join("backend/uploads/esquemas"), file), err => {
+        for (var file of files) {
+            const fileName = file;
+            fs.unlink(path.join(path.join("./uploads/esquemas"), file), err => {
                 if (err) throw err;
             });
+            if (host == "http://localhost:3000") {
+                if (fs.existsSync("./assets/" + fileName)) {
+                    fs.copyFile("./assets/" + fileName, "./uploads/esquemas/" + fileName, function(err) {
+                        if (err) throw err
+                        console.log('Successfully copied!')
+                    })
+                }
+            }
         }
     });
 
-    fs.readdir(path.join("backend/uploads/users"), (err, files) => {
+    fs.readdir(path.join("./uploads/users"), (err, files) => {
+        console.log("Cleaning and populating uploads/users folder")
         if (err) console.log(err);
 
-        for (const file of files) {
-            fs.unlink(path.join(path.join("backend/uploads/users"), file), err => {
+        for (var file of files) {
+            const fileName = file;
+            fs.unlink(path.join(path.join("./uploads/users"), file), err => {
                 if (err) throw err;
             });
+            if (host == "http://localhost:3000") {
+                if (fs.existsSync("./assets/" + fileName)) {
+                    fs.copyFile("./assets/" + fileName, "./uploads/users/" + fileName, function(err) {
+                        if (err) throw err
+                        console.log('Successfully copied!')
+                    })
+                }
+            }
+        }
+    });
+    fs.readdir(path.join("./output"), (err, files) => {
+        console.log("Cleaning and populating output folder")
+        if (err) console.log(err);
+
+        for (var file of files) {
+            const fileName = file;
+            fs.unlink(path.join(path.join("./output"), file), err => {
+                if (err) throw err;
+            });
+            if (host == "http://localhost:3000") {
+                if (fs.existsSync("./assets/" + fileName)) {
+                    fs.copyFile("./assets/" + fileName, "./output/" + fileName, function(err) {
+                        if (err) throw err
+                        console.log('Successfully copied!')
+                    })
+                }
+            }
         }
     });
     console.log("Fin")
-    return res.status(200).json({
-        data: reports
-    });
+    return reports;
 };
 
-exports.populateFile = async(req, res, next) => {
-    try {
-        if (req.file) {
-            console.log(req.file.filename)
-        }
-        return res.status(200).json({
-            message: "Uploaded file!",
-            fileName: req.file.filename
-        });
-    } catch (err) {
-        return res.status(500).json({
-            message: err
-        })
-    }
 
-}
+//"https://tablab-app.herokuapp.com"
+//"http://localhost:3000"
+//"https://tablab-app-prepro.herokuapp.com"
+populate("http://localhost:3000");

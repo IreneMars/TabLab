@@ -115,6 +115,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
                 this.datafile = {
                   id: datafileData.datafile._id,
                   title: datafileData.datafile.title,
+                  delimiter: datafileData.datafile.delimiter,
                   description: datafileData.datafile.description,
                   contentPath: datafileData.datafile.contentPath,
                   errLimit: datafileData.datafile.errLimit,
@@ -210,13 +211,14 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
       this.file = uploadedFile;
       this.isUploading = true;
       await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateFile', this.file);
-      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, null);
+      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.delimiter, this.datafile.errLimit, this.datafile.description, null);
 
       // Datafiles
       this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
         this.datafile = {
           id: datafileData.datafile._id,
           title: datafileData.datafile.title,
+          delimiter: datafileData.datafile.delimiter,
           description: datafileData.datafile.description,
           contentPath: datafileData.datafile.contentPath,
           errLimit: datafileData.datafile.errLimit,
@@ -277,7 +279,21 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
         return;
       }
       await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateContent', file);
-      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, null);
+      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.delimiter, this.datafile.errLimit, this.datafile.description, null);
+      this.datafilesService.getDatafile( this.datafileId).subscribe(datafileData => {
+        this.datafile = {
+          id: datafileData.datafile._id,
+          title: datafileData.datafile.title,
+          delimiter: datafileData.datafile.delimiter,
+          description: datafileData.datafile.description,
+          contentPath: datafileData.datafile.contentPath,
+          errLimit: datafileData.datafile.errLimit,
+          coleccion: datafileData.datafile.coleccion,
+          workspace: datafileData.datafile.workspace,
+        };
+        this.content = datafileData.content;
+      });
+
       this.fileContentForm.get('fileContent').disable();
       this.isSaving = false;
     }
@@ -290,6 +306,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
         this.datafile = {
           id: datafileData.datafile._id,
           title: datafileData.datafile.title,
+          delimiter: datafileData.datafile.delimiter,
           description: datafileData.datafile.description,
           contentPath: datafileData.datafile.contentPath,
           errLimit: datafileData.datafile.errLimit,

@@ -46,22 +46,8 @@ export class InvitationService {
     });
   }
 
-  getInvitationsHeader() {
-    return this.http.get<{message: string, invitations: any}>(BACKEND_URL)
-      .pipe(map( (invitationData) => {
-        return { 
-          invitations: invitationData.invitations
-          .map( invitation => {
-            return {
-              id: invitation._id,
-              sender: invitation.sender,
-              receiver: invitation.receiver,
-              status: invitation.status,
-              workspace: invitation.workspace,
-            };
-          }),
-        };
-      }))
+  checkPendingInvitations() {
+    return this.http.get<{message: string, pendingInvitations:boolean}>(BACKEND_URL+"checkPendings").toPromise();
   }
 
   addInvitation( receiverEmail: string, workspaceId: string) {

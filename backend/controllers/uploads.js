@@ -75,7 +75,13 @@ exports.updateFile = async(req, res) => {
         // New file path
         var newFilePath = "";
         const url = req.protocol + "://" + req.get("host") + "/";
+        var data = null;
+        var rows = 0;
+        var columns = 0;
         if (req.body.operation === 'updateFile' || req.body.operation === 'updateContent') {
+            data = fs.readFileSync(req.file.path, 'utf8')
+            data = data.split("\n");
+
             if (req.file) {
                 newFilePath = url + "datafiles/" + req.file.filename;
             } else {
@@ -84,6 +90,10 @@ exports.updateFile = async(req, res) => {
         }
         // Fetching datafile data
         var datafile = await Datafile.findById(req.params.id);
+        rows = data.length - 1;
+        columns = data[0].split(datafile.delimiter).length + 1;
+        datafile.errLimit = rows * columns;
+        await Datafile.findByIdAndUpdate(req.params.id, datafile);
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         if (roles.length !== 1) {
             return res.status(403).json({

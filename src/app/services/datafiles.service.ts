@@ -26,6 +26,7 @@ export class DatafileService {
         return {
           id: datafile._id,
           title: datafile.title, 
+          delimiter: datafile.delimiter,
           description: datafile.description, 
           contentPath: datafile.contentPath, 
           errLimit: datafile.errLimit,
@@ -53,10 +54,11 @@ export class DatafileService {
     }));
   }
 
-  addDatafile( title: string, description: string, coleccionId: string, workspaceId: string) {
+  addDatafile( title: string, delimiter: string, description: string, coleccionId: string, workspaceId: string) {
     const datafileData: Datafile = {
       'id': null,
       'title': title, 
+      'delimiter':delimiter,
       'description': description, 
       'contentPath': null, 
       'errLimit': null,
@@ -66,13 +68,14 @@ export class DatafileService {
     return this.http.post<{message: string, datafile: any}>(BACKEND_URL, datafileData).toPromise();
   }
       
-  updateDatafile(datafileId: string, title: string, description: string, coleccion:string) {
+  updateDatafile(datafileId: string,  title: string, delimiter: string, errLimit: number, description: string, coleccion:string) {
     const datafileData: Datafile = {
       'id':datafileId,
       'title': title, 
+      'delimiter':delimiter,
       'description': description, 
       'contentPath': null, 
-      'errLimit': null,
+      'errLimit': errLimit,
       'coleccion': coleccion, 
       'workspace': null
     };

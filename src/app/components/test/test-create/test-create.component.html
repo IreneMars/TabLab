@@ -15,14 +15,6 @@
                             </small>
                         </mat-error>
                     </div>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Delimitador" formControlName="delimiter" [class.is-invalid]="invalidDelimiter">
-                        <mat-error>
-                            <small *ngIf="invalidDelimiter" class="text-danger">
-                              Ingrese un delimitador adecuado.
-                            </small>
-                        </mat-error>
-                    </div>
                     <div class="mb-3 ">
                         <label class="col-form-label">Esquema:</label>
                         <select class="form-select form-select-sm" (change)="onEsquemaPicked($event)">

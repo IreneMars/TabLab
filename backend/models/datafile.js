@@ -16,6 +16,10 @@ const datafileSchema = mongoose.Schema({
         type: String,
         required: false
     },
+    delimiter: {
+        type: String,
+        required: false,
+    },
     errLimit: {
         type: Number,
         required: false

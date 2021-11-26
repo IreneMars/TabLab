@@ -132,7 +132,6 @@ export class TestExecuteComponent implements OnInit {
             const testUpdate: any = {
               id: responseData.testUpdates._id,
               title: responseData.testUpdates.title,
-              delimiter: responseData.testUpdates.delimiter,
               reportPath: responseData.testUpdates.reportPath,
               status: responseData.testUpdates.status,
               esquema: responseData.testUpdates.esquema,
@@ -151,7 +150,7 @@ export class TestExecuteComponent implements OnInit {
             }
             this.rawData = responseData.rawData;
             await this.suggestionsService.deleteSuggestionsByDatafile(testUpdate.datafile);
-            await this.suggestionsService.addSuggestionsByDatafile(testUpdate.datafile,this.rawData, testUpdate.delimiter);
+            await this.suggestionsService.addSuggestionsByDatafile(testUpdate.datafile,this.rawData);
             // Updating test with report information
             this.testsService.updateTest(testUpdate).then(async (data:any)=>{
               if (data !==  undefined){
