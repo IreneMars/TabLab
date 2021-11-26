@@ -45,11 +45,11 @@ async function populate(host) {
     console.log("Using host: " + host)
     var dataPath = null;
     if (host == "http://localhost:3000") {
-        dataPath = path.resolve("./populate_dev.json");
+        dataPath = "./backend/populate_dev.json";
     } else if (host == "https://tablab-app-prepro.herokuapp.com") {
-        dataPath = path.resolve("./populate_prepro.json");
+        dataPath = "./populate_prepro.json";
     } else {
-        dataPath = path.resolve("./populate_prod.json");
+        dataPath = "./populate_prod.json";
     }
     const rawData = fs.readFileSync(dataPath);
     const populate_json_data = JSON.parse(rawData);
