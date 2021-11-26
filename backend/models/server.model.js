@@ -64,6 +64,9 @@ class Server {
     }
 
     routes() {
+        this.app.use('/api/status/', function(req, res, next) {
+            res.sendStatus(200);
+        });
         this.app.use("/api/auth", require('../routes/auth'));
         this.app.use("/api/users", require('../routes/users'));
         this.app.use("/api/workspaces", require('../routes/workspaces'));

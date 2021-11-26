@@ -9,8 +9,8 @@
         "lint": "ng lint",
         "e2e": "ng e2e",
         "start:server": "nodemon server.js",
-        "heroku-postbuild": "ng build --prod --configuration ${configuration}"
-        "populate": "node ./backend/populate.js",
+        "heroku-postbuild": "ng build --prod --configuration ${configuration}",
+        "populate": "node ./backend/populate.js"
     },
     "private": true,
     "dependencies": {

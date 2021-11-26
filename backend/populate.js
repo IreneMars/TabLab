@@ -292,23 +292,30 @@ async function populate(host) {
         reports.errored_models.push({ "Suggestion": err });
     }
 
-    fs.readdir(path.join("./uploads/datafiles"), (err, files) => {
-        console.log("Cleaning and populating uploads/datafiles folder")
-        if (err) console.log(err);
+    fs.readdir(path.join("./assets/datafiles"), (err, files) => {
+        console.log("Uploading files from assets/datafiles folder")
+        if (err) {
+            console.log(err);
+        }
+        if (files.length === 0) {
+            console.log("There are no files to upload!")
+        } else {
+            for (var file of files) {
+                const fileName = file;
+                //eliminamos el file del directorio
+                if (fs.existsSync("./uploads/datafiles/" + fileName)) {
+                    fs.unlink(path.join(path.join("./uploads/datafiles"), file), err => {
+                        if (err) throw err;
+                    });
 
-        for (var file of files) {
-            const fileName = file;
-            //eliminamos el file del directorio
-            fs.unlink(path.join(path.join("./uploads/datafiles"), file), err => {
-                if (err) throw err;
-            });
-            // lo copiamos de assets (si existe) y lo pegamos en el directorio del que lo eliminamos anteriormente
-            if (host == "http://localhost:3000") {
-                if (fs.existsSync("./assets/" + fileName)) {
+                }
+                // lo copiamos de assets (si existe) y lo pegamos en el directorio del que lo eliminamos anteriormente
+                if (host == "http://localhost:3000") {
                     fs.copyFile("./assets/" + fileName, "./uploads/datafiles/" + fileName, function(err) {
                         if (err) throw err
                         console.log('Successfully copied!')
                     })
+
                 }
             }
         }
@@ -376,7 +383,15 @@ async function populate(host) {
     return reports;
 };
 
-
+function isDirEmpty(dirname) {
+    return fs.promises.readdir(dirname)
+        .then(files => {
+            return files.length === 0;
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
 //"https://tablab-app.herokuapp.com"
 //"http://localhost:3000"
 //"https://tablab-app-prepro.herokuapp.com"
