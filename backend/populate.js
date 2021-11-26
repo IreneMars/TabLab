@@ -45,7 +45,7 @@ async function populate(host) {
     console.log("Using host: " + host)
     var dataPath = null;
     if (host == "http://localhost:3000") {
-        dataPath = "./backend/populate_dev.json";
+        dataPath = "./populate_dev.json";
     } else if (host == "https://tablab-app-prepro.herokuapp.com") {
         dataPath = "./populate_prepro.json";
     } else {
@@ -293,105 +293,114 @@ async function populate(host) {
     }
 
     fs.readdir(path.join("./assets/datafiles"), (err, files) => {
-        console.log("Uploading files from assets/datafiles folder")
-        if (err) {
-            console.log(err);
-        }
-        if (files.length === 0) {
-            console.log("There are no files to upload!")
-        } else {
-            for (var file of files) {
-                const fileName = file;
-                //eliminamos el file del directorio
-                if (fs.existsSync("./uploads/datafiles/" + fileName)) {
-                    fs.unlink(path.join(path.join("./uploads/datafiles"), file), err => {
-                        if (err) throw err;
-                    });
-
-                }
-                // lo copiamos de assets (si existe) y lo pegamos en el directorio del que lo eliminamos anteriormente
-                if (host == "http://localhost:3000") {
-                    fs.copyFile("./assets/" + fileName, "./uploads/datafiles/" + fileName, function(err) {
-                        if (err) throw err
-                        console.log('Successfully copied!')
-                    })
-
+        console.log("Uploading files from assets/datafiles folder...")
+        try {
+            if (err) {
+                console.log(err);
+            } else {
+                if (files.length === 0) {
+                    console.log("There are no files to upload!")
+                } else {
+                    for (var file of files) {
+                        //eliminamos el file del directorio si existe
+                        if (fs.existsSync("./uploads/datafiles/" + file)) {
+                            fs.unlinkSync(path.join(path.join("./uploads/datafiles"), file));
+                            console.log(`Successfully deleted ${file}!`)
+                        }
+                        // lo copiamos de assets y lo pegamos en el directorio del que lo eliminamos anteriormente
+                        if (host == "http://localhost:3000") {
+                            fs.copyFileSync("./assets/datafiles/" + file, "./uploads/datafiles/" + file);
+                            console.log(`Successfully copied ${file}!`)
+                        }
+                    }
                 }
             }
-        }
-    });
-
-    fs.readdir(path.join("./uploads/esquemas"), (err, files) => {
-        console.log("Cleaning and populating uploads/esquemas folder")
-        if (err) console.log(err);
-
-        for (var file of files) {
-            const fileName = file;
-            fs.unlink(path.join(path.join("./uploads/esquemas"), file), err => {
-                if (err) throw err;
-            });
-            if (host == "http://localhost:3000") {
-                if (fs.existsSync("./assets/" + fileName)) {
-                    fs.copyFile("./assets/" + fileName, "./uploads/esquemas/" + fileName, function(err) {
-                        if (err) throw err
-                        console.log('Successfully copied!')
-                    })
-                }
-            }
+        } catch (err) {
+            console.log("Error uploading files from assets/datafiles folder: " + err)
         }
     });
 
-    fs.readdir(path.join("./uploads/users"), (err, files) => {
-        console.log("Cleaning and populating uploads/users folder")
-        if (err) console.log(err);
-
-        for (var file of files) {
-            const fileName = file;
-            fs.unlink(path.join(path.join("./uploads/users"), file), err => {
-                if (err) throw err;
-            });
-            if (host == "http://localhost:3000") {
-                if (fs.existsSync("./assets/" + fileName)) {
-                    fs.copyFile("./assets/" + fileName, "./uploads/users/" + fileName, function(err) {
-                        if (err) throw err
-                        console.log('Successfully copied!')
-                    })
+    fs.readdir(path.join("./assets/esquemas"), (err, files) => {
+        console.log("Uploading files from assets/esquemas folder...")
+        try {
+            if (err) {
+                console.log(err);
+            } else {
+                if (files.length === 0) {
+                    console.log("There are no files to upload!")
+                } else {
+                    for (var file of files) {
+                        if (fs.existsSync("./uploads/esquemas/" + file)) {
+                            fs.unlinkSync(path.join(path.join("./uploads/esquemas"), file));
+                            console.log(`Successfully deleted ${file}!`)
+                        }
+                        if (host == "http://localhost:3000") {
+                            fs.copyFileSync("./assets/esquemas/" + file, "./uploads/esquemas/" + file);
+                            console.log(`Successfully copied ${file}!`)
+                        }
+                    }
                 }
             }
+        } catch (err) {
+            console.log("Error uploading files from assets/esquemas folder: " + err)
         }
     });
-    fs.readdir(path.join("./output"), (err, files) => {
-        console.log("Cleaning and populating output folder")
-        if (err) console.log(err);
 
-        for (var file of files) {
-            const fileName = file;
-            fs.unlink(path.join(path.join("./output"), file), err => {
-                if (err) throw err;
-            });
-            if (host == "http://localhost:3000") {
-                if (fs.existsSync("./assets/" + fileName)) {
-                    fs.copyFile("./assets/" + fileName, "./output/" + fileName, function(err) {
-                        if (err) throw err
-                        console.log('Successfully copied!')
-                    })
+    fs.readdir(path.join("./assets/users"), (err, files) => {
+        console.log("Uploading files from assets/users folder...")
+        try {
+            if (err) {
+                console.log(err);
+            } else {
+                if (files.length === 0) {
+                    console.log("There are no files to upload!")
+                } else {
+                    for (var file of files) {
+                        if (fs.existsSync("./uploads/users/" + file)) {
+                            fs.unlinkSync(path.join(path.join("./uploads/users"), file));
+                            console.log(`Successfully deleted ${file}!`)
+                        }
+                        if (host == "http://localhost:3000") {
+                            fs.copyFileSync("./assets/users/" + file, "./uploads/users/" + file);
+                            console.log(`Successfully copied ${file}!`)
+                        }
+                    }
                 }
             }
+        } catch (err) {
+            console.log("Error uploading files from assets/users folder: " + err)
+        }
+    });
+
+    fs.readdir(path.join("./assets/reports"), (err, files) => {
+        console.log("Uploading files from assets/reports folder...")
+        try {
+            if (err) {
+                console.log(err);
+            } else {
+                if (files.length === 0) {
+                    console.log("There are no files to upload!")
+                } else {
+                    for (var file of files) {
+                        if (fs.existsSync("./output/" + file)) {
+                            fs.unlinkSync(path.join(path.join("./output"), file));
+                            console.log(`Successfully deleted ${file}!`)
+                        }
+                        if (host == "http://localhost:3000") {
+                            fs.copyFileSync("./assets/reports/" + file, "./output/" + file);
+                            console.log(`Successfully copied ${file}!`)
+                        }
+                    }
+                }
+            }
+        } catch (err) {
+            console.log("Error uploading files from assets/reports folder: " + err)
         }
     });
     console.log("Fin")
     return reports;
 };
 
-function isDirEmpty(dirname) {
-    return fs.promises.readdir(dirname)
-        .then(files => {
-            return files.length === 0;
-        })
-        .catch(err => {
-            console.log(err);
-        });
-}
 //"https://tablab-app.herokuapp.com"
 //"http://localhost:3000"
 //"https://tablab-app-prepro.herokuapp.com"
