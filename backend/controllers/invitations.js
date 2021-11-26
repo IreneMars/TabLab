@@ -49,7 +49,6 @@ exports.checkPendingInvitations = async(req, res, next) => {
     try {
         const invitations = await Invitation.find({ receiver: current_user_id, status: 'pending' });
         var pendingInvitations = false;
-        console.log(invitations)
         if (invitations.length > 0) {
             pendingInvitations = true;
         }
