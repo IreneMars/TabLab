@@ -17,5 +17,6 @@ jobs:
         provider: heroku
         api_key: $HEROKU_AUTH_TOKEN
         app: tablab-app-prepro
+        on: prepro
     - stage: API tests
       script: npm run test-prepro
