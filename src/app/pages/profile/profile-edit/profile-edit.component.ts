@@ -49,8 +49,8 @@ export class ProfileEditComponent implements OnInit{
           };
           
           this.userForm = new FormGroup({ 
-            'username': new FormControl(null, {validators: [Validators.minLength(4)]}), 
-            'name': new FormControl(null, {validators: [Validators.minLength(4)]}), 
+            'username': new FormControl(null, {validators: [Validators.minLength(4), Validators.maxLength(32)]}), 
+            'name': new FormControl(null, {validators: [Validators.minLength(4), Validators.maxLength(32)]}), 
             'photo': new FormControl(null, {asyncValidators: [mimeType]}) 
           });
           this.userForm.reset({

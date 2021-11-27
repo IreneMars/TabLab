@@ -13,6 +13,8 @@ const activitySchema = mongoose.Schema({
     workspaceTitle: {
         type: String,
         required: [true, 'Workspace title is mandatory'],
+        minLength: 1,
+        maxLength: 100
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,
@@ -22,6 +24,8 @@ const activitySchema = mongoose.Schema({
     authorName: {
         type: String,
         required: [true, 'Author name is mandatory'],
+        minLength: 4,
+        maxLength: 32
     },
     coleccion: {
         type: mongoose.Schema.Types.ObjectId,
@@ -31,6 +35,8 @@ const activitySchema = mongoose.Schema({
     coleccionTitle: {
         type: String,
         required: false,
+        minLength: 1,
+        maxLength: 100
     },
     datafile: {
         type: mongoose.Schema.Types.ObjectId,
@@ -39,7 +45,9 @@ const activitySchema = mongoose.Schema({
     },
     datafileTitle: {
         type: String,
-        required: false
+        required: false,
+        minLength: 1,
+        maxLength: 100
     },
     creationMoment: {
         type: String,

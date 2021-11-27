@@ -69,9 +69,9 @@ import { UsersService } from '../../../services/users.service';
 
   createPassForm() {
     this.passForm = this.formBuilder.group({
-    actualPass : ['', [Validators.required, Validators.minLength(4)]],
-    newPass : ['', [Validators.required, Validators.minLength(4)]],
-    repeatPass : ['', [Validators.required, Validators.minLength(4)]]
+    actualPass : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
+    newPass : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
+    repeatPass : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]]
     });
   }
 
