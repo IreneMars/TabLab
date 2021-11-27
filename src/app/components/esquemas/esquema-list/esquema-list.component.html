@@ -18,7 +18,7 @@
             <button type="button" class="btn btn-outline-primary btn-sm" disabled *ngIf="isAdding">
               Añadir esquema <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </button>
-            <app-esquema-create [(isSaving)]="isSaving" [(isAdding)]="isAdding" [(esquemas)]="esquemas" [datafile]="datafile" [workspaceId]="workspaceId" [esquema]="esquema" [esquemaContent]="esquemaContent" [esquemaForm]="esquemaForm" (esquemaChange)="setEsquema($event)"></app-esquema-create>
+            <app-esquema-create [(isSaving)]="isSaving" [(isAdding)]="isAdding" [esquemas]="esquemas" [datafile]="datafile" [workspaceId]="workspaceId" [(esquema)]="esquema" [esquemaContent]="esquemaContent" [esquemaForm]="esquemaForm"></app-esquema-create>
         </div>
     </div>
 </div>

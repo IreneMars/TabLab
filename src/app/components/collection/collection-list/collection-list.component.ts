@@ -40,9 +40,7 @@ export class CollectionListComponent implements OnInit{
     // Collections and Orphaned Datafiles
     this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
     this.collectionsService.getCollectionUpdateListener().subscribe(collectionData=>{
-      console.log("Colecciones")
       this.collections = collectionData.collections;
-      console.log(this.collections)
       this.orphanedDatafiles = collectionData.orphanedDatafiles;
     });
   }
@@ -66,15 +64,17 @@ export class CollectionListComponent implements OnInit{
     .then(response=>{
       // Collections
       this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-      this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: Collection[]})=>{
-        this.collections=collectionData.collections;
-        // Activities
-        this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
-        this.isDeleting = false;
-      }); 
+      // Activities
+      this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+      this.isDeleting = false;   
     })
     .catch(err=>{
       console.log("Error on onDelete method: "+err.message);
+      // Collections
+      this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+      // Activities
+      this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+      this.isDeleting = false;  
     });
 
   }

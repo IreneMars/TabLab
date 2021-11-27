@@ -27,7 +27,7 @@ export class WorkspaceListComponent implements OnInit {
   displayedColumns         : string[] = ['title', 'description', 'creationMoment', 'users'];
   workspaces               : Workspace[] = [];
   totalWorkspaces          : number = 0;
-  workspacesPerPage        : number = 2;
+  workspacesPerPage        : number = 4;
   currentPage              : number = 1;
   dataSource               : any = null;
   pageSizeOptions          : number[] = [1, 2, 5, 10];

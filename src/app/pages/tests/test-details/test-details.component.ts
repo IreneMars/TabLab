@@ -182,8 +182,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
                         const configAux = {...config, extraParamsStr};
                         this.formattedConfigs.push(configAux);
                       }
-                      
-                      
                       // Suggestions
                       this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
                       this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
@@ -191,7 +189,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
                         this.isLoading = false;
                         this.edit = false;
                       });
-                      
                     });
                   }
                 });
@@ -346,9 +343,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
       this.fileContentForm.patchValue({fileContent: datafileData.content});
       // Suggestions
       this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
-      this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
-        this.suggestions = suggestionData.suggestions;
-      });
     });
   }
   
@@ -371,9 +365,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
         this.fileContentForm.patchValue({fileContent: datafileData.content});
         // Suggestions
         this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
-        this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
-          this.suggestions = suggestionData.suggestions;
-        });
       });
     }
   }

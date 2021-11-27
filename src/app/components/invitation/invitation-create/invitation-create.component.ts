@@ -17,7 +17,6 @@ export class InvitationCreateComponent implements OnInit{
   invitationAdded             : boolean = false;
 
   @Input() workspaceId        : string;
-  invalidEmail                : boolean = false;
   invitationForm              : FormGroup;
   @Input() create             : any;
   @Input()  invitations       : Invitation[];
@@ -40,7 +39,6 @@ export class InvitationCreateComponent implements OnInit{
     this.userIsAuthenticated = this.authService.getIsAuth();
     if (this.userIsAuthenticated){
       this.userId = this.authService.getUserId();
-      console.log("Workspace Edit")
 
       this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData=>{
           this.personal = workspaceData.workspace.mandatory;
@@ -49,10 +47,17 @@ export class InvitationCreateComponent implements OnInit{
     }
   }
 
+  get invalidEmail() {
+    return this.invitationForm.get('email').invalid && this.invitationForm.get('email').touched;
+  }
+
+  get pristineInvitation() {
+    return this.invitationForm.get('email').pristine;
+  }
+
   onInvite() {
     this.invitationAdded = false;
     if (this.invitationForm.invalid){
-    this.invalidEmail = true;
     return Object.values(this.invitationForm.controls).forEach(control => {
       if (control instanceof FormGroup) {
         
@@ -73,7 +78,7 @@ export class InvitationCreateComponent implements OnInit{
           this.invitationAdded = true;
         })
         .catch(err=>{
-          console.log("Error on onInvite method: "+err.message.message);
+          console.log("Error on onInvite method: "+err.message);
         });
     }
     this.invitationForm.reset();

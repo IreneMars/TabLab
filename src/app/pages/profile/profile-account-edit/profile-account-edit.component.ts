@@ -69,9 +69,9 @@ import { UsersService } from '../../../services/users.service';
 
   createPassForm() {
     this.passForm = this.formBuilder.group({
-    actualPass : ['', [Validators.required, Validators.minLength(4)]],
-    newPass : ['', [Validators.required, Validators.minLength(4)]],
-    repeatPass : ['', [Validators.required, Validators.minLength(4)]]
+    actualPass : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
+    newPass : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
+    repeatPass : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]]
     });
   }
 
@@ -136,7 +136,10 @@ import { UsersService } from '../../../services/users.service';
       this.savedEmail = true;
     })
     .catch(err=>{
-      console.log("Error on onSaveEmail() method: "+err.message.message);
+      console.log("Error on onSaveEmail() method: "+err.message);
+      this.emailForm.reset({
+        email: this.user.email
+      });
       this.isSavingEmail = false;
     });
   }
@@ -165,9 +168,10 @@ import { UsersService } from '../../../services/users.service';
       this.savedPassword = true;
     })
     .catch(err=>{
-      console.log("Error on onSavePass() method: "+err.message.message);
+      console.log("Error on onSavePass() method: "+err.message);
       this.isSavingPassword = false;
-
+      this.passForm.reset();
+      this.isSavingPassword = false;
     });
   }
 
@@ -177,7 +181,7 @@ import { UsersService } from '../../../services/users.service';
       this.authService.logout();
       window.location.reload();
 
-    }).catch( err => {
+    }).catch(err=>{
       console.log("Error on onDeleteAccount method: "+err.message);
     });
     

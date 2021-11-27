@@ -20,7 +20,6 @@ export class CollectionCreateComponent implements OnInit{
   @Input() collections            : any[];
 
   @Input() activities             : Activity[];
-  @Output() activitiesChange      : EventEmitter<Activity[]> = new EventEmitter();
   @Input() editMode               : boolean;
   @Output() editModeChange        : any = new EventEmitter();
   @Input()  close                 : boolean;
@@ -83,14 +82,24 @@ export class CollectionCreateComponent implements OnInit{
         // Activities
         this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
         this.isSaving = false;
+        this.collectionForm.reset();   
         this.editModeChange.emit(false);
         this.hideButtonChange.emit(false);
-        this.collectionForm.reset();   
         this.editCollectionChange.emit(null);
         this.collectionIndexChange.emit(null);      
       })      
       .catch(err=>{
         console.log("Error on onSave() (edit mode) method: "+err.message);
+        // Collections
+        this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+        // Activities
+        this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+        this.isSaving = false;
+        this.collectionForm.reset();
+        this.editModeChange.emit(false);
+        this.hideButtonChange.emit(false);
+        this.editCollectionChange.emit(null);
+        this.collectionIndexChange.emit(null); 
       });
     } else {
       this.collectionsService.addCollection(values.title, this.workspaceId)
@@ -100,13 +109,19 @@ export class CollectionCreateComponent implements OnInit{
         // Activities
         this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
         this.isSaving = false;
-        this.hideButtonChange.emit(false);
         this.collectionForm.reset();
+        this.hideButtonChange.emit(false);
         this.editCollectionChange.emit(null);
         this.collectionIndexChange.emit(null);
       })
       .catch(err=>{
         console.log("Error on onSave() (create mode) method: "+err.message);
+        // Collections
+        this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+        // Activities
+        this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+        this.isSaving = false;
+        this.collectionForm.reset();
       });
     }
 

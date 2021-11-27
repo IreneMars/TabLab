@@ -17,7 +17,6 @@ export class GlobalConfigurationEditComponent implements OnInit{
   globalConfigurationEditForm  : FormGroup;
   @Input() globalConfig        : GlobalConfiguration;
   @Input() edit                : boolean;
-  @Output() globalConfigChange : EventEmitter<GlobalConfiguration> = new EventEmitter<GlobalConfiguration>();
   @Output() editChange         : EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(public globalConfigurationService: GlobalConfigurationService, public authService: AuthService,  private router: Router,
@@ -69,7 +68,6 @@ export class GlobalConfigurationEditComponent implements OnInit{
     this.globalConfigurationService.getGlobalConfig().subscribe((globalConfigData)=>{
       this.globalConfigurationEditForm.reset();
       this.isSaving = false;
-      this.globalConfigChange.emit(globalConfigData.globalConfiguration)
       this.editChange.emit(false);
     });
   }

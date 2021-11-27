@@ -1,10 +1,10 @@
 {
     "users": [
-        { "_id": "60ad88d2a74d2e58cc611a31", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2a$10$M4/WzOyXzntqUDAm8NDd4OEQ1NrrtrIzOMWzHWBM2X6wf/AgXaCy6", "name": "irene", "photo": "http://localhost:3000/users/jelly.png", "role": "ADMIN", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb2", "username": "daniel", "email": "daniel@gmail.com", "password": "$2y$10$IfcujEFKlz5jS/18OT5bRuVC2vFuO7UNaRvQiF3.zVf04i6vBfG8q", "name": "daniel", "photo": "http://localhost:3000/users/squid.png", "role": "USER", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb3", "username": "pedro", "email": "pedro@gmail.com", "password": "$2y$10$eZYlwcXLX5wrcWUXBXxbwu0C2zKthDQfZvlbQ80UF3tbB/D6RO/OC", "name": "pedro", "photo": "http://localhost:3000/users/palm-tree.png", "role": "USER", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb4", "username": "sandra", "email": "sandra@gmail.com", "password": "$2y$10$.BkuJC6g1TrW8os.wyFFN.BjIZpgmkYMa9oigdecjU2DenFJUi6.6", "name": "sandra", "photo": "http://localhost:3000/users/beans.png", "role": "USER", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb5", "username": "walo", "email": "walo@gmail.com", "password": "$2y$10$EUkpNODE0JPMPdJIEVyJrejWOrRVRH9usY4pcppOCY9dIWUSf.3IC", "name": "walo", "photo": "http://localhost:3000/users/duck.png", "role": "USER", "status": "true", "google": "false" }
+        { "_id": "60ad88d2a74d2e58cc611a31", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2a$10$M4/WzOyXzntqUDAm8NDd4OEQ1NrrtrIzOMWzHWBM2X6wf/AgXaCy6", "name": "irene", "photo": "http://localhost:3000/users/jelly.png", "role": "ADMIN", "status": true, "google": false },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb2", "username": "daniel", "email": "daniel@gmail.com", "password": "$2y$10$IfcujEFKlz5jS/18OT5bRuVC2vFuO7UNaRvQiF3.zVf04i6vBfG8q", "name": "daniel", "photo": "http://localhost:3000/users/squid.png", "role": "USER", "status": true, "google": false },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb3", "username": "pedro", "email": "pedro@gmail.com", "password": "$2y$10$eZYlwcXLX5wrcWUXBXxbwu0C2zKthDQfZvlbQ80UF3tbB/D6RO/OC", "name": "pedro", "photo": "http://localhost:3000/users/palm-tree.png", "role": "USER", "status": true, "google": false },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb4", "username": "sandra", "email": "sandra@gmail.com", "password": "$2y$10$.BkuJC6g1TrW8os.wyFFN.BjIZpgmkYMa9oigdecjU2DenFJUi6.6", "name": "sandra", "photo": "http://localhost:3000/users/beans.png", "role": "USER", "status": true, "google": false },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb5", "username": "walo", "email": "walo@gmail.com", "password": "$2y$10$EUkpNODE0JPMPdJIEVyJrejWOrRVRH9usY4pcppOCY9dIWUSf.3IC", "name": "walo", "photo": "http://localhost:3000/users/duck.png", "role": "USER", "status": true, "google": false }
     ],
 
     "terminals": [
@@ -16,18 +16,18 @@
     ],
 
     "workspaces": [
-        { "_id": "60aeaf40d0e8477348250ac9", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1624626060000", "mandatory": "true", "owner": "60ad88d2a74d2e58cc611a31" },
-        { "_id": "619e23c981adff301791f1f1", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1624788300000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb2" },
-        { "_id": "619e23cd9fbc17bde868fcd3", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1625131920000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb3" },
-        { "_id": "619e23d00015345d7e0ab8eb", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1625508240000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb4" },
-        { "_id": "619e23d468cd44a81f1ea98e", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1625506680000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb5" },
+        { "_id": "60aeaf40d0e8477348250ac9", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1624626060000", "mandatory": true, "owner": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "619e23c981adff301791f1f1", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1624788300000", "mandatory": true, "owner": "60ae10e9c2d2fe5c48e6eeb2" },
+        { "_id": "619e23cd9fbc17bde868fcd3", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1625131920000", "mandatory": true, "owner": "60ae10e9c2d2fe5c48e6eeb3" },
+        { "_id": "619e23d00015345d7e0ab8eb", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1625508240000", "mandatory": true, "owner": "60ae10e9c2d2fe5c48e6eeb4" },
+        { "_id": "619e23d468cd44a81f1ea98e", "title": "Espacio de trabajo personal", "description": "Este es un espacio de trabajo personal.", "creationMoment": "1625506680000", "mandatory": true, "owner": "60ae10e9c2d2fe5c48e6eeb5" },
 
-        { "_id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal (irene)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1626873300000", "mandatory": "false", "owner": "60ad88d2a74d2e58cc611a31" },
-        { "_id": "60aebafbb83c905694cd191d", "title": "Espacio de trabajo normal (irene) 2", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1627295460000", "mandatory": "false", "owner": "60ad88d2a74d2e58cc611a31" },
-        { "_id": "60b363c81e7c4e4ff4e724a0", "title": "Espacio de trabajo normal (dani)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1627918800000", "mandatory": "false", "owner": "60ae10e9c2d2fe5c48e6eeb2" },
-        { "_id": "619e27ce6e946ce6c15133d5", "title": "Espacio de trabajo normal (pedro)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1627920060000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb3" },
-        { "_id": "619e27edab3d09d9895a0f5b", "title": "Espacio de trabajo normal (sandra)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1630832700000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb4" },
-        { "_id": "619e27f28dbfea5c5e0b2017", "title": "Espacio de trabajo normal (walo)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1632162120000", "mandatory": "true", "owner": "60ae10e9c2d2fe5c48e6eeb5" }
+        { "_id": "60aebafbb83c905694cd191c", "title": "Espacio de trabajo normal (irene)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1626873300000", "mandatory": false, "owner": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "60aebafbb83c905694cd191d", "title": "Espacio de trabajo normal (irene) 2", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1627295460000", "mandatory": false, "owner": "60ad88d2a74d2e58cc611a31" },
+        { "_id": "60b363c81e7c4e4ff4e724a0", "title": "Espacio de trabajo normal (dani)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1627918800000", "mandatory": false, "owner": "60ae10e9c2d2fe5c48e6eeb2" },
+        { "_id": "619e27ce6e946ce6c15133d5", "title": "Espacio de trabajo normal (pedro)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1627920060000", "mandatory": true, "owner": "60ae10e9c2d2fe5c48e6eeb3" },
+        { "_id": "619e27edab3d09d9895a0f5b", "title": "Espacio de trabajo normal (sandra)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1630832700000", "mandatory": true, "owner": "60ae10e9c2d2fe5c48e6eeb4" },
+        { "_id": "619e27f28dbfea5c5e0b2017", "title": "Espacio de trabajo normal (walo)", "description": "Este es un espacio de trabajo normal.", "creationMoment": "1632162120000", "mandatory": true, "owner": "60ae10e9c2d2fe5c48e6eeb5" }
     ],
 
     "roles": [

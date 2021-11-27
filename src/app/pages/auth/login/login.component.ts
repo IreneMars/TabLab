@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.loginForm = this.formBuilder.group({
-      username       : ['', [Validators.required, Validators.minLength(4)]],
-      password       : ['', Validators.required],
+      username       : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
+      password       : ['', Validators.required, Validators.minLength(4), Validators.maxLength(32)],
       rememberme     : [false]
     });
   }

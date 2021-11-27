@@ -1,192 +1,440 @@
-2021-11-27 23:26:04,405 [MainThread  ] [INFO ]  Logs started with level INFO
-2021-11-27 23:26:04,405 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
-2021-11-27 23:26:04,405 [MainThread  ] [INFO ]  Delimiter: |
-2021-11-27 23:26:04,405 [MainThread  ] [INFO ]  Esquema: 
-2021-11-27 23:26:04,405 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-27 23:26:04,405 [MainThread  ] [INFO ]  Configurations:
-2021-11-27 23:26:04,405 [MainThread  ] [INFO ]  [{'code': ''}]
-2021-11-27 23:26:04,405 [MainThread  ] [INFO ]  null
-2021-11-27 23:26:04,406 [MainThread  ] [INFO ]  File extension: csv
-2021-11-27 23:26:04,545 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-27 23:26:04,671 [MainThread  ] [INFO ]  Schema validation result created.
-2021-11-27 23:26:04,671 [MainThread  ] [INFO ]  Saving report to file...
-2021-11-27 23:26:04,671 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+2021-11-27 16:40:37,819 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 16:40:37,819 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 16:40:37,819 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 16:40:37,819 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 16:40:37,819 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:40:37,819 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 16:40:37,819 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 16:40:37,819 [MainThread  ] [INFO ]  null
+2021-11-27 16:40:38,272 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 16:40:38,272 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 16:40:38,272 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 16:40:38,272 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 16:40:38,272 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:40:38,272 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 16:40:38,272 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 16:40:38,272 [MainThread  ] [INFO ]  null
+2021-11-27 16:40:38,273 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 16:40:38,600 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:40:38,683 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 16:40:38,683 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 16:40:38,684 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
 
-2021-11-27 23:26:04,671 [MainThread  ] [DEBUG]  Reducing report 1 ...
-2021-11-27 23:26:04,671 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+2021-11-27 16:40:38,684 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 16:40:38,684 [MainThread  ] [INFO ]  Validation finished and summarized report created.
 
-2021-11-27 23:26:04,672 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
-2021-11-27 23:26:04,672 [MainThread  ] [INFO ]  Report summary:
-2021-11-27 23:26:04,672 [MainThread  ] [INFO ]    Validation time: 0.125 seconds
-2021-11-27 23:26:04,672 [MainThread  ] [INFO ]    Validation errors found:
-2021-11-27 23:26:04,672 [MainThread  ] [INFO ]     � Global errors found in report:
-2021-11-27 23:26:04,672 [MainThread  ] [INFO ]  	   - task-error. Found: 1
-2021-11-27 23:26:04,672 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
-2021-11-27 23:27:45,836 [MainThread  ] [INFO ]  Logs started with level INFO
-2021-11-27 23:27:45,836 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
-2021-11-27 23:27:45,837 [MainThread  ] [INFO ]  Delimiter: |
-2021-11-27 23:27:45,837 [MainThread  ] [INFO ]  Esquema: 
-2021-11-27 23:27:45,837 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-27 23:27:45,837 [MainThread  ] [INFO ]  Configurations:
-2021-11-27 23:27:45,837 [MainThread  ] [INFO ]  [{'code': ''}]
-2021-11-27 23:27:45,837 [MainThread  ] [INFO ]  null
-2021-11-27 23:27:45,837 [MainThread  ] [INFO ]  File extension: csv
-2021-11-27 23:27:45,967 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-27 23:27:46,076 [MainThread  ] [INFO ]  Schema validation result created.
-2021-11-27 23:27:46,076 [MainThread  ] [INFO ]  Saving report to file...
-2021-11-27 23:27:46,077 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+2021-11-27 16:40:38,684 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 16:40:38,684 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 16:40:38,684 [MainThread  ] [INFO ]    Validation time: 0.082 seconds
+2021-11-27 16:40:38,684 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 16:40:38,684 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 16:40:38,684 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 16:40:38,684 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 16:41:33,585 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 16:41:33,585 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 16:41:33,586 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 16:41:33,586 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 16:41:33,586 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:41:33,586 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 16:41:33,586 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-27 16:41:33,586 [MainThread  ] [INFO ]  null
+2021-11-27 16:41:33,586 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 16:41:33,765 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:41:33,844 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 16:41:33,844 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 16:41:33,845 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
 
-2021-11-27 23:27:46,077 [MainThread  ] [DEBUG]  Reducing report 1 ...
-2021-11-27 23:27:46,078 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+2021-11-27 16:41:33,845 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 16:41:33,845 [MainThread  ] [INFO ]  Validation finished and summarized report created.
 
-2021-11-27 23:27:46,078 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
-2021-11-27 23:27:46,078 [MainThread  ] [INFO ]  Report summary:
-2021-11-27 23:27:46,078 [MainThread  ] [INFO ]    Validation time: 0.109 seconds
-2021-11-27 23:27:46,078 [MainThread  ] [INFO ]    Validation errors found:
-2021-11-27 23:27:46,078 [MainThread  ] [INFO ]     � Global errors found in report:
-2021-11-27 23:27:46,078 [MainThread  ] [INFO ]  	   - task-error. Found: 1
-2021-11-27 23:27:46,078 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
-2021-11-27 23:59:11,713 [MainThread  ] [INFO ]  Logs started with level INFO
-2021-11-27 23:59:11,713 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
-2021-11-27 23:59:11,713 [MainThread  ] [INFO ]  Delimiter: |
-2021-11-27 23:59:11,713 [MainThread  ] [INFO ]  Esquema: 
-2021-11-27 23:59:11,713 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-27 23:59:11,713 [MainThread  ] [INFO ]  Configurations:
-2021-11-27 23:59:11,713 [MainThread  ] [INFO ]  [{'code': ''}]
-2021-11-27 23:59:11,713 [MainThread  ] [INFO ]  null
-2021-11-27 23:59:11,713 [MainThread  ] [INFO ]  File extension: csv
-2021-11-27 23:59:11,828 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-27 23:59:11,929 [MainThread  ] [INFO ]  Schema validation result created.
-2021-11-27 23:59:11,929 [MainThread  ] [INFO ]  Saving report to file...
-2021-11-27 23:59:11,929 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+2021-11-27 16:41:33,845 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 16:41:33,845 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 16:41:33,845 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-27 16:41:33,845 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 16:41:33,845 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 16:41:33,845 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 16:41:33,845 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 16:44:56,139 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 16:44:56,139 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 16:44:56,139 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 16:44:56,139 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 16:44:56,139 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:44:56,139 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 16:44:56,139 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 16:44:56,139 [MainThread  ] [INFO ]  null
+2021-11-27 16:44:56,140 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 16:44:56,323 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:44:56,402 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 16:44:56,402 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 16:44:56,402 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
 
-2021-11-27 23:59:11,929 [MainThread  ] [DEBUG]  Reducing report 1 ...
-2021-11-27 23:59:11,929 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+2021-11-27 16:44:56,403 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 16:44:56,403 [MainThread  ] [INFO ]  Validation finished and summarized report created.
 
-2021-11-27 23:59:11,929 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
-2021-11-27 23:59:11,929 [MainThread  ] [INFO ]  Report summary:
-2021-11-27 23:59:11,929 [MainThread  ] [INFO ]    Validation time: 0.101 seconds
-2021-11-27 23:59:11,929 [MainThread  ] [INFO ]    Validation errors found:
-2021-11-27 23:59:11,929 [MainThread  ] [INFO ]     � Global errors found in report:
-2021-11-27 23:59:11,929 [MainThread  ] [INFO ]  	   - task-error. Found: 1
-2021-11-27 23:59:11,929 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
-2021-11-28 00:02:09,178 [MainThread  ] [INFO ]  Logs started with level INFO
-2021-11-28 00:02:09,194 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
-2021-11-28 00:02:09,194 [MainThread  ] [INFO ]  Delimiter: |
-2021-11-28 00:02:09,194 [MainThread  ] [INFO ]  Esquema: 
-2021-11-28 00:02:09,194 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-28 00:02:09,194 [MainThread  ] [INFO ]  Configurations:
-2021-11-28 00:02:09,194 [MainThread  ] [INFO ]  [{'code': ''}]
-2021-11-28 00:02:09,194 [MainThread  ] [INFO ]  null
-2021-11-28 00:02:09,194 [MainThread  ] [INFO ]  File extension: csv
-2021-11-28 00:02:09,312 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-28 00:02:09,409 [MainThread  ] [INFO ]  Schema validation result created.
-2021-11-28 00:02:09,409 [MainThread  ] [INFO ]  Saving report to file...
-2021-11-28 00:02:09,409 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+2021-11-27 16:44:56,403 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 16:44:56,403 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 16:44:56,403 [MainThread  ] [INFO ]    Validation time: 0.079 seconds
+2021-11-27 16:44:56,403 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 16:44:56,403 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 16:44:56,403 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 16:44:56,403 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 16:44:56,875 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 16:44:56,875 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 16:44:56,875 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 16:44:56,875 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 16:44:56,875 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:44:56,875 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 16:44:56,875 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 16:44:56,875 [MainThread  ] [INFO ]  null
+2021-11-27 16:44:56,875 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 16:44:57,053 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:44:57,132 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 16:44:57,132 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 16:44:57,133 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
 
-2021-11-28 00:02:09,409 [MainThread  ] [DEBUG]  Reducing report 1 ...
-2021-11-28 00:02:09,409 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+2021-11-27 16:44:57,133 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 16:44:57,133 [MainThread  ] [INFO ]  Validation finished and summarized report created.
 
-2021-11-28 00:02:09,409 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
-2021-11-28 00:02:09,409 [MainThread  ] [INFO ]  Report summary:
-2021-11-28 00:02:09,409 [MainThread  ] [INFO ]    Validation time: 0.097 seconds
-2021-11-28 00:02:09,409 [MainThread  ] [INFO ]    Validation errors found:
-2021-11-28 00:02:09,409 [MainThread  ] [INFO ]     � Global errors found in report:
-2021-11-28 00:02:09,409 [MainThread  ] [INFO ]  	   - task-error. Found: 1
-2021-11-28 00:02:09,409 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
-2021-11-28 00:07:40,064 [MainThread  ] [INFO ]  Logs started with level INFO
-2021-11-28 00:07:40,065 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
-2021-11-28 00:07:40,065 [MainThread  ] [INFO ]  Delimiter: |
-2021-11-28 00:07:40,065 [MainThread  ] [INFO ]  Esquema: 
-2021-11-28 00:07:40,065 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-28 00:07:40,065 [MainThread  ] [INFO ]  Configurations:
-2021-11-28 00:07:40,065 [MainThread  ] [INFO ]  [{'code': ''}]
-2021-11-28 00:07:40,065 [MainThread  ] [INFO ]  null
-2021-11-28 00:07:40,065 [MainThread  ] [INFO ]  File extension: csv
-2021-11-28 00:07:40,196 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-28 00:07:40,305 [MainThread  ] [INFO ]  Schema validation result created.
-2021-11-28 00:07:40,305 [MainThread  ] [INFO ]  Saving report to file...
-2021-11-28 00:07:40,305 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+2021-11-27 16:44:57,133 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 16:44:57,133 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 16:44:57,133 [MainThread  ] [INFO ]    Validation time: 0.079 seconds
+2021-11-27 16:44:57,133 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 16:44:57,133 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 16:44:57,133 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 16:44:57,133 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 16:47:31,593 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 16:47:31,593 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 16:47:31,593 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 16:47:31,593 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 16:47:31,593 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:47:31,593 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 16:47:31,593 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 16:47:31,593 [MainThread  ] [INFO ]  null
+2021-11-27 16:47:31,593 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 16:47:31,775 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:47:31,854 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 16:47:31,854 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 16:47:31,854 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
 
-2021-11-28 00:07:40,305 [MainThread  ] [DEBUG]  Reducing report 1 ...
-2021-11-28 00:07:40,305 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+2021-11-27 16:47:31,854 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 16:47:31,854 [MainThread  ] [INFO ]  Validation finished and summarized report created.
 
-2021-11-28 00:07:40,305 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
-2021-11-28 00:07:40,305 [MainThread  ] [INFO ]  Report summary:
-2021-11-28 00:07:40,305 [MainThread  ] [INFO ]    Validation time: 0.109 seconds
-2021-11-28 00:07:40,305 [MainThread  ] [INFO ]    Validation errors found:
-2021-11-28 00:07:40,305 [MainThread  ] [INFO ]     � Global errors found in report:
-2021-11-28 00:07:40,305 [MainThread  ] [INFO ]  	   - task-error. Found: 1
-2021-11-28 00:07:40,306 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
-2021-11-28 00:13:40,657 [MainThread  ] [INFO ]  Logs started with level INFO
-2021-11-28 00:13:40,657 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
-2021-11-28 00:13:40,657 [MainThread  ] [INFO ]  Delimiter: |
-2021-11-28 00:13:40,657 [MainThread  ] [INFO ]  Esquema: 
-2021-11-28 00:13:40,657 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-28 00:13:40,657 [MainThread  ] [INFO ]  Configurations:
-2021-11-28 00:13:40,657 [MainThread  ] [INFO ]  [{'code': ''}]
-2021-11-28 00:13:40,657 [MainThread  ] [INFO ]  null
-2021-11-28 00:13:40,657 [MainThread  ] [INFO ]  File extension: csv
-2021-11-28 00:13:40,804 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-28 00:13:40,917 [MainThread  ] [INFO ]  Schema validation result created.
-2021-11-28 00:13:40,917 [MainThread  ] [INFO ]  Saving report to file...
-2021-11-28 00:13:40,918 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+2021-11-27 16:47:31,854 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 16:47:31,854 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 16:47:31,854 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-27 16:47:31,854 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 16:47:31,856 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 16:47:31,856 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 16:47:31,856 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 16:47:32,289 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 16:47:32,289 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 16:47:32,290 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 16:47:32,290 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 16:47:32,290 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:47:32,290 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 16:47:32,290 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 16:47:32,290 [MainThread  ] [INFO ]  null
+2021-11-27 16:47:32,290 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 16:47:32,466 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:47:32,547 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 16:47:32,547 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 16:47:32,547 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
 
-2021-11-28 00:13:40,918 [MainThread  ] [DEBUG]  Reducing report 1 ...
-2021-11-28 00:13:40,918 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+2021-11-27 16:47:32,548 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 16:47:32,548 [MainThread  ] [INFO ]  Validation finished and summarized report created.
 
-2021-11-28 00:13:40,918 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
-2021-11-28 00:13:40,918 [MainThread  ] [INFO ]  Report summary:
-2021-11-28 00:13:40,918 [MainThread  ] [INFO ]    Validation time: 0.113 seconds
-2021-11-28 00:13:40,918 [MainThread  ] [INFO ]    Validation errors found:
-2021-11-28 00:13:40,918 [MainThread  ] [INFO ]     � Global errors found in report:
-2021-11-28 00:13:40,918 [MainThread  ] [INFO ]  	   - task-error. Found: 1
-2021-11-28 00:13:40,918 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
-2021-11-28 00:26:22,502 [MainThread  ] [INFO ]  Logs started with level INFO
-2021-11-28 00:26:22,503 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
-2021-11-28 00:26:22,503 [MainThread  ] [INFO ]  Delimiter: |
-2021-11-28 00:26:22,503 [MainThread  ] [INFO ]  Esquema: 
-2021-11-28 00:26:22,503 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-28 00:26:22,503 [MainThread  ] [INFO ]  Configurations:
-2021-11-28 00:26:22,503 [MainThread  ] [INFO ]  [{'code': ''}]
-2021-11-28 00:26:22,503 [MainThread  ] [INFO ]  null
-2021-11-28 00:26:22,503 [MainThread  ] [INFO ]  File extension: csv
-2021-11-28 00:26:22,630 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-28 00:26:22,741 [MainThread  ] [INFO ]  Schema validation result created.
-2021-11-28 00:26:22,741 [MainThread  ] [INFO ]  Saving report to file...
-2021-11-28 00:26:22,741 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+2021-11-27 16:47:32,548 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 16:47:32,548 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 16:47:32,548 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-27 16:47:32,548 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 16:47:32,548 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 16:47:32,548 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 16:47:32,548 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 16:56:36,377 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 16:56:36,377 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 16:56:36,377 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 16:56:36,377 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 16:56:36,377 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:56:36,377 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 16:56:36,377 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 16:56:36,377 [MainThread  ] [INFO ]  null
+2021-11-27 16:56:36,378 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 16:56:36,566 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:56:36,647 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 16:56:36,647 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 16:56:36,647 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
 
-2021-11-28 00:26:22,741 [MainThread  ] [DEBUG]  Reducing report 1 ...
-2021-11-28 00:26:22,741 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+2021-11-27 16:56:36,647 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 16:56:36,647 [MainThread  ] [INFO ]  Validation finished and summarized report created.
 
-2021-11-28 00:26:22,741 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
-2021-11-28 00:26:22,741 [MainThread  ] [INFO ]  Report summary:
-2021-11-28 00:26:22,741 [MainThread  ] [INFO ]    Validation time: 0.112 seconds
-2021-11-28 00:26:22,742 [MainThread  ] [INFO ]    Validation errors found:
-2021-11-28 00:26:22,742 [MainThread  ] [INFO ]     � Global errors found in report:
-2021-11-28 00:26:22,742 [MainThread  ] [INFO ]  	   - task-error. Found: 1
-2021-11-28 00:26:22,742 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
-2021-11-28 00:29:04,875 [MainThread  ] [INFO ]  Logs started with level INFO
-2021-11-28 00:29:04,875 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
-2021-11-28 00:29:04,875 [MainThread  ] [INFO ]  Delimiter: |
-2021-11-28 00:29:04,875 [MainThread  ] [INFO ]  Esquema: 
-2021-11-28 00:29:04,875 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-28 00:29:04,875 [MainThread  ] [INFO ]  Configurations:
-2021-11-28 00:29:04,875 [MainThread  ] [INFO ]  [{'code': ''}]
-2021-11-28 00:29:04,875 [MainThread  ] [INFO ]  null
-2021-11-28 00:29:04,875 [MainThread  ] [INFO ]  File extension: csv
-2021-11-28 00:29:05,001 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
-2021-11-28 00:29:05,108 [MainThread  ] [INFO ]  Schema validation result created.
-2021-11-28 00:29:05,108 [MainThread  ] [INFO ]  Saving report to file...
-2021-11-28 00:29:05,109 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+2021-11-27 16:56:36,647 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 16:56:36,647 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 16:56:36,647 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-27 16:56:36,647 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 16:56:36,647 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 16:56:36,647 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 16:56:36,648 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 16:56:37,096 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 16:56:37,096 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 16:56:37,096 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 16:56:37,096 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 16:56:37,096 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:56:37,096 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 16:56:37,096 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-27 16:56:37,096 [MainThread  ] [INFO ]  null
+2021-11-27 16:56:37,096 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 16:56:37,269 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:56:37,348 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 16:56:37,348 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 16:56:37,348 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
 
-2021-11-28 00:29:05,109 [MainThread  ] [DEBUG]  Reducing report 1 ...
-2021-11-28 00:29:05,109 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+2021-11-27 16:56:37,348 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 16:56:37,349 [MainThread  ] [INFO ]  Validation finished and summarized report created.
 
-2021-11-28 00:29:05,109 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
-2021-11-28 00:29:05,109 [MainThread  ] [INFO ]  Report summary:
-2021-11-28 00:29:05,109 [MainThread  ] [INFO ]    Validation time: 0.107 seconds
-2021-11-28 00:29:05,109 [MainThread  ] [INFO ]    Validation errors found:
-2021-11-28 00:29:05,109 [MainThread  ] [INFO ]     � Global errors found in report:
-2021-11-28 00:29:05,109 [MainThread  ] [INFO ]  	   - task-error. Found: 1
-2021-11-28 00:29:05,109 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 16:56:37,349 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 16:56:37,349 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 16:56:37,349 [MainThread  ] [INFO ]    Validation time: 0.078 seconds
+2021-11-27 16:56:37,349 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 16:56:37,349 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 16:56:37,349 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 16:56:37,349 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 16:59:14,098 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 16:59:14,098 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 16:59:14,098 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 16:59:14,098 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 16:59:14,098 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:59:14,098 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 16:59:14,098 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 16:59:14,098 [MainThread  ] [INFO ]  null
+2021-11-27 16:59:14,099 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 16:59:14,282 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:59:14,361 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 16:59:14,361 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 16:59:14,362 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-27 16:59:14,362 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 16:59:14,362 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-27 16:59:14,362 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 16:59:14,362 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 16:59:14,362 [MainThread  ] [INFO ]    Validation time: 0.078 seconds
+2021-11-27 16:59:14,362 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 16:59:14,362 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 16:59:14,362 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 16:59:14,362 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 16:59:14,805 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 16:59:14,805 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 16:59:14,805 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 16:59:14,805 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 16:59:14,805 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:59:14,805 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 16:59:14,805 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-27 16:59:14,806 [MainThread  ] [INFO ]  null
+2021-11-27 16:59:14,806 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 16:59:14,985 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 16:59:15,063 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 16:59:15,063 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 16:59:15,064 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-27 16:59:15,064 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 16:59:15,064 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-27 16:59:15,064 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 16:59:15,064 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 16:59:15,064 [MainThread  ] [INFO ]    Validation time: 0.078 seconds
+2021-11-27 16:59:15,064 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 16:59:15,064 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 16:59:15,064 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 16:59:15,064 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 17:04:24,941 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 17:04:24,942 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 17:04:24,942 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 17:04:24,942 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 17:04:24,942 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:04:24,942 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 17:04:24,942 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-27 17:04:24,942 [MainThread  ] [INFO ]  null
+2021-11-27 17:04:24,942 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 17:04:25,121 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:04:25,201 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 17:04:25,201 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 17:04:25,202 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-27 17:04:25,202 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 17:04:25,202 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-27 17:04:25,202 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 17:04:25,202 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 17:04:25,202 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-27 17:04:25,202 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 17:04:25,202 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 17:04:25,202 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 17:04:25,202 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 17:04:25,650 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 17:04:25,650 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 17:04:25,650 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 17:04:25,650 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 17:04:25,650 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:04:25,650 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 17:04:25,650 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 17:04:25,650 [MainThread  ] [INFO ]  null
+2021-11-27 17:04:25,651 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 17:04:25,826 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:04:25,907 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 17:04:25,908 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 17:04:25,908 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-27 17:04:25,908 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 17:04:25,908 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-27 17:04:25,908 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 17:04:25,908 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 17:04:25,908 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-27 17:04:25,908 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 17:04:25,908 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 17:04:25,908 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 17:04:25,909 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 17:05:45,934 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 17:05:45,934 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 17:05:45,934 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 17:05:45,934 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 17:05:45,934 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:05:45,934 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 17:05:45,934 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-27 17:05:45,934 [MainThread  ] [INFO ]  null
+2021-11-27 17:05:45,934 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 17:05:46,122 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:05:46,204 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 17:05:46,205 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 17:05:46,205 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-27 17:05:46,205 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 17:05:46,205 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-27 17:05:46,205 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 17:05:46,205 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 17:05:46,205 [MainThread  ] [INFO ]    Validation time: 0.083 seconds
+2021-11-27 17:05:46,205 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 17:05:46,205 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 17:05:46,205 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 17:05:46,206 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 17:05:46,651 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 17:05:46,651 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 17:05:46,651 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 17:05:46,651 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 17:05:46,651 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:05:46,651 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 17:05:46,651 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 17:05:46,651 [MainThread  ] [INFO ]  null
+2021-11-27 17:05:46,652 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 17:05:46,828 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:05:46,909 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 17:05:46,909 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 17:05:46,909 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-27 17:05:46,909 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 17:05:46,909 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-27 17:05:46,909 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 17:05:46,909 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 17:05:46,909 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-27 17:05:46,909 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 17:05:46,909 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 17:05:46,909 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 17:05:46,909 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 17:18:25,621 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 17:18:25,622 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 17:18:25,622 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 17:18:25,622 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 17:18:25,622 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:18:25,622 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 17:18:25,622 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-27 17:18:25,622 [MainThread  ] [INFO ]  null
+2021-11-27 17:18:25,622 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 17:18:25,803 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:18:25,883 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 17:18:25,883 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 17:18:25,883 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-27 17:18:25,883 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 17:18:25,883 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-27 17:18:25,884 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 17:18:25,884 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 17:18:25,884 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-27 17:18:25,884 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 17:18:25,884 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 17:18:25,884 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 17:18:25,884 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 17:18:29,107 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 17:18:29,107 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 17:18:29,107 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 17:18:29,107 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 17:18:29,107 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:18:29,107 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 17:18:29,107 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 17:18:29,107 [MainThread  ] [INFO ]  null
+2021-11-27 17:18:29,107 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 17:18:29,283 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:18:29,366 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 17:18:29,366 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 17:18:29,366 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-27 17:18:29,367 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 17:18:29,367 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-27 17:18:29,367 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 17:18:29,367 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 17:18:29,367 [MainThread  ] [INFO ]    Validation time: 0.083 seconds
+2021-11-27 17:18:29,367 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 17:18:29,367 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 17:18:29,367 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 17:18:29,367 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 17:23:38,478 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 17:23:38,478 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 17:23:38,478 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 17:23:38,478 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 17:23:38,478 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:23:38,478 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 17:23:38,478 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-27 17:23:38,478 [MainThread  ] [INFO ]  null
+2021-11-27 17:23:38,478 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 17:23:38,662 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:23:38,740 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 17:23:38,740 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 17:23:38,740 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-27 17:23:38,741 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 17:23:38,741 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-27 17:23:38,741 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 17:23:38,741 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 17:23:38,741 [MainThread  ] [INFO ]    Validation time: 0.078 seconds
+2021-11-27 17:23:38,741 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 17:23:38,741 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 17:23:38,741 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 17:23:38,741 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-27 17:23:42,490 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-27 17:23:42,490 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-27 17:23:42,490 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-27 17:23:42,490 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-27 17:23:42,491 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:23:42,491 [MainThread  ] [INFO ]  Configurations:
+2021-11-27 17:23:42,491 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-27 17:23:42,491 [MainThread  ] [INFO ]  null
+2021-11-27 17:23:42,491 [MainThread  ] [INFO ]  File extension: csv
+2021-11-27 17:23:42,664 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-27 17:23:42,745 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-27 17:23:42,745 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-27 17:23:42,745 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-27 17:23:42,745 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-27 17:23:42,746 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-27 17:23:42,746 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-27 17:23:42,746 [MainThread  ] [INFO ]  Report summary:
+2021-11-27 17:23:42,746 [MainThread  ] [INFO ]    Validation time: 0.081 seconds
+2021-11-27 17:23:42,746 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-27 17:23:42,746 [MainThread  ] [INFO ]     � Global errors found in report:
+2021-11-27 17:23:42,746 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-27 17:23:42,746 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.

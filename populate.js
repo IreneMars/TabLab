@@ -261,8 +261,8 @@ async function populate() {
         console.log(err);
     }
 
-    fs.readdir(path.join("backend/assets/datafiles"), (err, files) => {
-        console.log("Uploading files from backend/assets/datafiles folder...")
+    fs.readdir(path.join("populate/populate_files/datafiles"), (err, files) => {
+        console.log("Uploading files from populate/populate_files/datafiles folder...")
         try {
             if (err) {
                 console.log(err);
@@ -278,7 +278,7 @@ async function populate() {
                         }
                         // lo copiamos de assets y lo pegamos en el directorio del que lo eliminamos anteriormente
                         if (hostName == "http://localhost:3000") {
-                            fs.copyFileSync("backend/assets/datafiles/" + file, "backend/uploads/datafiles/" + file);
+                            fs.copyFileSync("populate/populate_files/datafiles/" + file, "backend/uploads/datafiles/" + file);
                             console.log(`Successfully copied ${file}!`)
                         }
                     }
@@ -289,8 +289,8 @@ async function populate() {
         }
     });
 
-    fs.readdir(path.join("backend/assets/esquemas"), (err, files) => {
-        console.log("Uploading files from backend/assets/esquemas folder...")
+    fs.readdir(path.join("populate/populate_files/esquemas"), (err, files) => {
+        console.log("Uploading files from populate/populate_files/esquemas folder...")
         try {
             if (err) {
                 console.log(err);
@@ -304,7 +304,7 @@ async function populate() {
                             console.log(`Successfully deleted ${file}!`)
                         }
                         if (hostName == "http://localhost:3000") {
-                            fs.copyFileSync("backend/assets/esquemas/" + file, "backend/uploads/esquemas/" + file);
+                            fs.copyFileSync("populate/populate_files/esquemas/" + file, "backend/uploads/esquemas/" + file);
                             console.log(`Successfully copied ${file}!`)
                         }
                     }
@@ -315,8 +315,8 @@ async function populate() {
         }
     });
 
-    fs.readdir(path.join("backend/assets/users"), (err, files) => {
-        console.log("Uploading files from backend/assets/users folder...")
+    fs.readdir(path.join("populate/populate_files/users"), (err, files) => {
+        console.log("Uploading files from populate/populate_files/users folder...")
         try {
             if (err) {
                 console.log(err);
@@ -330,7 +330,7 @@ async function populate() {
                             console.log(`Successfully deleted ${file}!`)
                         }
                         if (hostName == "http://localhost:3000") {
-                            fs.copyFileSync("backend/assets/users/" + file, "backend/uploads/users/" + file);
+                            fs.copyFileSync("populate/populate_files/users/" + file, "backend/uploads/users/" + file);
                             console.log(`Successfully copied ${file}!`)
                         }
                     }
@@ -341,8 +341,8 @@ async function populate() {
         }
     });
 
-    fs.readdir(path.join("backend/assets/reports"), (err, files) => {
-        console.log("Uploading files from backend/assets/reports folder...")
+    fs.readdir(path.join("populate/populate_files/reports"), (err, files) => {
+        console.log("Uploading files from populate/populate_files/reports folder...")
         try {
             if (err) {
                 console.log(err);
@@ -356,7 +356,7 @@ async function populate() {
                             console.log(`Successfully deleted ${file}!`)
                         }
                         if (hostName == "http://localhost:3000") {
-                            fs.copyFileSync("backend/assets/reports/" + file, "backend/output/" + file);
+                            fs.copyFileSync("populate/populate_files/reports/" + file, "backend/output/" + file);
                             console.log(`Successfully copied ${file}!`)
                         }
                     }

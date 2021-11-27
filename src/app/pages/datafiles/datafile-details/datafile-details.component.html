@@ -127,13 +127,13 @@
     </div>
     <div class="col-3" *ngIf="!isLoading">
         <div class="container ps-0">
-            <app-esquema-list [datafile]="datafile" [workspaceId]="workspaceId" [(esquemas)]="esquemas" [infer]="infer"></app-esquema-list>
+            <app-esquema-list [datafile]="datafile" [workspaceId]="workspaceId" [esquemas]="esquemas" [infer]="infer"></app-esquema-list>
         </div>
         <div class="container ps-0">
-            <app-configuration-list [datafileId]="datafileId" [workspaceId]="workspaceId" [(configurations)]="configurations"></app-configuration-list>
+            <app-configuration-list [datafileId]="datafileId" [workspaceId]="workspaceId" [configurations]="configurations"></app-configuration-list>
         </div>
         <div class="container ps-0">
-            <app-test-list [datafileId]="datafileId" [workspaceId]="workspaceId" [(tests)]="tests" [esquemas]="esquemas" [configurations]="configurations"></app-test-list>
+            <app-test-list [datafileId]="datafileId" [workspaceId]="workspaceId" [tests]="tests" [esquemas]="esquemas" [configurations]="configurations"></app-test-list>
         </div>
     </div>
 </div>

@@ -23,7 +23,7 @@ export class InvitationListComponent implements OnInit{
   @Input() invitations        : Invitation[] = [];
   @Output() invitationsChange : EventEmitter<Invitation[]> = new EventEmitter<Invitation[]>();
   totalInvitations            : number = 0;
-  invitationsPerPage          : number = 2;
+  invitationsPerPage          : number = 4;
   currentPage                 : number = 1;
   dataSource                  : any = null;
   pageSizeOptions             : number[] = [1, 2, 5, 10];
@@ -96,16 +96,12 @@ export class InvitationListComponent implements OnInit{
     this.invitationsService.updateInvitation(object.id, newStatus)
       .then(response=>{
         this.invitationsService.getInvitations(this.invitationsPerPage, this.currentPage);
-        this.invitationsService.getInvitationUpdateListener()
-        .subscribe( (invitationData: {invitations: Invitation[], invitationCount: number, totalInvitations: number}) => {
-          this.totalInvitations = invitationData.totalInvitations;
-          this.invitations = invitationData.invitations;
-          this.dataSource = new MatTableDataSource(this.invitations);
-          this.dataSource.sort = this.sort;
-        });
+        this.invitationsService.checkPendingInvitations();
       })
       .catch(err=>{
         console.log("Error on onInvite method: "+err.message);
+        this.invitationsService.getInvitations(this.invitationsPerPage, this.currentPage);
+        this.invitationsService.checkPendingInvitations();
       });
   }
 }

@@ -131,7 +131,7 @@
                                         <a class="link-secondary" [routerLink]="['/workspace',test.workspace,'datafile', test.datafile, 'test', test.id]">{{test.title}}</a>
                                     </div>
                                     <div class="col-2 d-flex justify-content-center">
-                                        <div>{{test.status}}</div>
+                                        <div>{{test.status | translate}}</div>
                                     </div>
                                     <div class="col-2 d-flex justify-content-center">
                                         <div>{{test.executable}}</div>

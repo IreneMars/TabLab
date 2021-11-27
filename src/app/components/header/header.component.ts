@@ -61,7 +61,8 @@ export class HeaderComponent implements OnInit{
           google: userData.user.google
         }
         // Invitations
-        this.invitationsService.checkPendingInvitations().then((response) => {     
+        this.invitationsService.checkPendingInvitations();
+        this.invitationsService.checkPendingInvitationsListener().subscribe((response) => {     
           this.hasInvitations = response.pendingInvitations;
           this.isLoading = false;
         });
