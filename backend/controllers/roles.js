@@ -41,8 +41,6 @@ exports.updateRole = async(req, res, next) => {
         const current_user_role = await Role.findOne({ 'user': current_user_id, 'workspace': req.body.workspace });
         const owners = await Role.find({ workspace: req.body.workspace, role: 'owner' });
 
-        console.log("Current user role: " + current_user_role.role)
-        console.log("User role: " + role.role)
         if (current_user_role.role === 'owner' && current_user_role.role === role.role && owners.length === 1) {
             return res.status(403).json({
                 message: "You are not allowed to leave this workspace without an owner!"
