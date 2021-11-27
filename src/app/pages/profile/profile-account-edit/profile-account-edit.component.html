@@ -12,14 +12,17 @@
                     <h1>Editar Cuenta</h1>
 
                     <form [formGroup]="emailForm" (ngSubmit)="onSaveEmail()">
-                        <div class="mb-3">
+                        <div>
                             <label for="FormEmail" class="form-label">Correo</label>
                             <input type="email" class="form-control" id="FormEmail" formControlName="email" [class.is-invalid]="invalidEmail" placeholder="Correo">
                             <mat-error>
                                 <small *ngIf="invalidEmail" class="text-danger">
-                          Ingrese un correo válido.
-                        </small>
+                                Ingrese un correo válido.
+                                </small>
                             </mat-error>
+                            <div class="text-primary mt-2" *ngIf="savedEmail && pristineEmail">
+                                <p>Correo guardado con éxito!</p>
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-primary me-1 mt-2" *ngIf="!isSavingEmail">
@@ -37,8 +40,8 @@
                             <input type="password" class="form-control" id="FormPassword" formControlName="actualPass" [class.is-invalid]="invalidActualPass" placeholder="Contraseña Actual">
                             <mat-error>
                                 <small *ngIf="invalidActualPass" class="text-danger">
-                          Ingrese una contraseña válida.
-                        </small>
+                                Ingrese una contraseña válida.
+                                </small>
                             </mat-error>
                         </div>
 
@@ -47,24 +50,28 @@
                             <input type="password" class="form-control" id="FormPasswordNew" formControlName="newPass" [class.is-invalid]="invalidNewPass" placeholder="Nueva Contraseña">
                             <mat-error>
                                 <small *ngIf="invalidNewPass" class="text-danger">
-                          Ingrese una contraseña válida.
-                        </small>
+                                Ingrese una contraseña válida.
+                                </small>
                             </mat-error>
                         </div>
 
-                        <div class="mb-3">
+                        <div>
                             <label for="FormPasswordRepeat" class="form-label">Repetir Contraseña</label>
                             <input type="password" class="form-control" id="FormPasswordRepeat" formControlName="repeatPass" [class.is-invalid]="invalidRepeatPass" placeholder="Repetir Contraseña">
                             <mat-error>
                                 <small *ngIf="invalidRepeatPass" class="text-danger">
-                          Ingrese una contraseña válida.
-                        </small>
+                                Ingrese una contraseña válida.
+                                </small>
                             </mat-error>
                         </div>
-
-                        <button class="btn btn-primary me-1 mt-2" type="submit">Actualizar Contraseña</button>
+                        <div class="text-primary mt-2" *ngIf="savedPassword && pristinePass">
+                            <p>Contraseña guardada con éxito!</p>
+                        </div>
+                        <button class="btn btn-primary me-1 mt-2" type="submit" *ngIf="!isSavingPassword">Actualizar Contraseña</button>
+                        <button class="btn btn-primary me-1 mt-2" type="submit" disabled *ngIf="isSavingPassword">
+                            Actualizar Contraseña <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>
                         <button class="btn btn-secondary me-1 mt-2" (click)="onCancelPassForm()" [disabled]="pristinePass">Cancelar</button>
-
                     </form>
                     <button type="button" class="btn btn-outline-danger mt-4" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">Eliminar cuenta</button>
 

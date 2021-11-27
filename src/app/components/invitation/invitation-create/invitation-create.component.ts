@@ -40,6 +40,8 @@ export class InvitationCreateComponent implements OnInit{
     this.userIsAuthenticated = this.authService.getIsAuth();
     if (this.userIsAuthenticated){
       this.userId = this.authService.getUserId();
+      console.log("Workspace Edit")
+
       this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData=>{
           this.personal = workspaceData.workspace.mandatory;
           this.isLoading = false;          

@@ -69,6 +69,7 @@ export class WorkspaceEditComponent implements OnInit{
     const values = this.workspaceEditForm.getRawValue();
     await this.workspaceService.updateWorkspace(this.workspace.id, values.title, values.description);
     // Workspace
+    console.log("Workspace Edit")
     this.workspaceService.getWorkspace(this.workspace.id).subscribe(workspaceData => {
       const workspace = {
         id: workspaceData.workspace._id,

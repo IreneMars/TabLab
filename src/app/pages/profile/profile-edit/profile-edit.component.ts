@@ -15,15 +15,14 @@ import { User } from 'src/app/models/user.model';
     styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit{
-  userIsAuthenticated          : boolean = false;
-  user                                        : User;
-  userId                                      : string;
-  isLoading                                   : boolean = false;
-  isSaving                                    : boolean = false;
-  userForm                                    : FormGroup;
-  photoPreview                                : string;
-  @ViewChild(HeaderComponent) headerComponent : HeaderComponent;
-
+  userIsAuthenticated : boolean = false;
+  user                : User;
+  userId              : string;
+  isLoading           : boolean = false;
+  isSaving            : boolean = false;
+  savedValues         : boolean = false;
+  userForm            : FormGroup;
+  photoPreview        : string;
 
   constructor(public authService: AuthService, public usersService: UsersService, public route: ActivatedRoute, 
               public workspacesService: WorkspacesService, private uploadsService: UploadsService) {
@@ -98,10 +97,12 @@ export class ProfileEditComponent implements OnInit{
       photo: this.user.photo
     });
     this.photoPreview = null;
+    this.savedValues = false;
   }
 
   async onSaveUser() {
     this.isSaving = true;
+    this.savedValues = false;
     if (this.userForm.invalid){
       this.isSaving = false;
       return Object.values(this.userForm.controls).forEach(control => {
@@ -131,6 +132,7 @@ export class ProfileEditComponent implements OnInit{
         google: userData.user.google
       };
       this.isSaving = false;
+      this.savedValues = true;
     });
   }
 }

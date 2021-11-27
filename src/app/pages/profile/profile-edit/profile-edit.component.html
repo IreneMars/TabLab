@@ -19,7 +19,7 @@
                         <div *ngIf="!photoPreview">
                             <img src="{{user.photo}}" class="border rounded-circle me-2" style="width: 80px;" alt="">
                         </div>
-                        <div class="mt-2 mb-4">
+                        <div class="mt-2">
                             <button type="button" class="btn btn-primary btn-sm" (click)="filePicker.click()">
                         Cambiar Foto
                         <span style="color: white;">
@@ -39,22 +39,25 @@
                         </small>
                             </mat-error>
                         </div>
-                        <div class="mb-3">
+                        <div>
                             <label for="FormUsername" class="form-label">Nombre de Usuario</label>
                             <input type="text" class="form-control" id="FormUsername" formControlName="username" [class.is-invalid]="invalidUsername" placeholder="Username" value="{{user.username}}">
                             <mat-error>
                                 <small *ngIf="invalidUsername" class="text-danger">
-                          Ingrese un nombre de usuario válido.
-                        </small>
+                                Ingrese un nombre de usuario válido.
+                                </small>
                             </mat-error>
                         </div>
-                        <button type="submit" class="btn btn-primary me-1 mt-2" *ngIf="!isSaving">
+                        <div class="text-primary mt-2" *ngIf="savedValues && pristineUser">
+                            <p>Cambios guardados con éxito!</p>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-1 mt-3" *ngIf="!isSaving">
                             Guardar Cambios
                         </button>
-                        <button type="submit" class="btn btn-primary me-1 mt-2" disabled *ngIf="isSaving">
+                        <button type="submit" class="btn btn-primary me-1 mt-3" disabled *ngIf="isSaving">
                             Guardar Cambios <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </button>
-                        <button class="btn btn-secondary mt-2" (click)="onCancelUserForm()" [disabled]="pristineUser">Cancelar</button>
+                        <button class="btn btn-secondary mt-3" (click)="onCancelUserForm()" [disabled]="pristineUser">Cancelar</button>
                     </form>
                 </div>
 

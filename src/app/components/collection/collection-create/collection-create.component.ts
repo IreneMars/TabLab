@@ -18,16 +18,19 @@ export class CollectionCreateComponent implements OnInit{
   invalidTitle                    : boolean = false;
   workspaceId                     : string;
   @Input() collections            : any[];
-  @Output() collectionsChange     : EventEmitter<any[]> = new EventEmitter();
+
   @Input() activities             : Activity[];
   @Output() activitiesChange      : EventEmitter<Activity[]> = new EventEmitter();
   @Input() editMode               : boolean;
   @Output() editModeChange        : any = new EventEmitter();
   @Input()  close                 : boolean;
   @Output() closeChange           : any = new EventEmitter();
-  @Input()  collectionIndex       : number;
-  @Output() collectionIndexChange : any = new EventEmitter();
+  
+  @Input() collectionIndex        : any;
+  @Output() collectionIndexChange  : EventEmitter<any> = new EventEmitter();
   @Input()  editCollection        : any;
+  @Output()  editCollectionChange  : EventEmitter<any> = new EventEmitter();
+
   @Input() hideButton             : boolean;
   @Output() hideButtonChange      : any = new EventEmitter();
 
@@ -82,7 +85,9 @@ export class CollectionCreateComponent implements OnInit{
         this.isSaving = false;
         this.editModeChange.emit(false);
         this.hideButtonChange.emit(false);
-        this.collectionForm.reset();         
+        this.collectionForm.reset();   
+        this.editCollectionChange.emit(null);
+        this.collectionIndexChange.emit(null);      
       })      
       .catch(err=>{
         console.log("Error on onSave() (edit mode) method: "+err.message);
@@ -96,7 +101,9 @@ export class CollectionCreateComponent implements OnInit{
         this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
         this.isSaving = false;
         this.hideButtonChange.emit(false);
-        this.collectionForm.reset(); 
+        this.collectionForm.reset();
+        this.editCollectionChange.emit(null);
+        this.collectionIndexChange.emit(null);
       })
       .catch(err=>{
         console.log("Error on onSave() (create mode) method: "+err.message);
@@ -110,7 +117,8 @@ export class CollectionCreateComponent implements OnInit{
     if (this.editMode) {
       this.hideButtonChange.emit(false);
       this.editModeChange.emit(false);
-      this.collectionIndexChange.emit(undefined);
+      this.editCollectionChange.emit(null);
+      this.collectionIndexChange.emit(null);
     } else {
         this.closeChange.emit(true);
     }

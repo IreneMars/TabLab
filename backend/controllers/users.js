@@ -107,7 +107,7 @@ exports.updateUser = async(req, res) => {
     current_user_id = req.userData.userId;
     try {
         const current_user = await User.findById(current_user_id);
-        if (current_user != req.params.id && current_user.role != 'ADMIN') {
+        if (current_user_id != req.params.id && current_user.role != 'ADMIN') {
             return res.status(403).json({
                 message: "Unauthorized to update this user!"
             });

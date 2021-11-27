@@ -22,12 +22,12 @@ export class CollectionListComponent implements OnInit{
   close                       : boolean = true;
   editMode                    : boolean = false;
   hideButton                  : boolean = false;
-  collectionIndex             : number;
+  editCollection              : any = null;
+  collectionIndex             : any = null;
   collections                 : Collection[];
   @Input() workspaceId        : string;
   orphanedDatafiles           : Datafile[];
   @Input() activities         : Activity[];
-  @Output() activitiesChange  : EventEmitter<Activity[]> = new EventEmitter();
   
   constructor(public collectionsService: CollectionsService, public authService: AuthService,
               public workspacesService: WorkspacesService, public router: Router,
@@ -40,7 +40,9 @@ export class CollectionListComponent implements OnInit{
     // Collections and Orphaned Datafiles
     this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
     this.collectionsService.getCollectionUpdateListener().subscribe(collectionData=>{
+      console.log("Colecciones")
       this.collections = collectionData.collections;
+      console.log(this.collections)
       this.orphanedDatafiles = collectionData.orphanedDatafiles;
     });
   }
@@ -50,9 +52,10 @@ export class CollectionListComponent implements OnInit{
     this.hideButton = true;
   }
 
-  async onUpdateCollection(index: number) {
+  async onUpdateCollection(collection: any, index: any) {
     this.isLoading = true;
     this.editMode = true;
+    this.editCollection = collection;
     this.collectionIndex = index;
     this.isLoading = false;
   }

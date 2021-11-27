@@ -75,7 +75,9 @@
         { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": "http://localhost:3000/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv", "delimiter": "|", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
         { "_id": "60b634e98ab1a18d8850e49f", "title": "Datafile 2", "description": "Este es el datafile 2.", "contentPath": null, "delimiter": "|", "errLimit": null, "coleccion": null, "workspace": "60aeaf40d0e8477348250ac9" },
         { "_id": "619389a81a2dffb23b953917", "title": "Datafile 3", "description": "Este es el datafile 3.", "contentPath": null, "delimiter": "|", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
-        { "_id": "6193a80edcc6d2ea6bd3e1b8", "title": "Datafile 4", "description": "Este es el datafile 4.", "contentPath": null, "delimiter": "|", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c3", "workspace": "60aeaf40d0e8477348250ac9" }
+        { "_id": "6193a80edcc6d2ea6bd3e1b8", "title": "Datafile 4", "description": "Este es el datafile 4.", "contentPath": null, "delimiter": "|", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c3", "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "61a13d9fa70a212ca734b753", "title": "Datafile 5", "description": "Este es el datafile 5.", "contentPath": null, "delimiter": "|", "errLimit": null, "coleccion": null, "workspace": "60aebafbb83c905694cd191c" }
+
     ],
 
     "esquemas": [
@@ -310,6 +312,19 @@
             "coleccion": "60b436d8a0646673b02cb8c3",
             "coleccionTitle": "Colección 2",
             "creationMoment": "1624887720000"
+        },
+        {
+            "_id": "61a14f6f42ed3a74964e1e81",
+            "message": "{{author}} añadió el archivo {{datafile}} al espacio de trabajo {{workspace}}",
+            "workspace": "60aebafbb83c905694cd191c",
+            "workspaceTitle": "Espacio de trabajo normal (irene)",
+            "author": "60ae10e9c2d2fe5c48e6eeb2",
+            "authorName": "Daniel",
+            "datafile": "61a13d9fa70a212ca734b753",
+            "datafileTitle": "Datafile 5",
+            "coleccion": null,
+            "coleccionTitle": null,
+            "creationMoment": "1626950280000"
         }
 
     ],

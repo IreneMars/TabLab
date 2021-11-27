@@ -47,33 +47,36 @@ export class HeaderComponent implements OnInit{
     console.log("User is authenticated: "+this.userIsAuthenticated)
     this.userId = this.authService.getUserId();
     // Current User
-    this.usersService.getUser(this.userId).subscribe(userData => {
-      this.user = {
-        id: userData.user.id,
-        username: userData.user.username,
-        email: userData.user.email,
-        password: userData.user.password,
-        photo: userData.user.photo,
-        name: userData.user.name,
-        role: userData.user.role,
-        status: userData.user.status,
-        google: userData.user.google
-      }
-      // Invitations
-      this.invitationsService.checkPendingInvitations().then((response) => {     
-        this.hasInvitations = response.pendingInvitations;
-        this.isLoading = false;
-      });
-    });
-    this.invitationsService.getInvitationUpdateListener().subscribe(invitationsResponse=>{
-      for (var invitation of invitationsResponse.invitations) {
-        if (invitation.status == "pending"){
-          this.hasInvitations = true;
-          break;
+    if(this.userIsAuthenticated){
+      this.usersService.getUser(this.userId).subscribe(userData => {
+        this.user = {
+          id: userData.user.id,
+          username: userData.user.username,
+          email: userData.user.email,
+          password: userData.user.password,
+          photo: userData.user.photo,
+          name: userData.user.name,
+          role: userData.user.role,
+          status: userData.user.status,
+          google: userData.user.google
         }
-      }
-      this.isLoading = false;
-    })
+        // Invitations
+        this.invitationsService.checkPendingInvitations().then((response) => {     
+          this.hasInvitations = response.pendingInvitations;
+          this.isLoading = false;
+        });
+      });
+      this.invitationsService.getInvitationUpdateListener().subscribe(invitationsResponse=>{
+        for (var invitation of invitationsResponse.invitations) {
+          if (invitation.status == "pending"){
+            this.hasInvitations = true;
+            break;
+          }
+        }
+        this.isLoading = false;
+      })
+
+    }
   }
 
 

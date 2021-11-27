@@ -36,7 +36,6 @@ async function populate() {
     } else {
         return new Error("No host was given! You should include -h <hostName> or --host <hostName> param.");
     }
-    console.log(hostName)
     await dbConnection(process.env.MONGODB_CNN);
 
     console.log("Populating database...");
