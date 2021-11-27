@@ -64,7 +64,6 @@ export class ProfileEditComponent implements OnInit{
     }
   }
 
-
   get pristineUser() {
     return this.userForm.get('username').pristine && this.userForm.get('name').pristine && this.userForm.get('photo').pristine;
   }
@@ -131,6 +130,11 @@ export class ProfileEditComponent implements OnInit{
         status: userData.user.status,
         google: userData.user.google
       };
+      this.userForm.reset({
+        name: this.user.name,
+        username: this.user.username,
+        photo: this.user.photo
+      });
       this.isSaving = false;
       this.savedValues = true;
     });

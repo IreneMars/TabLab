@@ -12,7 +12,7 @@ export class ReportsService {
     const executionData: any = { 
       'testId':testId
     };
-    return this.http.put<{message: any, testUpdates: any, execBuffer: any, rawData:any}>(BACKEND_URL, executionData);
+    return this.http.put<{message: any, testUpdates: any, execBuffer: any, rawData:any}>(BACKEND_URL, executionData).toPromise();
   }
 
 

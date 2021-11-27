@@ -26,19 +26,15 @@
                                 <button type="button" class="btn btn-sm btn-outline-success me-1" (click)="onEditStatus(element,'accepted')">Aceptar</button>
                                 <button type="button" class="btn btn-sm btn-outline-danger me-1" (click)="onEditStatus(element,'rejected')">Rechazar</button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary" *ngIf="element.status === 'pending'" (click)="onEditStatus(element,'seen')">
-                              <i class="fas fa-eye"></i>
-                            </button>
+                                 <i class="fas fa-eye"></i>
+                                </button>
                                 <button type="button" class="btn btn-sm btn-outline-light" *ngIf="element.status === 'seen'" (click)="onEditStatus(element,'pending')">
-                              <i class="fas fa-eye"></i>
-                            </button>
+                                <i class="fas fa-eye"></i>
+                                </button>
                             </div>
-                            <div *ngIf="element.status === 'accepted'">
-                                Aceptada
+                            <div *ngIf="element.status === 'accepted' || element.status === 'rejected'">
+                                {{element.status | translate}}
                             </div>
-                            <div *ngIf="element.status === 'rejected'">
-                                Rechazada
-                            </div>
-
                         </td>
                     </ng-container>
 

@@ -26,7 +26,6 @@ export class EsquemaCreateComponent implements OnInit{
   @Input() isAdding        : boolean = false;
   @Output() isAddingChange : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() esquemas        : Esquema[];
-  @Output() esquemasChange : EventEmitter<any[]> = new EventEmitter<any[]>();
   @Input() esquemaContent  : any;
   @Input() esquemaForm     : FormGroup;
   @Input() workspaceId     : string;
@@ -115,7 +114,11 @@ export class EsquemaCreateComponent implements OnInit{
           this.isSavingChange.emit(false);  
       })
       .catch(err=>{
-        console.log("Error on onSave (edit mode) method: "+err.message.message);
+        console.log("Error on onSave (edit mode) method: "+err.message);
+        this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+        this.esquemaForm.reset();
+        this.esquemaChange.emit(null);
+        this.isSavingChange.emit(false);  
       });
     } else {
       this.isAddingChange.emit(true);
@@ -128,7 +131,11 @@ export class EsquemaCreateComponent implements OnInit{
         this.isAddingChange.emit(false);  
       })
       .catch(err=>{
-        console.log("Error on onSave (create mode) method: "+err.message.message);
+        console.log("Error on onSave (create mode) method: "+err.message);
+        this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+        this.esquemaForm.reset();
+        this.esquemaChange.emit(null);
+        this.isAddingChange.emit(false);  
       });
 
     }

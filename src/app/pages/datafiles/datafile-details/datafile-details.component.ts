@@ -187,6 +187,8 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
     })
     .catch(err=>{
       console.log("Error on onDelete() method: "+err.message)
+      this.isLoading = false;
+      this.isDeleting = true;
     })
   }
 

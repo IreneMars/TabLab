@@ -17,17 +17,18 @@ export class ConfigurationCreateComponent implements OnInit{
   userIsAuthenticated            : boolean = false;
   @Input() isSaving              : boolean = false;
   @Output() isSavingChange       : EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() configurations        : Configuration[];
-  @Output() configurationsChange : EventEmitter<any[]> = new EventEmitter<any[]>();
   
+  @Input() configurations        : Configuration[];
   @Input() configurationForm     : FormGroup;
   @Input() datafileId            : string;
   @Input() workspaceId           : string;
   @Input() configurationId       : string;
   @Input() savefile              : string;
   @Input() extraControls         : object[] = [];
-  @Output() configurationChange  : EventEmitter<Configuration[]> = new EventEmitter<any>();
+  @Output() extraControlsChange  : EventEmitter<any[]> = new EventEmitter<any[]>();
+
   @Input() configuration         : Configuration;
+  
   @Input() extraParams           : boolean;
   pickedError                    : any;
   fricErrors                     : FricError[];
@@ -114,7 +115,7 @@ export class ConfigurationCreateComponent implements OnInit{
     this.extraControls.forEach(newControl => {
       this.configurationForm.removeControl(newControl[0]);
     });
-    this.configurationChange.emit([]);
+    this.extraControlsChange.emit([]);
   }
 
   async onSave() {
@@ -157,12 +158,8 @@ export class ConfigurationCreateComponent implements OnInit{
       this.configurationForm.removeControl(newControl[0]);
     });
     this.configurationsService.getConfigurationsByDatafile(this.datafileId);
-    this.configurationService.getConfigurationUpdateListener().subscribe(response=>{
-      this.configurations = response.configurations;
-      this.configurationsChange.emit(response.configurations);
-      this.configurationChange.emit([]);
-      this.isSavingChange.emit(false);
-    })
+    this.extraControlsChange.emit([]);
+    this.isSavingChange.emit(false);
   }
 
 

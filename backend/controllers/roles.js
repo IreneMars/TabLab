@@ -41,14 +41,16 @@ exports.updateRole = async(req, res, next) => {
         const current_user_role = await Role.findOne({ 'user': current_user_id, 'workspace': req.body.workspace });
         const owners = await Role.find({ workspace: req.body.workspace, role: 'owner' });
 
-        if (current_user_role.role === 'owner' && current_user_role.role === role && owners.length === 1) {
+        console.log("Current user role: " + current_user_role.role)
+        console.log("User role: " + role.role)
+        if (current_user_role.role === 'owner' && current_user_role.role === role.role && owners.length === 1) {
             return res.status(403).json({
                 message: "You are not allowed to leave this workspace without an owner!"
             });
         }
-        if (current_user_role === 'member' || (current_user_role === 'admin' && (role.role === 'owner' || role.role === 'admin'))) {
+        if (current_user_role.role === 'member' || (current_user_role.role === 'admin' && (role.role === 'owner' || role.role === 'admin'))) {
             return res.status(403).json({
-                message: "You are not allowed to update a role!"
+                message: "You are not allowed to update this role!"
             });
         }
         await Role.findByIdAndUpdate(req.params.id, { role: req.body.role });

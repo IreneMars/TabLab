@@ -25,7 +25,6 @@ export class DatafileCreateComponent implements OnInit{
   @Output() isSavingChange          : EventEmitter<boolean> = new EventEmitter<boolean>();
   
   @Input() activities             : Activity[];
-  @Output() activitiesChange      : EventEmitter<Activity[]> = new EventEmitter();
   
   constructor(public datafileService: DatafileService, public route: ActivatedRoute,
               private formBuilder: FormBuilder, private authService: AuthService, 
@@ -90,7 +89,7 @@ export class DatafileCreateComponent implements OnInit{
     }
     this.datafileService.addDatafile(values.title, values.delimiter, values.description, values.collection, this.workspaceId)
     .then((response)=>{
-      if(values.collection){
+        //Collections
         this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
         // Activities
         this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
@@ -100,21 +99,19 @@ export class DatafileCreateComponent implements OnInit{
           collection: 'Ninguna'
         });
         this.isSavingChange.emit(false);   
-      }else{
-        this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-        // Activities
-        this.activitiesService.getActivitiesByWorkspace(this.workspaceId);          
-        this.datafileForm.reset({
-          title: '',
-          description: '',
-          collection: 'Ninguna'
-        });
-        this.isSavingChange.emit(false);          
-      
-      }
     })
     .catch(err=>{
       console.log("Error on onSave() method: "+err.message);
+      //Collections
+      this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+      // Activities
+      this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+      this.datafileForm.reset({
+        title: '',
+        description: '',
+        collection: 'Ninguna'
+      });
+      this.isSavingChange.emit(false);   
     })
     
     

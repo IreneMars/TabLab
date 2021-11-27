@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
+import { sequenceEqual } from "rxjs/operators";
 
 export class TranslationSet {
     public languange: string
@@ -20,6 +21,17 @@ export class TranslatePipe implements PipeTransform {
           owner: 'Owner',
           admin: 'Admin',
           member: 'Member',
+          user: 'User',
+          pending: 'Pending',
+          failed: 'Failed',
+          passed: 'Passed',
+          true: 'True',
+          false: 'False',
+          active: 'Active',
+          inactive: 'Inactive',
+          seen: 'Seen',
+          rejected: 'Rejected',
+          accepted: 'Accepted'
         },
       },
       esp: {
@@ -28,6 +40,17 @@ export class TranslatePipe implements PipeTransform {
           owner: 'Propietario',
           admin: 'Admin',
           member: 'Miembro',
+          user: 'Usuario',
+          pending: 'Pendiente',
+          failed: 'Fallido',
+          passed: 'Aprobado',
+          true: 'Sí',
+          false: 'No',
+          active: 'Activa',
+          inactive: 'Inactiva',
+          seen: 'Vista',
+          rejected: 'Rechazada',
+          accepted: 'Aceptada'
         },
       },
     }
@@ -38,7 +61,8 @@ export class TranslatePipe implements PipeTransform {
       }
     }
 
-    transform(value: any, args?: any): any {
+    transform(value: string, args?: any): any {
+        value = value.toLowerCase();
         return this.translate(value)
     }
 }

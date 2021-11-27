@@ -10,8 +10,8 @@
             <button type="button" class="btn btn-outline-primary btn-sm" disabled *ngIf="isSaving">
               Añadir configuración <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </button>
-            <app-configuration-create [(configurations)]="configurations" [datafileId]="datafileId" [workspaceId]="workspaceId" [configurationId]="configurationId" [configuration]="configuration" [extraControls]="extraControls" [configurationForm]="configurationForm"
-                [extraParams]="extraParams" (configurationChange)="setExtraParams($event)" [(isSaving)]="isSaving"></app-configuration-create>
+            <app-configuration-create [configurations]="configurations" [datafileId]="datafileId" [workspaceId]="workspaceId" [configurationId]="configurationId" [configuration]="configuration" [(extraControls)]="extraControls" [configurationForm]="configurationForm"
+                [extraParams]="extraParams" [(isSaving)]="isSaving"></app-configuration-create>
         </div>
     </div>
 </div>

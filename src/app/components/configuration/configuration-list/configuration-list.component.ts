@@ -21,8 +21,7 @@ export class ConfigurationListComponent implements OnInit{
   @Input() datafileId     : string;
   @Input() workspaceId    : string;
   @Input() configurations : Configuration[];
-  @Output() configurationsChange : EventEmitter<any[]> = new EventEmitter<any[]>();
-  isSaving                       : boolean = false;
+  isSaving                : boolean = false;
   configurationForm       : FormGroup;
   configurationId         : string;
   configuration           : Configuration = null;
@@ -32,7 +31,7 @@ export class ConfigurationListComponent implements OnInit{
   fricErrors              : FricError[];
   
   constructor(public datafilesService: DatafileService, public route: ActivatedRoute, public authService: AuthService,
-    private eRef: ElementRef, private configurationsService: ConfigurationService, public fricErrorsService: FricErrorsService){
+              public configurationsService: ConfigurationService, public fricErrorsService: FricErrorsService){
     this.configurationForm = new FormGroup({
       'title': new FormControl('', {validators: [Validators.required, Validators.minLength(1), Validators.maxLength(100)]}),
       'errorCode': new FormControl('', {validators: [Validators.required]}),
@@ -61,6 +60,9 @@ export class ConfigurationListComponent implements OnInit{
     })
     .catch(err=>{
       console.log("Error on onDelete method: "+err.message);
+      // Collections
+      this.configurationsService.getConfigurationsByDatafile(this.datafileId);
+      this.isDeleting = false;
     });
   }
 

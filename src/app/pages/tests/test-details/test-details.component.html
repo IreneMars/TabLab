@@ -196,7 +196,7 @@
             </div>
             <div class="row mt-2 pe-2" *ngIf="test.totalErrors">
                 <div class="col pe-0">
-                    Ejecutable: {{test.executable}}
+                    Ejecutable: {{test.executable.toString() | translate}}
                 </div>
             </div>
             <div class="row mt-4 pe-2">

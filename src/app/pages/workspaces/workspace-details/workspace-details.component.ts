@@ -111,19 +111,10 @@ export class WorkspaceDetailsComponent implements OnInit {
     .then(roleData=>{
         // Users
         this.usersService.getUsersByWorkspace(this.workspaceId);
-        this.usersService.getUserUpdateListener().subscribe( (userData: {users: User[]}) => {
-          this.users = userData.users;
-          for (var userIndex in this.users){
-            const user = this.users[userIndex]
-            if(user.id===this.userId){
-              this.user = user;
-              this.currentUserRole = user.roleName;
-            }
-          }
-        });
     })
     .catch(err=>{
-      console.log("Error on onRolePicked method: "+err.message.message)
+      console.log("Error on onRolePicked method: "+err.message);
+      this.usersService.getUsersByWorkspace(this.workspaceId);
     });  
             
 

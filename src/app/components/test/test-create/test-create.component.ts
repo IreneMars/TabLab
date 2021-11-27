@@ -16,8 +16,6 @@ export class TestCreateComponent implements OnInit{
   userIsAuthenticated      : boolean = false;
   selectedConfigurations   : string[];
   @Input() tests           : Test[];
-  @Output() testsChange    : EventEmitter<any[]> = new EventEmitter<any[]>();
-
   @Input() isSaving        : boolean = false;
   @Output() isSavingChange : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() testForm        : FormGroup;
@@ -25,7 +23,6 @@ export class TestCreateComponent implements OnInit{
   @Input() datafileId      : string;
   @Input() esquemas        : any[];
   @Input() configurations  : any[];
-  @Output() testSaveChange : EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public testService: TestsService, public route: ActivatedRoute,
               private formBuilder: FormBuilder, public datafilesService: DatafileService, private authService: AuthService) {

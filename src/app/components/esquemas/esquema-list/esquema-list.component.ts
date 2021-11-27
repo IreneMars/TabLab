@@ -17,13 +17,12 @@ export class EsquemaListComponent implements OnInit {
   userIsAuthenticated  : boolean = false;
   isSaving             : boolean = false;
   isAdding             : boolean = false;
-  isInferring            : boolean = false;
+  isInferring          : boolean = false;
   isDeleting           : boolean = false;
   esquemaContent       : any;
   @Input() datafile    : Datafile;
   @Input() workspaceId : string;
   @Input() esquemas    : Esquema[];
-  @Output() esquemasChange : EventEmitter<any[]> = new EventEmitter<any[]>();
   @Input() infer       : boolean;
   savefileChange       : boolean = false;
   esquema              : Esquema = null;
@@ -50,6 +49,9 @@ export class EsquemaListComponent implements OnInit {
     })
     .catch(err=>{
       console.log("Error on onDelete method: "+err.message);
+      // Esquemas
+      this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+      this.isDeleting = false;
     });
   }
 
@@ -75,11 +77,6 @@ export class EsquemaListComponent implements OnInit {
    });
   }
 
-
-  setEsquema(newvalue: any) {
-    this.esquema = newvalue;
-  }
-
   onInfer() {
     this.isInferring = true;
     this.uploadsService.inferEsquemaContent(this.datafile.id)
@@ -88,7 +85,9 @@ export class EsquemaListComponent implements OnInit {
       this.isInferring = false;
     })
     .catch(err=>{
-      console.log("Error on onInfer method: "+err.message.message);
+      console.log("Error on onInfer method: "+err.message);
+      this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+      this.isInferring = false;
     });
 
 }
