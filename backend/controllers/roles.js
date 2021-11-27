@@ -74,12 +74,6 @@ exports.deleteRole = async(req, res, next) => {
             return res.status(403).json({
                 message: "You are not allowed to leave this workspace without an owner!"
             });
-        } else if (role.role === 'owner' && owners.length > 1) {
-            await Workspace.deleteOne({ _id: req.params.workspaceId });
-            await Role.deleteMany({ workspace: req.params.workspaceId });
-            return res.status(200).json({
-                message: "Role deletion (and workspace) successful!"
-            });
         } else {
             await Role.deleteOne({ workspace: req.params.workspaceId, user: current_user_id });
             return res.status(200).json({

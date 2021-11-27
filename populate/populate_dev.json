@@ -47,7 +47,6 @@
         { "_id": "60b36426894076503c4de402", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb2" },
         { "_id": "60b36426894076503c4de403", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb3" },
         { "_id": "60b36426894076503c4de404", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb4" },
-        { "_id": "60b36426894076503c4de405", "role": "admin", "workspace": "60aebafbb83c905694cd191c", "user": "60ae10e9c2d2fe5c48e6eeb5" },
         { "_id": "60b36426894076503c4de407", "role": "admin", "workspace": "60b363c81e7c4e4ff4e724a0", "user": "60ad88d2a74d2e58cc611a31" },
 
         { "_id": "619ec2db388ad000333348ff", "role": "member", "workspace": "60aebafbb83c905694cd191d", "user": "60ae10e9c2d2fe5c48e6eeb2" },
@@ -329,7 +328,7 @@
 
     ],
     "globalConfiguration": [
-        { "_id": "619637dd5e471a3913647ea9", "limitUsers": 5, "limitWorkspaces": 3 }
+        { "_id": "619637dd5e471a3913647ea9", "limitUsers": 5, "limitWorkspaces": 5 }
     ],
 
     "fricErrors": [

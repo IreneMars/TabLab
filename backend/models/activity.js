@@ -8,7 +8,7 @@ const activitySchema = mongoose.Schema({
     workspace: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Workspace",
-        required: [true, 'Workspace is mandatory'],
+        required: false,
     },
     workspaceTitle: {
         type: String,

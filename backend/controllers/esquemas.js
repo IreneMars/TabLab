@@ -36,8 +36,7 @@ exports.getEsquema = async(req, res, next) => {
             });
         }
         const url = req.protocol + "://" + req.get("host") + "/";
-        actualFilePath = esquema.contentPath.replace(url, 'backend/uploads/');
-
+        var actualFilePath = esquema.contentPath.replace(url, 'backend/uploads/');
         fs.readFile(actualFilePath, 'utf8', (err, data) => {
             if (err) {
                 return res.status(500).json({
@@ -139,7 +138,11 @@ exports.deleteEsquema = async(req, res, next) => {
                 message: "You are not authorized to delete an esquema from this workspace."
             })
         }
-        fs.unlinkSync(esquema.contentPath);
+
+        const url = req.protocol + "://" + req.get("host") + "/";
+        var actualFilePath = esquema.contentPath.replace(url, 'backend/uploads/');
+
+        fs.unlinkSync(actualFilePath);
         await Esquema.deleteOne({ _id: req.params.id });
         return res.status(200).json({
             message: "Esquema deletion successful!"

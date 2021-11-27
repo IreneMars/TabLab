@@ -6,326 +6,8 @@
 	},
 	"item": [
 		{
-			"name": "Populate",
-			"item": [
-				{
-					"name": "Populate DB",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/populate",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"populate"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Upload Photo (irene)",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": "/D:/irene/Desktop/TFG/Imágenes/jelly.png"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/api/populate/uploadFile",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"populate",
-								"uploadFile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Upload Photo (daniel)",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": "/D:/irene/Desktop/TFG/Imágenes/squid.png"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/api/populate/uploadFile",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"populate",
-								"uploadFile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Upload Photo (pedro)",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": "/D:/irene/Desktop/TFG/Imágenes/palm-tree.png"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/api/populate/uploadFile",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"populate",
-								"uploadFile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Upload Photo (sandra)",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": "/D:/irene/Desktop/TFG/Imágenes/beans.png"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/api/populate/uploadFile",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"populate",
-								"uploadFile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Upload Photo (walo)",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": "/D:/irene/Desktop/TFG/Imágenes/duck.png"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/api/populate/uploadFile",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"populate",
-								"uploadFile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Upload Content (Datafile 1)",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": "/D:/irene/Desktop/TFG/ficheros/fulls_dmf_full_v1_20200504_short_10_werrs.csv"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/api/populate/uploadFile",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"populate",
-								"uploadFile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Upload Content (Esquema 1)",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": "/D:/irene/Desktop/TFG/ficheros/populate_schema.json"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/api/populate/uploadFile",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"populate",
-								"uploadFile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Upload Content (Esquema 2)",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": "/D:/irene/Desktop/TFG/ficheros/populate_schema_2.json"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{url}}/api/populate/uploadFile",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"populate",
-								"uploadFile"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Authentication",
 			"item": [
-				{
-					"name": "Create User",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const userId = pm.response.json().user._id;\r",
-									"pm.collectionVariables.set(\"userId\", userId);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"test001\", \r\n    \"email\": \"test001@gmail.com\", \r\n    \"password\": \"test001\", \r\n    \"name\": \"test001\", \r\n    \"photo\": \"\",\r\n    \"role\":\"USER\",\r\n    \"status\": \"true\", \r\n    \"google\": \"false\" \r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/users",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Login User (irene)",
 					"event": [
@@ -333,12 +15,18 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const token = pm.response.json().token;\r",
-									"pm.globals.set(\"token\",\"Bearer \"+token)\r",
+									"// Testing response is OK\r",
+									"pm.test(\"Status code should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
 									"\r",
+									"// Setting token collection variable for Authentication Header\r",
+									"const token = pm.response.json().token;\r",
+									"pm.collectionVariables.set(\"token\", token);\r",
+									"\r",
+									"// Setting userId collection variable\r",
 									"const userId = pm.response.json().user._id;\r",
-									"pm.collectionVariables.set(\"userId\", userId);\r",
-									""
+									"pm.collectionVariables.set(\"userId\", userId);"
 								],
 								"type": "text/javascript"
 							}
@@ -370,6 +58,29 @@
 					},
 					"response": []
 				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
@@ -377,24 +88,206 @@
 			"item": [
 				{
 					"name": "Get User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Testing response is OK\r",
+									"pm.test(\"Status code should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Testing user got is the one cached in collection variable\r",
+									"const userId = pm.collectionVariables.get(\"userId\");\r",
+									"if (userId != null && userId != \"\")\r",
+									"{\r",
+									"    pm.test(\"Got User should be the one with userId: \" + userId, function () {\r",
+									"        pm.expect(pm.response.json().user._id).to.eql(userId);\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/users/60ad88d2a74d2e58cc611a31",
+							"raw": "{{url}}/api/users/:userId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"users",
-								"60ad88d2a74d2e58cc611a31"
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Testing response is OK\r",
+									"pm.test(\"Status code should be 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"// Testing response is OK\r",
+									"pm.test(\"User should be in response\", function () {\r",
+									"    pm.expect(json.user).to.not.eql(undefined);\r",
+									"});\r",
+									"\r",
+									"// Testing response is OK\r",
+									"pm.test(\"User's workspace should be in response\", function () {\r",
+									"    pm.expect(json.workspace).to.not.eql(undefined);\r",
+									"});\r",
+									"\r",
+									"// Testing response is OK\r",
+									"pm.test(\"User's role in workspace should be in response\", function () {\r",
+									"    pm.expect(json.role).to.not.eql(undefined);\r",
+									"});\r",
+									"\r",
+									"// Setting userId collection variable\r",
+									"const user = json.user;\r",
+									"if (user != null)\r",
+									"    pm.collectionVariables.set(\"userId\", user._id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test001\", \r\n    \"email\": \"test001@gmail.com\", \r\n    \"password\": \"test001\", \r\n    \"name\": \"test001\", \r\n    \"photo\": \"\",\r\n    \"role\":\"USER\",\r\n    \"status\": \"true\", \r\n    \"google\": \"false\" \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Same User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Testing response is OK\r",
+									"pm.test(\"Status code should be 400\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.eql(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test001\", \r\n    \"email\": \"test001@gmail.com\", \r\n    \"password\": \"test001\", \r\n    \"name\": \"test001\", \r\n    \"photo\": \"\",\r\n    \"role\":\"USER\",\r\n    \"status\": \"true\", \r\n    \"google\": \"false\" \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Created User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Testing response is OK\r",
+									"pm.test(\"Status code should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Setting token collection variable for Authentication Header\r",
+									"const token = pm.response.json().token;\r",
+									"pm.collectionVariables.set(\"token\", token);\r",
+									"\r",
+									"// Setting userId collection variable\r",
+									"const userId = pm.response.json().user._id;\r",
+									"pm.collectionVariables.set(\"userId\", userId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test001\",\r\n    \"password\": \"test001\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
 							]
 						}
 					},
@@ -402,22 +295,30 @@
 				},
 				{
 					"name": "Get Users By Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Users fetched has only irene\", function () {\r",
+									"    const users = pm.response.json().users;\r",
+									"    pm.expect(users.length).to.be.eql(1);\r",
+									"    pm.expect(users[0].username).to.be.eql(\"irene\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							},
-							{
-								"key": "",
-								"value": "",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/users/workspace/60aeaf40d0e8477348250ac9?from=0&limit=10",
+							"raw": "{{url}}/api/users/workspace/:workspaceId?from=0&limit=10",
 							"host": [
 								"{{url}}"
 							],
@@ -425,7 +326,7 @@
 								"api",
 								"users",
 								"workspace",
-								"60aeaf40d0e8477348250ac9"
+								":workspaceId"
 							],
 							"query": [
 								{
@@ -436,6 +337,12 @@
 									"key": "limit",
 									"value": "10"
 								}
+							],
+							"variable": [
+								{
+									"key": "workspaceId",
+									"value": "60aeaf40d0e8477348250ac9"
+								}
 							]
 						}
 					},
@@ -443,15 +350,36 @@
 				},
 				{
 					"name": "Edit User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"pm.test(\"User has properties changed\", function () {\r",
+									"    pm.expect(json.user.name).to.be.eql(\"User Test Update\");\r",
+									"    pm.expect(json.user.username).to.be.eql(\"test\");\r",
+									"    pm.expect(json.user.role).to.be.eql(\"USER\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User properties that weren't edited should have not changed\", function () {\r",
+									"    pm.expect(json.user.email).to.not.be.eql(null);\r",
+									"    pm.expect(json.user.actualPass).to.not.be.eql(null);\r",
+									"    pm.expect(json.user.newPass).to.not.be.eql(null);\r",
+									"    pm.expect(json.user.repeatPass).to.not.be.eql(null);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"name\": \"User Test Update\", \r\n    \"username\": \"test\", \r\n    \"email\": null, \r\n    \"role\":\"USER\",\r\n    \"actualPass\": null,\r\n    \"newPass\": null,\r\n    \"repeatPass\": null\r\n}\r\n",
@@ -462,14 +390,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/users/{{userId}}",
+							"raw": "{{url}}/api/users/:userId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"users",
-								"{{userId}}"
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
 							]
 						}
 					},
@@ -477,15 +411,22 @@
 				},
 				{
 					"name": "Edit Photo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
@@ -497,12 +438,12 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/D:/irene/Desktop/TFG/Imágenes/duck.png"
+									"src": "postman_tests/duck.png"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/api/uploads/users/{{userId}}",
+							"raw": "{{url}}/api/uploads/users/:userId",
 							"host": [
 								"{{url}}"
 							],
@@ -510,32 +451,13 @@
 								"api",
 								"uploads",
 								"users",
-								"{{userId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete User",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{url}}/api/users/{{userId}}",
-							"host": [
-								"{{url}}"
+								":userId"
 							],
-							"path": [
-								"api",
-								"users",
-								"{{userId}}"
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
 							]
 						}
 					},
@@ -543,17 +465,158 @@
 				},
 				{
 					"name": "Get Image",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/users/duck.png",
+							"raw": "{{url}}/users/:imageName",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"duck.png"
+								":imageName"
+							],
+							"variable": [
+								{
+									"key": "imageName",
+									"value": "duck.png"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Default Photo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/assets/:resourceName",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"assets",
+								":resourceName"
+							],
+							"variable": [
+								{
+									"key": "resourceName",
+									"value": "default-user-little.png"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Photo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/:resourceName",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								":resourceName"
+							],
+							"variable": [
+								{
+									"key": "resourceName",
+									"value": "duck.png"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User status property should be false\", function () {\r",
+									"    pm.expect(pm.response.json().user.status).to.be.false;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
 							]
 						}
 					},
@@ -565,32 +628,160 @@
 			"name": "Collections",
 			"item": [
 				{
-					"name": "Get Collections",
+					"name": "Login User (irene) Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Testing response is OK\r",
+									"pm.test(\"Status code should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Setting token collection variable for Authentication Header\r",
+									"const token = pm.response.json().token;\r",
+									"pm.collectionVariables.set(\"token\", token);\r",
+									"\r",
+									"// Setting userId collection variable\r",
+									"const userId = pm.response.json().user._id;\r",
+									"pm.collectionVariables.set(\"userId\", userId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"irene\",\r\n    \"password\": \"IRene25*\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Collections by Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"pm.test(\"Collections got should be \\\"Colección 1\\\" and \\\"2\\\"\", function () {\r",
+									"    pm.expect(json.collections.length).to.be.eql(2);\r",
+									"    pm.expect(json.collections[0].title).to.be.eql(\"Colección 1\");\r",
+									"    pm.expect(json.collections[1].title).to.be.eql(\"Colección 2\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should have 1 orphaned datafile\", function () {\r",
+									"    pm.expect(json.orphanedDatafiles.length).to.be.eql(1);\r",
+									"    pm.expect(json.orphanedDatafiles[0].title).to.be.eql(\"Datafile 2\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/api/collections/60aeaf40d0e8477348250ac9",
+							"raw": "{{url}}/api/collections/workspace/:workspaceId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"collections",
-								"60aeaf40d0e8477348250ac9"
+								"workspace",
+								":workspaceId"
+							],
+							"variable": [
+								{
+									"key": "workspaceId",
+									"value": "60aeaf40d0e8477348250ac9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Collection by Datafile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"pm.test(\"Collection got should be \\\"Colección 1\\\"\", function () {\r",
+									"    pm.expect(json.collection).to.not.be.undefined;\r",
+									"    pm.expect(json.collection.title).to.be.eql(\"Colección 1\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/collections/datafile/:datafileId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"collections",
+								"datafile",
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "60b634e98ab1a18d8850e49e"
+								}
 							]
 						}
 					},
@@ -603,9 +794,19 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"pm.test(\"Created collection should have corresponding title and workspace\", function () {\r",
+									"    pm.expect(json.collection).to.not.be.undefined;\r",
+									"    pm.expect(json.collection.title).to.be.eql(\"Collection Test\");\r",
+									"    pm.expect(json.collection.workspace).to.be.eql(\"60aeaf40d0e8477348250ac9\");\r",
+									"});\r",
+									"\r",
 									"const collectionId = pm.response.json().collection._id;\r",
-									"pm.collectionVariables.set(\"collectionId\", collectionId);\r",
-									""
+									"pm.collectionVariables.set(\"collectionId\", collectionId);"
 								],
 								"type": "text/javascript"
 							}
@@ -613,13 +814,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{   \r\n    \"title\": \"Collection Test\", \r\n    \"workspace\": \"60aeaf40d0e8477348250ac9\"\r\n}",
@@ -644,15 +839,26 @@
 				},
 				{
 					"name": "Edit Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Collection edited should have corresponding title\", function () {\r",
+									"    pm.expect(pm.response.json().collection.title).to.be.eql(\"Collection Test Update\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{   \r\n    \"title\": \"Collection Test Update\", \r\n    \"workspace\": \"60aeaf40d0e8477348250ac9\"\r\n}",
@@ -663,14 +869,69 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/collections/{{collectionId}}",
+							"raw": "{{url}}/api/collections/:collectionId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"collections",
-								"{{collectionId}}"
+								":collectionId"
+							],
+							"variable": [
+								{
+									"key": "collectionId",
+									"value": "{{collectionId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Collection Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"title\": \"Collection Test Update\", \r\n    \"workspace\": \"619e23cd9fbc17bde868fcd3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/collections/:collectionId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"collections",
+								":collectionId"
+							],
+							"variable": [
+								{
+									"key": "collectionId",
+									"value": "{{collectionId}}"
+								}
 							]
 						}
 					},
@@ -678,24 +939,37 @@
 				},
 				{
 					"name": "Delete Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/collections/{{collectionId}}",
+							"raw": "{{url}}/api/collections/:collectionId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"collections",
-								"{{collectionId}}"
+								":collectionId"
+							],
+							"variable": [
+								{
+									"key": "collectionId",
+									"value": "{{collectionId}}"
+								}
 							]
 						}
 					},
@@ -708,17 +982,31 @@
 			"item": [
 				{
 					"name": "Get Configurations By Datafile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"pm.test(\"Configurations got should be \\\"Config Filas Duplicadas\\\" and \\\"Config Valor Desviado\\\"\", function () {\r",
+									"    pm.expect(json.configurations.length).to.be.eql(2);\r",
+									"    pm.expect(json.configurations[0].title).to.be.eql(\"Config Filas Duplicadas\");\r",
+									"    pm.expect(json.configurations[1].title).to.be.eql(\"Config Valor Desviado\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/configurations/datafile/60b634e98ab1a18d8850e49e",
+							"raw": "{{url}}/api/configurations/datafile/:datafileId",
 							"host": [
 								"{{url}}"
 							],
@@ -726,7 +1014,13 @@
 								"api",
 								"configurations",
 								"datafile",
-								"60b634e98ab1a18d8850e49e"
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "60b634e98ab1a18d8850e49e"
+								}
 							]
 						}
 					},
@@ -739,9 +1033,18 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const configurationId = pm.response.json().configuration._id;\r",
-									"pm.collectionVariables.set(\"configurationId\", configurationId);\r",
-									""
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Configuration created is the corresponding one\", function () {\r",
+									"    pm.expect(json.configuration.title).to.be.eql(\"Configuration Test\");\r",
+									"});\r",
+									"\r",
+									"const configurationId = json.configuration._id;\r",
+									"pm.collectionVariables.set(\"configurationId\", configurationId);"
 								],
 								"type": "text/javascript"
 							}
@@ -749,13 +1052,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"title\":\"Configuration Test\",\r\n    \"errorCode\":\"duplicate-row\",\r\n    \"extraParams\":{},\r\n    \"datafile\":\"60b634e98ab1a18d8850e49e\"\r\n}",
@@ -780,24 +1077,41 @@
 				},
 				{
 					"name": "Get Configuration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Configuration got is \\\"Configuration Test\\\"\", function () {\r",
+									"    pm.expect(pm.response.json().configuration.title).to.be.eql(\"Configuration Test\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/configurations/{{configurationId}}",
+							"raw": "{{url}}/api/configurations/:configurationId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"configurations",
-								"{{configurationId}}"
+								":configurationId"
+							],
+							"variable": [
+								{
+									"key": "configurationId",
+									"value": "{{configurationId}}"
+								}
 							]
 						}
 					},
@@ -805,15 +1119,26 @@
 				},
 				{
 					"name": "Edit configuration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Configuration edited should have changed\", function () {\r",
+									"    pm.expect(pm.response.json().configuration.title).to.be.eql(\"Configuration Test Update\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"title\":\"Configuration Test Update\",\r\n    \"errorCode\":\"duplicate-row\",\r\n    \"extraParams\":{},\r\n    \"datafile\":\"60b634e98ab1a18d8850e49e\"\r\n}",
@@ -824,14 +1149,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/configurations/{{configurationId}}",
+							"raw": "{{url}}/api/configurations/:configurationId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"configurations",
-								"{{configurationId}}"
+								":configurationId"
+							],
+							"variable": [
+								{
+									"key": "configurationId",
+									"value": "{{configurationId}}"
+								}
 							]
 						}
 					},
@@ -839,24 +1170,37 @@
 				},
 				{
 					"name": "Delete configuration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/configurations/{{configurationId}}",
+							"raw": "{{url}}/api/configurations/:configurationId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"configurations",
-								"{{configurationId}}"
+								":configurationId"
+							],
+							"variable": [
+								{
+									"key": "configurationId",
+									"value": "{{configurationId}}"
+								}
 							]
 						}
 					},
@@ -869,15 +1213,27 @@
 			"item": [
 				{
 					"name": "Get Datafiles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"pm.test(\"Datafiles list got should have length 5\", function () {\r",
+									"    pm.expect(json.datafiles.length).to.be.eql(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{url}}/api/datafiles/",
 							"host": [
@@ -899,6 +1255,16 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"pm.test(\"Datafile created should be \\\"Datafile Test\\\"\", function () {\r",
+									"    pm.expect(json.datafile.title).to.be.eql(\"Datafile Test\");\r",
+									"    pm.expect(json.datafile.workspace).to.be.eql(\"60aeaf40d0e8477348250ac9\");\r",
+									"});\r",
+									"\r",
 									"const datafileId = pm.response.json().datafile._id;\r",
 									"pm.collectionVariables.set(\"datafileId\", datafileId);"
 								],
@@ -908,13 +1274,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"title\":\"Datafile Test\",\r\n    \"coleccion\":null,\r\n    \"workspace\":\"60aeaf40d0e8477348250ac9\"\r\n}",
@@ -938,16 +1298,23 @@
 					"response": []
 				},
 				{
-					"name": "Upload Content",
+					"name": "Upload Datafile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
@@ -969,12 +1336,12 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/D:/irene/Desktop/TFG/ficheros/fulls_dmf_full_v1_20200504_short_10_werrs.csv"
+									"src": "postman_tests/fulls_dmf_full_v1_20200504_short_10_werrs.csv"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/api/uploads/datafiles/{{datafileId}}",
+							"raw": "{{url}}/api/uploads/datafiles/:datafileId",
 							"host": [
 								"{{url}}"
 							],
@@ -982,7 +1349,13 @@
 								"api",
 								"uploads",
 								"datafiles",
-								"{{datafileId}}"
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "{{datafileId}}"
+								}
 							]
 						}
 					},
@@ -990,24 +1363,41 @@
 				},
 				{
 					"name": "Get Datafile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Datafile got is \\\"Datafile Test\\\"\", function () {\r",
+									"    pm.expect(pm.response.json().datafile.title).to.be.eql(\"Datafile Test\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/datafiles/{{datafileId}}",
+							"raw": "{{url}}/api/datafiles/:datafileId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"datafiles",
-								"{{datafileId}}"
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "{{datafileId}}"
+								}
 							]
 						}
 					},
@@ -1015,15 +1405,26 @@
 				},
 				{
 					"name": "Edit Datafile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Datafile should have title \\\"Datafile Test Update\\\"\", function () {\r",
+									"    pm.expect(pm.response.json().datafile.title).to.be.eql(\"Datafile Test Update\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"title\":\"Datafile Test Update\",\r\n    \"coleccion\":null,\r\n    \"workspace\":\"60aeaf40d0e8477348250ac9\"\r\n}",
@@ -1034,14 +1435,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/datafiles/{{datafileId}}",
+							"raw": "{{url}}/api/datafiles/:datafileId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"datafiles",
-								"{{datafileId}}"
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "{{datafileId}}"
+								}
 							]
 						}
 					},
@@ -1049,24 +1456,37 @@
 				},
 				{
 					"name": "Delete Datafile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/datafiles/{{datafileId}}",
+							"raw": "{{url}}/api/datafiles/:datafileId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"datafiles",
-								"{{datafileId}}"
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "{{datafileId}}"
+								}
 							]
 						}
 					},
@@ -1079,17 +1499,32 @@
 			"item": [
 				{
 					"name": "Get Esquemas By Datafile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Esquemas got should be \\\"Esquema 1\\\" and \\\"Esquema 2\\\"\", function () {\r",
+									"    pm.expect(json.esquemas.length).to.be.eql(2);\r",
+									"    pm.expect(json.esquemas[0].title).to.be.eql(\"Esquema 1\");\r",
+									"    pm.expect(json.esquemas[1].title).to.be.eql(\"Esquema 2\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/esquemas/datafile/60b634e98ab1a18d8850e49e",
+							"raw": "{{url}}/api/esquemas/datafile/:datafileId",
 							"host": [
 								"{{url}}"
 							],
@@ -1097,7 +1532,13 @@
 								"api",
 								"esquemas",
 								"datafile",
-								"60b634e98ab1a18d8850e49e"
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "60b634e98ab1a18d8850e49e"
+								}
 							]
 						}
 					},
@@ -1110,6 +1551,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
 									"const esquemaId = pm.response.json().esquema._id;\r",
 									"pm.collectionVariables.set(\"esquemaId\", esquemaId);"
 								],
@@ -1119,13 +1564,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{   \r\n    \"title\":\"Esquema Test\",\r\n    \"datafile\":\"60b634e98ab1a18d8850e49e\",\r\n    \"fileName\":\"dmf_schema.json\",\r\n    \"esquemaContent\": \"\"\r\n}",
@@ -1152,24 +1591,41 @@
 				},
 				{
 					"name": "Get Esquema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Esquema got is \\\"Esquema Test\\\"\", function () {\r",
+									"    pm.expect(pm.response.json().esquema.title).to.be.eql(\"Esquema Test\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/esquemas/{{esquemaId}}",
+							"raw": "{{url}}/api/esquemas/:esquemaId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"esquemas",
-								"{{esquemaId}}"
+								":esquemaId"
+							],
+							"variable": [
+								{
+									"key": "esquemaId",
+									"value": "{{esquemaId}}"
+								}
 							]
 						}
 					},
@@ -1177,15 +1633,26 @@
 				},
 				{
 					"name": "Edit Esquema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Edited Esquema should have name \\\"Esquema Test Update\\\"\", function () {\r",
+									"    pm.expect(pm.response.json().esquema.title).to.be.eql(\"Esquema Test Update\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{   \r\n    \"title\":\"Esquema Test Update\",\r\n    \"datafile\":\"60b634e98ab1a18d8850e49e\",\r\n    \"esquemaContent\":\"\"\r\n}",
@@ -1196,7 +1663,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/uploads/esquema/{{esquemaId}}",
+							"raw": "{{url}}/api/uploads/esquema/:esquemaId",
 							"host": [
 								"{{url}}"
 							],
@@ -1204,7 +1671,13 @@
 								"api",
 								"uploads",
 								"esquema",
-								"{{esquemaId}}"
+								":esquemaId"
+							],
+							"variable": [
+								{
+									"key": "esquemaId",
+									"value": "{{esquemaId}}"
+								}
 							]
 						}
 					},
@@ -1212,24 +1685,37 @@
 				},
 				{
 					"name": "Delete Esquema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/esquemas/{{esquemaId}}",
+							"raw": "{{url}}/api/esquemas/:esquemaId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"esquemas",
-								"{{esquemaId}}"
+								":esquemaId"
+							],
+							"variable": [
+								{
+									"key": "esquemaId",
+									"value": "{{esquemaId}}"
+								}
 							]
 						}
 					},
@@ -1237,17 +1723,35 @@
 				},
 				{
 					"name": "Infer Esquema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Esquema inferred should be \\\"Inferred Esquema - Datafile 1\\\"\", function () {\r",
+									"    pm.expect(json.esquema.title).to.be.eql(\"Inferred Esquema - Datafile 1\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content path should not be empty\", function () {\r",
+									"    pm.expect(json.esquema.contentPath).to.not.be.undefined;\r",
+									"    pm.expect(json.esquema.contentPath).to.not.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/uploads/esquema/infer/60b634e98ab1a18d8850e49e",
+							"raw": "{{url}}/api/uploads/esquema/infer/:esquemaId",
 							"host": [
 								"{{url}}"
 							],
@@ -1256,41 +1760,13 @@
 								"uploads",
 								"esquema",
 								"infer",
-								"60b634e98ab1a18d8850e49e"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Upload Esquema Content",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n      \"id\": null,\r\n      \"contentPath\": \"contentPath\", \r\n      \"esquemaContent\": \"esquemaContent\",\r\n      \"datafile\":\"datafileId\",\r\n      \"operation\": \"update\",\r\n      \"entity\":\"esquemas\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/uploads/esquema",
-							"host": [
-								"{{url}}"
+								":esquemaId"
 							],
-							"path": [
-								"api",
-								"uploads",
-								"esquema"
+							"variable": [
+								{
+									"key": "esquemaId",
+									"value": "60b634e98ab1a18d8850e49e"
+								}
 							]
 						}
 					},
@@ -1303,15 +1779,26 @@
 			"item": [
 				{
 					"name": "Get Frictionless Errors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Frictionless Errors list should have length 36\", function () {\r",
+									"    pm.expect(pm.response.json().fricErrors.length).to.be.eql(36);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{url}}/api/fricErrors/",
 							"host": [
@@ -1333,15 +1820,32 @@
 			"item": [
 				{
 					"name": "Get Invitations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Invitations list should have length total invitations\", function () {\r",
+									"    pm.expect(json.invitations.length).to.be.eql(json.totalInvitations);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Invitations count should be less than max Invitations\", function () {\r",
+									"    pm.expect(json.totalInvitations <= json.maxInvitations);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{url}}/api/invitations",
 							"host": [
@@ -1362,8 +1866,21 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const invitationId = pm.response.json().invitation._id;\r",
-									"pm.collectionVariables.set(\"invitationId\", invitationId);"
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Invitation workspace should have id \\\"60aebafbb83c905694cd191c\\\"\", function () {\r",
+									"    pm.expect(json.invitation.workspace).to.be.eql(\"60aebafbb83c905694cd191c\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Invitation status should be pending\", function () {\r",
+									"    pm.expect(json.invitation.status).to.be.eql(\"pending\");\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set(\"invitationId\", json.invitation._id);"
 								],
 								"type": "text/javascript"
 							}
@@ -1371,13 +1888,51 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"receiver\":\"walo@gmail.com\",\r\n    \"workspace\":\"60aebafbb83c905694cd191c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
 							}
-						],
+						},
+						"url": {
+							"raw": "{{url}}/api/invitations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"invitations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Invitation Personal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message shown should show the corresponding error\", function () {\r",
+									"    pm.expect(pm.response.json().message).to.be.eql(\"You can not invite users to your personal workspace!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"receiver\":\"walo@gmail.com\",\r\n    \"workspace\":\"60aeaf40d0e8477348250ac9\"\r\n}",
@@ -1407,15 +1962,21 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
 									"const token = pm.response.json().token;\r",
-									"pm.globals.set(\"token\",\"Bearer \"+token)\r",
-									""
+									"pm.collectionVariables.set(\"token\", token)"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1443,15 +2004,26 @@
 				},
 				{
 					"name": "Edit Invitation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Invitation status should be accepted\", function () {\r",
+									"    pm.expect(pm.response.json().invitation.status).to.be.eql(\"accepted\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"status\":\"accepted\"\r\n}",
@@ -1462,14 +2034,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/invitations/{{invitationId}}",
+							"raw": "{{url}}/api/invitations/:invitationId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"invitations",
-								"{{invitationId}}"
+								":invitationId"
+							],
+							"variable": [
+								{
+									"key": "invitationId",
+									"value": "{{invitationId}}"
+								}
 							]
 						}
 					},
@@ -1477,24 +2055,37 @@
 				},
 				{
 					"name": "Delete Invitation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/invitations/{{invitationId}}",
+							"raw": "{{url}}/api/invitations/:invitationId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"invitations",
-								"{{invitationId}}"
+								":invitationId"
+							],
+							"variable": [
+								{
+									"key": "invitationId",
+									"value": "{{invitationId}}"
+								}
 							]
 						}
 					},
@@ -1506,79 +2097,24 @@
 			"name": "Roles",
 			"item": [
 				{
-					"name": "Delete Role",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{url}}/api/roles/60aebafbb83c905694cd191c",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"roles",
-								"60aebafbb83c905694cd191c"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Role",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n      \"id\": \"60b36426894076503c4de402\",\r\n      \"role\": \"member\", \r\n      \"user\": null,\r\n      \"workspace\": \"60aebafbb83c905694cd191c\"\r\n    }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/roles/60b36426894076503c4de402",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"roles",
-								"60b36426894076503c4de402"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Tests",
-			"item": [
-				{
-					"name": "Login User (irene)",
+					"name": "Login User (irene) Copy",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
+									"// Testing response is OK\r",
+									"pm.test(\"Status code should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Setting token collection variable for Authentication Header\r",
 									"const token = pm.response.json().token;\r",
-									"pm.globals.set(\"token\",\"Bearer \"+token)\r",
-									""
+									"pm.collectionVariables.set(\"token\", token);\r",
+									"\r",
+									"// Setting userId collection variable\r",
+									"const userId = pm.response.json().user._id;\r",
+									"pm.collectionVariables.set(\"userId\", userId);"
 								],
 								"type": "text/javascript"
 							}
@@ -1611,18 +2147,173 @@
 					"response": []
 				},
 				{
+					"name": "Delete Role Without Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message should show the corresponding error\", function () {\r",
+									"    pm.expect(pm.response.json().message).to.be.eql(\"You are not allowed to leave this workspace without an owner!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/roles/:workspaceId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								":workspaceId"
+							],
+							"variable": [
+								{
+									"key": "workspaceId",
+									"value": "60aebafbb83c905694cd191c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Role should be owner\", function () {\r",
+									"    pm.expect(pm.response.json().role.role).to.be.eql(\"owner\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"role\": \"owner\", \r\n      \"workspace\": \"60aebafbb83c905694cd191c\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/roles/:roleId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								":roleId"
+							],
+							"variable": [
+								{
+									"key": "roleId",
+									"value": "60b36426894076503c4de402"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/roles/:workspaceId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								":workspaceId"
+							],
+							"variable": [
+								{
+									"key": "workspaceId",
+									"value": "60aebafbb83c905694cd191c"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tests",
+			"item": [
+				{
 					"name": "Get Tests By Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Tests list should have length 3\", function () {\r",
+									"    pm.expect(json.tests.length).to.be.eql(3);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Tests should be the corresponding ones\", function () {\r",
+									"    pm.expect(json.tests[0].title).to.be.eql(\"PRUEBA DMF 1\");\r",
+									"    pm.expect(json.tests[1].title).to.be.eql(\"PRUEBA DMF 2\");\r",
+									"    pm.expect(json.tests[2].title).to.be.eql(\"PRUEBA DMF 3\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/tests/workspace/60aeaf40d0e8477348250ac9",
+							"raw": "{{url}}/api/tests/workspace/:workspaceId",
 							"host": [
 								"{{url}}"
 							],
@@ -1630,7 +2321,13 @@
 								"api",
 								"tests",
 								"workspace",
-								"60aeaf40d0e8477348250ac9"
+								":workspaceId"
+							],
+							"variable": [
+								{
+									"key": "workspaceId",
+									"value": "60aeaf40d0e8477348250ac9"
+								}
 							]
 						}
 					},
@@ -1638,17 +2335,36 @@
 				},
 				{
 					"name": "Get Tests By Datafile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Tests list should have length 3\", function () {\r",
+									"    pm.expect(json.tests.length).to.be.eql(3);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Tests should be the corresponding ones\", function () {\r",
+									"    pm.expect(json.tests[0].title).to.be.eql(\"PRUEBA DMF 1\");\r",
+									"    pm.expect(json.tests[1].title).to.be.eql(\"PRUEBA DMF 2\");\r",
+									"    pm.expect(json.tests[2].title).to.be.eql(\"PRUEBA DMF 3\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/tests/workspace/60aeaf40d0e8477348250ac9/datafile/60b634e98ab1a18d8850e49e",
+							"raw": "{{url}}/api/tests/workspace/:workspaceId/datafile/:datafileId",
 							"host": [
 								"{{url}}"
 							],
@@ -1656,9 +2372,19 @@
 								"api",
 								"tests",
 								"workspace",
-								"60aeaf40d0e8477348250ac9",
+								":workspaceId",
 								"datafile",
-								"60b634e98ab1a18d8850e49e"
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "workspaceId",
+									"value": "60aeaf40d0e8477348250ac9"
+								},
+								{
+									"key": "datafileId",
+									"value": "60b634e98ab1a18d8850e49e"
+								}
 							]
 						}
 					},
@@ -1671,6 +2397,14 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Test created should be \\\"Test Test\\\"\", function () {\r",
+									"    pm.expect(pm.response.json().test.title).to.be.eql(\"Test Test\");\r",
+									"});\r",
+									"\r",
 									"const testId = pm.response.json().test._id;\r",
 									"pm.collectionVariables.set(\"testId\", testId);\r",
 									""
@@ -1681,13 +2415,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"title\":\"Test Test\",\r\n    \"esquema\":null,\r\n    \"delimiter\":\"|\",\r\n    \"configurations\":[],\r\n    \"datafile\": \"60b634e98ab1a18d8850e49e\"\r\n}",
@@ -1712,24 +2440,41 @@
 				},
 				{
 					"name": "Get Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Test got should be \\\"Test Test\\\"\", function () {\r",
+									"    pm.expect(pm.response.json().test.title).to.be.eql(\"Test Test\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/tests/{{testId}}",
+							"raw": "{{url}}/api/tests/:testId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"tests",
-								"{{testId}}"
+								":testId"
+							],
+							"variable": [
+								{
+									"key": "testId",
+									"value": "{{testId}}"
+								}
 							]
 						}
 					},
@@ -1737,15 +2482,26 @@
 				},
 				{
 					"name": "Edit Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Test edited should be \\\"Test Test Update\\\"\", function () {\r",
+									"    pm.expect(pm.response.json().test.title).to.be.eql(\"Test Test Update\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id\":\"{{testId}}\",\r\n    \"title\":\"Test Test Update\",\r\n    \"esquema\":null,\r\n    \"configurations\":[],\r\n    \"datafile\": \"60b634e98ab1a18d8850e49e\",\r\n    \"action\":\"\"\r\n}",
@@ -1756,14 +2512,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/tests/{{testId}}",
+							"raw": "{{url}}/api/tests/:testId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"tests",
-								"{{testId}}"
+								":testId"
+							],
+							"variable": [
+								{
+									"key": "testId",
+									"value": "{{testId}}"
+								}
 							]
 						}
 					},
@@ -1771,15 +2533,29 @@
 				},
 				{
 					"name": "Execute Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Test Report path and Exec buffer should not be empty\", function () {\r",
+									"    pm.expect(json.testUpdates.reportPath).to.not.be.empty;\r",
+									"    pm.expect(json.execBuffer).to.not.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"testId\":\"{{testId}}\"\r\n}",
@@ -1805,24 +2581,37 @@
 				},
 				{
 					"name": "Delete Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/tests/{{testId}}",
+							"raw": "{{url}}/api/tests/:testId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"tests",
-								"{{testId}}"
+								":testId"
+							],
+							"variable": [
+								{
+									"key": "testId",
+									"value": "{{testId}}"
+								}
 							]
 						}
 					},
@@ -1835,15 +2624,32 @@
 			"item": [
 				{
 					"name": "Get Workspaces",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Workspaces list should have length total workspaces\", function () {\r",
+									"    pm.expect(json.workspaces.length).to.be.eql(json.totalWorkspaces);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Workspaces count should be less than max Workspaces\", function () {\r",
+									"    pm.expect(json.totalWorkspaces <= json.maxWorkspaces);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{url}}/api/workspaces",
 							"host": [
@@ -1864,9 +2670,20 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Workspace created should be \\\"Workspace Test\\\"\", function () {\r",
+									"    pm.expect(pm.response.json().workspace.title).to.be.eql(\"Workspace Test\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Workspace created should have the user for owner\", function () {\r",
+									"    pm.expect(pm.response.json().role.user).to.be.eql(pm.collectionVariables.get(\"userId\"));\r",
+									"});\r",
+									"\r",
 									"const workspaceId = pm.response.json().workspace._id;\r",
-									"pm.collectionVariables.set(\"workspaceId\", workspaceId);\r",
-									""
+									"pm.collectionVariables.set(\"workspaceId\", workspaceId);"
 								],
 								"type": "text/javascript"
 							}
@@ -1874,13 +2691,7 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"title\": \"Workspace Test\", \r\n    \"description\": \"\",\r\n    \"creationMoment\": null,\r\n    \"mandatory\": false,\r\n    \"invitations\": []\r\n}",
@@ -1905,24 +2716,41 @@
 				},
 				{
 					"name": "Get Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Workspace got should be \\\"Workspace Test\\\"\", function () {\r",
+									"    pm.expect(pm.response.json().workspace.title).to.be.eql(\"Workspace Test\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/workspaces/{{workspaceId}}",
+							"raw": "{{url}}/api/workspaces/:workspaceId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"workspaces",
-								"{{workspaceId}}"
+								":workspaceId"
+							],
+							"variable": [
+								{
+									"key": "workspaceId",
+									"value": "{{workspaceId}}"
+								}
 							]
 						}
 					},
@@ -1930,15 +2758,26 @@
 				},
 				{
 					"name": "Edit Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Workspace edited should be \\\"Workspace Test Update\\\"\", function () {\r",
+									"    pm.expect(pm.response.json().workspace.title).to.be.eql(\"Workspace Test Update\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"title\": \"Workspace Test Update\", \r\n    \"description\": \"\", \r\n    \"mandatory\": false, \r\n    \"invitations\": []\r\n}",
@@ -1949,14 +2788,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/workspaces/{{workspaceId}}",
+							"raw": "{{url}}/api/workspaces/:workspaceId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"workspaces",
-								"{{workspaceId}}"
+								":workspaceId"
+							],
+							"variable": [
+								{
+									"key": "workspaceId",
+									"value": "{{workspaceId}}"
+								}
 							]
 						}
 					},
@@ -1964,24 +2809,37 @@
 				},
 				{
 					"name": "Delete Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/workspaces/{{workspaceId}}",
+							"raw": "{{url}}/api/workspaces/:workspaceId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"workspaces",
-								"{{workspaceId}}"
+								":workspaceId"
+							],
+							"variable": [
+								{
+									"key": "workspaceId",
+									"value": "{{workspaceId}}"
+								}
 							]
 						}
 					},
@@ -1994,17 +2852,28 @@
 			"item": [
 				{
 					"name": "Get Activity By User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Activities list should have length > 0\", function () {\r",
+									"    pm.expect(pm.response.json().activities.length > 0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/activities/user/60ad88d2a74d2e58cc611a31",
+							"raw": "{{url}}/api/activities/user/:userId",
 							"host": [
 								"{{url}}"
 							],
@@ -2012,7 +2881,13 @@
 								"api",
 								"activities",
 								"user",
-								"60ad88d2a74d2e58cc611a31"
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "60ad88d2a74d2e58cc611a31"
+								}
 							]
 						}
 					},
@@ -2020,17 +2895,28 @@
 				},
 				{
 					"name": "Get Activity By Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Activities list should have length 15\", function () {\r",
+									"    pm.expect(pm.response.json().activities.length).to.be.eql(2);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/activities/workspace/60aebafbb83c905694cd191c",
+							"raw": "{{url}}/api/activities/workspace/:workspaceId",
 							"host": [
 								"{{url}}"
 							],
@@ -2038,7 +2924,13 @@
 								"api",
 								"activities",
 								"workspace",
-								"60aebafbb83c905694cd191c"
+								":workspaceId"
+							],
+							"variable": [
+								{
+									"key": "workspaceId",
+									"value": "60aebafbb83c905694cd191c"
+								}
 							]
 						}
 					},
@@ -2050,16 +2942,82 @@
 			"name": "Global Configuration",
 			"item": [
 				{
+					"name": "Login User (irene) Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Testing response is OK\r",
+									"pm.test(\"Status code should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Setting token collection variable for Authentication Header\r",
+									"const token = pm.response.json().token;\r",
+									"pm.collectionVariables.set(\"token\", token);\r",
+									"\r",
+									"// Setting userId collection variable\r",
+									"const userId = pm.response.json().user._id;\r",
+									"pm.collectionVariables.set(\"userId\", userId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"irene\",\r\n    \"password\": \"IRene25*\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get Global Configuration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Global configuration should have limitUsers and limitWorkspaces\", function () {\r",
+									"    pm.expect(json.globalConfiguration).to.have.property(\"limitUsers\");\r",
+									"    pm.expect(json.globalConfiguration.limitUsers >= 5);\r",
+									"    pm.expect(json.globalConfiguration).to.have.property(\"limitWorkspaces\");\r",
+									"    pm.expect(json.globalConfiguration.limitWorkspaces >= 3);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{url}}/api/gconfiguration",
 							"host": [
@@ -2075,15 +3033,118 @@
 				},
 				{
 					"name": "Update Global Configuration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Global configuration should have limitUsers and limitWorkspaces changed\", function () {\r",
+									"    pm.expect(json.globalConfiguration).to.have.property(\"limitUsers\");\r",
+									"    pm.expect(json.globalConfiguration.limitUsers).to.be.eql(5);\r",
+									"    pm.expect(json.globalConfiguration).to.have.property(\"limitWorkspaces\");\r",
+									"    pm.expect(json.globalConfiguration.limitWorkspaces).to.be.eql(6);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"id\": \"619637dd5e471a3913647ea9\",\r\n    \"limitUsers\": 5, \r\n    \"limitWorkspaces\": 6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
 							}
-						],
+						},
+						"url": {
+							"raw": "{{url}}/api/gconfiguration",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"gconfiguration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User (walo) Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const token = pm.response.json().token;\r",
+									"pm.collectionVariables.set(\"token\", token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"walo\",\r\n    \"password\": \"walo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Global Configuration Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{ \r\n    \"id\": \"619637dd5e471a3913647ea9\",\r\n    \"limitUsers\": 5, \r\n    \"limitWorkspaces\": 6\r\n}",
@@ -2112,231 +3173,24 @@
 			"name": "Suggestions",
 			"item": [
 				{
-					"name": "Get Suggestions By Datafile",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{url}}/api/suggestions/get/60b634e98ab1a18d8850e49e",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"suggestions",
-								"get",
-								"60b634e98ab1a18d8850e49e"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Suggestion By Datafile",
+					"name": "Login User (irene) Copy 2",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const suggestionId = pm.response.json().suggestion[0]._id;\r",
-									"console.log(pm.response.json())\r",
-									"console.log(suggestionId)\r",
-									"pm.collectionVariables.set(\"suggestionId\", suggestionId);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"rawData\":[\r\n    \"constraint-error|[#table, #row, #cell]||MATCH_INTERNET|1|2|The cell \\\"\\\" in row at position \\\"2\\\" and field \\\"MATCH_INTERNET\\\" at position \\\"1\\\" does not conform to a constraint: constraint \\\"required\\\" is \\\"True\\\"|\"\r\n],\r\n    \"testDelimiter\":\"|\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/suggestions/add/60b634e98ab1a18d8850e49e",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"suggestions",
-								"add",
-								"60b634e98ab1a18d8850e49e"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Apply Suggestion",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"operation\":\"getRow\",\r\n    \"contentLines\":[\r\n        \"MATCH_INTERNET|MATCH_CAMPAGNE|MATCH_METHODE|MATCH_AVEC_COMMANDE|MATCH_AVEC_IMMATRICULATION|EST_DOUBLON|EST_DUPLICATA|DELAI_TRANSFO_MOYEN|DELAI_TRANSFO_MEDIAN|JOURS_ECOULES_DEPUIS_DEMANDE|MATCH_TIMING_30|MATCH_TIMING_60|MATCH_TIMING_90|MATCH_TIMING_180|TYPE_LEAD|METHODE_LEVIER|METHODE_BUSINESS|JOURS_ECOULES_DEPUIS_ROUTAGE|MARQUE_LEAD|SOUS_TYPE_LEAD|CMDMID|L_I_APPOINTMENT_DATE|L_I_ASSIGNMENT_COUNTER|BRAND__C|L_I_BRAND_OF_INTEREST|L_I_CALL_CMDM|L_I_CALLOUTMAXENDDATE|L_I_CAMPAIGN|L_I_CONTEXTE|L_I_CONVERTEDDATE|L_I_COTATION|CREATED_DATE_BY_CUSTOMER__C|L_I_CREATEDBYID|L_I_CREATIONORIGIN|L_I_CURRENT_TIMING|L_I_CURRENT_VEHICLE_MODEL|L_I_CURRENTMILAGE|L_I_DATE_DENVOI|L_I_DATE_ECHEANCE|L_I_DATEOFPURCHASEINTENT|L_I_DEVICE|L_I_FINALDEALER|L_I_FIRST_ACTION_DATE|L_I_ISCONVERTED|L_I_LAST_ACTIVITY_DATE|L_I_LASTMODIFIEDDATE|L_I_LASTREFERENCEDDATE|L_I_LASTVIEWEDDATE|L_I_LATE_DATE|L_I_LEAD_F6_ID|L_I_LEADFORM_NAME|LEADSOURCE|L_I_MAEVA_URL|L_I_ORIGINE|L_I_OWNED_BRAND|L_I_OWNED_REGISTRATION_NBR|L_I_OWNED_VEHICLE_FIRST_REG|L_I_PARENT_LEAD|L_I_PLATFORM|L_I_PLATFORM_NAME|L_I_PLATFORM_NAME_2|L_I_PROCESSED_BY_PLATFORM|L_I_QUALIFICATION|L_I_QUALIFICATION_SALESMAN|L_I_QUALIFIED_LEAD_REASSIG_D|L_I_QUALIFIED_LEAD_REASSIG_U|L_I_QUOTE_INTERVENTION_DURA|L_I_QUOTE_PRICE|L_I_QUOTE_URI|L_I_REMINDERDATE|L_I_REMINDERDATE_SALESMAN|L_I_SECOND_ACTION_DATE|L_I_SECOND_LATE_DATE|L_I_SECOND_STATE|L_I_SECOND_WARNING_DATE|L_I_SELLERCODE|L_I_SEMI_CLAIR_CODE|L_I_STATUS|L_I_SUBQUALIFICATION|L_I_SUBQUALIFICATION_SALESMAN|SUBTYPE_OF_INTEREST__C|L_I_TECH_LEADID|L_I_TIME_PROCESSING_TO_FIRST_C|L_I_TIME_PROCESSING_TO_SECOND|TYPEOFINTEREST__C|VEHICLEOFINTEREST__C|L_I_WARNING_DATE|DS_DATE_ENVOI_ROUTAGE_DESCENTE|DS_ID_CAMPAGNE|DS_CRM_PRM|DS_LIBELLE_DE_LA_CAMPAGNE|DS_CATEGORIE_CAMPAGNE|DS_VERSION_CREA|DS_CANAL|DS_COMBIN_CANAL|DS_COHERENCE_DE_COM|DS_NUMERO_DE_COMMANDE|DS_CODE_DR|DS_LIBELLE_DR|DS_CODE_RRF|DS_LIBELLE_AFFAIRE|DS_COMPTE_AFFAIRE_VN|DS_TMR|DS_RMR|DS_RATTACHEMENT_GROUPE|DS_IDENTIFIANT_MDM|DS_EMLAP|DS_PROVENANCE_DE_L_EMLAP|DS_CODE_BROCKERS|DS_MARQUE|DS_MODELE|DS_SEGMENT_EUR|DS_VN_VO|DS_AGE_A_L_ACHAT_EN_MOIS|DS_DATE_D_ACHAT|DS_SEGMENTATION|DS_SCORE_DE_RENOUVELLEMENT|DS_VALEUR_CLIENT|DS_PARTICIPANT|DS_OUVERTURE|DS_CLIC|DS_DESABONNEMENT|DS_BOUNCE_PLAINTE|DS_MARQUE_CAMPAGNE|DS_MODELE_CAMPAGNE|CMD_EV_IDPERS|CMD_EV_AFF_VENTE_COM|CMD_EV_MARQUE_COM|CMD_EV_MODELE_COM|CMD_EV_DT_ANNUL_COM|CMD_EV_DT_CRE_EVENT_COM|SIGNALETIQUE_AFFAIRE_ID|SIGNALETIQUE_GROUPE_NOM|SIGNALETIQUE_PLAQUE_NOM|SIGNALETIQUE_DR_LIBELLE|SIGNALETIQUE_MRS|SIGNALETIQUE_ME|SIGNALETIQUE_BMR|SIGNALETIQUE_NOM_USUEL|VE_MARQUE|VE_MODELE|VE_DT_MAJ_REL_CLI_VEH\\r\",\r\n        \"|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|453|RENAULT|Trade-In 2 Store|3701472|||RENAULT||||marque_renault_bi_def-large|cotation-en-ligne|||2019-02-04|||||||||desktop|||||||||||||Commercial links|||||||||||||||||||||||||||Listing Argus||||VO|||||||||||||||||||||||||||||||||||||||||||||||00000029|RRG|-|MARSEILLE|Anne-Valerie DELATTRE|Jean MEZZASALMA|Philippe NAZARIE|TOULON|RENAULT|FEH|2019-07-26\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|453|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-02-04|||||||||desktop|||||||||||||No-cookie|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000401|RRG|-|NANCY|Régis FIOCCA|PATRICK DELARBRE| |NANCY|RENAULT|SCENIC III GD|2019-05-24\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|453|RENAULT|||||RENAULT||||apv_revision_go_pro_ord_def-large|devis-en-ligne|||2019-02-04|||||||||desktop|||||||||||||Commercial links|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00020343|RRG|-|LYON|Yann LEMENN|Damien DELAITTRE|CHRISTOPHE BOURDEAU|PARET J. P. & ANNE|RENAULT|87J|2019-06-28\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|478|RENAULT|Demande d'entretien (APV)|1211590|||RENAULT|||||site-national|||2019-01-10|||||||||desktop|||||||||||||Natural Referencement|||||||||||||||||||||||||||Maintenance request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000255|EMIL FREY|EMIL FREY CHAMPAGNE|NANCY|Francisco MARTIN|Jessim GRUNBERG|Dominique LACZNY|REIMS|RENAULT||2019-05-22\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||1|1|1|1||0|1|478|RENAULT|Trade-In 2 Store|155253636|||RENAULT|||||devis-en-ligne|||2019-01-10|||||||||mobile|||||||||||||Natural Referencement|||||||||||||||||||||||||||Quote request with RDV||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000555|RRG|-|LYON|Yann LEMENN|Damien DELAITTRE|CHRISTOPHE BOURDEAU|LYON SUD|RENAULT|CL4|2019-01-10\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||1|1|1|1||0|1|480|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||No-cookie|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000258|EMIL FREY|E.FREY PAS DE CALAIS NORD|LILLE|Philippe BLOUZET|Bruno PONCIN|Jean-Michel DROMERT|BETHUNE|RENAULT|ZOE|2019-01-10\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|1|1||0|1|480|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||No-cookie|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000258|EMIL FREY|E.FREY PAS DE CALAIS NORD|LILLE|Philippe BLOUZET|Bruno PONCIN|Jean-Michel DROMERT|BETHUNE|RENAULT|ZOE|2019-03-31\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||1|1|1|1||0|1|480|DACIA|||||DACIA|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||Direct|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00001288|EMIL FREY|EMIL FREY PARIS|PARIS ILE DE FRANCE|ARNAUD DELABROYE|Marc MASSON|Philippe GRIVEAU|MEAUX|DACIA|52B|2019-01-19\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||1|1|1|1||0|1|480|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||Natural Referencement|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000952|RRG|-|BORDEAUX|Jean-Marc BERNOU|Frédéric PONTILLE|Pierre-Marie SARRUS|TOUL. ROCADE OUEST|RENAULT|CLI|2019-01-08\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|480|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||Direct|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00017008|ARATTO|-|BORDEAUX|Jean-Marc STADNIKOFF|Pascal FOUCHER|NATHALIE LEDRICH|TEIXEIRA JOSE MANUEL|RENAULT|MB4|2019-06-23\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|480|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||Direct|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00017008|ARATTO|-|BORDEAUX|Jean-Marc STADNIKOFF|Pascal FOUCHER|NATHALIE LEDRICH|TEIXEIRA JOSE MANUEL|RENAULT|MB4|2019-06-23\\r\",\r\n        \"\"],\r\n    \"testDelimiter\":\"|\",\r\n    \"newRowContent\":null\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/suggestions/apply/{{suggestionId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"suggestions",
-								"apply",
-								"{{suggestionId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Suggestions By Datafile",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{url}}/api/suggestions/deleteAll/60b634e98ab1a18d8850e49e",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"suggestions",
-								"deleteAll",
-								"60b634e98ab1a18d8850e49e"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Suggestion By Datafile 2",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const suggestionId = pm.response.json().suggestion[0]._id;\r",
-									"pm.collectionVariables.set(\"suggestionId\", suggestionId);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"rawData\":[\r\n    \"constraint-error|[#table, #row, #cell]||MATCH_INTERNET|1|2|The cell \\\"\\\" in row at position \\\"2\\\" and field \\\"MATCH_INTERNET\\\" at position \\\"1\\\" does not conform to a constraint: constraint \\\"required\\\" is \\\"True\\\"|\"\r\n],\r\n    \"testDelimiter\":\"|\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/suggestions/add/60b634e98ab1a18d8850e49e",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"suggestions",
-								"add",
-								"60b634e98ab1a18d8850e49e"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Suggestion",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{url}}/api/suggestions/{{suggestionId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"suggestions",
-								"{{suggestionId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Terminals",
-			"item": [
-				{
-					"name": "Login User (irene)",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const token = pm.response.json().token;\r",
-									"pm.globals.set(\"token\",\"Bearer \"+token)\r",
+									"// Testing response is OK\r",
+									"pm.test(\"Status code should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
 									"\r",
+									"// Setting token collection variable for Authentication Header\r",
+									"const token = pm.response.json().token;\r",
+									"pm.collectionVariables.set(\"token\", token);\r",
+									"\r",
+									"// Setting userId collection variable\r",
 									"const userId = pm.response.json().user._id;\r",
-									"pm.collectionVariables.set(\"userId\", userId);\r",
-									""
+									"pm.collectionVariables.set(\"userId\", userId);"
 								],
 								"type": "text/javascript"
 							}
@@ -2369,25 +3223,322 @@
 					"response": []
 				},
 				{
-					"name": "Get Terminal",
+					"name": "Get Suggestions By Datafile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should have 1 suggestion\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property(\"suggestions\");\r",
+									"    pm.expect(pm.response.json().suggestions.length).to.be.eql(1);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{url}}/api/terminals/{{userId}}",
+							"raw": "{{url}}/api/suggestions/get/:datafileId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"suggestions",
+								"get",
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "60b634e98ab1a18d8850e49e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Suggestion By Datafile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should have 1 suggestion\", function () {\r",
+									"    pm.expect(pm.response.json().suggestion.length).to.be.eql(1);\r",
+									"});\r",
+									"\r",
+									"const suggestionId = pm.response.json().suggestion[0]._id;\r",
+									"pm.collectionVariables.set(\"suggestionId\", suggestionId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rawData\":[\r\n    \"constraint-error|[#table, #row, #cell]||MATCH_INTERNET|1|2|The cell \\\"\\\" in row at position \\\"2\\\" and field \\\"MATCH_INTERNET\\\" at position \\\"1\\\" does not conform to a constraint: constraint \\\"required\\\" is \\\"True\\\"|\"\r\n],\r\n    \"testDelimiter\":\"|\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/suggestions/add/:datafileId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"suggestions",
+								"add",
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "60b634e98ab1a18d8850e49e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apply Suggestion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"operation\":\"getRow\",\r\n    \"contentLines\":[\r\n        \"MATCH_INTERNET|MATCH_CAMPAGNE|MATCH_METHODE|MATCH_AVEC_COMMANDE|MATCH_AVEC_IMMATRICULATION|EST_DOUBLON|EST_DUPLICATA|DELAI_TRANSFO_MOYEN|DELAI_TRANSFO_MEDIAN|JOURS_ECOULES_DEPUIS_DEMANDE|MATCH_TIMING_30|MATCH_TIMING_60|MATCH_TIMING_90|MATCH_TIMING_180|TYPE_LEAD|METHODE_LEVIER|METHODE_BUSINESS|JOURS_ECOULES_DEPUIS_ROUTAGE|MARQUE_LEAD|SOUS_TYPE_LEAD|CMDMID|L_I_APPOINTMENT_DATE|L_I_ASSIGNMENT_COUNTER|BRAND__C|L_I_BRAND_OF_INTEREST|L_I_CALL_CMDM|L_I_CALLOUTMAXENDDATE|L_I_CAMPAIGN|L_I_CONTEXTE|L_I_CONVERTEDDATE|L_I_COTATION|CREATED_DATE_BY_CUSTOMER__C|L_I_CREATEDBYID|L_I_CREATIONORIGIN|L_I_CURRENT_TIMING|L_I_CURRENT_VEHICLE_MODEL|L_I_CURRENTMILAGE|L_I_DATE_DENVOI|L_I_DATE_ECHEANCE|L_I_DATEOFPURCHASEINTENT|L_I_DEVICE|L_I_FINALDEALER|L_I_FIRST_ACTION_DATE|L_I_ISCONVERTED|L_I_LAST_ACTIVITY_DATE|L_I_LASTMODIFIEDDATE|L_I_LASTREFERENCEDDATE|L_I_LASTVIEWEDDATE|L_I_LATE_DATE|L_I_LEAD_F6_ID|L_I_LEADFORM_NAME|LEADSOURCE|L_I_MAEVA_URL|L_I_ORIGINE|L_I_OWNED_BRAND|L_I_OWNED_REGISTRATION_NBR|L_I_OWNED_VEHICLE_FIRST_REG|L_I_PARENT_LEAD|L_I_PLATFORM|L_I_PLATFORM_NAME|L_I_PLATFORM_NAME_2|L_I_PROCESSED_BY_PLATFORM|L_I_QUALIFICATION|L_I_QUALIFICATION_SALESMAN|L_I_QUALIFIED_LEAD_REASSIG_D|L_I_QUALIFIED_LEAD_REASSIG_U|L_I_QUOTE_INTERVENTION_DURA|L_I_QUOTE_PRICE|L_I_QUOTE_URI|L_I_REMINDERDATE|L_I_REMINDERDATE_SALESMAN|L_I_SECOND_ACTION_DATE|L_I_SECOND_LATE_DATE|L_I_SECOND_STATE|L_I_SECOND_WARNING_DATE|L_I_SELLERCODE|L_I_SEMI_CLAIR_CODE|L_I_STATUS|L_I_SUBQUALIFICATION|L_I_SUBQUALIFICATION_SALESMAN|SUBTYPE_OF_INTEREST__C|L_I_TECH_LEADID|L_I_TIME_PROCESSING_TO_FIRST_C|L_I_TIME_PROCESSING_TO_SECOND|TYPEOFINTEREST__C|VEHICLEOFINTEREST__C|L_I_WARNING_DATE|DS_DATE_ENVOI_ROUTAGE_DESCENTE|DS_ID_CAMPAGNE|DS_CRM_PRM|DS_LIBELLE_DE_LA_CAMPAGNE|DS_CATEGORIE_CAMPAGNE|DS_VERSION_CREA|DS_CANAL|DS_COMBIN_CANAL|DS_COHERENCE_DE_COM|DS_NUMERO_DE_COMMANDE|DS_CODE_DR|DS_LIBELLE_DR|DS_CODE_RRF|DS_LIBELLE_AFFAIRE|DS_COMPTE_AFFAIRE_VN|DS_TMR|DS_RMR|DS_RATTACHEMENT_GROUPE|DS_IDENTIFIANT_MDM|DS_EMLAP|DS_PROVENANCE_DE_L_EMLAP|DS_CODE_BROCKERS|DS_MARQUE|DS_MODELE|DS_SEGMENT_EUR|DS_VN_VO|DS_AGE_A_L_ACHAT_EN_MOIS|DS_DATE_D_ACHAT|DS_SEGMENTATION|DS_SCORE_DE_RENOUVELLEMENT|DS_VALEUR_CLIENT|DS_PARTICIPANT|DS_OUVERTURE|DS_CLIC|DS_DESABONNEMENT|DS_BOUNCE_PLAINTE|DS_MARQUE_CAMPAGNE|DS_MODELE_CAMPAGNE|CMD_EV_IDPERS|CMD_EV_AFF_VENTE_COM|CMD_EV_MARQUE_COM|CMD_EV_MODELE_COM|CMD_EV_DT_ANNUL_COM|CMD_EV_DT_CRE_EVENT_COM|SIGNALETIQUE_AFFAIRE_ID|SIGNALETIQUE_GROUPE_NOM|SIGNALETIQUE_PLAQUE_NOM|SIGNALETIQUE_DR_LIBELLE|SIGNALETIQUE_MRS|SIGNALETIQUE_ME|SIGNALETIQUE_BMR|SIGNALETIQUE_NOM_USUEL|VE_MARQUE|VE_MODELE|VE_DT_MAJ_REL_CLI_VEH\\r\",\r\n        \"|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|453|RENAULT|Trade-In 2 Store|3701472|||RENAULT||||marque_renault_bi_def-large|cotation-en-ligne|||2019-02-04|||||||||desktop|||||||||||||Commercial links|||||||||||||||||||||||||||Listing Argus||||VO|||||||||||||||||||||||||||||||||||||||||||||||00000029|RRG|-|MARSEILLE|Anne-Valerie DELATTRE|Jean MEZZASALMA|Philippe NAZARIE|TOULON|RENAULT|FEH|2019-07-26\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|453|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-02-04|||||||||desktop|||||||||||||No-cookie|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000401|RRG|-|NANCY|Régis FIOCCA|PATRICK DELARBRE| |NANCY|RENAULT|SCENIC III GD|2019-05-24\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|453|RENAULT|||||RENAULT||||apv_revision_go_pro_ord_def-large|devis-en-ligne|||2019-02-04|||||||||desktop|||||||||||||Commercial links|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00020343|RRG|-|LYON|Yann LEMENN|Damien DELAITTRE|CHRISTOPHE BOURDEAU|PARET J. P. & ANNE|RENAULT|87J|2019-06-28\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|478|RENAULT|Demande d'entretien (APV)|1211590|||RENAULT|||||site-national|||2019-01-10|||||||||desktop|||||||||||||Natural Referencement|||||||||||||||||||||||||||Maintenance request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000255|EMIL FREY|EMIL FREY CHAMPAGNE|NANCY|Francisco MARTIN|Jessim GRUNBERG|Dominique LACZNY|REIMS|RENAULT||2019-05-22\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||1|1|1|1||0|1|478|RENAULT|Trade-In 2 Store|155253636|||RENAULT|||||devis-en-ligne|||2019-01-10|||||||||mobile|||||||||||||Natural Referencement|||||||||||||||||||||||||||Quote request with RDV||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000555|RRG|-|LYON|Yann LEMENN|Damien DELAITTRE|CHRISTOPHE BOURDEAU|LYON SUD|RENAULT|CL4|2019-01-10\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||1|1|1|1||0|1|480|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||No-cookie|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000258|EMIL FREY|E.FREY PAS DE CALAIS NORD|LILLE|Philippe BLOUZET|Bruno PONCIN|Jean-Michel DROMERT|BETHUNE|RENAULT|ZOE|2019-01-10\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|1|1||0|1|480|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||No-cookie|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000258|EMIL FREY|E.FREY PAS DE CALAIS NORD|LILLE|Philippe BLOUZET|Bruno PONCIN|Jean-Michel DROMERT|BETHUNE|RENAULT|ZOE|2019-03-31\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||1|1|1|1||0|1|480|DACIA|||||DACIA|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||Direct|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00001288|EMIL FREY|EMIL FREY PARIS|PARIS ILE DE FRANCE|ARNAUD DELABROYE|Marc MASSON|Philippe GRIVEAU|MEAUX|DACIA|52B|2019-01-19\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||1|1|1|1||0|1|480|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||Natural Referencement|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00000952|RRG|-|BORDEAUX|Jean-Marc BERNOU|Frédéric PONTILLE|Pierre-Marie SARRUS|TOUL. ROCADE OUEST|RENAULT|CLI|2019-01-08\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|480|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||Direct|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00017008|ARATTO|-|BORDEAUX|Jean-Marc STADNIKOFF|Pascal FOUCHER|NATHALIE LEDRICH|TEIXEIRA JOSE MANUEL|RENAULT|MB4|2019-06-23\\r\",\r\n        \"1|0|REGLE_1|0|1|0|0||||0|0|0|1||0|1|480|RENAULT|||||RENAULT|||||devis-en-ligne|||2019-01-08|||||||||desktop|||||||||||||Direct|||||||||||||||||||||||||||After Sales Request||||APV-A|||||||||||||||||||||||||||||||||||||||||||||||00017008|ARATTO|-|BORDEAUX|Jean-Marc STADNIKOFF|Pascal FOUCHER|NATHALIE LEDRICH|TEIXEIRA JOSE MANUEL|RENAULT|MB4|2019-06-23\\r\",\r\n        \"\"],\r\n    \"testDelimiter\":\"|\",\r\n    \"newRowContent\":null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/suggestions/apply/:suggestionId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"suggestions",
+								"apply",
+								":suggestionId"
+							],
+							"variable": [
+								{
+									"key": "suggestionId",
+									"value": "{{suggestionId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Suggestions By Datafile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/suggestions/deleteAll/:datafileId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"suggestions",
+								"deleteAll",
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "60b634e98ab1a18d8850e49e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Suggestion By Datafile 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should have 1 suggestion\", function () {\r",
+									"    pm.expect(pm.response.json().suggestion.length).to.be.eql(1);\r",
+									"});\r",
+									"\r",
+									"const suggestionId = pm.response.json().suggestion[0]._id;\r",
+									"pm.collectionVariables.set(\"suggestionId\", suggestionId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rawData\":[\r\n    \"constraint-error|[#table, #row, #cell]||MATCH_INTERNET|1|2|The cell \\\"\\\" in row at position \\\"2\\\" and field \\\"MATCH_INTERNET\\\" at position \\\"1\\\" does not conform to a constraint: constraint \\\"required\\\" is \\\"True\\\"|\"\r\n],\r\n    \"testDelimiter\":\"|\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/suggestions/add/:datafileId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"suggestions",
+								"add",
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "60b634e98ab1a18d8850e49e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Suggestion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/suggestions/:suggestionId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"suggestions",
+								":suggestionId"
+							],
+							"variable": [
+								{
+									"key": "suggestionId",
+									"value": "{{suggestionId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Terminals",
+			"item": [
+				{
+					"name": "Get Terminal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/terminals/:userId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"terminals",
-								"{{userId}}"
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
 							]
 						}
 					},
@@ -2395,15 +3546,22 @@
 				},
 				{
 					"name": "Edit Terminal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id\": \"61952bed9136713cda9b4f6b\",\r\n    \"content\": [],\r\n    \"user\": \"60ad88d2a74d2e58cc611a31\"\r\n}",
@@ -2414,76 +3572,56 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/terminals/61952bed9136713cda9b4f6b",
+							"raw": "{{url}}/api/terminals/:terminalId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"terminals",
-								"61952bed9136713cda9b4f6b"
+								":terminalId"
+							],
+							"variable": [
+								{
+									"key": "terminalId",
+									"value": "61952bed9136713cda9b4f6b"
+								}
 							]
 						}
 					},
 					"response": []
 				}
 			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		},
 		{
-			"name": "Get User Default Photo",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/assets/default-user-little.png",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"assets",
-						"default-user-little.png"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get User Photo",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/users/duck.png",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"duck.png"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Default User Photo",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/assets/default-user-little.png",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"assets",
-						"default-user-little.png"
-					]
-				}
-			},
-			"response": []
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
@@ -2521,6 +3659,10 @@
 		},
 		{
 			"key": "suggestionId",
+			"value": ""
+		},
+		{
+			"key": "token",
 			"value": ""
 		}
 	]

@@ -167,7 +167,7 @@ exports.addEsquemaContent = async(req, res) => {
         const createdEsquema = await esquema.save();
         fs.writeFileSync(auxFilePath, req.body.esquemaContent);
 
-        return res.status(200).json({
+        return res.status(201).json({
             message: "Esquema added!",
             esquema: createdEsquema,
             newContent: req.body.esquemaContent

@@ -179,7 +179,7 @@ exports.updateWorkspace = async(req, res, next) => {
 
         return res.status(200).json({
             message: "Workspace updated successfully!",
-            user: updatedWorkspace
+            workspace: updatedWorkspace
         });
     } catch (err) {
         res.status(500).json({
