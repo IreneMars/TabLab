@@ -1,0 +1,2 @@
+Error Code|Tags|Label|Field Name|Field Position|Row Position|Error Message|Error Cell
+constraint-error|[#table, #row, #cell]||MATCH_INTERNET|1|2|The cell "" in row at position "2" and field "MATCH_INTERNET" at position "1" does not conform to a constraint: constraint "required" is "True"|

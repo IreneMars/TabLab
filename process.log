@@ -438,3 +438,51 @@
 2021-11-27 17:23:42,746 [MainThread  ] [INFO ]     · Global errors found in report:
 2021-11-27 17:23:42,746 [MainThread  ] [INFO ]  	   - task-error. Found: 1
 2021-11-27 17:23:42,746 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-28 14:50:17,122 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-28 14:50:17,122 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-28 14:50:17,122 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-28 14:50:17,122 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-28 14:50:17,122 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-28 14:50:17,122 [MainThread  ] [INFO ]  Configurations:
+2021-11-28 14:50:17,122 [MainThread  ] [INFO ]  [{'code': '[object Object]'}]
+2021-11-28 14:50:17,123 [MainThread  ] [INFO ]  null
+2021-11-28 14:50:17,123 [MainThread  ] [INFO ]  File extension: csv
+2021-11-28 14:50:17,381 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-28 14:50:17,460 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-28 14:50:17,460 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-28 14:50:17,460 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-28 14:50:17,460 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-28 14:50:17,461 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-28 14:50:17,461 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-28 14:50:17,461 [MainThread  ] [INFO ]  Report summary:
+2021-11-28 14:50:17,461 [MainThread  ] [INFO ]    Validation time: 0.08 seconds
+2021-11-28 14:50:17,461 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-28 14:50:17,461 [MainThread  ] [INFO ]     · Global errors found in report:
+2021-11-28 14:50:17,461 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-28 14:50:17,461 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.
+2021-11-28 14:50:21,266 [MainThread  ] [INFO ]  Logs started with level INFO
+2021-11-28 14:50:21,266 [MainThread  ] [INFO ]  Out Path: backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv
+2021-11-28 14:50:21,266 [MainThread  ] [INFO ]  Delimiter: |
+2021-11-28 14:50:21,266 [MainThread  ] [INFO ]  Esquema: backend/uploads/esquemas/populate_schema_2.json
+2021-11-28 14:50:21,266 [MainThread  ] [INFO ]  File: backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-28 14:50:21,266 [MainThread  ] [INFO ]  Configurations:
+2021-11-28 14:50:21,266 [MainThread  ] [INFO ]  [{'code': ''}]
+2021-11-28 14:50:21,266 [MainThread  ] [INFO ]  null
+2021-11-28 14:50:21,267 [MainThread  ] [INFO ]  File extension: csv
+2021-11-28 14:50:21,444 [MainThread  ] [INFO ]  Performing schema validation for file backend/uploads/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv
+2021-11-28 14:50:21,522 [MainThread  ] [INFO ]  Schema validation result created.
+2021-11-28 14:50:21,522 [MainThread  ] [INFO ]  Saving report to file...
+2021-11-28 14:50:21,522 [MainThread  ] [INFO ]  File schema report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_schema_report.json.
+
+2021-11-28 14:50:21,522 [MainThread  ] [DEBUG]  Reducing report 1 ...
+2021-11-28 14:50:21,523 [MainThread  ] [INFO ]  Validation finished and summarized report created.
+
+2021-11-28 14:50:21,523 [MainThread  ] [DEBUG]  {"errors": 1, "tasks": 0}
+2021-11-28 14:50:21,523 [MainThread  ] [INFO ]  Report summary:
+2021-11-28 14:50:21,523 [MainThread  ] [INFO ]    Validation time: 0.078 seconds
+2021-11-28 14:50:21,523 [MainThread  ] [INFO ]    Validation errors found:
+2021-11-28 14:50:21,523 [MainThread  ] [INFO ]     · Global errors found in report:
+2021-11-28 14:50:21,523 [MainThread  ] [INFO ]  	   - task-error. Found: 1
+2021-11-28 14:50:21,523 [MainThread  ] [INFO ]  Error file from summarized report saved to ../output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv.

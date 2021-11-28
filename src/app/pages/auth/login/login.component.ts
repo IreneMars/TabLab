@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   createForm() {
     this.loginForm = this.formBuilder.group({
       username       : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
-      password       : ['', Validators.required, Validators.minLength(4), Validators.maxLength(32)],
+      password       : ['', Validators.required],
       rememberme     : [false]
     });
   }
@@ -80,6 +80,7 @@ export class LoginComponent implements OnInit {
     }
     this.isLoading = true;
     const values = this.loginForm.getRawValue();
+    console.log("login")
     this.authService.login(values.username, values.password);
     
     if  (values.rememberme) {

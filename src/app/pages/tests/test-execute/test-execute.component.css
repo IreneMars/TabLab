@@ -29,6 +29,10 @@
     background-color: white;
 }
 
+.my-scrollbar {
+    height: 300px;
+}
+
 .border-header {
     border-top: 1px solid #ced4da;
     border-right: 1px solid #ced4da;
