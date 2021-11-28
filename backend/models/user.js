@@ -17,8 +17,6 @@ const userSchema = Schema({
     password: {
         type: String,
         required: [true, 'The password is mandatory'],
-        minLength: 4,
-        maxLength: 32
     },
     photo: {
         type: String,
