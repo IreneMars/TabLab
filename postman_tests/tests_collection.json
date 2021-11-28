@@ -2538,6 +2538,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"console.log(pm.response.error);\r",
+									"\r",
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",

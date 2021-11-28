@@ -80,7 +80,7 @@ exports.createReport = async(req, res, next) => {
         });
     } catch (err) {
         return res.status(500).json({
-            message: "Creating an error report and updating a test failed!"
+            message: "Creating an error report and updating a test failed!" + error
         });
     }
 };
