@@ -2,18 +2,25 @@ const fs = require('fs');
 const bufferedSpawn = require('buffered-spawn');
 
 const { User, Datafile, Role, Test, Esquema } = require('../models');
+const { uploadObject, deleteObject } = require('../helpers');
 
 exports.updatePhoto = async(req, res) => {
     current_user_id = req.userData.userId;
-
     try {
-        if (current_user_id !== req.body.userId) {
+        if (current_user_id !== req.params.id) {
             return res.status(403).json({
                 msg: `You're not authorized to perform this action.`
             });
         }
+
+        if (req.file == null) {
+            return res.status(400).json({
+                msg: `You must send a file in body.`
+            });
+        }
+
         // Fetch user info
-        var user = await User.findById(req.body.userId);
+        var user = await User.findById(req.params.id);
         if (!user) {
             return res.status(400).json({
                 msg: `There is no user with id ${ id }`
@@ -21,40 +28,22 @@ exports.updatePhoto = async(req, res) => {
         }
 
         // New File Path
-        var newFilePath = "";
-        const url = req.protocol + "://" + req.get("host") + "/";
-
-        if (req.file != null) {
-            newFilePath = url + "users/" + req.file.filename;
-        } else {
-            newFilePath = req.body.filePath;
-        }
-
+        const fileName = `users/${req.file.filename}`;
+        const fileData = fs.readFileSync(req.file.path);
+        const url = await uploadObject(fileData, fileName, req.file.mimetype);
+        
         //ActualFilePath
-        var actualFilePath = "";
-        var sameFiles = false;
         if (user.photo) {
-            if (!user.photo.includes("assets")) { // If it is not in assets:
-                actualFilePath = user.photo.replace(url, 'backend/uploads/');
-            }
-            if (user.photo === newFilePath) {
-                sameFiles = true;
-            } else {
-                user.photo = newFilePath;
-            }
-            const userUpdated = await User.updateOne({ _id: req.body.userId }, user)
+            await deleteObject(user.photo.replace("https://"+process.env.S3_BUCKET+".s3.amazonaws.com/", ""))
         }
-
-
-        // Limpiar imágenes previas
-        if (fs.existsSync(actualFilePath) && !sameFiles) {
-            fs.unlinkSync(actualFilePath);
-        }
+        
+        user.photo = url;
+        await User.updateOne({ _id: req.params.id }, user)
 
         return res.status(200).json({
             message: "File updated!",
             entity: "users",
-            filePath: newFilePath
+            filePath: url
         });
     } catch (err) {
         return res.status(500).json({
