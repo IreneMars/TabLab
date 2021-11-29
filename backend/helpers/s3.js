@@ -1,6 +1,6 @@
 const aws = require('aws-sdk');
 
-const uploadObject = async(fileData, fileName, fileType) => {
+const uploadObject = async(fileData, fileName) => {
     const s3 = new aws.S3();
     var url;
 
