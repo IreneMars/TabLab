@@ -2,7 +2,8 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title mb-0">Añadir Configuración</h2>
+                <h2 class="modal-title mb-0" *ngIf="!configuration">Añadir Configuración</h2>
+                <h2 class="modal-title mb-0" *ngIf="configuration">Editar Configuración</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCancel()"></button>
             </div>
             <form [formGroup]="configurationForm" (ngSubmit)="onSave()" novalidate>

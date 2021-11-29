@@ -19,6 +19,7 @@ const fs = require('fs');
 const path = require("path");
 const mongoose = require('mongoose');
 const { dbConnection } = require('./backend/database/config');
+const { uploadObject, deleteFolder } = require("./backend/helpers");
 
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
@@ -51,7 +52,6 @@ async function populate() {
     const rawData = fs.readFileSync(dataPath);
     const populate_json_data = JSON.parse(rawData);
     reports = { "errored_models": [], "reports": [] };
-
 
     //users
     try {
@@ -261,112 +261,88 @@ async function populate() {
         console.log(err);
     }
 
-    fs.readdir(path.join("populate/populate_files/datafiles"), (err, files) => {
-        console.log("Uploading files from populate/populate_files/datafiles folder...")
-        try {
-            if (err) {
-                console.log(err);
-            } else {
-                if (files.length === 0) {
-                    console.log("There are no files to upload!")
-                } else {
-                    for (var file of files) {
-                        //eliminamos el file del directorio si existe
-                        if (fs.existsSync("backend/uploads/datafiles/" + file)) {
-                            fs.unlinkSync(path.join(path.join("backend/uploads/datafiles"), file));
-                            console.log(`Successfully deleted ${file}!`)
-                        }
-                        // lo copiamos de assets y lo pegamos en el directorio del que lo eliminamos anteriormente
-                        if (hostName == "http://localhost:3000") {
-                            fs.copyFileSync("populate/populate_files/datafiles/" + file, "backend/uploads/datafiles/" + file);
-                            console.log(`Successfully copied ${file}!`)
-                        }
-                    }
-                }
-            }
-        } catch (err) {
-            console.log("Error uploading files from assets/datafiles folder: " + err)
-        }
-    });
+    try {
+        console.log("Deleting folders in S3...");
 
-    fs.readdir(path.join("populate/populate_files/esquemas"), (err, files) => {
-        console.log("Uploading files from populate/populate_files/esquemas folder...")
-        try {
-            if (err) {
-                console.log(err);
-            } else {
-                if (files.length === 0) {
-                    console.log("There are no files to upload!")
-                } else {
-                    for (var file of files) {
-                        if (fs.existsSync("backend/uploads/esquemas/" + file)) {
-                            fs.unlinkSync(path.join(path.join("backend/uploads/esquemas"), file));
-                            console.log(`Successfully deleted ${file}!`)
-                        }
-                        if (hostName == "http://localhost:3000") {
-                            fs.copyFileSync("populate/populate_files/esquemas/" + file, "backend/uploads/esquemas/" + file);
-                            console.log(`Successfully copied ${file}!`)
-                        }
-                    }
-                }
-            }
-        } catch (err) {
-            console.log("Error uploading files from assets/esquemas folder: " + err)
-        }
-    });
+        await deleteFolder("datafiles");
+        await deleteFolder("esquemas");
+        await deleteFolder("users");
+        await deleteFolder("reports");
 
-    fs.readdir(path.join("populate/populate_files/users"), (err, files) => {
-        console.log("Uploading files from populate/populate_files/users folder...")
-        try {
-            if (err) {
-                console.log(err);
-            } else {
-                if (files.length === 0) {
-                    console.log("There are no files to upload!")
-                } else {
-                    for (var file of files) {
-                        if (fs.existsSync("backend/uploads/users/" + file)) {
-                            fs.unlinkSync(path.join(path.join("backend/uploads/users"), file));
-                            console.log(`Successfully deleted ${file}!`)
-                        }
-                        if (hostName == "http://localhost:3000") {
-                            fs.copyFileSync("populate/populate_files/users/" + file, "backend/uploads/users/" + file);
-                            console.log(`Successfully copied ${file}!`)
-                        }
-                    }
-                }
-            }
-        } catch (err) {
-            console.log("Error uploading files from assets/users folder: " + err)
-        }
-    });
+        console.log("Folders in S3 deleted succesfully!");
+    } catch (error) {
+        console.log(error);
+    }
 
-    fs.readdir(path.join("populate/populate_files/reports"), (err, files) => {
-        console.log("Uploading files from populate/populate_files/reports folder...")
-        try {
-            if (err) {
-                console.log(err);
-            } else {
-                if (files.length === 0) {
-                    console.log("There are no files to upload!")
-                } else {
-                    for (var file of files) {
-                        if (fs.existsSync("backend/output/" + file)) {
-                            fs.unlinkSync(path.join(path.join("backend/output"), file));
-                            console.log(`Successfully deleted ${file}!`)
-                        }
-                        if (hostName == "http://localhost:3000") {
-                            fs.copyFileSync("populate/populate_files/reports/" + file, "backend/output/" + file);
-                            console.log(`Successfully copied ${file}!`)
-                        }
-                    }
-                }
+    try {
+        console.log("Uploading files to S3 from populate/populate_files/datafiles folder...");
+        const files = fs.readdirSync(path.join("populate/populate_files/datafiles"));
+        if (files.length === 0) {
+            console.log("There are no files to upload!")
+        } else {
+            for (var file of files) {
+                var fileData = fs.readFileSync(`populate/populate_files/datafiles/${file}`);
+                var url = await uploadObject(fileData, `datafiles/${file}`);
+                
+                console.log(`Successfully uploaded ${file} with url ${url} to S3!`);
             }
-        } catch (err) {
-            console.log("Error uploading files from assets/reports folder: " + err)
         }
-        mongoose.connection.close()
-    });
+    } catch (error) {
+        console.log("Error uploading files from populate/populate_files/datafiles folder: " + error)
+    }
+
+    try {
+        console.log("Uploading files to S3 from populate/populate_files/esquemas folder...");
+        const files = fs.readdirSync(path.join("populate/populate_files/esquemas"));
+        if (files.length === 0) {
+            console.log("There are no files to upload!")
+        } else {
+            for (var file of files) {
+                var fileData = fs.readFileSync(`populate/populate_files/esquemas/${file}`);
+                var url = await uploadObject(fileData, `esquemas/${file}`);
+                
+                console.log(`Successfully uploaded ${file} with url ${url} to S3!`);
+            }
+        }
+    } catch (error) {
+        console.log("Error uploading files from populate/populate_files/esquemas folder: " + error)
+    }
+
+    try {
+        console.log("Uploading files to S3 from populate/populate_files/users folder...");
+        const files = fs.readdirSync(path.join("populate/populate_files/users"));
+        if (files.length === 0) {
+            console.log("There are no files to upload!")
+        } else {
+            for (var file of files) {
+                var fileData = fs.readFileSync(`populate/populate_files/users/${file}`);
+                var url = await uploadObject(fileData, `users/${file}`);
+                
+                console.log(`Successfully uploaded ${file} with url ${url} to S3!`);
+            }
+        }
+    } catch (error) {
+        console.log("Error uploading files from populate/populate_files/users folder: " + error)
+    }
+
+    try {
+        console.log("Uploading files to S3 from populate/populate_files/reports folder...");
+        const files = fs.readdirSync(path.join("populate/populate_files/reports"));
+        if (files.length === 0) {
+            console.log("There are no files to upload!")
+        } else {
+            for (var file of files) {
+                var fileData = fs.readFileSync(`populate/populate_files/reports/${file}`);
+                var url = await uploadObject(fileData, `reports/${file}`);
+                
+                console.log(`Successfully uploaded ${file} with url ${url} to S3!`);
+            }
+        }
+    } catch (error) {
+        console.log("Error uploading files from populate/populate_files/reports folder: " + error)
+    }
+
+    mongoose.connection.close()
 };
 
 //"https://tablab-app.herokuapp.com"

@@ -251,7 +251,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
     const content = this.fileContentForm.value.fileContent;
     const file = this.generateFile(content);
     if(file){
-      await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", file);
+      await this.uploadsService.updateFile(this.datafileId, file);
     }
     this.hideEditableContent = true;
     this.isLoading = false;
@@ -335,7 +335,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
     const result = await this.suggestionsService.applySuggestion(this.suggestionId, "updateRow", this.datafile.delimiter, this.contentLines, values.rowContent);
     this.suggestionQueryResult = result.data.rowContent;
     const newFile = this.generateFile(result.data.content)
-    await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", newFile);
+    await this.uploadsService.updateFile(this.datafileId, newFile);
     await this.suggestionsService.deleteSuggestion(this.suggestionId);
     // Datafile, esquemas y configuraciones
     this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
@@ -357,7 +357,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
     this.suggestionForm.reset({'rowContent': result.data.rowContent})
     if(operation==="deleteRow"){
       const newFile = this.generateFile(result.data.content)
-      await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", newFile);
+      await this.uploadsService.updateFile(this.datafileId, newFile);
       await this.suggestionsService.deleteSuggestion(suggestionId);
       // Datafile, esquemas y configuraciones
       this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {

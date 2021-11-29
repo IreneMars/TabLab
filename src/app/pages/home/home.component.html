@@ -1,18 +1,40 @@
-<div class="m-5">
-    <div *ngIf="!userIsAuthenticated">
-        <div class="m-3">
-            <h1>Prueba tus tablas!</h1>
-            <p class="text-align-left">Ahorra tiempo validando tus tablas de forma rápida y sencilla mediante el uso de TabLab.</p>
-        </div>
-    </div>
-    <div *ngIf="userIsAuthenticated" class="row ps-2 pe-2 complete-height">
-        <div class="col-3 p-0"></div>
-        <div class="col-6">
-            <h1>Prueba tus tablas!</h1>
-            <p class="text-align-left">Ahorra tiempo validando tus tablas de forma rápida y sencilla mediante el uso de TabLab.</p>
-            <app-activity-list></app-activity-list>
-        </div>
-        <div class="col-3"></div>
-    </div>
+<div class="row pt-5 pb-5 bg-gradient-primary-to-secondary" *ngIf="!userIsAuthenticated">
+    <div class="col-2 p-0"></div>
+    <div class="col-4 pe-4 text-align-left" style="padding-top: 4rem;">
+        <h1>Valida tus tablas de forma rápida y sencilla con TabLab</h1>
+        <p class="description-text">Bienvenido a Tablab, una herramienta para validar y modificar grandes datasets de forma cómoda y eficaz.</p>
+        <button type="button" class="btn btn-primary mt-3" routerLinkActive="active" [routerLink]="['auth/login']">Empieza!</button>
 
+    </div>
+    <div class="col-6 ps-4">
+        <img src="http://localhost:3000/assets/Tests_Runned.png" class="img-fluid image-card"></div>
+</div>
+<div class="container px-5 pt-5" *ngIf="!userIsAuthenticated">
+    <div class="row gx-5 text-center">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+            <div class="icon-stack icon-stack-xl bg-gradient-primary-to-secondary text-white mb-4"><i class="fas fa-file-upload fa-2x"></i></div>
+            <h3 class="fw-bold">Subida y configuración de ficheros</h3>
+            <p class="mb-0">Sube tus tablas en fotmato csv/xlsx y configúralas añadiéndoles un esquema y otros parámetros que desees validar!</p>
+        </div>
+        <div class="col-lg-4 mb-5 mb-lg-0">
+            <div class="icon-stack icon-stack-xl bg-gradient-primary-to-secondary text-white mb-4"><i class="fas fa-tasks fa-2x"></i></div>
+            <h3 class="fw-bold">Ejecución de pruebas</h3>
+            <p class="mb-0">Elabora pruebas a partir de la configuración de tus ficheros y ejecútalas!</p>
+        </div>
+        <div class="col-lg-4">
+            <div class="icon-stack icon-stack-xl bg-gradient-primary-to-secondary text-white mb-4"><i class="fas fa-exchange-alt fa-2x"></i></div>
+            <h3 class="fw-bold">Sugerencias</h3>
+            <p class="mb-0">Observa los resultados de las pruebas y aplica sugerencias para corregir tus tablas!</p>
+        </div>
+    </div>
+</div>
+
+<div class="row pt-5 pb-5" *ngIf="userIsAuthenticated">
+    <div class="col-3 p-0"></div>
+    <div class="col-6">
+        <h1>Prueba tus tablas!</h1>
+        <p class="text-align-left">Ahorra tiempo validando tus tablas de forma rápida y sencilla mediante el uso de TabLab.</p>
+        <app-activity-list></app-activity-list>
+    </div>
+    <div class="col-3"></div>
 </div>

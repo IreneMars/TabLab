@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require("path");
 const http = require("http");
 const { dbConnection } = require('../database/config');
+const aws = require('aws-sdk');
 
 class Server {
 
@@ -10,6 +11,9 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         //this.port = this.normalizePort(process.env.PORT || "3000");
+
+        // Configurar AWS
+        this.configurarAWS();
 
         // Conectar a base de datos
         this.conectarDB();
@@ -19,6 +23,10 @@ class Server {
 
         // Rutas de mi aplicación
         this.routes();
+    }
+
+    configurarAWS() {
+        aws.config.region = 'eu-west-1';
     }
 
     async conectarDB() {
