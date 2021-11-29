@@ -1,6 +1,7 @@
 const { Role, Esquema, Datafile } = require("../models");
+const { deleteObject } = require('../helpers');
 
-const fs = require('fs');
+const axios = require('axios');
 
 exports.getEsquemasByDatafile = async(req, res) => {
     try {
@@ -18,7 +19,6 @@ exports.getEsquemasByDatafile = async(req, res) => {
 };
 
 exports.getEsquema = async(req, res, next) => {
-
     const current_user_id = req.userData.userId;
     try {
         const esquema = await Esquema.findById(req.params.id);
@@ -35,22 +35,20 @@ exports.getEsquema = async(req, res, next) => {
                 message: "You are not authorized to fetch this esquema."
             });
         }
-        const url = req.protocol + "://" + req.get("host") + "/";
-        var actualFilePath = esquema.contentPath.replace(url, 'backend/uploads/');
-        fs.readFile(actualFilePath, 'utf8', (err, data) => {
-            if (err) {
-                return res.status(500).json({
-                    message: "Fetching an esquema failed!",
-                    error: err
-                });
-            } else {
-                return res.status(200).json({
-                    message: "Esquema fetched successfully!",
-                    esquema: esquema,
-                    content: data
-                });
-            }
-        });
+
+        try {
+            const response = await axios.get(esquema.contentPath);
+            return res.status(200).json({
+                message: "Esquema fetched successfully!",
+                esquema: esquema,
+                content: response.data
+            });
+        } catch (error) {
+            return res.status(500).json({
+                message: "Fetching an esquema failed!",
+                error: err
+            });
+        }
     } catch (err) {
         return res.status(500).json({
             message: "Fetching an esquema failed!"
@@ -59,7 +57,6 @@ exports.getEsquema = async(req, res, next) => {
 };
 
 exports.createEsquema = async(req, res, next) => {
-
     const current_user_id = req.userData.userId;
 
     try {
@@ -139,10 +136,9 @@ exports.deleteEsquema = async(req, res, next) => {
             })
         }
 
-        const url = req.protocol + "://" + req.get("host") + "/";
-        var actualFilePath = esquema.contentPath.replace(url, 'backend/uploads/');
+        //ActualFilePath
+        await deleteObject(esquema.contentPath.replace("https://"+process.env.S3_BUCKET+".s3.amazonaws.com/", ""))
 
-        fs.unlinkSync(actualFilePath);
         await Esquema.deleteOne({ _id: req.params.id });
         return res.status(200).json({
             message: "Esquema deletion successful!"

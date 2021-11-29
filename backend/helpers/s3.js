@@ -8,7 +8,6 @@ const uploadObject = async(fileData, fileName, fileType) => {
         Bucket: process.env.S3_BUCKET,
         Key: fileName,
         Body: fileData,
-        ContentType: fileType,
         Expires: 60,
         ACL: 'public-read'
     };

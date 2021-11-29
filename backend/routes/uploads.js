@@ -6,7 +6,8 @@ const validateFile = require('../middlewares/validate-file');
 const { validateJWT, validateFields } = require('../middlewares');
 const router = Router();
 const {
-    updateFile,
+    updateDataFile,
+    deleteDataFile,
     updatePhoto,
     addEsquemaContent,
     updateEsquemaContent,
@@ -25,7 +26,14 @@ router.put("/datafiles/:id", [
     check('id', 'El id debe de ser de mongo').isMongoId(),
     check('id').custom(datafileExistsById),
     validateFields
-], updateFile);
+], updateDataFile);
+
+router.delete("/datafiles/:id", [
+    validateJWT,
+    check('id', 'El id debe de ser de mongo').isMongoId(),
+    check('id').custom(datafileExistsById),
+    validateFields
+], deleteDataFile);
 
 router.post("/esquema/create", [
     validateJWT,

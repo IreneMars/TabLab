@@ -16,13 +16,15 @@ export class UploadsService {
     return this.http.put(BACKEND_URL + "users/" + userId, userData).toPromise()
   }
 
-  updateFile(userId: string, datafileId: string, operation: string, file: File){
+  updateFile(datafileId: string, file: File){
     let datafileData = new FormData();
-    datafileData.append('userId',userId);
-    datafileData.append('operation',operation);
     datafileData.append('file', file);
     
     return this.http.put(BACKEND_URL + "datafiles/" + datafileId, datafileData).toPromise();
+  }
+
+  deleteFile(datafileId: string){
+    return this.http.delete(BACKEND_URL + "datafiles/" + datafileId).toPromise();
   }
 
   addEsquemaContent(title:string, datafileId: string, fileName: string, esquemaContent: string){
