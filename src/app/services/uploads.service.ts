@@ -9,29 +9,22 @@ export class UploadsService {
   
   constructor(private http: HttpClient) {}
 
-  updatePhoto(userId: string, photo: string | File){
-    let userData: any | FormData;
-    if (typeof(photo) === 'object') { 
-        userData = new FormData();
-        userData.append('userId',userId);
-        userData.append('file', photo);
-    } else { 
-        userData = {'userId':userId,'filePath': photo}; 
-    } 
+  updatePhoto(userId: string, photo: File){
+    let userData = new FormData();
+    userData.append('userId',userId);
+    userData.append('file', photo);
     return this.http.put(BACKEND_URL + "users/" + userId, userData).toPromise()
   }
 
-  updateFile(userId: string, datafileId: string, operation: string, file: string | File){
-    let datafileData: any | FormData;
-    if (typeof(file) === 'object') { 
-      datafileData = new FormData();
-      datafileData.append('userId',userId);
-      datafileData.append('operation',operation);
-      datafileData.append('file', file);
-    } else { 
-      datafileData = {'userId':userId, 'operation':operation,'filePath': file}; 
-    } 
+  updateFile(datafileId: string, file: File){
+    let datafileData = new FormData();
+    datafileData.append('file', file);
+    
     return this.http.put(BACKEND_URL + "datafiles/" + datafileId, datafileData).toPromise();
+  }
+
+  deleteFile(datafileId: string){
+    return this.http.delete(BACKEND_URL + "datafiles/" + datafileId).toPromise();
   }
 
   addEsquemaContent(title:string, datafileId: string, fileName: string, esquemaContent: string){

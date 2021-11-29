@@ -212,7 +212,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
 
       this.file = uploadedFile;
       this.isUploading = true;
-      await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateFile', this.file);
+      await this.uploadsService.updateFile(this.datafileId, this.file);
       await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.delimiter, this.datafile.errLimit, this.datafile.description, null);
 
       // Datafiles
@@ -280,7 +280,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
       } else {
         return;
       }
-      await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateContent', file);
+      await this.uploadsService.updateFile(this.datafileId, file);
       await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.delimiter, this.datafile.errLimit, this.datafile.description, null);
       this.datafilesService.getDatafile( this.datafileId).subscribe(datafileData => {
         this.datafile = {
@@ -302,7 +302,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
 
     async onDeleteFile() {
       this.isDeletingFile = true;
-      await this.uploadsService.updateFile(this.userId, this.datafileId,'deleteFile', null);
+      await this.uploadsService.deleteFile(this.datafileId);
       // Datafiles
       this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
         this.datafile = {
