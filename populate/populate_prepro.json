@@ -1,10 +1,10 @@
 {
     "users": [
-        { "_id": "60ad88d2a74d2e58cc611a31", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2a$10$M4/WzOyXzntqUDAm8NDd4OEQ1NrrtrIzOMWzHWBM2X6wf/AgXaCy6", "name": "irene", "photo": "https://tablab-app-prepro.herokuapp.com/users/jelly.png", "role": "ADMIN", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb2", "username": "daniel", "email": "daniel@gmail.com", "password": "$2y$10$IfcujEFKlz5jS/18OT5bRuVC2vFuO7UNaRvQiF3.zVf04i6vBfG8q", "name": "daniel", "photo": "https://tablab-app-prepro.herokuapp.com/users/squid.png", "role": "USER", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb3", "username": "pedro", "email": "pedro@gmail.com", "password": "$2y$10$eZYlwcXLX5wrcWUXBXxbwu0C2zKthDQfZvlbQ80UF3tbB/D6RO/OC", "name": "pedro", "photo": "https://tablab-app-prepro.herokuapp.com/users/palm-tree.png", "role": "USER", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb4", "username": "sandra", "email": "sandra@gmail.com", "password": "$2y$10$.BkuJC6g1TrW8os.wyFFN.BjIZpgmkYMa9oigdecjU2DenFJUi6.6", "name": "sandra", "photo": "https://tablab-app-prepro.herokuapp.com/users/beans.png", "role": "USER", "status": "true", "google": "false" },
-        { "_id": "60ae10e9c2d2fe5c48e6eeb5", "username": "walo", "email": "walo@gmail.com", "password": "$2y$10$EUkpNODE0JPMPdJIEVyJrejWOrRVRH9usY4pcppOCY9dIWUSf.3IC", "name": "walo", "photo": "https://tablab-app-prepro.herokuapp.com/users/duck.png", "role": "USER", "status": "true", "google": "false" }
+        { "_id": "60ad88d2a74d2e58cc611a31", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2a$10$M4/WzOyXzntqUDAm8NDd4OEQ1NrrtrIzOMWzHWBM2X6wf/AgXaCy6", "name": "irene", "photo": "https://tab-lab-prepro.s3.eu-west-1.amazonaws.com/users/jelly.png", "role": "ADMIN", "status": "true", "google": "false" },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb2", "username": "daniel", "email": "daniel@gmail.com", "password": "$2y$10$IfcujEFKlz5jS/18OT5bRuVC2vFuO7UNaRvQiF3.zVf04i6vBfG8q", "name": "daniel", "photo": "https://tab-lab-prepro.s3.eu-west-1.amazonaws.com/users/squid.png", "role": "USER", "status": "true", "google": "false" },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb3", "username": "pedro", "email": "pedro@gmail.com", "password": "$2y$10$eZYlwcXLX5wrcWUXBXxbwu0C2zKthDQfZvlbQ80UF3tbB/D6RO/OC", "name": "pedro", "photo": "https://tab-lab-prepro.s3.eu-west-1.amazonaws.com/users/palm-tree.png", "role": "USER", "status": "true", "google": "false" },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb4", "username": "sandra", "email": "sandra@gmail.com", "password": "$2y$10$.BkuJC6g1TrW8os.wyFFN.BjIZpgmkYMa9oigdecjU2DenFJUi6.6", "name": "sandra", "photo": "https://tab-lab-prepro.s3.eu-west-1.amazonaws.com/users/beans.png", "role": "USER", "status": "true", "google": "false" },
+        { "_id": "60ae10e9c2d2fe5c48e6eeb5", "username": "walo", "email": "walo@gmail.com", "password": "$2y$10$EUkpNODE0JPMPdJIEVyJrejWOrRVRH9usY4pcppOCY9dIWUSf.3IC", "name": "walo", "photo": "https://tab-lab-prepro.s3.eu-west-1.amazonaws.com/users/duck.png", "role": "USER", "status": "true", "google": "false" }
     ],
 
     "terminals": [
@@ -71,7 +71,7 @@
     ],
 
     "datafiles": [
-        { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": "https://tablab-app-prepro.herokuapp.com/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv", "delimiter": "|", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
+        { "_id": "60b634e98ab1a18d8850e49e", "title": "Datafile 1", "description": "Este es el datafile 1.", "contentPath": "https://tab-lab-prepro.s3.eu-west-1.amazonaws.com/datafiles/fulls_dmf_full_v1_20200504_short_10_werrs.csv", "delimiter": "|", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
         { "_id": "60b634e98ab1a18d8850e49f", "title": "Datafile 2", "description": "Este es el datafile 2.", "contentPath": null, "delimiter": "|", "errLimit": null, "coleccion": null, "workspace": "60aeaf40d0e8477348250ac9" },
         { "_id": "619389a81a2dffb23b953917", "title": "Datafile 3", "description": "Este es el datafile 3.", "contentPath": null, "delimiter": "|", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c2", "workspace": "60aeaf40d0e8477348250ac9" },
         { "_id": "6193a80edcc6d2ea6bd3e1b8", "title": "Datafile 4", "description": "Este es el datafile 4.", "contentPath": null, "delimiter": "|", "errLimit": null, "coleccion": "60b436d8a0646673b02cb8c3", "workspace": "60aeaf40d0e8477348250ac9" },
@@ -80,8 +80,8 @@
     ],
 
     "esquemas": [
-        { "_id": "60c164a855a6814cb879a775", "title": "Esquema 1", "contentPath": "https://tablab-app-prepro.herokuapp.com/esquemas/populate_schema.json", "creationMoment": "1622816872776", "datafile": "60b634e98ab1a18d8850e49e" },
-        { "_id": "60c1669355a6814cb879a77a", "title": "Esquema 2", "contentPath": "https://tablab-app-prepro.herokuapp.com/esquemas/populate_schema_2.json", "creationMoment": "1623287443765", "datafile": "60b634e98ab1a18d8850e49e" }
+        { "_id": "60c164a855a6814cb879a775", "title": "Esquema 1", "contentPath": "https://tab-lab-prepro.s3.eu-west-1.amazonaws.com/esquemas/populate_schema.json", "creationMoment": "1622816872776", "datafile": "60b634e98ab1a18d8850e49e" },
+        { "_id": "60c1669355a6814cb879a77a", "title": "Esquema 2", "contentPath": "https://tab-lab-prepro.s3.eu-west-1.amazonaws.com/esquemas/populate_schema_2.json", "creationMoment": "1623287443765", "datafile": "60b634e98ab1a18d8850e49e" }
     ],
 
     "configurations": [{
@@ -109,7 +109,7 @@
     "tests": [{
             "_id": "60c36c9ee5d8ef42848fe2f5",
             "title": "PRUEBA DMF 1",
-            "reportPath": "backend/output/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv",
+            "reportPath": "https://tab-lab-prepro.s3.eu-west-1.amazonaws.com/reports/fulls_dmf_full_v1_20200504_short_10_werrs_errors.csv",
             "status": "failed",
             "esquema": "60c164a855a6814cb879a775",
             "configurations": ["60bf55f7556da65e349c6266"],

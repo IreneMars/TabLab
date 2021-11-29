@@ -1,6 +1,6 @@
 {
     "users": [
-        { "_id": "60ad88d2a74d2e58cc611a31", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2a$10$M4/WzOyXzntqUDAm8NDd4OEQ1NrrtrIzOMWzHWBM2X6wf/AgXaCy6", "name": "irene", "photo": "https://tablab-app.herokuapp.com/users/jelly.png", "role": "ADMIN", "status": "true", "google": "false" }
+        { "_id": "60ad88d2a74d2e58cc611a31", "username": "irene", "email": "irenecharm97@gmail.com", "password": "$2a$10$M4/WzOyXzntqUDAm8NDd4OEQ1NrrtrIzOMWzHWBM2X6wf/AgXaCy6", "name": "irene", "photo": "https://tab-lab.s3.eu-west-1.amazonaws.com/users/jelly.png", "role": "ADMIN", "status": "true", "google": "false" }
     ],
 
     "terminals": [

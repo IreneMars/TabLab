@@ -1,7 +1,8 @@
 const { Role, Esquema, Datafile, Configuration, Test } = require("../models");
 const { execFileSync } = require('child_process');
-const { uploadObject, deleteObject } = require('../helpers');
+const { uploadObject } = require('../helpers');
 const fs = require('fs');
+const axios = require('axios');
 
 exports.createReport = async(req, res, next) => {
     const current_user_id = req.userData.userId;
@@ -29,30 +30,36 @@ exports.createReport = async(req, res, next) => {
         }
 
         const esquema = await Esquema.findById(test.esquema);
-        // Get Esquema de AWS S3
-        var response = await axios.get(esquema.contentPath);
-        esquemaNameSplit = esquema.contentPath.split('/');
-        var esquemaFileName = esquemaNameSplit[esquemaNameSplit.length-1];
-        var esquemaFilePath = "backend/uploads/esquemas/" + esquemaFileName;
-        fs.writeFileSync(esquemaFilePath, response.data);
+        var response;
+        var esquemaFilePath = "";
+        if (esquema) {
+            // Get Esquema de AWS S3
+            response = await axios.get(esquema.contentPath);
+            esquemaNameSplit = esquema.contentPath.split('/');
+            var esquemaFileName = esquemaNameSplit[esquemaNameSplit.length-1];
+            esquemaFilePath = "backend/uploads/esquemas/" + esquemaFileName;
+            fs.writeFileSync(esquemaFilePath, response.data);
+        }
 
         const configurations = await Configuration.find({ _id: { $in: test.configurations } });
         var configurationsAux = [];
-        for (var config of configurations) {
-            configAux = { "code": config.errorCode }
-            if (config.extraParams) {
-                for (var extraParam of config.extraParams.keys()) {
-                    configAux[extraParam] = config.extraParams.get(extraParam)
+        if (configurations) {
+            for (var config of configurations) {
+                configAux = { "code": config.errorCode }
+                if (config.extraParams) {
+                    for (var extraParam of config.extraParams.keys()) {
+                        configAux[extraParam] = config.extraParams.get(extraParam)
+                    }
                 }
+                configurationsAux.push(configAux);
             }
-            configurationsAux.push(configAux);
         }
 
         // Get Datafile from AWS S3
         response = await axios.get(datafile.contentPath);
         datafileNameSplit = datafile.contentPath.split('/');
         var datafileFileName = datafileNameSplit[datafileNameSplit.length-1];
-        var datafileFilePath = "backend/uploads/datafile/" + datafileFileName;
+        var datafileFilePath = "backend/uploads/datafiles/" + datafileFileName;
         fs.writeFileSync(datafileFilePath, response.data);
 
         const errorReportFileName = datafileFileName.split('.')[0] + '_errors.csv';
