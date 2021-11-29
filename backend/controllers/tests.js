@@ -1,5 +1,5 @@
 const { Role, Test, Datafile, Esquema, User } = require("../models");
-const fs = require('fs');
+const axios = require('axios');
 
 exports.getTests = async(req, res) => {
     try {
@@ -103,21 +103,20 @@ exports.getTest = async(req, res, next) => {
             esquema = null;
         }
         if (test.reportPath) {
-            fs.readFile(test.reportPath, 'utf8', (err, data) => {
-                if (err) {
-                    return res.status(500).json({
-                        message: "Fetching the content of the report file of this test failed!"
-                    });
-                } else {
-                    return res.status(200).json({
-                        message: "Sucessful fetch!",
-                        test: test,
-                        esquema: esquema,
-                        configurationIDs: test.configurations,
-                        reportContent: data
-                    });
-                }
-            });
+            try {
+                const response = await axios.get(test.reportPath);
+                return res.status(200).json({
+                    message: "Sucessful fetch!",
+                    test: test,
+                    esquema: esquema,
+                    configurationIDs: test.configurations,
+                    reportContent: response.data
+                });
+            } catch (error) {
+                return res.status(500).json({
+                    message: "Fetching the content of the report file of this test failed!"
+                });
+            }
         } else {
             return res.status(200).json({
                 message: "Sucessful fetch!",

@@ -38,7 +38,8 @@ exports.createReport = async(req, res, next) => {
             esquemaNameSplit = esquema.contentPath.split('/');
             var esquemaFileName = esquemaNameSplit[esquemaNameSplit.length-1];
             esquemaFilePath = "backend/uploads/esquemas/" + esquemaFileName;
-            fs.writeFileSync(esquemaFilePath, response.data);
+            let rawData = JSON.stringify(response.data);
+            fs.writeFileSync(esquemaFilePath, rawData);
         }
 
         const configurations = await Configuration.find({ _id: { $in: test.configurations } });
@@ -96,7 +97,7 @@ exports.createReport = async(req, res, next) => {
         });
     } catch (err) {
         return res.status(500).json({
-            message: "Creating an error report and updating a test failed!" + error
+            message: "Creating an error report and updating a test failed!" + err
         });
     }
 };

@@ -165,11 +165,11 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
                       this.configurations = configurationData.configurations;
                       if (this.datafile.contentPath) {
                         const nameWExtension = datafileData.datafile.contentPath.split('/');
-                        const splitNameWExtension = nameWExtension[4].split('.');
-                        this.extension = splitNameWExtension[1];
-                        var name = nameWExtension[4];
-                        if (nameWExtension[4].includes("-")){
-                          const nameWDate = nameWExtension[4].split('-');
+                        const splitNameWExtension = nameWExtension[nameWExtension.length-1].split('.');
+                        this.extension = splitNameWExtension[splitNameWExtension.length-1];
+                        var name = nameWExtension[nameWExtension.length-1];
+                        if (name.includes("-")){
+                          const nameWDate = nameWExtension[nameWExtension.length-1].split('-');
                           name = nameWDate[0] + '.' + this.extension;
                         }
                         this.fileName = name;

@@ -104,7 +104,7 @@ export class TestExecuteComponent implements OnInit {
       
       var reportPath: string = testData.test.reportPath;
       var fileNameSplits = reportPath.split("/");
-      var fileName = fileNameSplits[2].split(".");
+      var fileName = fileNameSplits[fileNameSplits.length-1].split(".");
       const blob = new Blob([testData.reportContent], {type: 'text/csv' })
       saveAs(blob, fileName[0]);
 

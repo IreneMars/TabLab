@@ -146,11 +146,11 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
                         if (this.datafile.contentPath) {
                           // contentPath: {backend/uploads/datafiles/capital-1234.csv",
                           const nameWExtension = this.datafile.contentPath.split('/');
-                          const splitNameWExtension = nameWExtension[4].split('.');
+                          const splitNameWExtension = nameWExtension[nameWExtension.length-1].split('.');
                           this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
                           var name = nameWExtension[4];
                           if (nameWExtension[4].includes("-")){
-                            const nameWDate = nameWExtension[4].split('-');
+                            const nameWDate = nameWExtension[nameWExtension.length-1].split('-');
                             name = nameWDate[0] + '.' + this.extension;
                           }
                           this.fileName = name;
@@ -202,7 +202,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
     if (files && files.length > 0) {
       const uploadedFile = (event.target as HTMLInputElement).files[0];
       const split = uploadedFile.name.split('.');
-      const extension = split[1].toLowerCase();
+      const extension = split[split.length-1].toLowerCase();
       if (extension !== 'xlsx' && extension !== 'csv') {
         this.invalidExtension = true;
         return;
@@ -238,9 +238,9 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
         if (this.datafile.contentPath) {
           // contentPath: {backend/uploads/datafiles/capital-1234.csv",
           const nameWExtension = this.datafile.contentPath.split('/');
-          const splitNameWExtension = nameWExtension[3].split('.');
-          this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
-          const nameWDate = nameWExtension[3].split('-');
+          const splitNameWExtension = nameWExtension[nameWExtension.length-1].split('.');
+          this.extension = splitNameWExtension[splitNameWExtension.length-1]; // setted in order to use it on onDownload() method
+          const nameWDate = nameWExtension[nameWExtension.length-1].split('-');
           const name = nameWDate[0];
           this.fileName = name + '.' + this.extension;
         }

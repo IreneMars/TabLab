@@ -60,7 +60,7 @@ export class EsquemaCreateComponent implements OnInit{
     if (files && files.length > 0) {
       const uploadedFile = (event.target as HTMLInputElement).files[0];
       const split = uploadedFile.name.split('.');
-      const extension = split[1].toLowerCase();
+      const extension = split[split.length-1].toLowerCase();
       if (extension !== 'json' && extension !== 'yaml') {
         this.invalidExtension = true;
         return;
