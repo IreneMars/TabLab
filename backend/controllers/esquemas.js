@@ -41,12 +41,11 @@ exports.getEsquema = async(req, res, next) => {
             return res.status(200).json({
                 message: "Esquema fetched successfully!",
                 esquema: esquema,
-                content: response.data
+                content: JSON.stringify(response.data)
             });
         } catch (error) {
             return res.status(500).json({
-                message: "Fetching an esquema failed!",
-                error: err
+                message: "Fetching an esquema failed!"
             });
         }
     } catch (err) {
