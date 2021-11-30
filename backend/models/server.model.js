@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const path = require("path");
-const http = require("http");
 const { dbConnection } = require('../database/config');
 const aws = require('aws-sdk');
 
@@ -10,7 +9,6 @@ class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
-        //this.port = this.normalizePort(process.env.PORT || "3000");
 
         // Configurar AWS
         this.configurarAWS();
