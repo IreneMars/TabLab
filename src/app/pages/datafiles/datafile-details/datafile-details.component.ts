@@ -14,11 +14,10 @@ import { Esquema } from '../../../models/esquema.model';
 import { Test } from '../../../models/test.model';
 import { UsersService } from '../../../services/users.service';
 import { CollectionsService } from 'src/app/services/collections.service';
-import { Collection } from 'src/app/models/collection.model';
 import { EsquemaService } from '../../../services/esquemas.service';
 import { ConfigurationService } from '../../../services/configuration.service';
 import { TestsService } from '../../../services/tests.service';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -34,12 +33,12 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
   isSaving              : boolean = false;
   isUploading           : boolean = false;
   isDeletingFile        : boolean = false;
-
   isDeleting            : boolean = false;
   infer                 : boolean = false;
   edit                  : boolean = false;
+  editContent           : boolean = false;
+
   invalidExtension      : boolean = false;
-  collections           : Collection[];
   datafileId            : string;
   datafile              : Datafile;
   workspaceId           : string;
@@ -51,35 +50,32 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
   fileContentForm       : FormGroup;
   filePreview           : string;
   content               : any = null;
-  arrayBuffer           : any;
   file                  : any = null;
   fileName              : string = '';
   extension             : string;
-  orphanedDatafiles     : Datafile[];
   onDestroy             : boolean = false;
   private datafilesSub  : Subscription;
 
   constructor(public datafilesService: DatafileService, public workspacesService: WorkspacesService, 
-              public uploadsService: UploadsService, public route: ActivatedRoute, 
-              public authService: AuthService, public usersService: UsersService, 
-              public collectionsService: CollectionsService, private router: Router,
-              public esquemasService: EsquemaService, public configurationsService: ConfigurationService,
-              public testsService: TestsService){
+              public collectionsService: CollectionsService, public uploadsService: UploadsService, 
+              public route: ActivatedRoute, public authService: AuthService, public usersService: UsersService, 
+              private router: Router, public esquemasService: EsquemaService, 
+              public configurationsService: ConfigurationService, public testsService: TestsService){
+
                 this.fileForm = new FormGroup({
                   'contentPath': new FormControl(null, {validators: [Validators.required]})
                 });
                 this.fileContentForm = new FormGroup({
                   'fileContent': new FormControl({value: '', disabled: true}),
                 });
-    }
+  }
+  
   ngOnDestroy() {
     this.datafilesSub.unsubscribe();
     this.onDestroy = true;
   }
     
-  ngOnInit(){
-    console.log("OnInit of datafile")
-    
+  ngOnInit(){  
     this.isLoading = true;
     this.userIsAuthenticated = this.authService.getIsAuth();
     if (this.userIsAuthenticated){
@@ -112,17 +108,14 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
               mandatory: workspaceData.workspace.mandatory,
               owner:workspaceData.workspace.owner
             };
-            this.orphanedDatafiles = workspaceData.orphanedDatafiles;
-            // Collections
-            this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-            this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: Collection[]})=>{
-              this.collections = collectionData.collections;
+            
               // Datafiles
               if(!this.isDeleting){
               this.datafilesSub = this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
                 this.datafile = {
                   id: datafileData.datafile._id,
                   title: datafileData.datafile.title,
+                  delimiter: datafileData.datafile.delimiter,
                   description: datafileData.datafile.description,
                   contentPath: datafileData.datafile.contentPath,
                   errLimit: datafileData.datafile.errLimit,
@@ -142,8 +135,6 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
                     if(!this.onDestroy){
                       this.configurationsService.getConfigurationsByDatafile(this.datafileId);
                       this.configurationsService.getConfigurationUpdateListener().subscribe(configurationData =>{
-                        // console.log("Permitido (datafile):"+!this.onDestroy)
-                        // console.log("Get configurations (datafile-details)")
                         this.configurations = configurationData.configurations;
   
                         if (this.content !== null) {
@@ -155,11 +146,14 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
                         if (this.datafile.contentPath) {
                           // contentPath: {backend/uploads/datafiles/capital-1234.csv",
                           const nameWExtension = this.datafile.contentPath.split('/');
-                          const splitNameWExtension = nameWExtension[3].split('.');
+                          const splitNameWExtension = nameWExtension[nameWExtension.length-1].split('.');
                           this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
-                          const nameWDate = nameWExtension[3].split('-');
-                          const name = nameWDate[0];
-                          this.fileName = name + '.' + this.extension;
+                          var name = nameWExtension[4];
+                          if (nameWExtension[4].includes("-")){
+                            const nameWDate = nameWExtension[nameWExtension.length-1].split('-');
+                            name = nameWDate[0] + '.' + this.extension;
+                          }
+                          this.fileName = name;
                         }
                         if (this.extension === 'xlsx') {
                           let res = this.content[0].join(',')+ '\n';
@@ -178,7 +172,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
               });}
             })
           });
-        });
+        
       });
     }
   }
@@ -193,6 +187,8 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
     })
     .catch(err=>{
       console.log("Error on onDelete() method: "+err.message)
+      this.isLoading = false;
+      this.isDeleting = true;
     })
   }
 
@@ -206,7 +202,7 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
     if (files && files.length > 0) {
       const uploadedFile = (event.target as HTMLInputElement).files[0];
       const split = uploadedFile.name.split('.');
-      const extension = split[1].toLowerCase();
+      const extension = split[split.length-1].toLowerCase();
       if (extension !== 'xlsx' && extension !== 'csv') {
         this.invalidExtension = true;
         return;
@@ -216,14 +212,15 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
 
       this.file = uploadedFile;
       this.isUploading = true;
-      await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateFile', this.file);
-      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, null);
+      await this.uploadsService.updateFile(this.datafileId, this.file);
+      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.delimiter, this.datafile.errLimit, this.datafile.description, null);
 
       // Datafiles
       this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
         this.datafile = {
           id: datafileData.datafile._id,
           title: datafileData.datafile.title,
+          delimiter: datafileData.datafile.delimiter,
           description: datafileData.datafile.description,
           contentPath: datafileData.datafile.contentPath,
           errLimit: datafileData.datafile.errLimit,
@@ -241,9 +238,9 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
         if (this.datafile.contentPath) {
           // contentPath: {backend/uploads/datafiles/capital-1234.csv",
           const nameWExtension = this.datafile.contentPath.split('/');
-          const splitNameWExtension = nameWExtension[3].split('.');
-          this.extension = splitNameWExtension[1]; // setted in order to use it on onDownload() method
-          const nameWDate = nameWExtension[3].split('-');
+          const splitNameWExtension = nameWExtension[nameWExtension.length-1].split('.');
+          this.extension = splitNameWExtension[splitNameWExtension.length-1]; // setted in order to use it on onDownload() method
+          const nameWDate = nameWExtension[nameWExtension.length-1].split('-');
           const name = nameWDate[0];
           this.fileName = name + '.' + this.extension;
         }
@@ -283,20 +280,35 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
       } else {
         return;
       }
-      await this.uploadsService.updateFile(this.userId, this.datafileId, 'updateContent', file);
-      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.description, null);
+      await this.uploadsService.updateFile(this.datafileId, file);
+      await this.datafilesService.updateDatafile( this.datafileId, this.datafile.title, this.datafile.delimiter, this.datafile.errLimit, this.datafile.description, null);
+      this.datafilesService.getDatafile( this.datafileId).subscribe(datafileData => {
+        this.datafile = {
+          id: datafileData.datafile._id,
+          title: datafileData.datafile.title,
+          delimiter: datafileData.datafile.delimiter,
+          description: datafileData.datafile.description,
+          contentPath: datafileData.datafile.contentPath,
+          errLimit: datafileData.datafile.errLimit,
+          coleccion: datafileData.datafile.coleccion,
+          workspace: datafileData.datafile.workspace,
+        };
+        this.content = datafileData.content;
+      });
+
       this.fileContentForm.get('fileContent').disable();
       this.isSaving = false;
     }
 
     async onDeleteFile() {
       this.isDeletingFile = true;
-      await this.uploadsService.updateFile(this.userId, this.datafileId,'deleteFile', null);
+      await this.uploadsService.deleteFile(this.datafileId);
       // Datafiles
       this.datafilesService.getDatafile(this.datafileId).subscribe(datafileData => {
         this.datafile = {
           id: datafileData.datafile._id,
           title: datafileData.datafile.title,
+          delimiter: datafileData.datafile.delimiter,
           description: datafileData.datafile.description,
           contentPath: datafileData.datafile.contentPath,
           errLimit: datafileData.datafile.errLimit,
@@ -330,8 +342,10 @@ export class DatafileDetailsComponent implements OnInit, OnDestroy{
 
     onEditContent() {
       if (this.fileContentForm.get('fileContent').disabled) {
+        this.editContent = true;
         this.fileContentForm.get('fileContent').enable();
       } else {
+        this.editContent = false;
         this.fileContentForm.get('fileContent').disable();
       }
     }

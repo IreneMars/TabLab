@@ -12,6 +12,8 @@ const {
 
 router.put("/", [
     validateJWT,
+    check('id', 'The ID is not a valid Mongo ID').isMongoId(),
+    check('id').custom(testExistsById),
 ], createReport);
 
 module.exports = router;

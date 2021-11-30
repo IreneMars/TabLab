@@ -32,4 +32,9 @@ configurationSchema.pre('save', function(next) {
     next();
 });
 
+configurationSchema.methods.toJSON = function() {
+    const { __v, ...configuration } = this.toObject();
+    return configuration;
+}
+
 module.exports = mongoose.model('Configuration', configurationSchema);

@@ -1,104 +1,64 @@
 const fs = require('fs');
 const bufferedSpawn = require('buffered-spawn');
 
-const { User, Datafile, Role, Test } = require('../models');
+const { User, Datafile, Role, Test, Esquema } = require('../models');
+const { uploadObject, deleteObject } = require('../helpers');
 
-exports.updateFile = async(req, res) => {
+exports.updatePhoto = async(req, res) => {
     current_user_id = req.userData.userId;
-
     try {
-        const entity = req.body.entity;
-        let model;
-        let actualFilePath = "";
-        const url = req.protocol + "://" + req.get("host") + "/";
-        if (req.file) {
-            newFilePath = url + entity + "/" + req.file.filename;
-        } else {
-            newFilePath = req.body.filePath;
-        }
-
-        if (current_user_id !== req.body.userId) {
+        if (current_user_id !== req.params.id) {
             return res.status(403).json({
                 msg: `You're not authorized to perform this action.`
             });
         }
-        var sameFiles = false;
-        switch (entity) {
-            case 'users':
-                model = await User.findById(req.body.userId);
-                if (!model) {
-                    return res.status(400).json({
-                        msg: `There is no user with id ${ id }`
-                    });
-                }
-                if (model.photo) {
-                    if (model.photo === newFilePath) {
-                        sameFiles = true;
-                    }
-                    if (!model.photo.includes("assets")) { // If it is not in assets:
-                        actualFilePath = model.photo.replace(url, 'backend/uploads/');
-                    }
 
-                    model.photo = newFilePath;
-                    await User.updateOne({ _id: req.body.userId }, model)
-                    break;
-                }
-            case 'datafiles':
-                model = await Datafile.findById(req.body.datafileId);
-                if (!model) {
-                    return res.status(404).json({
-                        msg: `There is no datafile with id ${ id }`
-                    });
-                }
-                const roles = await Role.find({ workspace: model.workspace, user: current_user_id });
-                if (roles.length !== 1) {
-                    return res.status(403).json({
-                        message: "The current user is not authorized to perform any actions on this workspace!"
-                    });
-                }
-                let newContentPath = null;
-                if (req.body.operation === 'updateFile' || req.body.operation === 'updateContent') {
-                    newContentPath = "backend/uploads/datafiles/" + req.file.filename;
-                }
-
-                if (model.contentPath) {
-                    actualFilePath = model.contentPath;
-                }
-                model.contentPath = newContentPath;
-                await Datafile.updateOne({ _id: req.body.datafileId }, model)
-                const tests = await Test.find({ 'datafile': req.body.datafileId });
-                for (var test of tests) {
-                    await Test.findByIdAndUpdate(test._id, { 'executable': true });
-                }
-                break;
-
-            default:
-                return res.status(500).json({ msg: 'There is no validation for this.' });
+        if (req.file == null) {
+            return res.status(400).json({
+                msg: `You must send a file in body.`
+            });
         }
-        // Limpiar imágenes previas
-        if (fs.existsSync(actualFilePath) && !sameFiles) {
-            fs.unlinkSync(actualFilePath);
+
+        // Fetch user info
+        var user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(400).json({
+                msg: `There is no user with id ${ id }`
+            });
         }
-        //await model.save();
+
+        // New File Path
+        const fileName = `users/${req.file.filename}`;
+        const fileData = fs.readFileSync(req.file.path);
+        const url = await uploadObject(fileData, fileName);
+        
+        //ActualFilePath
+        if (user.photo) {
+            await deleteObject(user.photo.replace("https://"+process.env.S3_BUCKET+".s3.amazonaws.com/", ""))
+        }
+        
+        user.photo = url;
+        await User.updateOne({ _id: req.params.id }, user)
+
         return res.status(200).json({
             message: "File updated!",
-            entity: entity,
-            filePath: newFilePath
+            entity: "users",
+            filePath: url
         });
-
     } catch (err) {
         return res.status(500).json({
             message: "Updating a file failed!"
         });
-
     }
 }
 
-exports.updateEsquemaContent = async(req, res) => {
+exports.updateDataFile = async(req, res) => {
     current_user_id = req.userData.userId;
-    try {
-        const datafile = await Datafile.findById(req.body.datafile);
 
+    try {
+        // Fetching datafile data
+        var datafile = await Datafile.findById(req.params.id);
+        
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         if (roles.length !== 1) {
             return res.status(403).json({
@@ -106,41 +66,195 @@ exports.updateEsquemaContent = async(req, res) => {
             });
         }
 
-        if (req.body.operation === 'update' || req.body.operation === 'create') {
-            if (req.body.operation === 'update') {
-                fs.unlinkSync(req.body.contentPath);
-            }
+        //ActualFilePath
+        if (datafile.contentPath) {
+            await deleteObject(datafile.contentPath.replace("https://"+process.env.S3_BUCKET+".s3.amazonaws.com/", ""))
+        }
 
-            fs.writeFile(req.body.contentPath, req.body.esquemaContent, (err) => {
-                if (err) {
-                    return res.status(500).json({
-                        message: "Writing an esquema failed!"
-                    });
-                }
-                return res.status(200).json({
-                    message: "File updated!",
-                    filePath: req.body.contentPath
-                });
-            });
-        } else if (req.body.operation === 'infer') {
-            const fileName = 'inferred_schema' + "-" + Date.now() + '.yaml';
-            const newFilePath = 'backend/uploads/esquemas/' + fileName;
-            bufferedSpawn('python', ["backend/scripts/infer_esquema.py", datafile.contentPath, fileName])
-                .then((output) => {
-                    return res.status(200).json({
-                        message: "Esquema inferred successfully",
-                        filePath: newFilePath
-                    });
-                }, (err) => {
-                    return res.status(500).json({
-                        message: "Inferring an esquema failed!",
-                    });
-                });
-        } else if (!req.body.contentPath && !datafile.contentPath) {
-            return res.status(500).json({
-                message: "There is no content to infer an esquema!"
+        // New File Path
+        const fileName = `datafiles/${req.file.filename}`;
+        const fileData = fs.readFileSync(req.file.path, 'utf8');
+        const url = await uploadObject(fileData, fileName);
+        
+        datafile.contentPath = url;
+        
+        var split = fileData.split("\n");
+        var rows = split.length - 1;
+        var columns = split[0].split(datafile.delimiter).length + 1;
+        datafile.errLimit = rows * columns;
+        await Datafile.findByIdAndUpdate(req.params.id, datafile);
+
+        var tests = await Test.find({ 'datafile': req.params.id });
+        for (var test of tests) {
+            await Test.findByIdAndUpdate(test._id, { 'executable': true });
+        }
+
+        return res.status(200).json({
+            message: "File updated!",
+            entity: "datafiles",
+            filePath: url
+        });
+
+    } catch (err) {
+        return res.status(500).json({
+            message: "Updating a file failed!"
+        });
+    }
+}
+
+exports.deleteDataFile = async(req, res) => {
+    current_user_id = req.userData.userId;
+
+    try {
+        // Fetching datafile data
+        var datafile = await Datafile.findById(req.params.id);
+        
+        const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
+        if (roles.length !== 1) {
+            return res.status(403).json({
+                message: "The current user is not authorized to perform any actions on this workspace!"
             });
         }
+
+        //ActualFilePath
+        if (datafile.contentPath) {
+            await deleteObject(datafile.contentPath.replace("https://"+process.env.S3_BUCKET+".s3.amazonaws.com/", ""))
+        }
+
+        datafile.contentPath = "";
+
+        await Datafile.updateOne({ _id: req.params.id }, datafile);
+        
+        var tests = await Test.find({ 'datafile': req.params.id });
+        for (var test of tests) {
+            await Test.findByIdAndUpdate(test._id, { 'executable': true });
+        }
+
+        return res.status(200).json({
+            message: "File Deleted!",
+            datafile: datafile
+        });
+
+    } catch (err) {
+        return res.status(500).json({
+            message: "Deleting a file failed!"
+        });
+    }
+}
+
+exports.addEsquemaContent = async(req, res) => {
+    current_user_id = req.userData.userId;
+
+    try {
+        const datafile = await Datafile.findById(req.body.datafile);
+        const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
+        if (roles.length !== 1) {
+            return res.status(403).json({
+                message: "The current user is not authorized to perform any actions on this workspace!"
+            });
+        }
+
+        var split = req.body.fileName.split(".");
+        const extension = split[1].toLowerCase();
+        var name = split[0].toLowerCase().split(" ").join("_") + "-" + Date.now() + "." + extension;
+        
+        const fileUrl = await uploadObject(req.body.esquemaContent, `esquemas/${name}`);
+
+        const esquema = new Esquema({
+            title: req.body.title,
+            contentPath: fileUrl,
+            creationMoment: null,
+            datafile: req.body.datafile
+        });
+        const createdEsquema = await esquema.save();
+
+        return res.status(201).json({
+            message: "Esquema added!",
+            esquema: createdEsquema,
+            newContent: req.body.esquemaContent
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: "Updating an esquema file failed!"
+        });
+    }
+}
+
+exports.updateEsquemaContent = async(req, res) => {
+    current_user_id = req.userData.userId;
+
+    try {
+        const datafile = await Datafile.findById(req.body.datafile);
+        const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
+        if (roles.length !== 1) {
+            return res.status(403).json({
+                message: "The current user is not authorized to perform any actions on this workspace!"
+            });
+        }
+        
+        const esquema = await Esquema.findById(req.params.esquemaId);
+
+        // New File Path
+        var name = esquema.contentPath.replace("https://"+process.env.S3_BUCKET+".s3.amazonaws.com/", "");
+        await uploadObject(req.body.esquemaContent, name);
+
+        await Esquema.findByIdAndUpdate(req.params.esquemaId, {
+            title: req.body.title
+        });
+        const updatedEsquema = await Esquema.findById(req.params.esquemaId);
+        
+        return res.status(200).json({
+            message: "Esquema updated!",
+            esquema: updatedEsquema,
+            newContent: req.body.esquemaContent
+        });
+    } catch (err) {
+        return res.status(500).json({
+            message: "Updating an esquema file failed!"
+        });
+    }
+}
+
+exports.inferEsquemaContent = async(req, res) => {
+    current_user_id = req.userData.userId;
+
+    try {
+        const datafile = await Datafile.findById(req.params.datafileId);
+        
+        const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
+        if (roles.length !== 1) {
+            return res.status(403).json({
+                message: "The current user is not authorized to perform any actions on this workspace!"
+            });
+        }
+
+        const fileName = 'inferred_schema' + "-" + Date.now() + '.yaml'
+
+        bufferedSpawn('python', ["backend/scripts/infer_esquema.py", datafile.contentPath, fileName])
+            .then(async(output) => {
+                // New File Path
+                var fileS3Path = `esquemas/${fileName}`;
+                const fileData = fs.readFileSync("backend/uploads/esquemas/" + fileName);
+
+                const url = await uploadObject(fileData, fileS3Path);
+
+                const esquema = new Esquema({
+                    title: "Inferred Esquema - " + datafile.title,
+                    contentPath: url,
+                    creationMoment: null,
+                    datafile: req.params.datafileId
+                });
+                const createdEsquema = await esquema.save();
+                return res.status(200).json({
+                    message: "Esquema inferred successfully",
+                    esquema: createdEsquema,
+                });
+            }, (err) => {
+                return res.status(500).json({
+                    message: "Inferring an esquema failed!",
+                });
+            });
+
     } catch (err) {
         return res.status(500).json({
             message: "Updating an esquema file failed!"

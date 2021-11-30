@@ -1,7 +1,6 @@
 export interface Test {
   id: string;
   title: string;
-  delimiter: string;
   reportPath: string;
   esquema: string;
   configurations: string[];

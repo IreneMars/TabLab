@@ -11,7 +11,8 @@ const BACKEND_URL = environment.apiUrl + '/invitations/';
 export class InvitationService {
   private invitations: Invitation[] = [];
   private invitationsUpdated = new Subject<{invitations: Invitation[], invitationCount: number, totalInvitations: number}>();
-  
+  private pendingInvitationsUpdated = new Subject<{pendingInvitations: boolean}>();
+
   constructor(private http: HttpClient) {}
   
   getInvitationUpdateListener() {
@@ -42,26 +43,21 @@ export class InvitationService {
         this.invitationsUpdated.next({
           invitations: [...this.invitations],
           invitationCount: transformedInvitationData.maxInvitations,
-          totalInvitations: transformedInvitationData.totalInvitations});
+          totalInvitations: transformedInvitationData.totalInvitations
+        });
     });
   }
+  
+  checkPendingInvitationsListener() {
+    return this.pendingInvitationsUpdated.asObservable();
+  }
 
-  getInvitationsHeader() {
-    return this.http.get<{message: string, invitations: any}>(BACKEND_URL)
-      .pipe(map( (invitationData) => {
-        return { 
-          invitations: invitationData.invitations
-          .map( invitation => {
-            return {
-              id: invitation._id,
-              sender: invitation.sender,
-              receiver: invitation.receiver,
-              status: invitation.status,
-              workspace: invitation.workspace,
-            };
-          }),
-        };
-      }))
+  checkPendingInvitations() {
+    return this.http.get<{message: string, pendingInvitations:boolean}>(BACKEND_URL+"checkPendings").subscribe(pendingInvitationData=>{
+      this.pendingInvitationsUpdated.next({
+        pendingInvitations: pendingInvitationData.pendingInvitations
+      });
+    });
   }
 
   addInvitation( receiverEmail: string, workspaceId: string) {

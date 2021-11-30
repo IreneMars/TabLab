@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Invitation } from 'src/app/models/invitation.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { InvitationService } from '../../../services/invitations.service';
+import { WorkspacesService } from '../../../services/workspaces.service';
 
 @Component({
   selector: 'app-invitation-create',
@@ -15,15 +16,14 @@ export class InvitationCreateComponent implements OnInit{
   isLoading                   : boolean = false;
   invitationAdded             : boolean = false;
 
-  workspaceId                 : string;
-  invalidEmail                : boolean = false;
+  @Input() workspaceId        : string;
   invitationForm              : FormGroup;
   @Input() create             : any;
   @Input()  invitations       : Invitation[];
   @Output() invitationsChange : any = new EventEmitter();
-
+  personal                    : boolean = false;
   constructor(public invitationsService: InvitationService, public authService: AuthService, private formBuilder: FormBuilder,
-              private activatedRoute: ActivatedRoute,  private router: Router) {
+              private workspacesService: WorkspacesService) {
     this.createForm();
   }
 
@@ -34,19 +34,30 @@ export class InvitationCreateComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.workspaceId = params.get('workspaceId');
-      this.userIsAuthenticated = this.authService.getIsAuth();
-      if (this.userIsAuthenticated){
-        this.userId = this.authService.getUserId();
-      }
-    });
+    this.isLoading = true;          
+
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    if (this.userIsAuthenticated){
+      this.userId = this.authService.getUserId();
+
+      this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData=>{
+          this.personal = workspaceData.workspace.mandatory;
+          this.isLoading = false;          
+      });
+    }
+  }
+
+  get invalidEmail() {
+    return this.invitationForm.get('email').invalid && this.invitationForm.get('email').touched;
+  }
+
+  get pristineInvitation() {
+    return this.invitationForm.get('email').pristine;
   }
 
   onInvite() {
     this.invitationAdded = false;
     if (this.invitationForm.invalid){
-    this.invalidEmail = true;
     return Object.values(this.invitationForm.controls).forEach(control => {
       if (control instanceof FormGroup) {
         
@@ -67,7 +78,7 @@ export class InvitationCreateComponent implements OnInit{
           this.invitationAdded = true;
         })
         .catch(err=>{
-          console.log("Error on onInvite method: "+err.message.message);
+          console.log("Error on onInvite method: "+err.message);
         });
     }
     this.invitationForm.reset();

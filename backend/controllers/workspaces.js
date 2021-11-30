@@ -19,9 +19,10 @@ exports.getWorkspaces = async(req, res, next) => {
             workspaceQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
         }
 
-        var documents = await workspaceQuery.exec();
-        for (doc in documents) {
-            const roles = await Role.find({ workspace: documents[doc]._id });
+        var workspaces = await workspaceQuery.exec();
+
+        for (var workspace of workspaces) {
+            const roles = await Role.find({ workspace: workspace._id });
             var user_ids = roles.map(function(elem) {
                 return elem.user.toString();
             });
@@ -29,13 +30,13 @@ exports.getWorkspaces = async(req, res, next) => {
             var user_updated = users.map(function(elem) {
                 return { "id": elem._id, "photo": elem.photo };
             });
-            documents[doc]._doc['users'] = user_updated;
+            workspace._doc['users'] = user_updated;
         }
 
         return res.status(200).json({
             message: "Workspaces fetched successfully!",
-            workspaces: documents,
-            maxWorkspaces: documents.length,
+            workspaces: workspaces,
+            maxWorkspaces: workspaces.length,
             totalWorkspaces: allWorkspaces.length
         });
     } catch (err) {
@@ -51,37 +52,16 @@ exports.getWorkspace = async(req, res, next) => {
         const roles = await Role.find({ workspace: req.params.id, user: current_user_id });
         const user = await User.findById(current_user_id);
 
-        if (roles.length !== 1 || user.role !== 'ADMIN') {
+        if (roles.length !== 1 && user.role !== 'ADMIN') {
             return res.status(403).json({
                 message: "Not authorized to fetch this workspace!"
             });
         }
         const workspace = await Workspace.findById(req.params.id);
-        const orphanedDatafiles = await Datafile.find({ "workspace": req.params.id, "coleccion": null });
-        const datafiles = await Datafile.find({ "workspace": req.params.id });
-        var datafileIds = [];
-        var datafilesWTests = [];
-        for (var datafile of datafiles) {
-            const tests = await Test.find({ datafile: datafile._id });
-            if (tests.length > 0) {
-                datafile._doc['tests'] = [];
-                for (var test of tests) {
-                    const testMap = new Map();
-                    testMap.set('id', test._id);
-                    testMap.set('title', test.title);
-                    datafile._doc['tests'].push(testMap);
-                    datafilesWTests.push(datafile);
-                    datafileIds.push(datafile._id);
-                }
-            }
-        }
-        const tests = await Test.find({ datafile: { $in: datafileIds } });
+
         return res.status(200).json({
             message: "Workspace fetched successfully!",
             workspace: workspace,
-            orphanedDatafiles: orphanedDatafiles,
-            datafilesWTests: datafilesWTests,
-            tests: tests
         });
     } catch (err) {
         return res.status(500).json({
@@ -98,7 +78,7 @@ exports.createWorkspace = async(req, res, next) => {
         const roles = await Role.find({ user: current_user_id });
         if (roles.length === configuration.limitWorkspaces) {
             return res.status(500).json({
-                message: `You are not allowed to be in more than ${configuration.limitWorkspaces}`
+                message: `You are not allowed to be in more than ${configuration.limitWorkspaces} workspaces`
             });
         }
         const workspace = new Workspace({
@@ -141,10 +121,14 @@ exports.createWorkspace = async(req, res, next) => {
             const user = await User.findById(current_user_id);
             const activity = new Activity({
                 message: "{{author}} creó el espacio de trabajo {{workspace}}",
-                workspace: { 'id': createdWorkspace._id, 'title': createdWorkspace.title },
-                author: { 'id': current_user_id, 'name': user.name },
+                workspace: createdWorkspace._id,
+                workspaceTitle: createdWorkspace.title,
+                author: current_user_id,
+                authorName: user.name,
                 coleccion: null,
+                coleccionTitle: null,
                 datafile: null,
+                datafileTitle: null,
                 creationMoment: null
             });
             await activity.save();
@@ -181,17 +165,21 @@ exports.updateWorkspace = async(req, res, next) => {
         const user = await User.findById(current_user_id);
         const activity = new Activity({
             message: "{{author}} modificó el espacio de trabajo {{workspace}}",
-            workspace: { 'id': updatedWorkspace._id, 'title': updatedWorkspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
+            workspace: updatedWorkspace._id,
+            workspaceTitle: updatedWorkspace.title,
+            author: current_user_id,
+            authorName: user.name,
             coleccion: null,
+            coleccionTitle: null,
             datafile: null,
+            datafileTitle: null,
             creationMoment: null
         });
         await activity.save();
 
         return res.status(200).json({
             message: "Workspace updated successfully!",
-            user: updatedWorkspace
+            workspace: updatedWorkspace
         });
     } catch (err) {
         res.status(500).json({
@@ -204,10 +192,10 @@ exports.deleteWorkspace = async(req, res, next) => {
     const current_user_id = req.userData.userId;
 
     try {
-        const role = Role.findOne({ workspace: req.params.id, user: current_user_id, role: "owner" });
+        const roles = Role.find({ workspace: req.params.id, user: current_user_id, role: "owner" });
         const user = await User.findById(current_user_id);
 
-        if (!role || user.role !== 'ADMIN') {
+        if (roles.length !== 1 && user.role !== 'ADMIN') {
             return res.status(401).json({
                 message: "You are not authorized to delete that workspace!"
             });
@@ -227,10 +215,14 @@ exports.deleteWorkspace = async(req, res, next) => {
 
         const activity = new Activity({
             message: "{{author}} eliminó el espacio de trabajo {{workspace}}",
-            workspace: { 'id': null, 'title': workspaceTitle },
-            author: { 'id': current_user_id, 'name': user.name },
+            workspace: null,
+            workspaceTitle: workspaceTitle,
+            author: current_user_id,
+            authorName: user.name,
             coleccion: null,
+            coleccionTitle: null,
             datafile: null,
+            datafileTitle: null,
             creationMoment: null
         });
         await activity.save();

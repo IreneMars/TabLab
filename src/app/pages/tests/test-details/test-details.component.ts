@@ -26,9 +26,9 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 })
 export class TestDetailsComponent implements OnInit, OnDestroy{
   isLoading                : boolean = false;
-  userId                : string;
-  user                  : any;
-  userIsAuthenticated   : boolean = false;
+  userId                   : string;
+  user                     : any;
+  userIsAuthenticated      : boolean = false;
 
   testId                   : string;
   test                     : Test;
@@ -36,12 +36,12 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
   selectedConfigurationIDs : string[] = [];
   
   workspaceId              : string;
+  workspace                : Workspace;
   datafileId               : string;
   datafile                 : Datafile;
   esquemas                 : Esquema[];
   configurations           : Configuration[] = [];
   formattedConfigs         : any[] = [];
-  workspace                : Workspace;
 
   extension                : string = null;
   fileName                 : string = null;
@@ -54,7 +54,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
   contentLines             : string[];
   suggestions              : Suggestion[];
   suggestionQueryResult    : any = null;
-  onDestroy                :boolean = false;
+  onDestroy                : boolean = false;
   suggestionForm           : FormGroup = null;
   suggestionId             : string;
 
@@ -65,7 +65,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
 
                 this.testForm = new FormGroup({
                   'title': new FormControl(null, {validators: [Validators.required]}),
-                  'delimiter': new FormControl(null)
                 });
                 
                 this.fileContentForm = new FormGroup({
@@ -118,7 +117,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
               this.test = {
                 id: testData.test._id,
                 title: testData.test.title,
-                delimiter: testData.test.delimiter,
                 reportPath: testData.test.reportPath,
                 status: testData.test.status,
                 esquema: testData.test.esquema,
@@ -130,7 +128,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
                 executable: testData.test.executable,
                 datafile: testData.test.datafile,
               };
-              this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
+              this.testForm.reset({title: this.test.title});
               this.selectedEsquema = {
                 id: testData.esquema._id,
                 title: testData.esquema.title,
@@ -148,6 +146,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
                 this.datafile = {
                   id: datafileData.datafile.id,
                   title: datafileData.datafile.title,
+                  delimiter: datafileData.datafile.delimiter,
                   description: datafileData.datafile.description,
                   contentPath: datafileData.datafile.contentPath,
                   errLimit: datafileData.datafile.errLimit,
@@ -163,19 +162,18 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
                   if(!this.onDestroy){
                     this.configurationsService.getConfigurationsByDatafile(this.datafileId);
                     this.configurationsService.getConfigurationUpdateListener().subscribe(configurationData =>{
-                      // console.log("Permitido (test):"+!this.onDestroy)
-                      // console.log("Get configurations (test-details)")
                       this.configurations = configurationData.configurations;
                       if (this.datafile.contentPath) {
                         const nameWExtension = datafileData.datafile.contentPath.split('/');
-                        const splitNameWExtension = nameWExtension[3].split('.');
-                        this.extension = splitNameWExtension[1];
-                        
-                        const nameWDate = splitNameWExtension[0].split('-');
-                        const name = nameWDate[0];
-                        this.fileName = name + '.' + this.extension;
+                        const splitNameWExtension = nameWExtension[nameWExtension.length-1].split('.');
+                        this.extension = splitNameWExtension[splitNameWExtension.length-1];
+                        var name = nameWExtension[nameWExtension.length-1];
+                        if (name.includes("-")){
+                          const nameWDate = nameWExtension[nameWExtension.length-1].split('-');
+                          name = nameWDate[0] + '.' + this.extension;
+                        }
+                        this.fileName = name;
                       }
-                      // console.log("Configs length: "+this.configurations.length)
                       for (var config of this.configurations){
                         const extraParamsJSON = JSON.stringify(config.extraParams).toString();
                         const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
@@ -184,8 +182,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
                         const configAux = {...config, extraParamsStr};
                         this.formattedConfigs.push(configAux);
                       }
-                      // console.log(this.formattedConfigs.length)
-      
                       // Suggestions
                       this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
                       this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
@@ -233,7 +229,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
       this.test = {
         id: testData.test._id,
         title: testData.test.title,
-        delimiter: testData.test.delimiter,
         reportPath: testData.test.reportPath,
         status: testData.test.status,
         esquema: testData.test.esquema,
@@ -245,7 +240,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
         executable: testData.test.executable,
         datafile: testData.test.datafile,
       };
-      this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
+      this.testForm.reset({title: this.test.title});
       this.edit = false;
       this.isSavingTest = false;
     });
@@ -256,7 +251,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
     const content = this.fileContentForm.value.fileContent;
     const file = this.generateFile(content);
     if(file){
-      await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", file);
+      await this.uploadsService.updateFile(this.datafileId, file);
     }
     this.hideEditableContent = true;
     this.isLoading = false;
@@ -319,7 +314,7 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
 
   onCancelTestForm(){
     this.edit = false;
-    this.testForm.reset({title: this.test.title, delimiter: this.test.delimiter});
+    this.testForm.reset({title: this.test.title});
   }
   
   get invalidRowContent() {
@@ -337,10 +332,10 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
       });
     }
     const values = this.suggestionForm.getRawValue();
-    const result = await this.suggestionsService.applySuggestion(this.suggestionId, "updateRow", this.test.delimiter, this.contentLines, values.rowContent);
+    const result = await this.suggestionsService.applySuggestion(this.suggestionId, "updateRow", this.datafile.delimiter, this.contentLines, values.rowContent);
     this.suggestionQueryResult = result.data.rowContent;
     const newFile = this.generateFile(result.data.content)
-    await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", newFile);
+    await this.uploadsService.updateFile(this.datafileId, newFile);
     await this.suggestionsService.deleteSuggestion(this.suggestionId);
     // Datafile, esquemas y configuraciones
     this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
@@ -348,27 +343,21 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
       this.fileContentForm.patchValue({fileContent: datafileData.content});
       // Suggestions
       this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
-      this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
-        this.suggestions = suggestionData.suggestions;
-      });
     });
   }
   //
   async onApplyChanges(suggestionId:string, operation:string){
     this.suggestionId = suggestionId;
-    console.log(this.suggestionId)
     this.suggestionQueryResult = null;
-    const result = await this.suggestionsService.applySuggestion(suggestionId, operation,this.test.delimiter, this.contentLines, null);
-    console.log(result)
+    const result = await this.suggestionsService.applySuggestion(suggestionId, operation, this.datafile.delimiter, this.contentLines, null);
     this.suggestionQueryResult = result.data.rowContent;
     this.suggestionForm = new FormGroup({
       'rowContent': new FormControl('', {validators: [Validators.required]}),
     });
     this.suggestionForm.reset({'rowContent': result.data.rowContent})
-    console.log(this.suggestionForm)
     if(operation==="deleteRow"){
       const newFile = this.generateFile(result.data.content)
-      await this.uploadsService.updateFile( this.userId, this.datafileId, "updateContent", newFile);
+      await this.uploadsService.updateFile(this.datafileId, newFile);
       await this.suggestionsService.deleteSuggestion(suggestionId);
       // Datafile, esquemas y configuraciones
       this.datafilesService.getDatafile(this.datafileId).subscribe( datafileData => {
@@ -376,9 +365,6 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
         this.fileContentForm.patchValue({fileContent: datafileData.content});
         // Suggestions
         this.suggestionsService.getSuggestionsByDatafile(this.datafileId);
-        this.suggestionsService.getSuggestionUpdateListener().subscribe(suggestionData=>{
-          this.suggestions = suggestionData.suggestions;
-        });
       });
     }
   }

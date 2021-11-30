@@ -1,6 +1,7 @@
 const { Activity, Role, Collection, Workspace, Datafile, Configuration, Esquema, Test, User } = require("../models");
-var fs = require('file-system');
 const xlsxFile = require('read-excel-file/node');
+const axios = require('axios');
+const { deleteObject } = require('../helpers');
 
 exports.getDatafiles = async(req, res) => {
     try {
@@ -25,10 +26,11 @@ exports.getDatafile = async(req, res, next) => {
                 message: "Datafile not found."
             });
         }
+        
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         const user = await User.findById(current_user_id);
-
-        if (roles.length !== 1 || user.role !== 'ADMIN') {
+        
+        if (roles.length !== 1 && user.role !== 'ADMIN') {
             return res.status(403).json({
                 message: "You are not authorized to fetch this datafile."
             });
@@ -36,27 +38,28 @@ exports.getDatafile = async(req, res, next) => {
         const configurations = await Configuration.find({ datafile: req.params.id });
         const esquemas = await Esquema.find({ datafile: req.params.id });
         const tests = await Test.find({ datafile: req.params.id });
-        if (datafile.contentPath != null) {
+
+        if (datafile.contentPath != null && datafile.contentPath.length != "") {
             var extension = datafile.contentPath.split('.').pop().toLowerCase();
+            var response;
+            try {
+                response = await axios.get(datafile.contentPath);
+            } catch (error) {
+                return res.status(500).json({
+                    message: "Fetching the content of this datafile failed!"
+                });
+            }
             if (extension === 'csv') {
-                fs.readFile(datafile.contentPath, 'utf8', (err, data) => {
-                    if (err) {
-                        return res.status(500).json({
-                            message: "Fetching the content of the csv file of this datafile failed!"
-                        });
-                    } else {
-                        return res.status(200).json({
-                            message: "Sucessful fetch!",
-                            datafile: datafile,
-                            content: data,
-                            esquemas: esquemas,
-                            configurations: configurations,
-                            tests: tests
-                        });
-                    }
+                return res.status(200).json({
+                    message: "Sucessful fetch!",
+                    datafile: datafile,
+                    content: response.data,
+                    esquemas: esquemas,
+                    configurations: configurations,
+                    tests: tests
                 });
             } else if (extension === 'xlsx') {
-                xlsxFile(datafile.contentPath).then((rows) => {
+                xlsxFile(response.data).then((rows) => {
                     return res.status(200).json({
                         message: "Sucessful fetch!",
                         datafile: datafile,
@@ -109,6 +112,7 @@ exports.createDatafile = async(req, res, next) => {
             title: req.body.title,
             description: req.body.description,
             contentPath: null,
+            delimiter: req.body.delimiter,
             errLimit: null,
             coleccion: req.body.coleccion,
             workspace: req.body.workspace
@@ -121,18 +125,25 @@ exports.createDatafile = async(req, res, next) => {
         const user = await User.findById(current_user_id);
         var messageAux = "{{author}} añadió el fichero {{datafile}} al espacio de trabajo {{workspace}}";
         var coleccionAux = null;
+        var coleccionTitleAux = null;
         if (req.body.coleccion != null) {
             messageAux = "{{author}} añadió el fichero {{datafile}} al espacio de trabajo {{workspace}} (en la colección {{coleccion}})";
             const coleccion = await Collection.findById(req.body.coleccion);
-            coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
+            coleccionAux = coleccion._id;
+            coleccionTitleAux = coleccion.title;
         }
         const activity = new Activity({
             message: messageAux,
-            workspace: { 'id': workspace._id, 'title': workspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
+            workspace: workspace._id,
+            workspaceTitle: workspace.title,
+            author: current_user_id,
+            authorName: user.name,
             coleccion: coleccionAux,
-            datafile: { 'id': datafile._id, 'title': datafile.title },
+            coleccionTitle: coleccionTitleAux,
+            datafile: datafile._id,
+            datafileTitle: datafile.title,
             creationMoment: null
+
         });
         await activity.save();
 
@@ -157,29 +168,35 @@ exports.updateDatafile = async(req, res) => {
                 message: "You are not authorized to update a datafile from this workspace."
             });
         }
-        await Datafile.findByIdAndUpdate(req.params.id, { title: req.body.title, description: req.body.description, coleccion: req.body.collection });
+        await Datafile.findByIdAndUpdate(req.params.id, {
+            title: req.body.title,
+            description: req.body.description,
+            delimiter: req.body.delimiter,
+            coleccion: req.body.coleccion
+        });
         const updatedDatafile = await Datafile.findById(req.params.id);
-
-        const tests = await Test.find({ 'datafile': updatedDatafile._id });
-        for (var test of tests) {
-            await Test.findByIdAndUpdate(test._id, { 'executable': true });
-        }
 
         const workspace = await Workspace.findById(updatedDatafile.workspace);
         const user = await User.findById(current_user_id);
         var messageAux = "{{author}} modificó el fichero del espacio de trabajo {{workspace}}";
         var coleccionAux = null;
+        var coleccionTitleAux = null;
         if (updatedDatafile.coleccion) {
             messageAux = "{{author}} modificó el fichero del espacio de trabajo {{workspace}} (de la colección {{coleccion}})";
             const coleccion = await Collection.findById(updatedDatafile.coleccion);
-            coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
+            coleccionAux = coleccion._id;
+            coleccionTitleAux = coleccion.title;
         }
         const activity = new Activity({
             message: messageAux,
-            workspace: { 'id': workspace._id, 'title': workspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
+            workspace: workspace._id,
+            workspaceTitle: workspace.title,
+            author: current_user_id,
+            authorName: user.name,
             coleccion: coleccionAux,
-            datafile: { 'id': datafile._id, 'title': datafile.title },
+            coleccionTitle: coleccionTitleAux,
+            datafile: datafile._id,
+            datafileTitle: datafile.title,
             creationMoment: null
         });
         await activity.save();
@@ -203,11 +220,17 @@ exports.deleteDatafile = async(req, res) => {
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         const user = await User.findById(current_user_id);
 
-        if (roles.length !== 1 || user.role !== 'ADMIN') {
+        if (roles.length !== 1 && user.role !== 'ADMIN') {
             return res.status(403).json({
                 message: "You are not authorized to delete a datafile from this workspace."
             })
         }
+
+        //ActualFilePath
+        if (datafile.contentPath) {
+            await deleteObject(datafile.contentPath.replace("https://"+process.env.S3_BUCKET+".s3.amazonaws.com/", ""))
+        }
+        
         const datafileTitle = datafile.title;
         await Configuration.deleteMany({ datafile: req.params.id });
         await Esquema.deleteMany({ datafile: req.params.id });
@@ -217,17 +240,23 @@ exports.deleteDatafile = async(req, res) => {
         const workspace = await Workspace.findById(datafile.workspace);
         var messageAux = "{{author}} eliminó el fichero del espacio de trabajo {{workspace}}";
         var coleccionAux = null;
+        var coleccionTitleAux = null
         if (datafile.coleccion) {
             messageAux = "{{author}} eliminó el fichero del espacio de trabajo {{workspace}} (de la colección {{coleccion}})";
             const coleccion = await Collection.findById(datafile.coleccion);
-            coleccionAux = { 'id': coleccion._id, 'title': coleccion.title };
+            coleccionAux = coleccion._id;
+            coleccionTitleAux = coleccion.title;
         }
         const activity = new Activity({
             message: messageAux,
-            workspace: { 'id': workspace._id, 'title': workspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
+            workspace: workspace._id,
+            workspaceTitle: workspace.title,
+            author: current_user_id,
+            authorName: user.name,
             coleccion: coleccionAux,
-            datafile: { 'id': null, 'title': datafileTitle },
+            coleccionTitle: coleccionTitleAux,
+            datafile: null,
+            datafileTitle: datafileTitle,
             creationMoment: null
         });
         await activity.save();

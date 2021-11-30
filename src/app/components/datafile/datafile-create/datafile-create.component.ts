@@ -5,9 +5,9 @@ import { Activity } from 'src/app/models/activity.model';
 import { ActivitiesService } from 'src/app/services/activities.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DatafileService } from 'src/app/services/datafiles.service';
-import { Collection } from '../../../models/collection.model';
 import { CollectionsService } from '../../../services/collections.service';
 import { WorkspacesService } from '../../../services/workspaces.service';
+import { Collection } from '../../../models/collection.model';
 
 @Component({
   selector: 'app-datafile-create',
@@ -17,22 +17,14 @@ import { WorkspacesService } from '../../../services/workspaces.service';
 export class DatafileCreateComponent implements OnInit{
   datafileForm                      : FormGroup;
   userIsAuthenticated               : boolean = false;
-  userId                            : string;
+  userId                             : string;
+  collections                : Collection[];                        
+  @Input() workspaceId              : string;
+  
   @Input() isSaving                 : boolean = false;
   @Output() isSavingChange          : EventEmitter<boolean> = new EventEmitter<boolean>();
   
-  @Input() collections              : any[];
-  @Output() collectionsChange       : EventEmitter<any[]> = new EventEmitter<any[]>();
-
-  @Input() orphanedDatafiles        : any[];
-  @Output() orphanedDatafilesChange : EventEmitter<any[]> = new EventEmitter<any[]>();
-
-  @Input() savefile                 : boolean;
-  @Output() savefileChange          : EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() workspaceId              : string;
-  
   @Input() activities             : Activity[];
-  @Output() activitiesChange      : EventEmitter<Activity[]> = new EventEmitter();
   
   constructor(public datafileService: DatafileService, public route: ActivatedRoute,
               private formBuilder: FormBuilder, private authService: AuthService, 
@@ -50,14 +42,20 @@ export class DatafileCreateComponent implements OnInit{
     this.userIsAuthenticated = this.authService.getIsAuth();
     if (this.userIsAuthenticated){
       this.userId = this.authService.getUserId();
+      this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+      this.collectionsService.getCollectionUpdateListener().subscribe(collectionData=>{
+        this.collections=collectionData.collections;
+      });
     }
   }
+  
 
   createForm() {
     this.datafileForm = this.formBuilder.group({
       title       : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      delimiter   : [''],
       description : ['', [Validators.maxLength(200)]],
-      collection : ['', ],
+      collection  : [''],
     });
   }
 
@@ -67,6 +65,10 @@ export class DatafileCreateComponent implements OnInit{
 
   get invalidDescription() {
     return this.datafileForm.get('description').invalid && this.datafileForm.get('description').touched;
+  }
+
+  get invalidDelimiter() {
+    return this.datafileForm.get('delimiter').invalid && this.datafileForm.get('delimiter').touched;
   }
 
   async onSave() {
@@ -85,45 +87,31 @@ export class DatafileCreateComponent implements OnInit{
     if(values.collection==='Ninguna'){
       values.collection = null;
     }
-    this.datafileService.addDatafile(values.title, values.description, values.collection, this.workspaceId)
+    this.datafileService.addDatafile(values.title, values.delimiter, values.description, values.collection, this.workspaceId)
     .then((response)=>{
-      if(values.collection){
-        // Collections
+        //Collections
         this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-        this.collectionsService.getCollectionUpdateListener().subscribe( (collectionData: {collections: Collection[]}) => {
-          this.collectionsChange.emit(collectionData.collections);
-          // Activities
-          this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
-          this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
-            this.activitiesChange.emit(activityData.activities)
-            this.datafileForm.reset({
-              title: '',
-              description: '',
-              collection: 'Ninguna'
-            });
-            this.isSavingChange.emit(false);
-          });
-        }); 
-      }else{
-        // Orphaned Datafiles
-        this.workspacesService.getWorkspace(this.workspaceId).subscribe(workspaceData => {
-          this.orphanedDatafilesChange.emit(workspaceData.orphanedDatafiles);
-          // Activities
-          this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
-          this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
-            this.activitiesChange.emit(activityData.activities)
-            this.datafileForm.reset({
-              title: '',
-              description: '',
-              collection: 'Ninguna'
-            });
-            this.isSavingChange.emit(false);
-          });
-        })
-      }
+        // Activities
+        this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+        this.datafileForm.reset({
+          title: '',
+          description: '',
+          collection: 'Ninguna'
+        });
+        this.isSavingChange.emit(false);   
     })
     .catch(err=>{
       console.log("Error on onSave() method: "+err.message);
+      //Collections
+      this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+      // Activities
+      this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+      this.datafileForm.reset({
+        title: '',
+        description: '',
+        collection: 'Ninguna'
+      });
+      this.isSavingChange.emit(false);   
     })
     
     

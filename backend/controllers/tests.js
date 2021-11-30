@@ -1,5 +1,5 @@
 const { Role, Test, Datafile, Esquema, User } = require("../models");
-const fs = require('fs');
+const axios = require('axios');
 
 exports.getTests = async(req, res) => {
     try {
@@ -93,7 +93,7 @@ exports.getTest = async(req, res, next) => {
         }
         const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id });
         const user = await User.findById(current_user_id);
-        if (roles.length !== 1 || user.role !== 'ADMIN') {
+        if (roles.length !== 1 && user.role !== 'ADMIN') {
             return res.status(403).json({
                 message: "Not authorized to fetch this test!"
             });
@@ -103,21 +103,20 @@ exports.getTest = async(req, res, next) => {
             esquema = null;
         }
         if (test.reportPath) {
-            fs.readFile(test.reportPath, 'utf8', (err, data) => {
-                if (err) {
-                    return res.status(500).json({
-                        message: "Fetching the content of the report file of this test failed!"
-                    });
-                } else {
-                    return res.status(200).json({
-                        message: "Sucessful fetch!",
-                        test: test,
-                        esquema: esquema,
-                        configurationIDs: test.configurations,
-                        reportContent: data
-                    });
-                }
-            });
+            try {
+                const response = await axios.get(test.reportPath);
+                return res.status(200).json({
+                    message: "Sucessful fetch!",
+                    test: test,
+                    esquema: esquema,
+                    configurationIDs: test.configurations,
+                    reportContent: response.data
+                });
+            } catch (error) {
+                return res.status(500).json({
+                    message: "Fetching the content of the report file of this test failed!"
+                });
+            }
         } else {
             return res.status(200).json({
                 message: "Sucessful fetch!",
@@ -146,7 +145,6 @@ exports.createTest = async(req, res, next) => {
         }
         const test = new Test({
             title: req.body.title,
-            delimiter: req.body.delimiter,
             reportPath: null,
             status: 'pending',
             esquema: req.body.esquema,
@@ -220,7 +218,7 @@ exports.deleteTest = async(req, res, next) => {
         }
         const roles = await Role.find({ 'workspace': datafile.workspace, 'user': current_user_id });
         const user = await User.findById(current_user_id);
-        if (roles.length !== 1 || user.role !== 'ADMIN') {
+        if (roles.length !== 1 && user.role !== 'ADMIN') {
             return res.status(401).json({ message: "You are not authorized to delete a test from this datafile!" });
         }
         await Test.deleteOne({ _id: req.params.id });

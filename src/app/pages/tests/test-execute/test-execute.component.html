@@ -3,32 +3,40 @@
     </div>
     <div class="col-5">
         <div class="container mt-4">
-            <div class="row mt-4" *ngIf="!isLoading">
+            <div class="row mt-4">
                 <div class="col-6">
                     <h2>Runner</h2>
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                    <div *ngIf="selectedTestIDs.size>0">
-                        <button class="btn btn-outline-light btn-sm" type="button" *ngIf="!inExecution" (click)="onExecute()">
+                    <div>
+                        <button class="btn btn-primary btn-sm" type="button" *ngIf="!inExecution && selectedTestIDs.size>0" (click)="onExecute()">
                           <i class="fas fa-play"></i> Ejecutar
                         </button>
+                        <button class="btn btn-primary btn-sm" type="button" *ngIf="!inExecution && selectedTestIDs.size==0" (click)="onExecute()" disabled>
+                            <i class="fas fa-play"></i> Ejecutar
+                          </button>
                         <button class="btn btn-outline-light btn-sm" type="button" *ngIf="inExecution">
                           Stop<i class="fas fa-pen"></i>
                         </button>
                     </div>
-
                 </div>
             </div>
-            <div class="row mt-1">
+            <div class="row mt-2">
+                <div class="col">
+                    <p class="explanation">Para poder ejecutar pruebas, estas deben tener la condición de "ejecutables".</p>
+                    <p class="explanation">Una prueba es "ejecutable", si ha sido creada y no ha sido ejecutada aún, o si habiendo sido ejecutada, el fichero de datos al que está asociada, ha sido modificado.</p>
+                </div>
+            </div>
+            <div class="row mt-4">
                 <div class="col-6">
-                    <h2 class="mb-0">Orden de Ejecución</h2>
+                    <h2 class="mb-0">Pruebas a ejecutar</h2>
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                    <div class="form-check">
+                    <div class="form-check pt-2">
                         <input class="form-check-input" type="checkbox" id="selectAllTests" (change)="onSelectAll($event)" [checked]="selectedTestIDs.size === tests.length">
                         <label class="form-check-label" for="selectAllTests">
-                                Seleccionar Todos
-                            </label>
+                            Seleccionar Todos
+                        </label>
                     </div>
                 </div>
             </div>
@@ -44,7 +52,7 @@
                                     </label>
                                 </div>
                                 <div class="form-check" *ngIf="!test.executable">
-                                    <input class="form-check-input" type="checkbox" id="datafileCheck" value="{{test.id}}" (change)="onTestPicked($event)" [checked]="checkTest(test.id)" disabled>
+                                    <input class="form-check-input" type="checkbox" id="datafileCheck" value="{{test.id}}" (change)="onTestPicked($event)" [checked]="checkTest(test.id)" [attr.disabled]="checkTest(test.id)">
                                     <label class="form-check-label" for="datafileCheck" style="font-size: 12px;">
                                         {{test.title}} ({{test.datafileTitle}})     
                                     </label>
@@ -123,7 +131,7 @@
                                         <a class="link-secondary" [routerLink]="['/workspace',test.workspace,'datafile', test.datafile, 'test', test.id]">{{test.title}}</a>
                                     </div>
                                     <div class="col-2 d-flex justify-content-center">
-                                        <div>{{test.status}}</div>
+                                        <div>{{test.status | translate}}</div>
                                     </div>
                                     <div class="col-2 d-flex justify-content-center">
                                         <div>{{test.executable}}</div>

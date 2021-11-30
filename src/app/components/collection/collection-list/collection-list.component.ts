@@ -18,20 +18,17 @@ export class CollectionListComponent implements OnInit{
   userIsAuthenticated         : boolean = false;
   userId                      : string;
   isDeleting                  : boolean = false;
+  isLoading                   : boolean = false;
   close                       : boolean = true;
-  collectionIndex             : number;
   editMode                    : boolean = false;
-  datafiles                   : any[];
-  selectedDatafileId          : string;
-  @Input() collections        : Collection[];
-  @Output() collectionsChange : EventEmitter<Collection[]> = new EventEmitter();
-  @Input() activities         : Activity[];
-  @Output() activitiesChange  : EventEmitter<Activity[]> = new EventEmitter();
-  @Input() orphanedDatafiles  : Datafile[];
+  hideButton                  : boolean = false;
+  editCollection              : any = null;
+  collectionIndex             : any = null;
+  collections                 : Collection[];
   @Input() workspaceId        : string;
-  @Input() isLoading          : boolean;
-  @Output() isLoadingChange   : EventEmitter<boolean> = new EventEmitter();
-
+  orphanedDatafiles           : Datafile[];
+  @Input() activities         : Activity[];
+  
   constructor(public collectionsService: CollectionsService, public authService: AuthService,
               public workspacesService: WorkspacesService, public router: Router,
               public activitiesService: ActivitiesService) {
@@ -40,15 +37,23 @@ export class CollectionListComponent implements OnInit{
   ngOnInit(){
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.userId = this.authService.getUserId();
+    // Collections and Orphaned Datafiles
+    this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+    this.collectionsService.getCollectionUpdateListener().subscribe(collectionData=>{
+      this.collections = collectionData.collections;
+      this.orphanedDatafiles = collectionData.orphanedDatafiles;
+    });
   }
 
   onAddCollection() {
     this.close = false;
+    this.hideButton = true;
   }
 
-  async onUpdateCollection(index: number) {
+  async onUpdateCollection(collection: any, index: any) {
     this.isLoading = true;
     this.editMode = true;
+    this.editCollection = collection;
     this.collectionIndex = index;
     this.isLoading = false;
   }
@@ -59,18 +64,17 @@ export class CollectionListComponent implements OnInit{
     .then(response=>{
       // Collections
       this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
-      this.collectionsService.getCollectionUpdateListener().subscribe((collectionData: {collections: Collection[]})=>{
-        this.collectionsChange.emit(collectionData.collections)
-        // Activities
-        this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
-        this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
-          this.activitiesChange.emit(activityData.activities)
-          this.isDeleting = false;
-        });
-      }); 
+      // Activities
+      this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+      this.isDeleting = false;   
     })
     .catch(err=>{
       console.log("Error on onDelete method: "+err.message);
+      // Collections
+      this.collectionsService.getCollectionsByWorkspace(this.workspaceId);
+      // Activities
+      this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
+      this.isDeleting = false;  
     });
 
   }

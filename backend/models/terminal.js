@@ -12,4 +12,9 @@ const terminalSchema = Schema({
     }
 });
 
+terminalSchema.methods.toJSON = function() {
+    const { __v, ...terminal } = this.toObject();
+    return terminal;
+}
+
 module.exports = model('Terminal', terminalSchema);

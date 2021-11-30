@@ -10,7 +10,9 @@ const BACKEND_URL = environment.apiUrl + '/collections/';
 @Injectable({providedIn: 'root'})
 export class CollectionsService {
   private collections: any[] = [];
-  private collectionsUpdated = new Subject<{collections: any[]}>();
+  private orphanedDatafiles: any[] = [];
+  private collectionsUpdated = new Subject<{collections: any[],orphanedDatafiles: any[]}>();
+
 
   constructor(private http: HttpClient) {}
 
@@ -18,8 +20,9 @@ export class CollectionsService {
     return this.collectionsUpdated.asObservable();
   }
 
+
   getCollectionsByWorkspace(workspaceId: string) {
-    return this.http.get<{message: string, collections: any[], orphanedDatafiles: any[]}>(BACKEND_URL + workspaceId)
+    return this.http.get<{message: string, collections: any[], orphanedDatafiles: any[]}>(BACKEND_URL + "workspace/" + workspaceId)
     .pipe(map( (collectionData) => {
       return { 
         collections: collectionData.collections
@@ -30,17 +33,35 @@ export class CollectionsService {
             workspace: collection.workspace,
             datafiles: collection.datafiles
           };
-      }),
+        }),
+        orphanedDatafiles: collectionData.orphanedDatafiles
+        .map(datafile => {
+          return {
+            id: datafile._id,
+            title: datafile.title,
+            description: datafile.description,
+            contentPath: datafile.contentPath,
+            errLimit: datafile.errLimit,
+            coleccion: datafile.coleccion,
+            workspace: datafile.workspace
+          };
+        })  
     };
     }))
     .subscribe((transformedCollectionData) => {
       this.collections = transformedCollectionData.collections;
+      this.orphanedDatafiles = transformedCollectionData.orphanedDatafiles;
       this.collectionsUpdated.next({
-        collections: [...this.collections]
+        collections: [...this.collections],
+        orphanedDatafiles: [...this.orphanedDatafiles]
       });
     });
   }
-
+  
+  getCollectionByDatafile(datafileId: string) {
+    return this.http.get<{message: string, collection: any}>(BACKEND_URL + "datafile/" + datafileId)
+    
+  }
   addCollection(title: string, workspaceId: string) {
     const collection: Collection = { 
       'id': null,

@@ -5,7 +5,8 @@ const {
     getInvitations,
     createInvitation,
     updateInvitation,
-    deleteInvitation
+    deleteInvitation,
+    checkPendingInvitations
 } = require("../controllers/invitations");
 
 const {
@@ -21,6 +22,10 @@ const {
 router.get("/",
     validateJWT,
     getInvitations);
+
+router.get("/checkPendings",
+    validateJWT,
+    checkPendingInvitations);
 
 router.post("/", [
     validateJWT,

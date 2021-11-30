@@ -40,4 +40,9 @@ const suggestionSchema = mongoose.Schema({
     }
 });
 
+suggestionSchema.methods.toJSON = function() {
+    const { __v, ...suggestion } = this.toObject();
+    return suggestion;
+}
+
 module.exports = mongoose.model('Suggestion', suggestionSchema);

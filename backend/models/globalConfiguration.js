@@ -13,4 +13,9 @@ const globalConfigurationSchema = mongoose.Schema({
     },
 });
 
+globalConfigurationSchema.methods.toJSON = function() {
+    const { __v, ...globalConfiguration } = this.toObject();
+    return globalConfiguration;
+}
+
 module.exports = mongoose.model('GlobalConfiguration', globalConfigurationSchema);

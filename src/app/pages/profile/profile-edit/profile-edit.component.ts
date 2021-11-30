@@ -15,15 +15,14 @@ import { User } from 'src/app/models/user.model';
     styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit{
-  userIsAuthenticated          : boolean = false;
-  user                                        : User;
-  userId                                      : string;
-  isLoading                                   : boolean = false;
-  isSaving                                    : boolean = false;
-  userForm                                    : FormGroup;
-  photoPreview                                : string;
-  @ViewChild(HeaderComponent) headerComponent : HeaderComponent;
-
+  userIsAuthenticated : boolean = false;
+  user                : User;
+  userId              : string;
+  isLoading           : boolean = false;
+  isSaving            : boolean = false;
+  savedValues         : boolean = false;
+  userForm            : FormGroup;
+  photoPreview        : string;
 
   constructor(public authService: AuthService, public usersService: UsersService, public route: ActivatedRoute, 
               public workspacesService: WorkspacesService, private uploadsService: UploadsService) {
@@ -50,8 +49,8 @@ export class ProfileEditComponent implements OnInit{
           };
           
           this.userForm = new FormGroup({ 
-            'username': new FormControl(null, {validators: [Validators.minLength(4)]}), 
-            'name': new FormControl(null, {validators: [Validators.minLength(4)]}), 
+            'username': new FormControl(null, {validators: [Validators.minLength(4), Validators.maxLength(32)]}), 
+            'name': new FormControl(null, {validators: [Validators.minLength(4), Validators.maxLength(32)]}), 
             'photo': new FormControl(null, {asyncValidators: [mimeType]}) 
           });
           this.userForm.reset({
@@ -64,7 +63,6 @@ export class ProfileEditComponent implements OnInit{
       });
     }
   }
-
 
   get pristineUser() {
     return this.userForm.get('username').pristine && this.userForm.get('name').pristine && this.userForm.get('photo').pristine;
@@ -98,10 +96,12 @@ export class ProfileEditComponent implements OnInit{
       photo: this.user.photo
     });
     this.photoPreview = null;
+    this.savedValues = false;
   }
 
   async onSaveUser() {
     this.isSaving = true;
+    this.savedValues = false;
     if (this.userForm.invalid){
       this.isSaving = false;
       return Object.values(this.userForm.controls).forEach(control => {
@@ -130,7 +130,13 @@ export class ProfileEditComponent implements OnInit{
         status: userData.user.status,
         google: userData.user.google
       };
+      this.userForm.reset({
+        name: this.user.name,
+        username: this.user.username,
+        photo: this.user.photo
+      });
       this.isSaving = false;
+      this.savedValues = true;
     });
   }
 }

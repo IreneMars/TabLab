@@ -9,19 +9,8 @@ const BACKEND_URL = environment.apiUrl + '/roles/';
 export class RolesService {
   
   constructor(private http: HttpClient) {}
-
-  addRole(workspaceId: string, userId: string){
-    const role: Role = {
-      'id': null,
-      'role': null, 
-      'workspace': workspaceId, 
-      'user': userId
-    };
-    return this.http.post<{message: string, role: any}>(BACKEND_URL, role).toPromise();
-  }
-  
+ 
   updateRole(roleId: string, roleName: string, workspaceId: string){
-    let res: any;
     const role: Role = {
       'id': roleId,
       'role': roleName, 

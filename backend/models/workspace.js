@@ -32,4 +32,9 @@ workspaceSchema.pre('save', function(next) {
     next();
 });
 
+workspaceSchema.methods.toJSON = function() {
+    const { __v, ...workspace } = this.toObject();
+    return workspace;
+}
+
 module.exports = mongoose.model('Workspace', workspaceSchema);

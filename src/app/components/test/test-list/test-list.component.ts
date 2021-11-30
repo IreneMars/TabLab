@@ -20,10 +20,7 @@ export class TestListComponent implements OnInit{
   @Input() datafileId     : string;
   @Input() workspaceId    : string;
   @Input() tests          : Test[];
-  @Output() testsChange         : EventEmitter<any[]> = new EventEmitter<any[]>();
-  formattedConfigs      : any[] = [];
-
-  //@Input() test           : Test;
+  formattedConfigs        : any[] = [];
   @Input() esquemas       : any[];
   @Input() configurations : any[];
 
@@ -47,12 +44,10 @@ export class TestListComponent implements OnInit{
     this.testsService.deleteTest(testId)
     .then(testResponse=>{
       this.testsService.getTestsByDatafile(this.datafileId, this.workspaceId);
-      this.testsService.getTestUpdateListener().subscribe(testData=>{
-        this.testsChange.emit(testData.tests);
-      });
     })
     .catch(err=>{
-      console.log("Error on onDelete() method: "+err.message.message);
+      console.log("Error on onDelete() method: "+err.message);
+      this.testsService.getTestsByDatafile(this.datafileId, this.workspaceId);
     });
     
   }

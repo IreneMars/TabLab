@@ -1,6 +1,6 @@
 <div class="row ps-2 pe-2 complete-height" *ngIf="!isLoading">
     <div class="col-2 collections p-0">
-        <app-collection-list [workspaceId]="workspaceId" [(collections)]="collections" [orphanedDatafiles]="orphanedDatafiles" [(isLoading)]="isLoading"></app-collection-list>
+        <app-collection-list [workspaceId]="workspaceId"></app-collection-list>
     </div>
     <div class="col-7" *ngIf="!isLoading">
         <app-datafile-edit *ngIf="edit" [(edit)]="edit" [(datafile)]="datafile" [datafileId]="datafileId" [workspaceId]="workspaceId"></app-datafile-edit>
@@ -12,6 +12,8 @@
                     <h2>{{ datafile.title }} (from <a routerLink="/workspace/{{workspaceId}}">
                       {{workspace.title}}
                     </a>)</h2>
+                    <h3>{{ datafile.description }}</h3>
+
                 </div>
                 <div class="col-2 d-flex justify-content-end">
                     <div class="me-1">
@@ -31,7 +33,8 @@
             </div>
             <div class="row mt-1" *ngIf="!edit">
                 <div class="col">
-                    <p>{{ datafile.description }}</p>
+                    <p>Delimitador: {{datafile.delimiter}}</p>
+                    <p>Límite de errores: {{datafile.errLimit}}</p>
                 </div>
             </div>
             <div class="row mt-1">
@@ -49,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="col-10">
-                                <form [formGroup]="fileForm" (ngSubmit)="onSave()">
+                                <form [formGroup]="fileForm">
                                     <input type="file" (change)="onFilePicked($event)" formControlName="contentPath" class="form-control form-control-sm" name="uploaded_file">
                                 </form>
                             </div>
@@ -63,7 +66,7 @@
                         </button>
                     </div>
                     <div class="me-1">
-                        <form [formGroup]="fileForm" (ngSubmit)="onSave()">
+                        <form [formGroup]="fileForm">
                             <input type="file" (change)="onFilePicked($event)" formControlName="contentPath" class="form-control form-control-sm" name="uploaded_file">
                         </form>
                     </div>
@@ -104,10 +107,10 @@
                 </div>
                 <div class="col-6 mt-2 d-flex justify-content-end">
                     <div>
-                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content && !isSaving" [disabled]="disabledContent" (click)="onSave()">
+                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content && editContent && !isSaving" [disabled]="disabledContent" (click)="onSave()">
                             Guardar cambios
                         </button>
-                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content && isSaving" disabled>
+                        <button class="btn btn-outline-primary btn-sm" type="submit" *ngIf="content && editContent && isSaving" disabled>
                             Guardar cambios <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </button>
                     </div>
@@ -124,13 +127,13 @@
     </div>
     <div class="col-3" *ngIf="!isLoading">
         <div class="container ps-0">
-            <app-esquema-list [datafile]="datafile" [workspaceId]="workspaceId" [(esquemas)]="esquemas" [infer]="infer"></app-esquema-list>
+            <app-esquema-list [datafile]="datafile" [workspaceId]="workspaceId" [esquemas]="esquemas" [infer]="infer"></app-esquema-list>
         </div>
         <div class="container ps-0">
-            <app-configuration-list [datafileId]="datafileId" [workspaceId]="workspaceId" [(configurations)]="configurations"></app-configuration-list>
+            <app-configuration-list [datafileId]="datafileId" [workspaceId]="workspaceId" [configurations]="configurations"></app-configuration-list>
         </div>
         <div class="container ps-0">
-            <app-test-list [datafileId]="datafileId" [workspaceId]="workspaceId" [(tests)]="tests" [esquemas]="esquemas" [configurations]="configurations"></app-test-list>
+            <app-test-list [datafileId]="datafileId" [workspaceId]="workspaceId" [tests]="tests" [esquemas]="esquemas" [configurations]="configurations"></app-test-list>
         </div>
     </div>
 </div>

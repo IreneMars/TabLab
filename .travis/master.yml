@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - "16"
+
+cache:
+  directories:
+     - ./node_modules
+
+install:
+  - npm install
+
+jobs:
+  include:
+    - stage: Deploy to heroku prod
+      script: ignore
+      deploy: &heroku
+        provider: heroku
+        api_key: $HEROKU_AUTH_TOKEN
+        app: tablab-app
+        on: master

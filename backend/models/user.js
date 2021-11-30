@@ -5,7 +5,9 @@ const userSchema = Schema({
     username: {
         type: String,
         required: [true, 'The username is mandatory'],
-        unique: [true, 'The username must be unique']
+        unique: [true, 'The username must be unique'],
+        minLength: 4,
+        maxLength: 32
     },
     email: {
         type: String,
@@ -14,7 +16,7 @@ const userSchema = Schema({
     },
     password: {
         type: String,
-        required: [true, 'The password is mandatory'],
+        required: [true, 'The password is mandatory']
     },
     photo: {
         type: String,
@@ -22,7 +24,9 @@ const userSchema = Schema({
     },
     name: {
         type: String,
-        default: this.username
+        default: this.username,
+        minLength: 4,
+        maxLength: 32
     },
     role: {
         type: String,

@@ -15,11 +15,11 @@ export class LoginComponent implements OnInit {
   isLoading           : boolean = false;
   loggedIn            : boolean;
   loginForm           : FormGroup;
-  url                 : RequestInfo;
+  //url                 : RequestInfo;
   user                : SocialUser;
 
-  private auth2: gapi.auth2.GoogleAuth;
-  private subject = new ReplaySubject<gapi.auth2.GoogleUser>(1);
+  private auth2       : gapi.auth2.GoogleAuth;
+  private subject     : ReplaySubject<gapi.auth2.GoogleUser> = new ReplaySubject<gapi.auth2.GoogleUser>(1);
 
   constructor( public authService: AuthService, private formBuilder: FormBuilder, 
                private socialAuthService: SocialAuthService, private router: Router ) {
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.loginForm = this.formBuilder.group({
-      username       : ['', [Validators.required, Validators.minLength(4)]],
+      username       : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
       password       : ['', Validators.required],
       rememberme     : [false]
     });
@@ -46,9 +46,9 @@ export class LoginComponent implements OnInit {
         rememberme: true,
       });
     }
-    this.url = (window.location.hostname.includes('localhost')) ?
-                            'http://localhost:3000/api/auth/google' :
-                            'https://tablab-app.herokuapp.com/api/auth/google';
+    // this.url = (window.location.hostname.includes('localhost')) ?
+    //                         'http://localhost:3000/api/auth/google' :
+    //                         'https://tablab-app.herokuapp.com/api/auth/google';
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
@@ -80,6 +80,7 @@ export class LoginComponent implements OnInit {
     }
     this.isLoading = true;
     const values = this.loginForm.getRawValue();
+    console.log("login")
     this.authService.login(values.username, values.password);
     
     if  (values.rememberme) {
@@ -97,12 +98,11 @@ export class LoginComponent implements OnInit {
     if (!this.auth2.isSignedIn.get()){
       await this.auth2.signIn();
       const id_token = this.auth2.currentUser.get().getAuthResponse().id_token;
-      const data1 = { id_token };
       this.authService.googleLogin(id_token);
       this.isLoading = false;
-  } else {
-    console.log('Already signed in!');
-  }
+    } else {
+      console.log('Already signed in!');
+    }
 }
 
   observable(): Observable<gapi.auth2.GoogleUser>{

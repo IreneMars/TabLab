@@ -10,7 +10,6 @@ const {
 const {
     validateFields,
     validateJWT,
-    hasRole
 } = require('../middlewares');
 const {
     getUsers,

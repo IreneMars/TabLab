@@ -1,5 +1,6 @@
 <div class="row complete-height" *ngIf="!isLoading">
-    <div class="col-2">
+    <div class="col-2 collections p-0">
+        <app-collection-list [workspaceId]="workspaceId"></app-collection-list>
     </div>
     <div class="col-7">
         <div class="container mt-4 mb-5">
@@ -10,16 +11,6 @@
                         <mat-error>
                             <small *ngIf="invalidTitle" class="text-danger">
                               Ingrese un título adecuado
-                            </small>
-                        </mat-error>
-                    </div>
-                </div>
-                <div class="row ms-0 me-0 mb-1 p-0">
-                    <div class="col ps-0 pe-0 d-flex justify-content-start">
-                        <input type="text" class="form-control" placeholder="Delimitador" formControlName="delimiter" [class.is-invalid]="invalidDelimiter">
-                        <mat-error>
-                            <small *ngIf="invalidDelimiter" class="text-danger">
-                              Ingrese un delimitador adecuado.
                             </small>
                         </mat-error>
                     </div>
@@ -41,7 +32,6 @@
                 <div class="col-10">
                     <h2>{{ test.title }} (from <a routerLink="/workspace/{{workspaceId}}/datafile/{{datafileId}}">
                       {{datafile.title}}</a>)</h2>
-                    <h3>Delimiter: {{test.delimiter}}</h3>
                 </div>
                 <div class="col-2 d-flex justify-content-end">
                     <div class="me-1">
@@ -54,7 +44,7 @@
                           <i class="fas fa-ellipsis-h"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" routerLink="/workspace/{{workspaceId}}/runner/{{test.id}}">Ejecutar Prueba</a></li>
+                            <li><a class="dropdown-item" routerLink="/workspace/{{workspaceId}}/runner/{{test.id}}" *ngIf="test.executable">Ejecutar Prueba</a></li>
                             <li><a class="dropdown-item danger" *ngIf="workspace.owner==user.id || user.role=='ADMIN'" (click)="onDelete()">Eliminar Prueba</a></li>
                         </ul>
                     </div>
@@ -114,7 +104,7 @@
                 </div>
                 <div class="col-6 mt-2 d-flex justify-content-end">
                     <div *ngIf="datafile.contentPath">
-                        <button class="btn btn-outline-primary btn-sm me-1" routerLink="/workspace/{{workspaceId}}/runner/{{test.id}}">Ejecutar Prueba</button>
+                        <button class="btn btn-outline-primary btn-sm me-1" routerLink="/workspace/{{workspaceId}}/runner/{{test.id}}" *ngIf="test.executable">Ejecutar Prueba</button>
                         <button class="btn btn-outline-primary btn-sm" type="submit" (click)="onSaveContent()" *ngIf="!hideEditableContent">Guardar cambios</button>
                     </div>
                 </div>
@@ -199,8 +189,14 @@
                     <h2>Stats</h2>
                 </div>
             </div>
-            <div class="row mt-4 pe-2">
+            <div class="row mt-2 pe-2" *ngIf="test.totalErrors">
                 <div class="col pe-0">
+                    Errores: {{test.totalErrors}}
+                </div>
+            </div>
+            <div class="row mt-2 pe-2" *ngIf="test.totalErrors">
+                <div class="col pe-0">
+                    Ejecutable: {{test.executable.toString() | translate}}
                 </div>
             </div>
             <div class="row mt-4 pe-2">

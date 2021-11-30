@@ -1,16 +1,11 @@
-<form class="row mt-2" [formGroup]="invitationForm" (ngSubmit)="onInvite()">
-    <div *ngIf="!create">
+<form class="row mt-2" [formGroup]="invitationForm" (ngSubmit)="onInvite()" *ngIf="!isLoading">
+    <div *ngIf="!create && !personal">
         <div class="row m-0 p-0">
             <div class="col p-0 input-group input-group-sm">
                 <input type="email" class="form-control" placeholder="Introduce un email..." formControlName="email" [class.is-invalid]="invalidEmail">
                 <a class="btn btn-outline-secondary btn-sm" (click)="onReset()">
                     <i class="fas fa-times"></i>
                 </a>
-            </div>
-        </div>
-        <div class="row m-0 p-0" *ngIf="invitationAdded">
-            <div class="col p-0 pt-2">
-                <p>Enviado!</p>
             </div>
         </div>
     </div>
@@ -21,13 +16,20 @@
         </a>
         <button class="btn btn-outline-secondary btn-sm" type="button" type="submit" id="button-addon2">Añadir</button>
     </div>
-    <div class="row ms-0 mb-2 p-0">
+    <div class="row ms-0 mb-2 p-0" *ngIf="invalidEmail">
         <div class="col d-flex justify-content-start">
             <mat-error>
-                <small *ngIf="invalidEmail" class="text-danger">
+                <small class="text-danger">
                   Ingrese un correo adecuado
                 </small>
             </mat-error>
+        </div>
+    </div>
+    <div class="row ms-0 mb-2 p-0" *ngIf="invitationAdded && pristineInvitation">
+        <div class="col d-flex justify-content-start">
+            <div class="text-primary mt-2">
+                <p>Invitación enviada con éxito!</p>
+            </div>
         </div>
     </div>
     <div class="row ms-0 p-0" *ngIf="create">

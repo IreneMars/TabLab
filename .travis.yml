@@ -1,0 +1,7 @@
+if: branch IN (prepro, master)
+
+import:
+- source: .travis/prepro.yml
+  if: branch = prepro
+- source: .travis/master.yml
+  if: branch = master

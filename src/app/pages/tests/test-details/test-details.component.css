@@ -2,6 +2,10 @@
     color: #dc3845;
 }
 
+.collections {
+    background-color: #f2f2f3;
+}
+
 .my-custom-scrollbar {
     height: 60%;
     overflow: auto;

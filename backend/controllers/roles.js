@@ -41,14 +41,14 @@ exports.updateRole = async(req, res, next) => {
         const current_user_role = await Role.findOne({ 'user': current_user_id, 'workspace': req.body.workspace });
         const owners = await Role.find({ workspace: req.body.workspace, role: 'owner' });
 
-        if (current_user_role.role === 'owner' && owners.length === 1) {
+        if (current_user_role.role === 'owner' && current_user_role.role === role.role && owners.length === 1) {
             return res.status(403).json({
                 message: "You are not allowed to leave this workspace without an owner!"
             });
         }
-        if (current_user_role === 'member' || (current_user_role === 'admin' && (role.role === 'owner' || role.role === 'admin'))) {
+        if (current_user_role.role === 'member' || (current_user_role.role === 'admin' && (role.role === 'owner' || role.role === 'admin'))) {
             return res.status(403).json({
-                message: "You are not allowed to update a role!"
+                message: "You are not allowed to update this role!"
             });
         }
         await Role.findByIdAndUpdate(req.params.id, { role: req.body.role });
@@ -71,10 +71,8 @@ exports.deleteRole = async(req, res, next) => {
         const role = await Role.findOne({ workspace: req.params.workspaceId, user: current_user_id });
         const owners = await Role.find({ workspace: req.params.workspaceId, role: 'owner' });
         if (role.role === 'owner' && owners.length === 1) { //onleave
-            await Workspace.deleteOne({ _id: req.params.workspaceId });
-            await Role.deleteMany({ workspace: req.params.workspaceId });
-            return res.status(200).json({
-                message: "Role deletion (and workspace) successful!"
+            return res.status(403).json({
+                message: "You are not allowed to leave this workspace without an owner!"
             });
         } else {
             await Role.deleteOne({ workspace: req.params.workspaceId, user: current_user_id });

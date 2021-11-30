@@ -1,6 +1,7 @@
 const { Role, Esquema, Datafile } = require("../models");
+const { deleteObject } = require('../helpers');
 
-const fs = require('fs');
+const axios = require('axios');
 
 exports.getEsquemasByDatafile = async(req, res) => {
     try {
@@ -18,7 +19,6 @@ exports.getEsquemasByDatafile = async(req, res) => {
 };
 
 exports.getEsquema = async(req, res, next) => {
-
     const current_user_id = req.userData.userId;
     try {
         const esquema = await Esquema.findById(req.params.id);
@@ -35,20 +35,19 @@ exports.getEsquema = async(req, res, next) => {
                 message: "You are not authorized to fetch this esquema."
             });
         }
-        fs.readFile(esquema.contentPath, 'utf8', (err, data) => {
-            if (err) {
-                return res.status(500).json({
-                    message: "Fetching an esquema failed!",
-                    error: err
-                });
-            } else {
-                return res.status(200).json({
-                    message: "Esquema fetched successfully!",
-                    esquema: esquema,
-                    content: data
-                });
-            }
-        });
+
+        try {
+            const response = await axios.get(esquema.contentPath);
+            return res.status(200).json({
+                message: "Esquema fetched successfully!",
+                esquema: esquema,
+                content: JSON.stringify(response.data)
+            });
+        } catch (error) {
+            return res.status(500).json({
+                message: "Fetching an esquema failed!"
+            });
+        }
     } catch (err) {
         return res.status(500).json({
             message: "Fetching an esquema failed!"
@@ -57,10 +56,13 @@ exports.getEsquema = async(req, res, next) => {
 };
 
 exports.createEsquema = async(req, res, next) => {
-
     const current_user_id = req.userData.userId;
 
     try {
+        var title = req.body.title;
+        if (req.body.operation === "infer") {
+            title = "Inferred esquema - " + req.body.title;
+        }
         const datafile = await Datafile.findById(req.body.datafile);
         const roles = await Role.find({ 'workspace': datafile.workspace, 'user': current_user_id });
         if (roles.length !== 1) {
@@ -69,7 +71,7 @@ exports.createEsquema = async(req, res, next) => {
             })
         }
         const esquema = new Esquema({
-            title: req.body.title,
+            title: title,
             contentPath: req.body.contentPath,
             creationMoment: null,
             datafile: req.body.datafile
@@ -132,7 +134,10 @@ exports.deleteEsquema = async(req, res, next) => {
                 message: "You are not authorized to delete an esquema from this workspace."
             })
         }
-        fs.unlinkSync(esquema.contentPath);
+
+        //ActualFilePath
+        await deleteObject(esquema.contentPath.replace("https://"+process.env.S3_BUCKET+".s3.amazonaws.com/", ""))
+
         await Esquema.deleteOne({ _id: req.params.id });
         return res.status(200).json({
             message: "Esquema deletion successful!"

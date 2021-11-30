@@ -1,7 +1,14 @@
-const { GlobalConfiguration } = require("../models");
+const { GlobalConfiguration, User } = require("../models");
 
 exports.getGlobalConfiguration = async(req, res, next) => {
+    current_user_id = req.userData.userId;
     try {
+        const current_user = await User.findById(current_user_id);
+        // if (current_user.role != 'ADMIN') {
+        //     return res.status(403).json({
+        //         message: "Unauthorized to fetch the global configuration!"
+        //     });
+        // }
         const globalConfigurations = await GlobalConfiguration.find();
         if (globalConfigurations.length !== 1) {
             return res.status(500).json({
@@ -22,6 +29,12 @@ exports.getGlobalConfiguration = async(req, res, next) => {
 exports.updateGlobalConfiguration = async(req, res, next) => {
     current_user_id = req.userData.userId;
     try {
+        const current_user = await User.findById(current_user_id);
+        if (current_user.role != 'ADMIN') {
+            return res.status(403).json({
+                message: "Unauthorized to fetch the global configuration!"
+            });
+        }
         const globalConfigurations = await GlobalConfiguration.find();
         if (globalConfigurations.length !== 1) {
             return res.status(500).json({

@@ -17,10 +17,15 @@ import { UsersService } from '../../../services/users.service';
     isSavingEmail       : boolean = false;
     isSavingPassword    : boolean = false;
 
+    savedEmail          : boolean = false;
+    savedPassword       : boolean = false;
+
     isLoading           : boolean = false;
     user                : User;
     emailForm           : FormGroup;
     passForm            : FormGroup;
+
+
 
     constructor(public authService: AuthService, public usersService: UsersService, public route: ActivatedRoute, 
                 public workspacesService: WorkspacesService, private router: Router, private formBuilder: FormBuilder) {
@@ -64,9 +69,9 @@ import { UsersService } from '../../../services/users.service';
 
   createPassForm() {
     this.passForm = this.formBuilder.group({
-    actualPass : ['', [Validators.required, Validators.minLength(4)]],
-    newPass : ['', [Validators.required, Validators.minLength(4)]],
-    repeatPass : ['', [Validators.required, Validators.minLength(4)]]
+    actualPass : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
+    newPass : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]],
+    repeatPass : ['', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]]
     });
   }
 
@@ -79,7 +84,7 @@ import { UsersService } from '../../../services/users.service';
   }
 
   get pristinePass() {
-    return this.passForm.get('actualPass').pristine && this.passForm.get('actualPass').pristine && this.passForm.get('actualPass').pristine;
+    return this.passForm.get('actualPass').pristine && this.passForm.get('newPass').pristine && this.passForm.get('repeatPass').pristine;
   }
 
   get invalidActualPass() {
@@ -98,14 +103,18 @@ import { UsersService } from '../../../services/users.service';
     this.emailForm.reset({
       email: this.user.email
     });
+    this.savedEmail = false;
   }
 
   onCancelPassForm() {
     this.passForm.reset();
+    this.savedPassword= false;
   }
 
   onSaveEmail() {
     this.isSavingEmail = true;
+    this.savedEmail = false;
+
     if (this.emailForm.invalid){
       this.isSavingEmail = false;
       return Object.values(this.emailForm.controls).forEach(control => {
@@ -117,21 +126,28 @@ import { UsersService } from '../../../services/users.service';
       });
     }
     const values = this.emailForm.getRawValue();
-    this.usersService.updateUser(this.user.id, null, null,  values.email, this.user.role, null, null, null)
+    this.usersService.updateUser(this.userId, null, null,  values.email, this.user.role, null, null, null)
     .then(userData=>{
       this.user = userData.user;
       this.emailForm.reset({
         email: this.user.email
       });
       this.isSavingEmail = false;
+      this.savedEmail = true;
     })
     .catch(err=>{
-      console.log("Error on onSaveEmail() method: "+err.message.message);
+      console.log("Error on onSaveEmail() method: "+err.message);
+      this.emailForm.reset({
+        email: this.user.email
+      });
+      this.isSavingEmail = false;
     });
   }
 
   async onSavePass() {
     this.isSavingPassword = true;
+    this.savedPassword = false;
+
     if (this.passForm.invalid){
       this.isSavingPassword = false;
       return Object.values(this.passForm.controls).forEach(control => {
@@ -143,13 +159,19 @@ import { UsersService } from '../../../services/users.service';
       });
     }
     const values = this.passForm.getRawValue();
-    this.usersService.updateUser(this.user.id, null, null, null, this.user.role, values.actualPass, values.newPass, values.repeatPass)
+
+    this.usersService.updateUser(this.userId, null, null, null, this.user.role, values.actualPass, values.newPass, values.repeatPass)
     .then(userData=>{
       this.user = userData.user;
+      this.passForm.reset();
       this.isSavingPassword = false;
+      this.savedPassword = true;
     })
     .catch(err=>{
-      console.log("Error on onSavePass() method: "+err.message.message);
+      console.log("Error on onSavePass() method: "+err.message);
+      this.isSavingPassword = false;
+      this.passForm.reset();
+      this.isSavingPassword = false;
     });
   }
 
@@ -159,7 +181,7 @@ import { UsersService } from '../../../services/users.service';
       this.authService.logout();
       window.location.reload();
 
-    }).catch( err => {
+    }).catch(err=>{
       console.log("Error on onDeleteAccount method: "+err.message);
     });
     

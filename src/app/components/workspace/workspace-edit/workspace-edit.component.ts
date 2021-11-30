@@ -81,11 +81,9 @@ export class WorkspaceEditComponent implements OnInit{
       this.workspaceChange.emit(workspace);
       // Activities
       this.activitiesService.getActivitiesByWorkspace(this.workspace.id);
-      this.activitiesService.getActivityUpdateListener().subscribe((activityData: {activities: Activity[]}) => {
-        this.editChange.emit(false);
-        this.workspaceEditForm.reset();
-        this.isSaving = false;
-      });
+      this.editChange.emit(false);
+      this.workspaceEditForm.reset();
+      this.isSaving = false;
     });
   }
 

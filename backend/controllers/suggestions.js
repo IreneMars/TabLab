@@ -34,7 +34,7 @@ exports.createSuggestionsByDatafile = async(req, res, next) => {
         var suggestions = [];
         for (var line of req.body.rawData) {
             var lineAux = line.replace('\r', '');
-            var values = lineAux.split(req.body.testDelimiter);
+            var values = lineAux.split(datafile.delimiter);
             var tagsStr = values[1].replace(/[\[\]']+/g, '');
             var tags = tagsStr.split(", ");
             const suggestion = new Suggestion({
@@ -82,7 +82,6 @@ exports.applySuggestion = async(req, res, next) => {
         const operation = req.body.operation;
         const contentLines = req.body.contentLines;
         const rowNumber = suggestion.rowPosition;
-        console.log(operation)
         if (operation === "getRow") {
             const content = contentLines.join("\n");
             return res.status(200).json({
@@ -104,14 +103,8 @@ exports.applySuggestion = async(req, res, next) => {
                 }
             });
         } else if (operation === "updateRow") {
-            console.log(contentLines[rowNumber - 1])
-            console.log("New content:")
-            console.log(req.body.newRowContent)
             contentLines[rowNumber - 1] = req.body.newRowContent;
-            console.log("New content lines:")
-            console.log(contentLines)
             const content = contentLines.join("\n");
-            console.log(content)
             return res.status(200).json({
                 message: "Suggestion used successfully!",
                 data: {

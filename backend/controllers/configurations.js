@@ -31,9 +31,19 @@ exports.getConfiguration = async(req, res, next) => {
                 message: "Not authorized to fetch this configuration!"
             });
         }
+        var extraParams = null;
+        if (configuration.extraParams) {
+            extraParams = {};
+            for (elem of configuration.extraParams) {
+
+                extraParams[elem[0]] = elem[1]
+            }
+
+        }
         return res.status(200).json({
             message: "Sucessful fetch!",
-            configuration: configuration
+            configuration: configuration,
+            extraParams: extraParams
         });
     } catch (err) {
         return res.status(500).json({

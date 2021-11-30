@@ -1,12 +1,12 @@
-<form class="container mt-4" [formGroup]="datafileEditForm" (ngSubmit)="onSave()" *ngIf="!loading">
+<form class="container mt-4" [formGroup]="datafileEditForm" (ngSubmit)="onSave()">
 
     <div class="row ms-0 me-0 mb-1 p-0">
         <div class="col ps-0 pe-0 d-flex justify-content-start">
             <input type="text" class="form-control" placeholder="Título" formControlName="title" [class.is-invalid]="invalidTitle">
             <mat-error>
                 <small *ngIf="invalidTitle" class="text-danger">
-                Ingrese un título adecuado
-              </small>
+                    Ingrese un título adecuado
+                </small>
             </mat-error>
         </div>
     </div>
@@ -22,7 +22,28 @@
     </div>
     <div class="row ms-0 me-0 mb-1 p-0">
         <div class="col ps-0 pe-0 d-flex justify-content-start">
-            <select class="form-select form-select-sm" formControlName="collection" (change)="onCollectionPicked($event)">
+            <input type="text" class="form-control" placeholder="Delimitador" formControlName="delimiter" [class.is-invalid]="invalidDelimiter">
+            <mat-error>
+                <small *ngIf="invalidDelimiter" class="text-danger">
+                Ingrese un delimitador adecuado.
+                </small>
+            </mat-error>
+        </div>
+    </div>
+    <div class="row ms-0 me-0 mb-1 p-0">
+        <div class="col ps-0 pe-0 d-flex justify-content-start">
+            <input type="number" class="form-control" placeholder="Límite de errores" formControlName="errLimit" [class.is-invalid]="invalidErrLimit">
+            <mat-error>
+                <small *ngIf="invalidErrLimit" class="text-danger">
+                Ingrese un límite de errores adecuado (superior o igual a 1).
+                </small>
+            </mat-error>
+        </div>
+    </div>
+    <div class="row ms-0 me-0 mb-1 p-0">
+        <div class="col ps-0 pe-0 d-flex justify-content-start">
+            <select class="form-select form-select-sm" formControlName="collection">
+                <option value="None" selected> ----- </option>
                 <option *ngFor="let collection of collections" value="{{collection.id}}">{{collection.title}}</option>
               </select>
         </div>

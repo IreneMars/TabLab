@@ -119,12 +119,10 @@ export class TestsService {
     return this.http.get<{message: string, test: any, esquema: any, configurationIDs: string[], reportContent: string}>(BACKEND_URL + testId);
   }
   
-  addTest(title: string, delimiter:string, esquemaId: string, configurations: string[], datafileId: string){
-    let res;
+  addTest(title: string, esquemaId: string, configurations: string[], datafileId: string){
     const test: Test = {
       'id': null,
       'title': title,
-      'delimiter': delimiter,
       'reportPath': null,
       'status': null,
       'esquema': esquemaId,
@@ -136,12 +134,11 @@ export class TestsService {
       'executable': null,
       'datafile': datafileId,
     };
-    
     return this.http.post<{message: string, test: any}>(BACKEND_URL, test).toPromise();
   }
     
   updateTest(test:Test) {
-    return this.http.put<{message: string, test: any, content}>(BACKEND_URL + test.id, test).toPromise();
+    return this.http.put<{message: string, test: any, content:any}>(BACKEND_URL + test.id, test).toPromise();
   }
     
   deleteTest(testId: string){

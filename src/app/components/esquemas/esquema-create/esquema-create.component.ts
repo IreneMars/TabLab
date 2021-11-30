@@ -26,7 +26,6 @@ export class EsquemaCreateComponent implements OnInit{
   @Input() isAdding        : boolean = false;
   @Output() isAddingChange : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() esquemas        : Esquema[];
-  @Output() esquemasChange : EventEmitter<any[]> = new EventEmitter<any[]>();
   @Input() esquemaContent  : any;
   @Input() esquemaForm     : FormGroup;
   @Input() workspaceId     : string;
@@ -61,7 +60,7 @@ export class EsquemaCreateComponent implements OnInit{
     if (files && files.length > 0) {
       const uploadedFile = (event.target as HTMLInputElement).files[0];
       const split = uploadedFile.name.split('.');
-      const extension = split[1].toLowerCase();
+      const extension = split[split.length-1].toLowerCase();
       if (extension !== 'json' && extension !== 'yaml') {
         this.invalidExtension = true;
         return;
@@ -70,7 +69,6 @@ export class EsquemaCreateComponent implements OnInit{
         this.invalidExtension = false;
       }
       this.file = uploadedFile;
-  
       this.papa.parse(uploadedFile, {
         complete(results) {
           let chain = '';
@@ -108,49 +106,36 @@ export class EsquemaCreateComponent implements OnInit{
     const esquemaContent = (document.getElementById('esquemaContent') as HTMLInputElement).value
     if (this.esquema) {
       this.isSavingChange.emit(true);
-      this.uploadsService.updateEsquemaContent(this.esquema.id, null, this.esquema.contentPath, this.datafile.id, esquemaContent, 'update')
+      this.uploadsService.updateEsquemaContent(this.esquema.id, values.title, this.datafile.id, esquemaContent)
       .then(updateResponse=>{
-        this.esquemaService.updateEsquema(this.esquema.id, values.title, updateResponse.filePath, this.datafile.id)
-        .then(response=>{
-          // Esquemas
           this.esquemasService.getEsquemasByDatafile(this.datafile.id);
-          this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
-            this.esquemasChange.emit(esquemaData.esquemas);
-            this.esquemaForm.reset();
-            this.esquemaChange.emit(null);
-            this.isSavingChange.emit(false);  
-          }); 
-        })
-        .catch(err=>{
-          console.log("Error on onUpdateContent (edit mode) method: "+err.message.message);
-        });
+          this.esquemaForm.reset();
+          this.esquemaChange.emit(null);
+          this.isSavingChange.emit(false);  
       })
       .catch(err=>{
-        console.log("Error on onSave (edit mode) method: "+err.message.message);
+        console.log("Error on onSave (edit mode) method: "+err.message);
+        this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+        this.esquemaForm.reset();
+        this.esquemaChange.emit(null);
+        this.isSavingChange.emit(false);  
       });
     } else {
       this.isAddingChange.emit(true);
       (document.getElementById('esquemaContent') as HTMLInputElement).value = ""
-
-      this.uploadsService.updateEsquemaContent(null, this.file.name, null, this.datafile.id, esquemaContent, 'create')
+      this.uploadsService.addEsquemaContent(values.title, this.datafile.id, this.file.name, esquemaContent)
       .then(updateResponse=>{
-        this.esquemaService.addEsquema(values.title, this.datafile.id, updateResponse.filePath, 'create')
-        .then(response=>{
-          // Esquemas
-          this.esquemasService.getEsquemasByDatafile(this.datafile.id);
-          this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
-            this.esquemasChange.emit(esquemaData.esquemas);
-            this.esquemaForm.reset();
-            this.esquemaChange.emit(null);
-            this.isAddingChange.emit(false);  
-          }); 
-        })
-        .catch(err=>{
-          console.log("Error on onUpdateContent (create mode) method: "+err.message.message);
-        });
+        this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+        this.esquemaForm.reset();
+        this.esquemaChange.emit(null);
+        this.isAddingChange.emit(false);  
       })
       .catch(err=>{
-        console.log("Error on onSave (create mode) method: "+err.message.message);
+        console.log("Error on onSave (create mode) method: "+err.message);
+        this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+        this.esquemaForm.reset();
+        this.esquemaChange.emit(null);
+        this.isAddingChange.emit(false);  
       });
 
     }

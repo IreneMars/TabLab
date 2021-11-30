@@ -32,6 +32,10 @@ export class GlobalConfigurationComponent implements OnInit {
                 public usersService: UsersService, public workspacesService: WorkspacesService, public datafilesService: DatafileService,
                 public testsService: TestsService) {
   }
+  
+  isAdmin(){
+    return this.user && this.user.role.toUpperCase()=="ADMIN";
+  }
 
   ngOnInit(): void { 
     this.isLoading = true;
@@ -101,13 +105,10 @@ export class GlobalConfigurationComponent implements OnInit {
       }
       // Users
       this.usersService.getUsers();
-      this.usersService.getUserUpdateListener()
-      .subscribe( (userData: {users: User[]}) => {
-        this.users = userData.users;
-      });
-
-    }).catch( err => {
+    }).catch(err=>{
       console.log("Error on onDeleteAccount method: "+err.message);
+      // Users
+      this.usersService.getUsers();
     });
     
   }

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class=" modal-content " style="width:auto;display: inline-block; ">
             <div class="modal-header ">
-                <h2 class="modal-title mb-0 " id="exampleModalLabel ">Añadir Esquema</h2>
+                <h2 class="modal-title mb-0 " id="exampleModalLabel ">Añadir Prueba</h2>
                 <button type="button " class="btn-close " data-bs-dismiss="modal" aria-label="Close " (click)="onCancel()"></button>
             </div>
             <div class="modal-body " style="display: inline-block ">
@@ -15,14 +15,6 @@
                             </small>
                         </mat-error>
                     </div>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Delimitador" formControlName="delimiter" [class.is-invalid]="invalidDelimiter">
-                        <mat-error>
-                            <small *ngIf="invalidDelimiter" class="text-danger">
-                              Ingrese un delimitador adecuado.
-                            </small>
-                        </mat-error>
-                    </div>
                     <div class="mb-3 ">
                         <label class="col-form-label">Esquema:</label>
                         <select class="form-select form-select-sm" (change)="onEsquemaPicked($event)">
@@ -30,40 +22,39 @@
                               <option *ngFor="let esquema of esquemas" value="{{esquema.id}}">{{esquema.title}}</option>
                         </select>
                     </div>
-                    <div class="mb-3 " style="display: inline-block ">
-                        <div class="container">
-                            <div class="row border-header p-2">
-                                <div class="col-3 d-flex justify-content-start">
-                                    <div>Título</div>
-                                </div>
-                                <div class="col-4 d-flex justify-content-center">
-                                    <div>Código de Error</div>
-                                </div>
-                                <div class="col-4 d-flex justify-content-center">
-                                    <div>Parámetros</div>
-                                </div>
-                                <div class="col-1">
-                                    <div></div>
-                                </div>
+                    <div class="mb-3" style="display: inline-block; padding-left: 0.8rem; padding-right: 0.8rem; ">
+                        <label class="col-form-label">Configuraciones:</label>
+                        <div class="row border-header p-2">
+                            <div class="col-3 d-flex justify-content-start">
+                                <div>Título</div>
                             </div>
-                            <div class="row mt-0 p-2 border-content">
-                                <div class="col">
-                                    <div class="row mt-1 mb-1" *ngFor="let configuration of configurations">
-                                        <td class="col-3 d-flex justify-content-start">
-                                            <div>{{configuration.title}}</div>
-                                        </td>
-                                        <td class="col-4 d-flex justify-content-center">
-                                            <div>{{configuration.errorCode}}</div>
-                                        </td>
-                                        <td class="col-4 d-flex justify-content-center">
-                                            <div>{{configuration.extraParamsStr}}</div>
-                                        </td>
-                                        <td class="col-1 d-flex justify-content-center">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="{{configuration.id}}" id="flexCheckDefault" (change)="onConfigurationPicked($event)">
-                                            </div>
-                                        </td>
-                                    </div>
+                            <div class="col-4 d-flex justify-content-center">
+                                <div>Código de Error</div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-center">
+                                <div>Parámetros</div>
+                            </div>
+                            <div class="col-1">
+                                <div></div>
+                            </div>
+                        </div>
+                        <div class="row mt-0 p-2 border-content">
+                            <div class="col">
+                                <div class="row mt-1 mb-1" *ngFor="let configuration of configurations">
+                                    <td class="col-3 d-flex justify-content-start">
+                                        <div>{{configuration.title}}</div>
+                                    </td>
+                                    <td class="col-4 d-flex justify-content-center">
+                                        <div>{{configuration.errorCode}}</div>
+                                    </td>
+                                    <td class="col-4 d-flex justify-content-center">
+                                        <div>{{configuration.extraParamsStr}}</div>
+                                    </td>
+                                    <td class="col-1 d-flex justify-content-center">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="{{configuration.id}}" id="flexCheckDefault" (change)="onConfigurationPicked($event)">
+                                        </div>
+                                    </td>
                                 </div>
                             </div>
                         </div>

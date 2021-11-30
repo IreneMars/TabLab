@@ -16,8 +16,6 @@ export class TestCreateComponent implements OnInit{
   userIsAuthenticated      : boolean = false;
   selectedConfigurations   : string[];
   @Input() tests           : Test[];
-  @Output() testsChange    : EventEmitter<any[]> = new EventEmitter<any[]>();
-
   @Input() isSaving        : boolean = false;
   @Output() isSavingChange : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() testForm        : FormGroup;
@@ -25,7 +23,6 @@ export class TestCreateComponent implements OnInit{
   @Input() datafileId      : string;
   @Input() esquemas        : any[];
   @Input() configurations  : any[];
-  @Output() testSaveChange : EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public testService: TestsService, public route: ActivatedRoute,
               private formBuilder: FormBuilder, public datafilesService: DatafileService, private authService: AuthService) {
@@ -41,7 +38,6 @@ export class TestCreateComponent implements OnInit{
   createForm() {
     this.testForm = this.formBuilder.group({
       title          : ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-      delimiter      : [''],
       esquema        : [''],
       configurations : [[]]
     });
@@ -57,11 +53,7 @@ export class TestCreateComponent implements OnInit{
   get invalidTitle() {
     return this.testForm.get('title').invalid && this.testForm.get('title').touched;
   }
-
-  get invalidDelimiter() {
-    return this.testForm.get('delimiter').invalid && this.testForm.get('delimiter').touched;
-  }
-  
+ 
   async onSave() {
     this.isSavingChange.emit(true);
     if (this.testForm.invalid){
@@ -75,15 +67,13 @@ export class TestCreateComponent implements OnInit{
       });
      }
     const values = this.testForm.getRawValue();
-    await this.testService.addTest(values.title, values.delimiter, values.esquema, values.configurations, this.datafileId);
+    await this.testService.addTest(values.title, values.esquema, values.configurations, this.datafileId);
     // Tests
     this.testService.getTestsByDatafile(this.datafileId,this.workspaceId);
-    this.testService.getTestUpdateListener().subscribe(testData => {
-      this.testsChange.emit(testData.tests);
-      this.testForm.reset({});
-      this.selectedConfigurations = [];
-      this.isSavingChange.emit(false);  
-    });
+    this.testForm.reset({});
+    this.selectedConfigurations = [];
+    this.isSavingChange.emit(false);  
+    
   }
 
   onConfigurationPicked(event: Event) {

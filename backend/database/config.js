@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const dbConnection = async() => {
+const dbConnection = async(uri) => {
     try {
-        await mongoose.connect(process.env.MONGODB_CNN, {
+        await mongoose.connect(uri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
@@ -11,7 +11,7 @@ const dbConnection = async() => {
         console.log('¡Conectado a la base de datos de Mongo!');
 
     } catch (error) {
-        throw new Error('Error a la hora de conectarte a la base de datos de Mongo.');
+        throw new Error('Error a la hora de conectarte a la base de datos de Mongo: ' + error);
     }
 };
 

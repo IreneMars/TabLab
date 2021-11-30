@@ -7,10 +7,6 @@ const testSchema = mongoose.Schema({
         minLength: 1,
         maxLength: 100
     },
-    delimiter: {
-        type: String,
-        required: [false],
-    },
     reportPath: {
         type: String,
         required: false
@@ -63,5 +59,10 @@ testSchema.pre('save', function(next) {
     this.status = 'pending';
     next();
 });
+
+testSchema.methods.toJSON = function() {
+    const { __v, ...test } = this.toObject();
+    return test;
+}
 
 module.exports = mongoose.model('Test', testSchema);

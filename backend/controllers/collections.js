@@ -1,12 +1,19 @@
 const { Role, Collection, Datafile, User, Workspace, Activity } = require("../models");
 
 exports.getCollectionsByWorkspace = async(req, res) => {
+    const current_user_id = req.userData.userId;
     try {
-        collections = await Collection.find({ 'workspace': req.params.workspaceId });
+        const roles = await Role.find({ workspace: req.params.workspaceId, user: current_user_id }); // test if the current user is inside the workspace
+        if (roles.length !== 1) {
+            return res.status(403).json({
+                message: "You are not authorized to get this collection."
+            });
+        }
+        var collections = await Collection.find({ 'workspace': req.params.workspaceId });
         var updatedCollections = [];
         if (collections.length > 0) {
             for (var collection of collections) {
-                datafiles = await Datafile.find({ 'coleccion': collection._id });
+                var datafiles = await Datafile.find({ 'coleccion': collection._id });
                 const updatedCollection = {
                     ...collection._doc,
                     datafiles: datafiles
@@ -14,13 +21,44 @@ exports.getCollectionsByWorkspace = async(req, res) => {
                 updatedCollections.push(updatedCollection);
             }
         }
+        const orphanedDatafiles = await Datafile.find({ "workspace": req.params.workspaceId, "coleccion": null });
+
         return res.status(200).json({
             message: "Collections fetched successfully!",
             collections: updatedCollections,
+            orphanedDatafiles: orphanedDatafiles,
         });
     } catch (error) {
         return res.status(500).json({
             message: "Fetching collections failed!"
+        });
+    }
+};
+
+exports.getCollectionByDatafile = async(req, res) => {
+    const current_user_id = req.userData.userId;
+
+    try {
+        const datafile = await Datafile.findById(req.params.datafileId);
+        const roles = await Role.find({ workspace: datafile.workspace, user: current_user_id }); // test if the current user is inside the workspace
+        if (roles.length !== 1) {
+            return res.status(403).json({
+                message: "You are not authorized to get this collection."
+            });
+        }
+        var collection = null;
+        if (datafile.coleccion) {
+            var collection = await Collection.findById(datafile.coleccion);
+        }
+
+
+        return res.status(200).json({
+            message: "Collections fetched successfully!",
+            collection: collection,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Fetching a collection failed!"
         });
     }
 };
@@ -44,14 +82,18 @@ exports.createCollection = async(req, res) => {
         const workspace = await Workspace.findById(createdCollection.workspace);
         const activity = new Activity({
             message: "{{author}} añadió la colección {{coleccion}} al espacio de trabajo {{workspace}}",
-            workspace: { 'id': workspace._id, 'title': workspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
-            coleccion: { 'id': createdCollection._id, 'title': createdCollection.title },
+            workspace: workspace._id,
+            workspaceTitle: workspace.title,
+            author: current_user_id,
+            authorName: user.name,
+            coleccion: createdCollection._id,
+            coleccionTitle: createdCollection.title,
             datafile: null,
+            datafileTitle: null,
             creationMoment: null
         });
-        await activity.save();
 
+        created = await activity.save();
         return res.status(201).json({
             message: "Collection created successfully!",
             collection: createdCollection
@@ -80,10 +122,14 @@ exports.updateCollection = async(req, res) => {
             const workspace = await Workspace.findById(updatedCollection.workspace);
             const activity = new Activity({
                 message: "{{author}} modificó la colección {{coleccion}} del espacio de trabajo {{workspace}}",
-                workspace: { 'id': workspace._id, 'title': workspace.title },
-                author: { 'id': current_user_id, 'name': user.name },
-                coleccion: { 'id': updatedCollection._id, 'title': updatedCollection.title },
+                workspace: workspace._id,
+                workspaceTitle: workspace.title,
+                author: current_user_id,
+                authorName: user.name,
+                coleccion: updatedCollection._id,
+                coleccionTitle: updatedCollection.title,
                 datafile: null,
+                datafileTitle: null,
                 creationMoment: null
             });
             await activity.save();
@@ -118,10 +164,14 @@ exports.deleteCollection = async(req, res) => {
         const workspace = await Workspace.findById(collection.workspace);
         const activity = new Activity({
             message: "{{author}} eliminó la colección {{coleccion}} del espacio de trabajo {{workspace}}",
-            workspace: { 'id': workspace._id, 'title': workspace.title },
-            author: { 'id': current_user_id, 'name': user.name },
-            coleccion: { 'id': null, 'title': collectionTitle },
+            workspace: workspace._id,
+            workspaceTitle: workspace.title,
+            author: current_user_id,
+            authorName: user.name,
+            coleccion: null,
+            coleccionTitle: collectionTitle,
             datafile: null,
+            datafileTitle: null,
             creationMoment: null
         });
         await activity.save();

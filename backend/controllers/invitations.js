@@ -1,9 +1,11 @@
 const { Invitation, User, Workspace, Role, GlobalConfiguration } = require("../models");
 
 exports.getInvitations = async(req, res, next) => {
+    const current_user_id = req.userData.userId;
+
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const current_user_id = req.userData.userId;
+
     try {
         const invitationQuery = Invitation.find({ receiver: current_user_id });
         const allInvitations = await invitationQuery.exec();
@@ -41,40 +43,68 @@ exports.getInvitations = async(req, res, next) => {
 
 };
 
+exports.checkPendingInvitations = async(req, res, next) => {
+    const current_user_id = req.userData.userId;
+
+    try {
+        const invitations = await Invitation.find({ receiver: current_user_id, status: 'pending' });
+        var pendingInvitations = false;
+        if (invitations.length > 0) {
+            pendingInvitations = true;
+        }
+        return res.status(200).json({
+            message: "Invitations fetched successfully!",
+            pendingInvitations: pendingInvitations
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Fetching invitations failed!"
+        });
+    }
+
+};
+
 exports.createInvitation = async(req, res, next) => {
     const current_user_id = req.userData.userId;
 
     try {
         const configurations = await GlobalConfiguration.find();
         const configuration = configurations[0];
+        const workspace = await Workspace.findById(req.body.workspace);
+        if (workspace.mandatory) {
+            return res.status(403).json({
+                message: `You can not invite users to your personal workspace!`
+            });
+        }
         const roles = await Role.find({ workspace: req.body.workspace });
 
         if (roles.length === configuration.limitUsers) {
-            return res.status(500).json({
+            return res.status(403).json({
                 message: `This workspace is not allowed to have more than ${configuration.limitUsers} users!`
             });
         }
         const receiver = await User.findOne({ "email": req.body.receiver });
         if (!receiver) {
-            return res.status(500).json({
+            return res.status(403).json({
                 message: "Creating an invitation failed! User not found!"
             });
         }
         if (receiver._id == current_user_id) {
-            return res.status(500).json({
+            return res.status(403).json({
                 message: "You cannot send an invitation to yourself!"
             });
         }
+
         const invitations = await Invitation.find({ "receiver": receiver._id, "sender": current_user_id });
         if (invitations.length > 0) {
-            return res.status(500).json({
+            return res.status(403).json({
                 message: "That user has already received an invitation!"
             });
         } else {
             const invitation = new Invitation({
                 sender: current_user_id,
                 receiver: receiver._id,
-                status: req.body.status,
+                status: "pending",
                 workspace: req.body.workspace
             });
             const createdInvitation = await invitation.save();

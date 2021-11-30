@@ -46,31 +46,6 @@ export class EsquemaService {
     return this.http.get<{message:string, esquema: any, content: any}>(BACKEND_URL + esquemaId);
   }
 
-  addEsquema(title: string, datafileId: string, contentPath:string, operation:string){
-    let esquemaData: Esquema = {
-      'id': null,
-      'title': title, 
-      'contentPath': contentPath, 
-      'creationMoment':null,
-      'datafile':datafileId,
-    };
-    if (operation === "infer"){
-      esquemaData.title = "Inferred esquema - " + title;
-    }
-    return this.http.post<{message: string, esquema: any}>(BACKEND_URL, esquemaData).toPromise();
-  }
-
-  updateEsquema(esquemaId: string, title: string, contentPath: string, datafileId: string) {
-    const esquemaData: Esquema = {
-      'id': esquemaId,
-      'title': title, 
-      'contentPath': contentPath, 
-      'creationMoment': null,
-      'datafile': datafileId,
-    };
-    return this.http.put<{message: string, esquema: any}>(BACKEND_URL + esquemaId, esquemaData).toPromise();
-  }
-
   deleteEsquema(id: string){
     return this.http.delete<{message: string}>(BACKEND_URL +  id).toPromise()
   }

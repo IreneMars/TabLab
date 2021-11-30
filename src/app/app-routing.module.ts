@@ -9,7 +9,6 @@ import { WorkspaceDetailsComponent } from './pages/workspaces/workspace-details/
 import { DatafileDetailsComponent } from './pages/datafiles/datafile-details/datafile-details.component';
 import { TestDetailsComponent } from './pages/tests/test-details/test-details.component';
 import { TestExecuteComponent } from './pages/tests/test-execute/test-execute.component';
-import { ProfileDetailsComponent } from './pages/profile/profile-details/profile-details.component';
 import { ProfileEditComponent } from './pages/profile/profile-edit/profile-edit.component';
 import { ProfileAccountEditComponent } from './pages/profile/profile-account-edit/profile-account-edit.component';
 import { GlobalConfigurationComponent } from './pages/globalConfiguration/globalConfiguration.component';
@@ -29,7 +28,6 @@ const routes: Routes = [
   // Profile (account edit, details, edit)
   { path: 'account/:userId/edit', component: ProfileAccountEditComponent, canActivate: [AuthGuard]},
   { path: 'profile/:userId/edit', component: ProfileEditComponent, canActivate: [AuthGuard]},
-  { path: 'profile/:userId', component: ProfileDetailsComponent, canActivate: [AuthGuard]},
   // Tests (details)
   { path: 'workspace/:workspaceId/datafile/:datafileId/test/:testId', component: TestDetailsComponent, canActivate: [AuthGuard]},
   { path: 'workspace/:workspaceId/runner', component: TestExecuteComponent, canActivate: [AuthGuard]},

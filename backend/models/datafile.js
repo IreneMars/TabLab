@@ -16,6 +16,10 @@ const datafileSchema = mongoose.Schema({
         type: String,
         required: false
     },
+    delimiter: {
+        type: String,
+        required: false,
+    },
     errLimit: {
         type: Number,
         required: false
@@ -31,5 +35,10 @@ const datafileSchema = mongoose.Schema({
         required: true
     }
 });
+
+datafileSchema.methods.toJSON = function() {
+    const { __v, ...datafile } = this.toObject();
+    return datafile;
+}
 
 module.exports = mongoose.model('Datafile', datafileSchema);

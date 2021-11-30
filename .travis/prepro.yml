@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - "16"
+
+cache:
+  directories:
+     - ./node_modules
+
+install:
+  - npm install
+
+jobs:
+  include:
+    - stage: Deploy to heroku prepro
+      script: ignore
+      deploy: &heroku
+        provider: heroku
+        api_key: $HEROKU_AUTH_TOKEN
+        app: tablab-app-prepro
+        on: prepro
+        run:
+          - node populate.js -h https://tablab-app-prepro.herokuapp.com
+    - stage: API tests
+      script: npm run test-prepro

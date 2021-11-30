@@ -1,15 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const path = require("path");
-const http = require("http");
 const { dbConnection } = require('../database/config');
+const aws = require('aws-sdk');
 
 class Server {
 
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
-        //this.port = this.normalizePort(process.env.PORT || "3000");
+
+        // Configurar AWS
+        this.configurarAWS();
 
         // Conectar a base de datos
         this.conectarDB();
@@ -21,8 +23,12 @@ class Server {
         this.routes();
     }
 
+    configurarAWS() {
+        aws.config.region = 'eu-west-1';
+    }
+
     async conectarDB() {
-        await dbConnection();
+        await dbConnection(process.env.MONGODB_CNN);
     }
 
     getApp() {
@@ -41,11 +47,11 @@ class Server {
         this.app.use(express.json());
         this.app.use(express.static('/app/dist/tablab'));
         this.app.use(express.urlencoded({ extended: false }));
+
         this.app.use("/users", express.static(path.join("backend/uploads/users")));
         this.app.use("/datafiles", express.static(path.join("backend/uploads/datafiles")));
-
+        this.app.use("/esquemas", express.static(path.join("backend/uploads/esquemas")));
         this.app.use("/assets", express.static(path.join("backend/assets")));
-        this.app.use("/files", express.static(path.join("backend/files")));
 
         this.app.use((req, res, next) => {
             // Permitimos solo a nuestra aplicacion de angular hacer llamadas a nuestra api
@@ -64,9 +70,11 @@ class Server {
     }
 
     routes() {
+        this.app.use('/api/status/', function(req, res, next) {
+            res.sendStatus(200);
+        });
         this.app.use("/api/auth", require('../routes/auth'));
         this.app.use("/api/users", require('../routes/users'));
-        this.app.use("/api/populate", require('../routes/populate'));
         this.app.use("/api/workspaces", require('../routes/workspaces'));
         this.app.use("/api/roles", require('../routes/roles'));
         this.app.use("/api/invitations", require('../routes/invitations'));

@@ -13,7 +13,6 @@ import { WorkspaceDetailsComponent } from './workspaces/workspace-details/worksp
 import { DatafileDetailsComponent } from './datafiles/datafile-details/datafile-details.component';
 import { TestDetailsComponent } from './tests/test-details/test-details.component';
 import { TestExecuteComponent } from './tests/test-execute/test-execute.component';
-import { ProfileDetailsComponent } from './profile/profile-details/profile-details.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
 import { ProfileAccountEditComponent } from './profile/profile-account-edit/profile-account-edit.component';
 import { GlobalConfigurationComponent } from './globalConfiguration/globalConfiguration.component';
@@ -29,7 +28,6 @@ import { TranslatePipe } from '../pipes/translate.pipe';
     DatafileDetailsComponent,
     TestDetailsComponent,
     TestExecuteComponent,
-    ProfileDetailsComponent,
     ProfileEditComponent,
     ProfileAccountEditComponent,
     GlobalConfigurationComponent,

@@ -22,12 +22,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <app-invitation-create [(invitations)]="invitations" [create]="create"></app-invitation-create>
-                    <mat-error>
-                        <small *ngIf="invalidInvitations" class="text-danger">
-                            No puede invitar a más de {{configuration.limitUsers}} usuarios!
-                        </small>
-                    </mat-error>
+
 
                     <div class="row">
                         <div class="col d-flex justify-content-end">

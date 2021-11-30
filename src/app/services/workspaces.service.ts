@@ -47,24 +47,7 @@ export class WorkspacesService {
   }
   
   getWorkspace(workspaceId: string) {
-    return this.http.get<{message: string, workspace: any, orphanedDatafiles: any[], datafilesWTests: any[], tests: any[]}>(BACKEND_URL + workspaceId)
-    .pipe(map( (workspaceData) => {
-      return { 
-        workspace: workspaceData.workspace,
-        orphanedDatafiles: workspaceData.orphanedDatafiles
-          .map(datafile => {
-            return {
-              id: datafile._id,
-              title: datafile.title,
-              description: datafile.description,
-              contentPath: datafile.contentPath,
-              errLimit: datafile.errLimit,
-              coleccion: datafile.coleccion,
-              workspace: datafile.workspace
-            };
-          })  
-      };
-    }));
+    return this.http.get<{message: string, workspace: any}>(BACKEND_URL + workspaceId);
   }
 
   addWorkspace(title: string, description: string, mandatory: boolean, invitations: string[]) {
@@ -83,16 +66,12 @@ export class WorkspacesService {
   }
 
   updateWorkspace(workspaceId: string, title: string, description: string){
-    let res: any;
-    const workspace: Workspace = {
+    const workspaceData = {
       'id': workspaceId,
       'title': title, 
       'description': description, 
-      'creationMoment': null,
-      'mandatory': null,
-      'owner':null
     };
-    return this.http.put<{message: string, workspace: any}>(BACKEND_URL + workspaceId, workspace).toPromise();
+    return this.http.put<{message: string, workspace: any}>(BACKEND_URL + workspaceId, workspaceData).toPromise();
   }
 
   deleteWorkspace(workspaceId: string) {

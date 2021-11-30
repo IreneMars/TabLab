@@ -17,13 +17,12 @@ export class EsquemaListComponent implements OnInit {
   userIsAuthenticated  : boolean = false;
   isSaving             : boolean = false;
   isAdding             : boolean = false;
-  isInferring            : boolean = false;
+  isInferring          : boolean = false;
   isDeleting           : boolean = false;
   esquemaContent       : any;
   @Input() datafile    : Datafile;
   @Input() workspaceId : string;
   @Input() esquemas    : Esquema[];
-  @Output() esquemasChange : EventEmitter<any[]> = new EventEmitter<any[]>();
   @Input() infer       : boolean;
   savefileChange       : boolean = false;
   esquema              : Esquema = null;
@@ -46,13 +45,13 @@ export class EsquemaListComponent implements OnInit {
     .then(response=>{
       // Esquemas
       this.esquemasService.getEsquemasByDatafile(this.datafile.id);
-      this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
-        this.esquemasChange.emit(esquemaData.esquemas)
-        this.isDeleting = false;
-      }); 
+      this.isDeleting = false;
     })
     .catch(err=>{
       console.log("Error on onDelete method: "+err.message);
+      // Esquemas
+      this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+      this.isDeleting = false;
     });
   }
 
@@ -78,33 +77,18 @@ export class EsquemaListComponent implements OnInit {
    });
   }
 
-
-  setEsquema(newvalue: any) {
-    this.esquema = newvalue;
-  }
-
   onInfer() {
-    console.log(this.datafile)
     this.isInferring = true;
-    this.uploadsService.updateEsquemaContent(null, null, null, this.datafile.id, null, 'infer')
-      .then(updateResponse=>{
-        
-        this.esquemasService.addEsquema(this.datafile.title, this.datafile.id, updateResponse.filePath, 'infer')
-        .then(response => {
-          // Esquemas
-          this.esquemasService.getEsquemasByDatafile(this.datafile.id);
-          this.esquemasService.getEsquemaUpdateListener().subscribe((esquemaData: {esquemas: Esquema[]})=>{
-            this.esquemasChange.emit(esquemaData.esquemas)
-            this.isInferring = false;
-          });      
-         })
-        .catch(err => {
-          console.log("Error on onUpdateContent (infer mode) method: "+err.message.message);
-        });
-  })
-  .catch(err=>{
-    console.log("Error on onInfer method: "+err.message.message);
-  });
+    this.uploadsService.inferEsquemaContent(this.datafile.id)
+    .then(updateResponse=>{   
+      this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+      this.isInferring = false;
+    })
+    .catch(err=>{
+      console.log("Error on onInfer method: "+err.message);
+      this.esquemasService.getEsquemasByDatafile(this.datafile.id);
+      this.isInferring = false;
+    });
 
 }
 }
