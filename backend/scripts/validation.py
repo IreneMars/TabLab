@@ -209,7 +209,8 @@ def save_report_to_file(report, file):
     output.close()
 
 def validate_file(file_path, delimiter, schema_file=None,  errors_file_name=None, configurations=None, total_poss_errors=None):
-    output_directory = '../output/'
+    base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    output_directory = base_path+'/output/'
     schema_report = None
 
     #Establecemos los nombres de los dos únicos ficheros que generaremos: el schema report y el errors report
