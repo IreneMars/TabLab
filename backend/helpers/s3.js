@@ -1,6 +1,6 @@
 const aws = require('aws-sdk');
 
-const uploadObject = async(fileData, fileName, fileType) => {
+const uploadObject = async(fileData, fileName) => {
     const s3 = new aws.S3();
     var url;
 
@@ -33,7 +33,33 @@ const deleteObject = async(fileName) => {
         });
 };
 
+const deleteFolder = async(folderPath) => {
+    const s3 = new aws.S3();
+    const listParams = {
+        Bucket: process.env.S3_BUCKET,
+        Prefix: folderPath
+    };
+
+    const listedObjects = await s3.listObjectsV2(listParams).promise();
+
+    if (listedObjects.Contents.length === 0) return;
+
+    const deleteParams = {
+        Bucket: process.env.S3_BUCKET,
+        Delete: { Objects: [] }
+    };
+
+    listedObjects.Contents.forEach(({ Key }) => {
+        deleteParams.Delete.Objects.push({ Key });
+    });
+
+    await s3.deleteObjects(deleteParams).promise();
+
+    if (listedObjects.IsTruncated) await deleteFolder(folderPath);
+};
+
 module.exports = {
     uploadObject,
-    deleteObject
+    deleteObject,
+    deleteFolder
 }

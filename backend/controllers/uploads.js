@@ -30,7 +30,7 @@ exports.updatePhoto = async(req, res) => {
         // New File Path
         const fileName = `users/${req.file.filename}`;
         const fileData = fs.readFileSync(req.file.path);
-        const url = await uploadObject(fileData, fileName, req.file.mimetype);
+        const url = await uploadObject(fileData, fileName);
         
         //ActualFilePath
         if (user.photo) {
@@ -74,7 +74,7 @@ exports.updateDataFile = async(req, res) => {
         // New File Path
         const fileName = `datafiles/${req.file.filename}`;
         const fileData = fs.readFileSync(req.file.path, 'utf8');
-        const url = await uploadObject(fileData, fileName, req.file.mimetype);
+        const url = await uploadObject(fileData, fileName);
         
         datafile.contentPath = url;
         
@@ -158,7 +158,7 @@ exports.addEsquemaContent = async(req, res) => {
         const extension = split[1].toLowerCase();
         var name = split[0].toLowerCase().split(" ").join("_") + "-" + Date.now() + "." + extension;
         
-        const fileUrl = await uploadObject(req.body.esquemaContent, `esquemas/${name}`, null);
+        const fileUrl = await uploadObject(req.body.esquemaContent, `esquemas/${name}`);
 
         const esquema = new Esquema({
             title: req.body.title,
@@ -196,7 +196,7 @@ exports.updateEsquemaContent = async(req, res) => {
 
         // New File Path
         var name = esquema.contentPath.replace("https://"+process.env.S3_BUCKET+".s3.amazonaws.com/", "");
-        await uploadObject(req.body.esquemaContent, name, null);
+        await uploadObject(req.body.esquemaContent, name);
 
         await Esquema.findByIdAndUpdate(req.params.esquemaId, {
             title: req.body.title
@@ -236,7 +236,7 @@ exports.inferEsquemaContent = async(req, res) => {
                 var fileS3Path = `esquemas/${fileName}`;
                 const fileData = fs.readFileSync("backend/uploads/esquemas/" + fileName);
 
-                const url = await uploadObject(fileData, fileS3Path, );
+                const url = await uploadObject(fileData, fileS3Path);
 
                 const esquema = new Esquema({
                     title: "Inferred Esquema - " + datafile.title,

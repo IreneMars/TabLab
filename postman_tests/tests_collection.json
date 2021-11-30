@@ -431,16 +431,16 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "userId",
-									"value": "{{userId}}",
-									"type": "text"
-								},
-								{
 									"key": "file",
 									"type": "file",
 									"src": "postman_tests/duck.png"
 								}
-							]
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "{{url}}/api/uploads/users/:userId",
@@ -493,86 +493,6 @@
 							"variable": [
 								{
 									"key": "imageName",
-									"value": "duck.png"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User Default Photo",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/assets/:resourceName",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"assets",
-								":resourceName"
-							],
-							"variable": [
-								{
-									"key": "resourceName",
-									"value": "default-user-little.png"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User Photo",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users/:resourceName",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								":resourceName"
-							],
-							"variable": [
-								{
-									"key": "resourceName",
 									"value": "duck.png"
 								}
 							]
@@ -1319,21 +1239,6 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "userId",
-									"value": "{{userId}}",
-									"type": "text"
-								},
-								{
-									"key": "datafileId",
-									"value": "{{datafileId}}",
-									"type": "text"
-								},
-								{
-									"key": "operation",
-									"value": "updateFile",
-									"type": "text"
-								},
-								{
 									"key": "file",
 									"type": "file",
 									"src": "postman_tests/fulls_dmf_full_v1_20200504_short_10_werrs.csv"
@@ -1441,6 +1346,45 @@
 							],
 							"path": [
 								"api",
+								"datafiles",
+								":datafileId"
+							],
+							"variable": [
+								{
+									"key": "datafileId",
+									"value": "{{datafileId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Datafile file",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/uploads/datafiles/:datafileId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"uploads",
 								"datafiles",
 								":datafileId"
 							],
@@ -1567,7 +1511,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \r\n    \"title\":\"Esquema Test\",\r\n    \"datafile\":\"60b634e98ab1a18d8850e49e\",\r\n    \"fileName\":\"dmf_schema.json\",\r\n    \"esquemaContent\": \"\"\r\n}",
+							"raw": "{   \r\n    \"title\":\"Esquema Test\",\r\n    \"datafile\":\"60b634e98ab1a18d8850e49e\",\r\n    \"fileName\":\"dmf_schema.json\",\r\n    \"esquemaContent\": \"{ 'test': 'test' }\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1655,7 +1599,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \r\n    \"title\":\"Esquema Test Update\",\r\n    \"datafile\":\"60b634e98ab1a18d8850e49e\",\r\n    \"esquemaContent\":\"\"\r\n}",
+							"raw": "{   \r\n    \"title\":\"Esquema Test Update\",\r\n    \"datafile\":\"60b634e98ab1a18d8850e49e\",\r\n    \"esquemaContent\":\"{ test2: test2 }\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2538,6 +2482,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"console.log(pm.response.error);\r",
+									"\r",
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
@@ -3663,6 +3609,14 @@
 		},
 		{
 			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "signedRequest",
+			"value": ""
+		},
+		{
+			"key": "objectUrl",
 			"value": ""
 		}
 	]

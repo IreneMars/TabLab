@@ -209,22 +209,13 @@ def save_report_to_file(report, file):
     output.close()
 
 def validate_file(file_path, delimiter, schema_file=None,  errors_file_name=None, configurations=None, total_poss_errors=None):
-    output_directory = '../output/'
-    # Si no existe el path, crearlo
-    if not os.path.exists(output_directory):
-        os.mkdir(output_directory)
-        return;
+    base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    output_directory = base_path+'/output/'
     schema_report = None
-    # logger.setLevel(logging.INFO)
-
-    # Si no existe el file avisar por consola y detener proceso
-    if not os.path.exists(file_path):
-        # logger.error(f'El archivo no existe en el path {file_path}')
-        logger.info(f'El archivo no existe en el path {file_path}')
-        return;
 
     #Establecemos los nombres de los dos únicos ficheros que generaremos: el schema report y el errors report
     file_name = os.path.basename(file_path)
+    logger.info('File name : ' + file_name)
     extension = pathlib.Path(file_name).suffix
     # logger.info('File extension: '+extension.replace(".",""))
     logger.info('File extension: '+extension.replace(".",""))
