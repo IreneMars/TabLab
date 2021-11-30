@@ -63,26 +63,36 @@ exports.createReport = async(req, res, next) => {
         var datafileFilePath = "backend/uploads/datafiles/" + datafileFileName;
         fs.writeFileSync(datafileFilePath, response.data);
 
-        const errorReportFileName = datafileFileName.split('.')[0] + '_errors.csv';
+        const errorReportFileName = datafileFileName.split('.')[0] + "-" + Date.now() + '_errors.csv';
         const errorReportPath = 'backend/output/' + errorReportFileName;
 
         const testData = [test.title, errorReportPath, datafile.delimiter, esquemaFilePath, datafileFilePath, configurationsAux, datafile.errLimit];
         const execBuffer = execFileSync(
             'python', ["backend/scripts/validation.py", testData[1], testData[2], testData[3], testData[4], testData[5], testData[6]], { encoding: 'utf-8' }
         );
-        const rawdata = fs.readFileSync(errorReportPath, 'utf8');
-        var rawDataSplit = rawdata.split('\n');
-        rawDataSplit.shift();
-
-        // Upload Report to AWS S3
-        const fileFullName = `reports/${errorReportFileName}`;
-        const uploadedFileUrl = await uploadObject(rawdata, fileFullName);
-        test.reportPath = uploadedFileUrl;
         
-        const lines = rawdata.split("\n");
-        const errors = lines.length - 1;
+        var rawdata = "";
+        var rawDataSplit = [];
+        var uploadedFileUrl = null;
+        var errors = 0;
+        if (fs.existsSync(errorReportPath)) {
+            rawdata = fs.readFileSync(errorReportPath, 'utf8');
+            rawDataSplit = rawdata.split('\n');
+            rawDataSplit.shift();
+            
+            // Upload Report to AWS S3
+            const fileFullName = `reports/${errorReportFileName}`;
+            uploadedFileUrl = await uploadObject(rawdata, fileFullName);
+            
+            const lines = rawdata.split("\n");
+            errors = lines.length - 1;
+        }
+
+        test.reportPath = uploadedFileUrl;
         if (errors > 0) {
             test.status = 'failed';
+        } else {
+            test.status = 'passed';
         }
         test.updateMoment = Date.now();
         test.executionMoment = Date.now();

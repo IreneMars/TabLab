@@ -168,7 +168,9 @@ export class TestExecuteComponent implements OnInit {
           }
           this.rawData = responseData.rawData;
           await this.suggestionsService.deleteSuggestionsByDatafile(testUpdate.datafile);
-          await this.suggestionsService.addSuggestionsByDatafile(testUpdate.datafile,this.rawData);
+          if (this.rawData != null && this.rawData.length > 0) {
+            await this.suggestionsService.addSuggestionsByDatafile(testUpdate.datafile,this.rawData);
+          }
           // Updating test with report information
           const data = await this.testsService.updateTest(testUpdate);
           if (data !==  undefined){

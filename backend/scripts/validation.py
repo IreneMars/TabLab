@@ -311,6 +311,8 @@ esquema_path = sys.argv[3];
 file_path = sys.argv[4];
 configurations = [{'code':sys.argv[5]}]
 total_poss_errors = sys.argv[6];
+if total_poss_errors == 'null':
+    total_poss_errors = None
 
 logger.info('Out Path: '+out_path);
 print('Delimiter: '+delimiter);

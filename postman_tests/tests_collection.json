@@ -435,12 +435,7 @@
 									"type": "file",
 									"src": "postman_tests/duck.png"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{url}}/api/uploads/users/:userId",
@@ -2482,17 +2477,17 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"console.log(pm.response.error);\r",
-									"\r",
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
 									"const json = pm.response.json();\r",
 									"\r",
-									"pm.test(\"Test Report path and Exec buffer should not be empty\", function () {\r",
-									"    pm.expect(json.testUpdates.reportPath).to.not.be.empty;\r",
+									"pm.test(\"Test should be tagged as Passed\", function () {\r",
+									"    pm.expect(json.testUpdates.status).to.be.eql(\"passed\");\r",
+									"    pm.expect(json.testUpdates.reportPath).to.be.null;\r",
 									"    pm.expect(json.execBuffer).to.not.be.empty;\r",
+									"    pm.expect(json.rawData).to.be.empty;\r",
 									"});"
 								],
 								"type": "text/javascript"
