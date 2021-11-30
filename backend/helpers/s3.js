@@ -1,11 +1,14 @@
 const aws = require('aws-sdk');
 
-const uploadObject = async(fileData, fileName) => {
+const uploadObject = async(fileData, fileName, bucket = null) => {
     const s3 = new aws.S3();
     var url;
 
+    if (bucket == null)
+        bucket = process.env.S3_BUCKET;
+
     const params = {
-        Bucket: process.env.S3_BUCKET,
+        Bucket: bucket,
         Key: fileName,
         Body: fileData,
         Expires: 60,
@@ -13,7 +16,7 @@ const uploadObject = async(fileData, fileName) => {
     };
     await s3.putObject(params).promise()
         .then(data => {
-            url = `https://${process.env.S3_BUCKET}.s3.amazonaws.com/${fileName}`;
+            url = `https://${bucket}.s3.amazonaws.com/${fileName}`;
         }).catch(err => {
             throw new Error('An error ocurred while signing url for S3: ' + err);
         });
@@ -21,10 +24,12 @@ const uploadObject = async(fileData, fileName) => {
     return url;
 };
 
-const deleteObject = async(fileName) => {
+const deleteObject = async(fileName, bucket = null) => {
     const s3 = new aws.S3();
+    if (bucket == null)
+        bucket = process.env.S3_BUCKET;
     const params = {
-        Bucket: process.env.S3_BUCKET, 
+        Bucket: bucket, 
         Key: fileName
     };
     await s3.deleteObject(params).promise()
@@ -33,10 +38,12 @@ const deleteObject = async(fileName) => {
         });
 };
 
-const deleteFolder = async(folderPath) => {
+const deleteFolder = async(folderPath, bucket = null) => {
     const s3 = new aws.S3();
+    if (bucket == null)
+        bucket = process.env.S3_BUCKET;
     const listParams = {
-        Bucket: process.env.S3_BUCKET,
+        Bucket: bucket,
         Prefix: folderPath
     };
 
@@ -45,7 +52,7 @@ const deleteFolder = async(folderPath) => {
     if (listedObjects.Contents.length === 0) return;
 
     const deleteParams = {
-        Bucket: process.env.S3_BUCKET,
+        Bucket: bucket,
         Delete: { Objects: [] }
     };
 

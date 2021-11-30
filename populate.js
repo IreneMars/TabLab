@@ -37,18 +37,35 @@ async function populate() {
     } else {
         return new Error("No host was given! You should include -h <hostName> or --host <hostName> param.");
     }
-    await dbConnection(process.env.MONGODB_CNN);
+
+    var mongodb_cnn;
+    if (argv.mongo) {
+        mongodb_cnn = argv.mongo;
+    } else if (argv.m) {
+        mongodb_cnn = argv.m;
+    } else {
+        mongodb_cnn = process.env.MONGODB_CNN;
+    }
 
     console.log("Populating database...");
+
+    console.log("Using MONGODB_CNN: " + mongodb_cnn)
+    await dbConnection(mongodb_cnn);
+
     console.log("Using host: " + hostName);
     var dataPath = null;
+    var s3bucket;
     if (hostName == "http://localhost:3000") {
         dataPath = "populate/populate_dev.json";
+        s3bucket = "tab-lab-dev";
     } else if (hostName == "https://tablab-app-prepro.herokuapp.com") {
         dataPath = "populate/populate_prepro.json";
+        s3bucket = "tab-lab-prepro";
     } else {
         dataPath = "populate/populate_prod.json";
+        s3bucket = "tab-lab";
     }
+    console.log("Using dataPath: " + dataPath);
     const rawData = fs.readFileSync(dataPath);
     const populate_json_data = JSON.parse(rawData);
     reports = { "errored_models": [], "reports": [] };
@@ -264,10 +281,10 @@ async function populate() {
     try {
         console.log("Deleting folders in S3...");
 
-        await deleteFolder("datafiles");
-        await deleteFolder("esquemas");
-        await deleteFolder("users");
-        await deleteFolder("reports");
+        await deleteFolder("datafiles", s3bucket);
+        await deleteFolder("esquemas", s3bucket);
+        await deleteFolder("users", s3bucket);
+        await deleteFolder("reports", s3bucket);
 
         console.log("Folders in S3 deleted succesfully!");
     } catch (error) {
@@ -282,7 +299,7 @@ async function populate() {
         } else {
             for (var file of files) {
                 var fileData = fs.readFileSync(`populate/populate_files/datafiles/${file}`);
-                var url = await uploadObject(fileData, `datafiles/${file}`);
+                var url = await uploadObject(fileData, `datafiles/${file}`, s3bucket);
                 
                 console.log(`Successfully uploaded ${file} with url ${url} to S3!`);
             }
@@ -299,7 +316,7 @@ async function populate() {
         } else {
             for (var file of files) {
                 var fileData = fs.readFileSync(`populate/populate_files/esquemas/${file}`);
-                var url = await uploadObject(fileData, `esquemas/${file}`);
+                var url = await uploadObject(fileData, `esquemas/${file}`, s3bucket);
                 
                 console.log(`Successfully uploaded ${file} with url ${url} to S3!`);
             }
@@ -316,7 +333,7 @@ async function populate() {
         } else {
             for (var file of files) {
                 var fileData = fs.readFileSync(`populate/populate_files/users/${file}`);
-                var url = await uploadObject(fileData, `users/${file}`);
+                var url = await uploadObject(fileData, `users/${file}`, s3bucket);
                 
                 console.log(`Successfully uploaded ${file} with url ${url} to S3!`);
             }
@@ -333,7 +350,7 @@ async function populate() {
         } else {
             for (var file of files) {
                 var fileData = fs.readFileSync(`populate/populate_files/reports/${file}`);
-                var url = await uploadObject(fileData, `reports/${file}`);
+                var url = await uploadObject(fileData, `reports/${file}`, s3bucket);
                 
                 console.log(`Successfully uploaded ${file} with url ${url} to S3!`);
             }
