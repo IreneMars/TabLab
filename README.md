@@ -20,8 +20,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## WebServer + RestServer
 
-Recuerden que deben de ejecutar ```npm install``` para reconstruir los módulos de Node.
-
-## User Credentials
-irene
-HeFuIbKlJtVDEFas
+Ejecutar ```npm install``` para reconstruir los módulos de Node.
