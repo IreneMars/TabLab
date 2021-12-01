@@ -35,11 +35,11 @@ export class ActivityListComponent implements OnInit{
           activity.message = activity.message.replace("{{workspace}}",workspaceLink);
           
           activity.message = activity.message.replace("{{author}}",activity.authorName);
-          if (activity.coleccion){
+          if (activity.coleccionTitle){
             var coleccionLink :string = '<a href="'+environment.host+'workspace/'+activity.workspace+'">'+activity.coleccionTitle+'</a>'
             activity.message = activity.message.replace("{{coleccion}}",coleccionLink);
           } 
-          if (activity.datafile) {
+          if (activity.datafileTitle) {
             var datafileLink :string = '<a href="'+environment.host+'workspace/'+activity.workspace+'/datafile/'+activity.datafile+'">'+activity.datafileTitle+'</a>'
             activity.message = activity.message.replace("{{datafile}}",datafileLink);
           }       

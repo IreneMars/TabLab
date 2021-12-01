@@ -31,10 +31,13 @@ export class TestListComponent implements OnInit{
   ngOnInit(){
     this.configurationsService.getConfigurationsByDatafile(this.datafileId);
     for (var config of this.configurations){
-      const extraParamsJSON = JSON.stringify(config.extraParams).toString();
-      const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
-      const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
-      const extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');
+      var extraParamsStr = "";
+      if(config.extraParams){
+        const extraParamsJSON = JSON.stringify(config.extraParams).toString();
+        const extraParamsStr1 = extraParamsJSON.replace(/{/g, '');
+        const extraParamsStr2 = extraParamsStr1.replace(/}/g, '');
+        var extraParamsStr = extraParamsStr2.replace(/,/g, ',\n');
+      }
       const configAux = {...config, extraParamsStr};
       this.formattedConfigs.push(configAux);
     }

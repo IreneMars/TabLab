@@ -86,7 +86,10 @@ export class CollectionCreateComponent implements OnInit{
         this.editModeChange.emit(false);
         this.hideButtonChange.emit(false);
         this.editCollectionChange.emit(null);
-        this.collectionIndexChange.emit(null);      
+        this.collectionIndexChange.emit(null);
+        this.closeChange.emit(true);
+
+              
       })      
       .catch(err=>{
         console.log("Error on onSave() (edit mode) method: "+err.message);
@@ -100,6 +103,8 @@ export class CollectionCreateComponent implements OnInit{
         this.hideButtonChange.emit(false);
         this.editCollectionChange.emit(null);
         this.collectionIndexChange.emit(null); 
+        this.closeChange.emit(true);
+
       });
     } else {
       this.collectionsService.addCollection(values.title, this.workspaceId)
@@ -113,6 +118,8 @@ export class CollectionCreateComponent implements OnInit{
         this.hideButtonChange.emit(false);
         this.editCollectionChange.emit(null);
         this.collectionIndexChange.emit(null);
+        this.closeChange.emit(true);
+
       })
       .catch(err=>{
         console.log("Error on onSave() (create mode) method: "+err.message);
@@ -121,6 +128,8 @@ export class CollectionCreateComponent implements OnInit{
         // Activities
         this.activitiesService.getActivitiesByWorkspace(this.workspaceId);
         this.isSaving = false;
+        this.closeChange.emit(true);
+
         this.collectionForm.reset();
       });
     }

@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="row" *ngIf="edit">
-                <app-globalconfiguration-edit *ngIf="edit" [(edit)]="edit" [globalConfig]="globalConfig"></app-globalconfiguration-edit>
+                <app-globalconfiguration-edit *ngIf="edit" [(edit)]="edit" [(globalConfig)]="globalConfig"></app-globalconfiguration-edit>
             </div>
             <div class="row mt-2">
                 <div class="col">
@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col">
                     <div class="table-responsive">
-                        <table class="table table-fixed table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col" class="col-2">Nombre de usuario</th>
@@ -53,13 +53,13 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let user of users">
-                                    <th style="height: 43.8px;" class="col-2">{{user.username}}</th>
-                                    <td style="height: 43.8px;" class="col-2" align="center">{{user.name}}</td>
-                                    <td style="height: 43.8px;" class="col-2" align="center">{{user.email}}</td>
-                                    <td style="height: 43.8px;" class="col-2" align="center">{{user.role | translate}}</td>
-                                    <td style="height: 43.8px;" class="col-2" align="center" *ngIf="user.status">{{"active" | translate}}</td>
-                                    <td style="height: 43.8px;" class="col-2" align="center" *ngIf="!user.status">{{"inactive" | translate}}</td>
-                                    <td style="height: 43.8px;" class="col-2">
+                                    <th style="height: 43.8px;">{{user.username}}</th>
+                                    <td style="height: 43.8px;" align="center">{{user.name}}</td>
+                                    <td style="height: 43.8px;" align="center">{{user.email}}</td>
+                                    <td style="height: 43.8px;" align="center">{{user.role | translate}}</td>
+                                    <td style="height: 43.8px;" align="center" *ngIf="user.status">{{"active" | translate}}</td>
+                                    <td style="height: 43.8px;" align="center" *ngIf="!user.status">{{"inactive" | translate}}</td>
+                                    <td style="height: 43.8px;">
                                         <button type="button" class="btn btn-outline-danger btn-sm" (click)="onDeleteAccount(user.id)">
                                             Desactivar Cuenta
                                         </button>
@@ -79,25 +79,25 @@
             <div class="row">
                 <div class="col">
                     <div class="table-responsive">
-                        <table class="table table-fixed table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col" class="col-4">Título</th>
-                                    <th scope="col" class="col-3">Descripción</th>
-                                    <th scope="col" class="col-3">
+                                    <th scope="col" class="col-5">Descripción</th>
+                                    <th scope="col" class="col-2">
                                         <div align="center">Momento de Creación</div>
                                     </th>
-                                    <th scope="col" class="col-2">
+                                    <th scope="col" class="col-1">
                                         <div align="center">Obligatorio</div>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let workspace of workspaces" [routerLink]="['/workspace', workspace.id]">
-                                    <th class="col-4">{{workspace.title}}</th>
-                                    <td class="col-3">{{(workspace.description.length>6)?(workspace.description | slice:0:30)+'..':(workspace.description)}}</td>
-                                    <td class="col-3" align="center">{{workspace.creationMoment}}</td>
-                                    <td class="col-2" align="center">{{workspace.mandatory.toString()| translate}}</td>
+                                    <th>{{workspace.title}}</th>
+                                    <td>{{(workspace.description.length>60)?(workspace.description | slice:0:60)+'..':(workspace.description)}}</td>
+                                    <td align="center">{{workspace.creationMoment}}</td>
+                                    <td align="center">{{workspace.mandatory.toString()| translate}}</td>
                                 </tr>
                                 <tr>
                             </tbody>
@@ -113,7 +113,7 @@
             <div class="row">
                 <div class="col">
                     <div class="table-responsive">
-                        <table class="table table-fixed table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col" class="col-3">Título</th>
@@ -128,10 +128,10 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let datafile of datafiles" [routerLink]="['/workspace',datafile.workspace,'datafile', datafile.id]">
-                                    <th class="col-3">{{datafile.title}}</th>
-                                    <td class="col-3" align="center">{{datafile.delimiter}}</td>
-                                    <td class="col-3">{{datafile.description}}</td>
-                                    <td class="col-3" align="center">{{datafile.errLimit || 0}}</td>
+                                    <th>{{datafile.title}}</th>
+                                    <td align="center">{{datafile.delimiter}}</td>
+                                    <td>{{datafile.description}}</td>
+                                    <td align="center">{{datafile.errLimit || 0}}</td>
                                 </tr>
                                 <tr>
                             </tbody>
@@ -147,7 +147,7 @@
             <div class="row mb-5">
                 <div class="col">
                     <div class="table-responsive">
-                        <table class="table table-fixed table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col" class="col-3">Título</th>
@@ -164,10 +164,10 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let test of tests" [routerLink]="['/workspace',test.workspace,'datafile', test.datafile, 'test', test.id]">
-                                    <th class="col-3">{{test.title}}</th>
-                                    <td class="col-3" align="center">{{test.status | translate}}</td>
-                                    <td class="col-3" align="center">{{test.executable.toString() | translate}}</td>
-                                    <td class="col-3" align="center">{{test.totalErrors || 0}}</td>
+                                    <th>{{test.title}}</th>
+                                    <td align="center">{{test.status | translate}}</td>
+                                    <td align="center">{{test.executable.toString() | translate}}</td>
+                                    <td align="center">{{test.totalErrors || 0}}</td>
                                 </tr>
                                 <tr>
                             </tbody>

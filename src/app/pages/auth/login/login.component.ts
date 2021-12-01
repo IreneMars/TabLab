@@ -80,7 +80,6 @@ export class LoginComponent implements OnInit {
     }
     this.isLoading = true;
     const values = this.loginForm.getRawValue();
-    console.log("login")
     this.authService.login(values.username, values.password);
     
     if  (values.rememberme) {

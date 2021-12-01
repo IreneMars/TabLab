@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Configuration } from 'src/app/models/configuration.model';
 import { FricError } from 'src/app/models/fricError.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -35,7 +35,7 @@ export class ConfigurationCreateComponent implements OnInit{
 
   constructor(public configurationService: ConfigurationService, public fricErrorsService: FricErrorsService, 
               public route: ActivatedRoute, private authService: AuthService, 
-              public configurationsService: ConfigurationService, private eRef: ElementRef,) {
+              public configurationsService: ConfigurationService, public router: Router,) {
   }
 
   ngOnInit() {
@@ -111,11 +111,11 @@ export class ConfigurationCreateComponent implements OnInit{
   }
 
   onCancel() {
-    this.configurationForm.reset();
     this.extraControls.forEach(newControl => {
       this.configurationForm.removeControl(newControl[0]);
     });
     this.extraControlsChange.emit([]);
+
   }
 
   async onSave() {
@@ -152,8 +152,12 @@ export class ConfigurationCreateComponent implements OnInit{
         extraParams: result.configuration.extraParams,
         datafile: result.configuration.datafile,
       }
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([`/workspace/${this.workspaceId}/datafile/${this.datafileId}`]);
+      });
     }
     this.configurationForm.reset();
+
     this.extraControls.forEach(newControl => {
       this.configurationForm.removeControl(newControl[0]);
     });

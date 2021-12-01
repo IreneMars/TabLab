@@ -35,7 +35,8 @@ export class ProfileEditComponent implements OnInit{
       this.route.paramMap.subscribe((paramMap: ParamMap) => {
         this.userId = paramMap.get('userId');
         // User
-        this.usersService.getUser(this.userId).subscribe(userData => {
+        this.usersService.getUser(this.userId);
+        this.usersService.getUserUpdateListener().subscribe(userData => {
           this.user = {
             id: userData.user._id,
             username: userData.user.username,
@@ -118,7 +119,8 @@ export class ProfileEditComponent implements OnInit{
     }
     await this.usersService.updateUser(this.userId, values.name, values.username, null, this.user.role, null, null, null);
     // User
-    this.usersService.getUser(this.userId).subscribe(userData => {
+    this.usersService.getUser(this.userId);
+    this.usersService.getUserUpdateListener().subscribe(userData => {
       this.user = {
         id: userData.user._id,
         username: userData.user.username,

@@ -3,6 +3,6 @@ export interface Configuration {
   title: string;
   creationMoment: Date;
   errorCode: string;
-  extraParams: Map<string, string>;
+  extraParams: object;
   datafile: string;
 }

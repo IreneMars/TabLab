@@ -9,7 +9,6 @@ import { DatafileService } from '../../../services/datafiles.service';
 import { UsersService } from '../../../services/users.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
-import { Datafile } from 'src/app/models/datafile.model';
 import { Activity } from 'src/app/models/activity.model';
 
 @Component({
@@ -68,7 +67,7 @@ export class WorkspaceDetailsComponent implements OnInit {
           };
           // Users
           this.usersService.getUsersByWorkspace(this.workspaceId);
-          this.usersService.getUserUpdateListener().subscribe( (userData: {users: User[]}) => {
+          this.usersService.getUsersUpdateListener().subscribe( (userData: {users: User[]}) => {
             this.users = userData.users;
             for (var userIndex in this.users){
               const user = this.users[userIndex]
@@ -94,6 +93,15 @@ export class WorkspaceDetailsComponent implements OnInit {
       this.router.navigate(['/workspaces']);
     }, err => {
       console.log("Error on onLeave method: "+err.message);
+    });
+  }
+
+  onDelete(){
+    this.isLoading = true;
+    this.workspacesService.deleteWorkspace(this.workspaceId).then( response => {
+      this.router.navigate(['/workspaces']);
+    }, err => {
+      console.log("Error on onDelete method: "+err.message);
     });
   }
 

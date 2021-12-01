@@ -85,7 +85,8 @@ export class TestDetailsComponent implements OnInit, OnDestroy{
     if (this.userIsAuthenticated){
       this.userId = this.authService.getUserId();
       // Current User
-      this.usersService.getUser(this.userId).subscribe(userData=>{
+      this.usersService.getUser(this.userId);
+      this.usersService.getUserUpdateListener().subscribe(userData=>{
         this.user = {
           id: userData.user._id,
           username: userData.user.username,

@@ -25,7 +25,8 @@ export class HomeComponent implements OnInit{
       const data = this.authService.getUserData();
       this.userId = data.userId;
       // Current User
-      this.usersService.getUser(this.userId).subscribe(userData => {
+      this.usersService.getUser(this.userId);
+      this.usersService.getUserUpdateListener().subscribe(userData => {
         this.user = {
             id: userData.user._id,
             username: userData.user.username,

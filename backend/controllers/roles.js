@@ -18,7 +18,7 @@ exports.createRole = async(req, res, next) => {
         }
 
         const role = new Role({
-            role: null,
+            role: "member",
             workspace: req.body.workspace,
             user: req.body.user,
         });

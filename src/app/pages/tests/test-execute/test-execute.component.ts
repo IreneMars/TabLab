@@ -56,6 +56,7 @@ export class TestExecuteComponent implements OnInit {
                   this.testId = paramMap.get('testId');
                   //Test
                   this.testsService.getTest(this.testId).subscribe((testData)=>{
+
                     if(testData.test.executable){
                       this.selectedTestIDs.add(this.testId);     
                     }
@@ -101,7 +102,7 @@ export class TestExecuteComponent implements OnInit {
   
   onDownload(testId: string) {
     this.testsService.getTest(testId).subscribe( testData => {
-      
+
       var reportPath: string = testData.test.reportPath;
       var fileNameSplits = reportPath.split("/");
       var fileName = fileNameSplits[fileNameSplits.length-1].split(".");
