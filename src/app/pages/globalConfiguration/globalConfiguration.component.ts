@@ -43,7 +43,8 @@ export class GlobalConfigurationComponent implements OnInit {
     if (this.userIsAuthenticated) {
       this.userId = this.authService.getUserId();
       //Current User
-      this.usersService.getUser(this.userId).subscribe(userData => {
+      this.usersService.getUser(this.userId);
+      this.usersService.getUserUpdateListener().subscribe(userData => {
         this.user = {
           id: userData.user.id,
           username: userData.user.username,
@@ -65,7 +66,7 @@ export class GlobalConfigurationComponent implements OnInit {
           }
           // Users
           this.usersService.getUsers();
-          this.usersService.getUserUpdateListener()
+          this.usersService.getUsersUpdateListener()
           .subscribe( (userData: {users: User[]}) => {
             this.users = userData.users;
             // Workspaces

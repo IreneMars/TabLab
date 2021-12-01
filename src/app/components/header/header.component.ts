@@ -45,7 +45,8 @@ export class HeaderComponent implements OnInit{
     this.userId = this.authService.getUserId();
     // Current User
     if(this.userIsAuthenticated){
-      this.usersService.getUser(this.userId).subscribe(userData => {
+      this.usersService.getUser(this.userId);
+      this.usersService.getUserUpdateListener().subscribe(userData => {
         this.user = {
           id: userData.user.id,
           username: userData.user.username,
@@ -63,6 +64,9 @@ export class HeaderComponent implements OnInit{
           this.hasInvitations = response.pendingInvitations;
           this.isLoading = false;
         });
+      });
+      this.usersService.getUserUpdateListener().subscribe(userUpdated=>{
+          this.user = userUpdated.user;
       });
       this.invitationsService.getInvitationUpdateListener().subscribe(invitationsResponse=>{
         for (var invitation of invitationsResponse.invitations) {

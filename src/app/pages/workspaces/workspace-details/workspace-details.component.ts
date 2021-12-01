@@ -67,7 +67,7 @@ export class WorkspaceDetailsComponent implements OnInit {
           };
           // Users
           this.usersService.getUsersByWorkspace(this.workspaceId);
-          this.usersService.getUserUpdateListener().subscribe( (userData: {users: User[]}) => {
+          this.usersService.getUsersUpdateListener().subscribe( (userData: {users: User[]}) => {
             this.users = userData.users;
             for (var userIndex in this.users){
               const user = this.users[userIndex]

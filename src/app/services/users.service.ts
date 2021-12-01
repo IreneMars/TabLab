@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -11,10 +11,16 @@ const BACKEND_URL = environment.apiUrl + '/users/';
 export class UsersService {
   private users: User[] = [];
   private usersUpdated = new Subject<{users: User[]}>();
-  
+  private user: any =  null;
+  private userUpdated = new Subject<{user: any}>();
+
   constructor(private http: HttpClient) {}
   
   getUserUpdateListener() {
+    return this.userUpdated.asObservable();
+  }
+
+  getUsersUpdateListener() {
     return this.usersUpdated.asObservable();
   }
   
@@ -77,7 +83,13 @@ export class UsersService {
   }
   
   getUser(userId: string) {
-    return this.http.get<{message:string, user: any}>(BACKEND_URL + userId);
+    return this.http.get<{message:string, user: any}>(BACKEND_URL + userId)
+    .subscribe((transformedUserData) => {
+      this.user = transformedUserData.user;
+      this.userUpdated.next({
+        user: this.user
+      });
+    });
   }
 
   addUser(username: string, email: string, password: string) {
@@ -107,6 +119,7 @@ export class UsersService {
       'repeatPass': repeatPass
     };
     return this.http.put<{message: string, user: any}>(BACKEND_URL + userId, userData).toPromise();
+    
   }
 
   deleteAccount(userId: string) {
