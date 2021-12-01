@@ -3,7 +3,6 @@ const { Role, Configuration, Datafile } = require("../models");
 exports.getConfigurationsByDatafile = async(req, res) => {
     try {
         const configurations = await Configuration.find({ 'datafile': req.params.datafileId });
-
         return res.status(200).json({
             message: "Configurations fetched successfully!",
             configurations: configurations,
@@ -31,19 +30,19 @@ exports.getConfiguration = async(req, res, next) => {
                 message: "Not authorized to fetch this configuration!"
             });
         }
-        var extraParams = null;
-        if (configuration.extraParams) {
-            extraParams = {};
-            for (elem of configuration.extraParams) {
+        // var extraParams = null;
+        // if (configuration.extraParams) {
+        //     extraParams = {};
+        //     for (elem of configuration.extraParams) {
 
-                extraParams[elem[0]] = elem[1]
-            }
+        //         extraParams[elem[0]] = elem[1]
+        //     }
 
-        }
+        // }
         return res.status(200).json({
             message: "Sucessful fetch!",
             configuration: configuration,
-            extraParams: extraParams
+            // extraParams: extraParams
         });
     } catch (err) {
         return res.status(500).json({

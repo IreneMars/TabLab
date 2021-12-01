@@ -18,7 +18,7 @@ export class ConfigurationService {
   }
 
   getConfiguration(configurationId: string) {
-    return this.http.get<{message:string, configuration: any, extraParams: any}>(BACKEND_URL + configurationId);
+    return this.http.get<{message:string, configuration: any}>(BACKEND_URL + configurationId);
   }
 
   getConfigurationsByDatafile(datafileId: string) {

@@ -192,9 +192,8 @@ exports.deleteWorkspace = async(req, res, next) => {
     const current_user_id = req.userData.userId;
 
     try {
-        const roles = Role.find({ workspace: req.params.id, user: current_user_id, role: "owner" });
+        const roles = await Role.find({ workspace: req.params.id, user: current_user_id, role: "owner" });
         const user = await User.findById(current_user_id);
-
         if (roles.length !== 1 && user.role !== 'ADMIN') {
             return res.status(401).json({
                 message: "You are not authorized to delete that workspace!"

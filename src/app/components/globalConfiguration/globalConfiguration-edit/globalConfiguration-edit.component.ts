@@ -16,6 +16,7 @@ export class GlobalConfigurationEditComponent implements OnInit{
   isSaving                     : boolean = false;
   globalConfigurationEditForm  : FormGroup;
   @Input() globalConfig        : GlobalConfiguration;
+  @Output() globalConfigChange  : EventEmitter<any> = new EventEmitter<any>();
   @Input() edit                : boolean;
   @Output() editChange         : EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -66,6 +67,8 @@ export class GlobalConfigurationEditComponent implements OnInit{
     const values = this.globalConfigurationEditForm.getRawValue();
     await this.globalConfigurationService.updateGlobalConfig(this.globalConfig.id, values.limitUsers, values.limitWorkspaces);
     this.globalConfigurationService.getGlobalConfig().subscribe((globalConfigData)=>{
+      console.log(globalConfigData.globalConfiguration)
+      this.globalConfigChange.emit(globalConfigData.globalConfiguration)
       this.globalConfigurationEditForm.reset();
       this.isSaving = false;
       this.editChange.emit(false);

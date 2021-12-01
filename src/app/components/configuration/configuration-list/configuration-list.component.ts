@@ -29,6 +29,7 @@ export class ConfigurationListComponent implements OnInit{
   extraControls           : object[] = [];
   extraParams             : boolean = false;  
   fricErrors              : FricError[];
+  createEdit              : boolean;
   
   constructor(public datafilesService: DatafileService, public route: ActivatedRoute, public authService: AuthService,
               public configurationsService: ConfigurationService, public fricErrorsService: FricErrorsService){
@@ -81,10 +82,9 @@ export class ConfigurationListComponent implements OnInit{
         extraParams: configurationData.configuration.extraParams,
         datafile: configurationData.configuration.datafile,
       }
-      const extraParams = configurationData.extraParams;
       this.configurationForm.patchValue({title: configurationData.configuration.title,
                                          errorCode: configurationData.configuration.errorCode});
-      if(extraParams){
+      if(this.configuration.extraParams){
         const fricError: FricError = this.fricErrors.find(element => element.errorCode === this.configuration.errorCode);
         Object.keys(fricError.extraParams).forEach(extraParam => {
           let tipo = '';
@@ -97,7 +97,7 @@ export class ConfigurationListComponent implements OnInit{
                               'tipo'      : tipo,
                               'enum'      : fricError.extraParams[extraParam],
                               'hint'      : fricError.extraParams['hints'][extraParam],
-                              'value'     : extraParams[extraParam]
+                              'value'     : this.configuration.extraParams[extraParam]
                              };
             } else {
               tipo = typeof fricError.extraParams[extraParam];
@@ -105,13 +105,13 @@ export class ConfigurationListComponent implements OnInit{
                               'extraParam': extraParam,
                               'tipo'      : tipo,
                               'hint'      : fricError.extraParams['hints'][extraParam],
-                              'value'     : extraParams[extraParam]
+                              'value'     : this.configuration.extraParams[extraParam]
                              };
             }
 
-            this.configurationForm.addControl(extraParam, new FormControl(extraParams[extraParam], {validators: [Validators.required]}));
+            this.configurationForm.addControl(extraParam, new FormControl(this.configuration.extraParams[extraParam], {validators: [Validators.required]}));
             this.extraControls.push(extraControl);
-            //this.configurationForm.patchValue({extraParam:extraParams[extraParam]});
+            this.configurationForm.patchValue({extraParam:this.configuration.extraParams[extraParam]});
           }
         });
         this.extraParams = true;

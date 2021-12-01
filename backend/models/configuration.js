@@ -16,9 +16,8 @@ const configurationSchema = mongoose.Schema({
         required: [true, 'The error code is mandatory'],
     },
     extraParams: {
-        type: Map,
-        of: String,
-        required: [false],
+        type: Object,
+        required: false,
     },
     datafile: {
         type: mongoose.Schema.Types.ObjectId,

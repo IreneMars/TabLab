@@ -57,6 +57,7 @@ export class GlobalConfigurationComponent implements OnInit {
         };
         // Global Configuration
         this.globalConfigService.getGlobalConfig().subscribe(globalConfigData=>{
+          console.log(globalConfigData.globalConfiguration)
           this.globalConfig = {
             "id": globalConfigData.globalConfiguration._id,
             "limitUsers": globalConfigData.globalConfiguration.limitUsers,

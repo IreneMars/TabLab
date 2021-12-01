@@ -131,6 +131,10 @@ exports.updateInvitation = async(req, res, next) => {
             });
         }
         await Invitation.findByIdAndUpdate(req.params.id, { status: req.body.status });
+        if (req.body.status === "accepted") {
+            const newRole = new Role({ user: invitation.receiver, workspace: invitation.workspace, role: "member" });
+            await newRole.save();
+        }
         const updatedInvitation = await Invitation.findById(req.params.id);
         return res.status(200).json({
             message: "Update successful!",

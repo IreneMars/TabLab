@@ -18,11 +18,6 @@ const roleSchema = Schema({
     }
 });
 
-roleSchema.pre('save', function(next) {
-    this.role = 'member';
-    next();
-});
-
 roleSchema.methods.toJSON = function() {
     const { __v, ...role } = this.toObject();
     return role;
