@@ -7,7 +7,7 @@ const axios = require('axios');
 exports.createReport = async(req, res, next) => {
     const current_user_id = req.userData.userId;
     const testId = req.body.testId;
-    
+
     try {
         const test = await Test.findById(testId);
         if (!test.executable) {
@@ -36,7 +36,7 @@ exports.createReport = async(req, res, next) => {
             // Get Esquema de AWS S3
             response = await axios.get(esquema.contentPath);
             esquemaNameSplit = esquema.contentPath.split('/');
-            var esquemaFileName = esquemaNameSplit[esquemaNameSplit.length-1];
+            var esquemaFileName = esquemaNameSplit[esquemaNameSplit.length - 1];
             esquemaFilePath = "backend/uploads/esquemas/" + esquemaFileName;
             let rawData = JSON.stringify(response.data);
             fs.writeFileSync(esquemaFilePath, rawData);
@@ -46,11 +46,12 @@ exports.createReport = async(req, res, next) => {
         var configurationsAux = [];
         if (configurations) {
             for (var config of configurations) {
-                configAux = { "code": config.errorCode }
+                var configAux = { "code": config.errorCode }
                 if (config.extraParams) {
-                    for (var extraParam of config.extraParams.keys()) {
-                        configAux[extraParam] = config.extraParams.get(extraParam)
-                    }
+                    configAux = {...configAux, ...config.extraParams }
+                        // for (var extraParam of config.extraParams) {
+                        //     configAux[extraParam] = config.extraParams[extraParam]
+                        // }
                 }
                 configurationsAux.push(configAux);
             }
@@ -59,7 +60,7 @@ exports.createReport = async(req, res, next) => {
         // Get Datafile from AWS S3
         response = await axios.get(datafile.contentPath);
         datafileNameSplit = datafile.contentPath.split('/');
-        var datafileFileName = datafileNameSplit[datafileNameSplit.length-1];
+        var datafileFileName = datafileNameSplit[datafileNameSplit.length - 1];
         var datafileFilePath = "backend/uploads/datafiles/" + datafileFileName;
         fs.writeFileSync(datafileFilePath, response.data);
 
@@ -70,7 +71,7 @@ exports.createReport = async(req, res, next) => {
         const execBuffer = execFileSync(
             'python', ["backend/scripts/validation.py", testData[1], testData[2], testData[3], testData[4], testData[5], testData[6]], { encoding: 'utf-8' }
         );
-        
+
         var rawdata = "";
         var rawDataSplit = [];
         var uploadedFileUrl = null;
@@ -79,11 +80,11 @@ exports.createReport = async(req, res, next) => {
             rawdata = fs.readFileSync(errorReportPath, 'utf8');
             rawDataSplit = rawdata.split('\n');
             rawDataSplit.shift();
-            
+
             // Upload Report to AWS S3
             const fileFullName = `reports/${errorReportFileName}`;
             uploadedFileUrl = await uploadObject(rawdata, fileFullName);
-            
+
             const lines = rawdata.split("\n");
             errors = lines.length - 1;
         }

@@ -1,4 +1,5 @@
 import os, json, logging, sys, pathlib, logging
+
 from frictionless import validate, Detector, Resource, describe_schema
 # from backend.scripts.report_summary import (
 #     summarize_report,
@@ -208,7 +209,7 @@ def save_report_to_file(report, file):
     output.write(report_json)
     output.close()
 
-def validate_file(file_path, delimiter, schema_file=None,  errors_file_name=None, configurations=None, total_poss_errors=None):
+def validate_file(out_path, file_path, delimiter, schema_file=None,  errors_file_name=None, configurations=None, total_poss_errors=None):
     base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     output_directory = base_path+'/output/'
     schema_report = None
@@ -285,11 +286,11 @@ def validate_file(file_path, delimiter, schema_file=None,  errors_file_name=None
 
         log_highlights_for_summarize_report(summary_report,logger)
 
-        error_csv_file_path = os.path.join(output_directory, errors_file_name)
-        create_csv_from_summarized_report(summary_report, csv_file_path=error_csv_file_path)
+        # error_csv_file_path = os.path.join(output_directory, errors_file_name)
+        create_csv_from_summarized_report(summary_report, csv_file_path=out_path)
         if not summary_report.get('valid', True):
-            print(f'Error file from summarized report saved to {error_csv_file_path}.')
-            logger.info(f'Error file from summarized report saved to {error_csv_file_path}.')
+            print(f'Error file from summarized report saved to {out_path}.')
+            logger.info(f'Error file from summarized report saved to {out_path}.')
 
 def infer_schema(file_path):
     schema = describe_schema(file_path)
@@ -313,6 +314,8 @@ configurations = [{'code':sys.argv[5]}]
 total_poss_errors = sys.argv[6];
 if total_poss_errors == 'null':
     total_poss_errors = None
+else:
+    total_poss_errors = int(total_poss_errors)
 
 logger.info('Out Path: '+out_path);
 print('Delimiter: '+delimiter);
@@ -332,4 +335,4 @@ logger.info(total_poss_errors);
 # esquema_path = "D:/irene/Desktop/TabLab/backend/uploads/esquemas/populate_schema.json"
 # configurations = []
 
-validate_file(file_path, delimiter, schema_file=esquema_path, configurations=configurations, total_poss_errors=total_poss_errors)
+validate_file(out_path, file_path, delimiter, schema_file=esquema_path, configurations=configurations, total_poss_errors=total_poss_errors)
